@@ -334,6 +334,20 @@ const CALUNAH_CONFIG = {
       upcoming:    true
     },
     {
+      id:          'prayer2025',
+      title:       '3-Day Prayer Session for Haiti',
+      date:        'April 2–4, 2025',
+      time:        '7:30 PM – 8:30 PM EDT',
+      location:    'Virtual — Zoom',
+      flyer:       'images/events/prayer2025.webp',
+      tags:        ['Prayer', 'Spiritual', 'Virtual', 'Haiti'],
+      description: 'CALUNAH lifted up heartfelt prayers for Haiti — for peace, healing, and strength in the midst of hardship. Three nights of intercession uniting all chapters in one voice before God.',
+      fullInfo:    'As uncertainty was being faced among Haitian immigrants, CALUNAH launched a three-day Prayer Session with the participation of all chapters — calling on God for Forgiveness & Reconciliation (Wednesday), Physical, Emotional & Spiritual Healing (Thursday), and Protection & Deliverance (Friday). 📍 Via Zoom · Meeting ID: 898 1400 5387 · Passcode: prayers · "The prayer of a righteous person is powerful and effective." – James 5:16. As a faithful God — HE CAME THROUGH!',
+      ticketUrl:   '',
+      ctaLabel:    'View Recap',
+      upcoming:    false
+    },
+    {
       id:          'backpack2025',
       title:       'Backpack Drive Community Service',
       date:        'October 26, 2025',
@@ -394,6 +408,7 @@ const CALUNAH_CONFIG = {
     { src: 'images/community/backpack-7.webp',   caption: 'Backpack Drive 2025 — Impact in the Community',       cat: 'community' },
     { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds — High Tea Fundraiser 2026',  cat: 'events'    },
     { src: 'images/events/backpack2025.webp',    caption: 'Backpack Drive Community Service 2025',       cat: 'events'    },
+    { src: 'images/events/prayer2025.webp',      caption: '3-Day Prayer Session for Haiti — April 2025', cat: 'events'   },
   ],
 
   /* ---------- Videos ---------- */
