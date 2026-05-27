@@ -348,6 +348,20 @@ const CALUNAH_CONFIG = {
       upcoming:    false
     },
     {
+      id:          'saturdaygiving2024',
+      title:       'Saturday Giving Event',
+      date:        'November 30, 2024',
+      time:        '5:30 PM',
+      location:    'Virtual — YouTube & Facebook Live',
+      flyer:       'images/events/saturdaygiving2024.webp',
+      tags:        ['Fundraiser', 'Giving', 'Scholarships', 'Community'],
+      description: 'Our community came together for the Saturday Giving Event — a heartfelt initiative raising funds for student scholarships, campus maintenance, building upgrades, new computers, and essential resources that enhance learning and growth.',
+      fullInfo:    'On November 30, 2024, CALUNAH Executive presented the Saturday Giving Event broadcast live on YouTube and Facebook. The event raised funds for: Scholarships · Renovation & Maintenance · Monitors / Computers · and much more. Thanks to the incredible generosity of donors, partners, and volunteers, the event made a lasting impact that will continue to benefit our school community for years to come. 📺 Broadcast on CALUNAH Executive YouTube & Facebook platforms.',
+      ticketUrl:   '',
+      ctaLabel:    'View Recap',
+      upcoming:    false
+    },
+    {
       id:          'gala2024',
       title:       'Annual Gala & Awards Night 2024',
       date:        'December 7, 2024',
@@ -379,7 +393,8 @@ const CALUNAH_CONFIG = {
     { src: 'images/community/backpack-6.jpg',    caption: 'Backpack Drive 2025 — Back to School Ready',          cat: 'community' },
     { src: 'images/community/backpack-7.webp',   caption: 'Backpack Drive 2025 — Impact in the Community',       cat: 'community' },
     { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds — High Tea Fundraiser 2026',   cat: 'events'    },
-    { src: 'images/events/backpack2025.webp',    caption: 'Backpack Drive Community Service 2025',        cat: 'events'    },
+    { src: 'images/events/backpack2025.webp',       caption: 'Backpack Drive Community Service 2025',        cat: 'events'    },
+    { src: 'images/events/saturdaygiving2024.webp', caption: 'Saturday Giving Event — November 30, 2024',   cat: 'events'    },
     { src: 'images/events/prayer2025.webp',      caption: '3-Day Prayer Session for Haiti — April 2025',  cat: 'events'    },
     { src: 'images/community/georgia-1.webp',   caption: 'Georgia Chapter Installation — Feb 2025',      cat: 'community' },
     { src: 'images/community/georgia-2.webp',   caption: 'Georgia Chapter — Meet & Greet Luncheon',      cat: 'community' },
