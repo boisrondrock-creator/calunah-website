@@ -306,34 +306,6 @@ const CALUNAH_CONFIG = {
       upcoming:    true
     },
     {
-      id:          'gala2026',
-      title:       'CALUNAH Annual Gala & Fundraiser 2026',
-      date:        'July 12, 2026',
-      time:        '6:00 PM – 11:00 PM EDT',
-      location:    'Marriott Biscayne Bay, Miami, FL',
-      flyer:       'images/events/gala2026.jpg',
-      tags:        ['Gala', 'Fundraiser', 'Annual'],
-      description: 'Join us for our flagship annual gala celebrating excellence, community, and the enduring legacy of UAH alumni. An elegant evening of inspiration, awards, networking, and fundraising for our scholarship programs.',
-      fullInfo:    'The Annual CALUNAH Gala is our premier fundraising event bringing together alumni, supporters, and friends from across the diaspora. Proceeds support student scholarships, disaster relief, and community development in Haiti. Black-tie optional. Tickets include dinner, live entertainment, and a silent auction.',
-      ticketUrl:   'https://www.eventbrite.com/calunah-gala-2026',
-      ctaLabel:    'Get Your Tickets',
-      upcoming:    true
-    },
-    {
-      id:          'scholarship2026',
-      title:       'Scholarship Awards Ceremony 2026',
-      date:        'August 20, 2026',
-      time:        '3:00 PM EDT',
-      location:    'Virtual Event via Zoom Webinar',
-      flyer:       'images/events/scholarship2026.jpg',
-      tags:        ['Scholarship', 'Education', 'Virtual'],
-      description: 'Celebrating our 2026 scholarship recipients with an inspiring ceremony recognizing academic excellence and community service among UAH students.',
-      fullInfo:    'CALUNAH is proud to award scholarships to deserving students at the Université Adventiste d\'Haïti. This annual ceremony honors their achievements and reaffirms our commitment to education. Open to all members and guests. Zoom link sent upon RSVP.',
-      ticketUrl:   '',
-      ctaLabel:    'RSVP Now',
-      upcoming:    true
-    },
-    {
       id:          'georgia2025',
       title:       'Georgia Chapter Installation',
       date:        'February 22, 2025',
@@ -376,20 +348,6 @@ const CALUNAH_CONFIG = {
       upcoming:    false
     },
     {
-      id:          'convention2025',
-      title:       'CALUNAH National Convention 2025',
-      date:        'October 10, 2025',
-      time:        'All Day',
-      location:    'Miami Gardens, FL',
-      flyer:       'images/events/convention2025.jpg',
-      tags:        ['Convention', 'Annual', 'Networking'],
-      description: 'Our 2025 national convention brought together alumni from across the country for two days of professional development, worship, and fellowship.',
-      fullInfo:    'The CALUNAH National Convention is held annually and serves as the central gathering of alumni chapters from across the United States and beyond. The 2025 edition featured keynote speakers, workshops, cultural celebration, and the official business meeting of the organization.',
-      ticketUrl:   '',
-      ctaLabel:    'View Recap',
-      upcoming:    false
-    },
-    {
       id:          'gala2024',
       title:       'Annual Gala & Awards Night 2024',
       date:        'December 7, 2024',
@@ -420,9 +378,9 @@ const CALUNAH_CONFIG = {
     { src: 'images/community/backpack-5.webp',   caption: 'Backpack Drive 2025 — Nationwide Chapters United',    cat: 'community' },
     { src: 'images/community/backpack-6.jpg',    caption: 'Backpack Drive 2025 — Back to School Ready',          cat: 'community' },
     { src: 'images/community/backpack-7.webp',   caption: 'Backpack Drive 2025 — Impact in the Community',       cat: 'community' },
-    { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds — High Tea Fundraiser 2026',  cat: 'events'    },
-    { src: 'images/events/backpack2025.webp',    caption: 'Backpack Drive Community Service 2025',       cat: 'events'    },
-    { src: 'images/events/prayer2025.webp',      caption: '3-Day Prayer Session for Haiti — April 2025', cat: 'events'   },
+    { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds — High Tea Fundraiser 2026',   cat: 'events'    },
+    { src: 'images/events/backpack2025.webp',    caption: 'Backpack Drive Community Service 2025',        cat: 'events'    },
+    { src: 'images/events/prayer2025.webp',      caption: '3-Day Prayer Session for Haiti — April 2025',  cat: 'events'    },
     { src: 'images/community/georgia-1.webp',   caption: 'Georgia Chapter Installation — Feb 2025',      cat: 'community' },
     { src: 'images/community/georgia-2.webp',   caption: 'Georgia Chapter — Meet & Greet Luncheon',      cat: 'community' },
     { src: 'images/community/georgia-3.webp',   caption: 'Georgia Chapter — Ebenezer SDA Church, Atlanta', cat: 'community' },
