@@ -292,6 +292,20 @@ const CALUNAH_CONFIG = {
   /* ---------- Events ---------- */
   events: [
     {
+      id:          'hightea2026',
+      title:       'Blooming Minds: Giving Back for Education',
+      date:        'June 21, 2026',
+      time:        '5:30 PM – 9:30 PM',
+      location:    'Holy Trinity Reception Center, Orlando, FL',
+      flyer:       'images/events/hightea2026.jpg',
+      tags:        ['High Tea', 'Fundraiser', 'Education'],
+      description: 'An elegant High Tea fundraising evening to support education. Featuring keynote speaker Modoline Altenor, Esq., MC Marjory Sheba, and live performances by Emmanuel Garilus, JP Sonics, Marielle Donatien & Stephanie Garilus.',
+      fullInfo:    'Join CALUNAH for Blooming Minds — an upscale High Tea Fundraising Event raising funds for education. Keynote: Modoline Altenor, Esq. | MC: Marjory Sheba. Featured Performers: Emmanuel Garilus (Saxophonist), JP Sonics (Classic Band), Marielle Donatien (Solo Artist), Stephanie Garilus (Solo Artist). 📍 1217 Trinity Woods Ln, Orlando, FL 32751. 🎟 $60 Advance · $30 Children under 12 · $70 At the Door.',
+      ticketUrl:   'https://www.eventbrite.com/',
+      ctaLabel:    'Buy Tickets — $60',
+      upcoming:    true
+    },
+    {
       id:          'gala2026',
       title:       'CALUNAH Annual Gala & Fundraiser 2026',
       date:        'July 12, 2026',
@@ -382,7 +396,7 @@ const CALUNAH_CONFIG = {
 
   /* ---------- e-Newsletter Issues ---------- */
   newsletters: [
-    { title: 'CALUNAH Quarterly, Spring 2026', date: 'April 2026',    pdf: 'newsletters/spring2026.pdf',  preview: 'Gala announcement, scholarship recipients, chapter spotlights.'       },
+    { title: 'Perspectives — Spring 2026', date: 'Spring 2026', pdf: 'data/perspectives-spring-2026.pdf', preview: 'High Tea fundraiser, scholarship spotlights, alumni stories, chapter updates & community impact.', featured: true },
     { title: 'CALUNAH Quarterly, Winter 2025', date: 'January 2026',  pdf: 'newsletters/winter2025.pdf', preview: 'Year in review with achievements, financials, and member stories.'   },
     { title: 'CALUNAH Quarterly, Fall 2025',   date: 'October 2025',  pdf: 'newsletters/fall2025.pdf',   preview: 'Convention recap, leadership updates, and Haiti project news.'        },
     { title: 'CALUNAH Quarterly, Summer 2025', date: 'July 2025',     pdf: 'newsletters/summer2025.pdf', preview: 'Gala highlights, new chapters, and community service roundup.'      },
@@ -1045,15 +1059,47 @@ function buildNewsletterIssues() {
   const list = qs('#issues-list');
   if (!list) return;
 
+  // Inject featured reader above issues list (only once)
+  const featured = CALUNAH_CONFIG.newsletters.find(n => n.featured);
+  const readerWrap = qs('#nl-reader-wrap');
+  if (featured && readerWrap) {
+    readerWrap.innerHTML = `
+      <div class="nl-featured-header">
+        <div class="nl-featured-badge"><i class="fas fa-star"></i> Latest Issue</div>
+        <h3 class="nl-featured-title">${featured.title}</h3>
+        <p class="nl-featured-sub">${featured.preview}</p>
+        <a href="${featured.pdf}" download class="btn btn-gold nl-download-btn">
+          <i class="fas fa-download"></i> Download PDF
+        </a>
+        <a href="${featured.pdf}" target="_blank" rel="noopener" class="btn btn-ghost nl-open-btn">
+          <i class="fas fa-external-link-alt"></i> Open Full Screen
+        </a>
+      </div>
+      <div class="nl-book-viewer">
+        <iframe src="${featured.pdf}#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
+          class="nl-iframe" title="${featured.title}" loading="lazy"
+          allowfullscreen></iframe>
+        <div class="nl-mobile-fallback">
+          <i class="fas fa-book-open"></i>
+          <p>Tap to read the newsletter</p>
+          <a href="${featured.pdf}" target="_blank" rel="noopener" class="btn btn-gold">
+            <i class="fas fa-file-pdf"></i> Open Newsletter
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  // Past issues list (skip featured)
   list.innerHTML = CALUNAH_CONFIG.newsletters.map((n, i) => `
-    <div class="issue-item" data-aos="fade-right" data-aos-delay="${i * 60}">
-      <div class="issue-icon"><i class="fas fa-newspaper"></i></div>
+    <div class="issue-item${n.featured ? ' issue-featured' : ''}" data-aos="fade-right" data-aos-delay="${i * 60}">
+      <div class="issue-icon">${n.featured ? '<i class="fas fa-star"></i>' : '<i class="fas fa-newspaper"></i>'}</div>
       <div class="issue-info">
-        <div class="issue-title">${n.title}</div>
+        <div class="issue-title">${n.title}${n.featured ? ' <span class="issue-new-tag">NEW</span>' : ''}</div>
         <div class="issue-date"><i class="fas fa-calendar-alt"></i> ${n.date}</div>
         <div class="issue-preview">${n.preview}</div>
       </div>
-      <a href="${n.pdf}" target="_blank" rel="noopener" class="issue-download" title="Download PDF">
+      <a href="${n.pdf}" target="_blank" rel="noopener" class="issue-download" title="Read / Download PDF">
         <i class="fas fa-file-pdf"></i>
         <span>Read</span>
       </a>
@@ -2022,6 +2068,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initMembershipForm();
   initRecurringMembership();
   initNLSignupForm();
+
+  /* Event spotlight dismiss */
+  const spotlightClose = qs('#spotlight-close');
+  const spotlight = qs('#event-spotlight');
+  if (spotlightClose && spotlight) {
+    spotlightClose.addEventListener('click', () => {
+      spotlight.classList.add('hidden');
+    });
+  }
   initDonation();
   updateSocialLinks();
   updateYear();
