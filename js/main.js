@@ -334,6 +334,20 @@ const CALUNAH_CONFIG = {
       upcoming:    true
     },
     {
+      id:          'backpack2025',
+      title:       'Backpack Drive Community Service',
+      date:        'October 26, 2025',
+      time:        'All Day',
+      location:    'Multiple Chapters — Nationwide',
+      flyer:       'images/events/backpack2025.webp',
+      tags:        ['Community Service', 'Education', 'Chapters'],
+      description: 'CALUNAH launched a Backpack Drive Community Service event just before school opened, taking place simultaneously across all chapters on the same day — reaching out a hand to children in need across different states.',
+      fullInfo:    'It was a great success where hundreds and hundreds of backpacks were given to different communities. A smile was surely put on many children\'s faces, and a burden lifted upon many parents getting ready for back to school. The event took place simultaneously through the participation of all chapters, on the same day, in different states — uniting CALUNAH in one powerful act of service.',
+      ticketUrl:   '',
+      ctaLabel:    'View Photos',
+      upcoming:    false
+    },
+    {
       id:          'convention2025',
       title:       'CALUNAH National Convention 2025',
       date:        'October 10, 2025',
@@ -365,18 +379,21 @@ const CALUNAH_CONFIG = {
 
   /* ---------- Gallery ---------- */
   gallery: [
-    { src: 'images/campus1.jpg',                 caption: 'UAH Main Campus',            cat: 'campus'    },
-    { src: 'images/campus2.jpg',                 caption: 'Academic Halls of UAH',      cat: 'campus'    },
-    { src: 'images/campus3.jpg',                 caption: 'UAH Grounds & Gardens',      cat: 'campus'    },
-    { src: 'images/campus4.jpg',                 caption: 'UAH Campus Life',            cat: 'campus'    },
-    { src: 'images/events/gala2024.jpg',         caption: 'Annual Gala 2024',           cat: 'events'    },
-    { src: 'images/events/convention2025.jpg',   caption: 'National Convention 2025',   cat: 'events'    },
-    { src: 'images/events/scholarship2026.jpg',  caption: 'Scholarship Ceremony',       cat: 'events'    },
-    { src: 'images/gallery/community1.jpg',      caption: 'Community Outreach',         cat: 'community' },
-    { src: 'images/gallery/community2.jpg',      caption: 'Youth Mentorship Program',   cat: 'community' },
-    { src: 'images/gallery/community3.jpg',      caption: 'Disaster Relief Effort',     cat: 'community' },
-    { src: 'images/gallery/leadership1.jpg',     caption: 'Leadership Summit 2024',     cat: 'leadership'},
-    { src: 'images/gallery/leadership2.jpg',     caption: 'Board of Directors 2025',    cat: 'leadership'}
+    { src: 'images/campus/main-building.jpg',    caption: 'Auditorium Michel Toussaint — UNAH',  cat: 'campus'    },
+    { src: 'images/campus/aerial-2.jpg',         caption: 'UNAH Campus — Aerial Skyview',        cat: 'campus'    },
+    { src: 'images/campus/aerial-1.jpg',         caption: 'UNAH Campus — Aerial View',           cat: 'campus'    },
+    { src: 'images/campus/auditorium.jpg',       caption: 'UNAH Campus — Academic Building',     cat: 'campus'    },
+    { src: 'images/campus/campus-path.jpg',      caption: 'UNAH Campus — Pathways',              cat: 'campus'    },
+    { src: 'images/community/backpack-cover.webp', caption: 'Backpack Drive 2025 — Community Service', cat: 'community' },
+    { src: 'images/community/backpack-1.webp',   caption: 'Backpack Drive 2025 — Giving Backpacks to Children',  cat: 'community' },
+    { src: 'images/community/backpack-2.webp',   caption: 'Backpack Drive 2025 — Chapter Volunteers',            cat: 'community' },
+    { src: 'images/community/backpack-3.webp',   caption: 'Backpack Drive 2025 — Smiles Across Communities',     cat: 'community' },
+    { src: 'images/community/backpack-4.webp',   caption: 'Backpack Drive 2025 — Hundreds of Backpacks Given',   cat: 'community' },
+    { src: 'images/community/backpack-5.webp',   caption: 'Backpack Drive 2025 — Nationwide Chapters United',    cat: 'community' },
+    { src: 'images/community/backpack-6.jpg',    caption: 'Backpack Drive 2025 — Back to School Ready',          cat: 'community' },
+    { src: 'images/community/backpack-7.webp',   caption: 'Backpack Drive 2025 — Impact in the Community',       cat: 'community' },
+    { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds — High Tea Fundraiser 2026',  cat: 'events'    },
+    { src: 'images/events/backpack2025.webp',    caption: 'Backpack Drive Community Service 2025',       cat: 'events'    },
   ],
 
   /* ---------- Videos ---------- */
@@ -840,12 +857,13 @@ function buildGallery() {
   const grid = qs('#gallery-grid');
   if (!grid) return;
 
-  // Check which images actually exist by attempting to load them
+  // Filter out known placeholder paths that have no real files
   const existingItems = CALUNAH_CONFIG.gallery.filter(item => {
-    // Only include items with real paths (not placeholder images that don't exist)
-    return !item.src.startsWith('images/campus') &&
-           !item.src.startsWith('images/gallery/') &&
-           !item.src.startsWith('images/events/');
+    return !item.src.startsWith('images/campus1') &&
+           !item.src.startsWith('images/campus2') &&
+           !item.src.startsWith('images/campus3') &&
+           !item.src.startsWith('images/campus4') &&
+           !item.src.startsWith('images/gallery/');
   });
 
   if (existingItems.length === 0) {
