@@ -16,7 +16,7 @@ const CALUNAH_CONFIG = {
     facebook:  'https://www.facebook.com/calunah',
     instagram: 'https://www.instagram.com/calunah',
     twitter:   'https://twitter.com/calunah',
-    youtube:   'https://www.youtube.com/@calunah'
+    youtube:   'https://www.youtube.com/channel/UCGtzefrtPJdErdghKKA2E8g'
   },
 
   /* ---------- Hero Stats ---------- */
@@ -282,9 +282,9 @@ const CALUNAH_CONFIG = {
     facebookUrl:  'https://www.facebook.com/calunah/live',
     instagramUrl: 'https://www.instagram.com/calunah/',
     nextStream: {
-      date:     'June 15, 2026',
-      time:     '7:00 PM EDT',
-      title:    'CALUNAH Annual General Assembly 2026',
+      date:     'June 21, 2026',
+      time:     '5:30 PM EDT',
+      title:    'Blooming Minds: High Tea Fundraiser 2026 — LIVE Broadcast',
       platform: 'YouTube Live'
     }
   },
@@ -410,17 +410,12 @@ const CALUNAH_CONFIG = {
 
   /* ---------- Videos ---------- */
   featuredVideo: {
-    youtubeId:   'dQw4w9WgXcQ',
-    title:       'Welcome to CALUNAH: Who We Are',
-    description: 'Discover the mission, history, and impact of the Club des Alumni de l\'Université Adventiste d\'Haïti.'
+    youtubeId:   'DFaJBNtm8jg',
+    title:       'CALUNAH Saturday Giving 2025',
+    description: 'Relive our 2025 Saturday Giving fundraiser broadcast live — raising funds for student scholarships, campus renovation, monitors, computers, and essential resources for UNAH students.'
   },
   videos: [
-    { youtubeId: 'dQw4w9WgXcQ', title: 'CALUNAH Annual Gala Highlight 2024',      description: 'Relive the magic of our 2024 Annual Gala & Awards Night.'              },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Scholarship Awards Ceremony 2023',         description: 'Celebrating our 2023 scholarship recipients and their achievements.'   },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'CALUNAH Convention Recap 2023',            description: 'Highlights from the 2023 National Convention in Miami.'                 },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Community Outreach: Haiti Relief 2023',      description: 'Our teams on the ground delivering aid to earthquake-affected families.'},
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Message from the President 2025',          description: 'President\'s annual message to all CALUNAH members and supporters.'     },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Youth Mentorship Program Launch',          description: 'Launching our new mentorship program connecting alumni with UAH students.'}
+    { youtubeId: 'pPEFGn-W2s0', title: 'CALUNAH Saturday Giving Fundraiser 2024', description: 'Our Saturday Giving event broadcast live on YouTube & Facebook — November 26, 2024.' }
   ],
 
   /* ---------- e-Newsletter Issues ---------- */
@@ -1000,10 +995,65 @@ function initLightbox() {
    12. VIDEOS BUILDER
    ============================================================ */
 function buildVideos() {
-  // Video grid is currently replaced with a "Coming Soon" panel in HTML.
-  // This function is a no-op until real YouTube IDs are added to CALUNAH_CONFIG.videos.
-  // To activate: replace the .videos-coming-soon HTML block with <div id="videos-grid"></div>
-  // and update CALUNAH_CONFIG.videos with real YouTube video IDs.
+  const fv    = CALUNAH_CONFIG.featuredVideo;
+  const vids  = CALUNAH_CONFIG.videos;
+  const chUrl = CALUNAH_CONFIG.social.youtube;
+
+  /* ── Featured video ── */
+  const featureEl = qs('#video-feature');
+  if (featureEl && fv && fv.youtubeId) {
+    featureEl.innerHTML = `
+      <div class="video-feature" data-aos="fade-up">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/${fv.youtubeId}?rel=0"
+            title="${fv.title}" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-feature-info">
+          <span class="section-badge gold"><i class="fab fa-youtube"></i> Latest Video</span>
+          <h3>${fv.title}</h3>
+          <p>${fv.description}</p>
+          <a href="https://www.youtube.com/watch?v=${fv.youtubeId}" target="_blank" rel="noopener" class="btn btn-youtube">
+            <i class="fab fa-youtube"></i> Watch on YouTube
+          </a>
+        </div>
+      </div>`;
+  }
+
+  /* ── Past recordings grid ── */
+  const gridEl = qs('#videos-grid');
+  if (gridEl && vids && vids.length) {
+    gridEl.innerHTML = vids.map((v, i) => `
+      <div class="video-card" data-aos="fade-up" data-aos-delay="${i * 120}">
+        <div class="video-thumb">
+          <iframe src="https://www.youtube.com/embed/${v.youtubeId}?rel=0"
+            title="${v.title}" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-card-info">
+          <h4>${v.title}</h4>
+          <span><i class="fab fa-youtube"></i> ${v.description}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ── Subscribe banner ── */
+  const subEl = qs('#video-subscribe');
+  if (subEl) {
+    subEl.innerHTML = `
+      <div class="video-sub-banner" data-aos="fade-up">
+        <div class="vsb-icon"><i class="fab fa-youtube"></i></div>
+        <div class="vsb-text">
+          <h4>More Videos Coming Soon</h4>
+          <p>Subscribe to our channel and turn on notifications — be the first to watch event replays, live streams, and announcements.</p>
+        </div>
+        <a href="${chUrl}?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-youtube">
+          <i class="fab fa-youtube"></i> Subscribe to Our Channel
+        </a>
+      </div>`;
+  }
 }
 
 

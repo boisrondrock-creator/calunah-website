@@ -497,8 +497,17 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .live-admin-note i{color:var(--gold);margin-top:.15rem;flex-shrink:0}
 .live-admin-note p{color:rgba(255,255,255,.6);margin:0;line-height:1.6}
 .live-admin-note code{background:rgba(0,0,0,.3);padding:.1rem .35rem;border-radius:4px;font-size:.78rem;color:var(--gold-light)}
+/* ── Subscribe banner & section label ── */
+.videos-section-label{margin:0 0 1.5rem}
+.vsl-title{font-family:var(--font-head);font-size:1.15rem;color:rgba(255,255,255,.7);font-weight:700}
+.vsl-title i{color:#ff0000;margin-right:.45rem}
+.video-sub-banner{display:flex;align-items:center;gap:2rem;background:rgba(255,0,0,.06);border:1px solid rgba(255,0,0,.18);border-radius:var(--radius-lg);padding:1.75rem 2rem;margin-top:2.5rem}
+.vsb-icon{font-size:2.6rem;color:#ff0000;flex-shrink:0;line-height:1}
+.vsb-text{flex:1}
+.vsb-text h4{font-family:var(--font-head);font-size:1.15rem;color:var(--white);margin-bottom:.3rem}
+.vsb-text p{color:rgba(255,255,255,.55);font-size:.88rem;line-height:1.6}
 /* Featured video */
-.video-feature{display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:center;margin-bottom:4rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-lg);overflow:hidden}
+.video-feature{display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:center;margin-bottom:3rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius-lg);overflow:hidden}
 .video-frame{position:relative;aspect-ratio:16/9}
 .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 .video-feature-info{padding:2.5rem 2.5rem 2.5rem 0}
@@ -896,6 +905,8 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .timeline::before{left:20px}
 }
 @media(max-width:640px){
+  /* Subscribe banner stack on mobile */
+  .video-sub-banner{flex-direction:column;text-align:center}
   /* Spotlight responsive */
   .spotlight-inner{flex-direction:column;align-items:flex-start;gap:.75rem}
   .spotlight-details strong{font-size:.85rem;white-space:normal}
