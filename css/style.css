@@ -815,33 +815,12 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
   .donate-grid{grid-template-columns:repeat(2,1fr)}
   .donate-ways{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:1000px){
-  .about-grid,.contact-grid,.newsletter-layout{grid-template-columns:1fr;gap:3rem}
-  .about-collage{max-width:540px;margin:0 auto}
-  .events-grid,.work-grid,.videos-grid{grid-template-columns:1fr 1fr}
-  .platforms-grid{grid-template-columns:1fr}
-  .video-feature{grid-template-columns:1fr}
-  .video-feature-info{padding:1.75rem}
-  .founders-block{grid-template-columns:1fr;text-align:center}
-  .founders-photo-wrap{margin:0 auto}
-  .founders-quote{text-align:left}
-  .tl-item{grid-template-columns:48px 1fr}
-  .tl-dot{grid-column:1}
-  .tl-card{grid-column:2}
-  .tl-item.right{direction:ltr}
-  .timeline::before{left:24px}
-  .donor-tiers{grid-template-columns:1fr}
-}
-@media(max-width:960px){
+  /* ── Nav: show hamburger on all screens ≤ 1200px ── */
   .nav-hamburger{display:flex}
   .lang-switcher{margin-left:auto;margin-right:.6rem}
-
-  /* ── Mobile slide-in panel — fully transparent glass ── */
   .nav-links{
     position:fixed;top:0;right:0;
     width:min(320px,95vw);height:100vh;
-    /* Transparent with strong blur for readability */
     background:rgba(5,18,8,0.18);
     -webkit-backdrop-filter:blur(28px) saturate(1.4);
     backdrop-filter:blur(28px) saturate(1.4);
@@ -855,15 +834,12 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
     z-index:1001
   }
   .nav-links.open{transform:translateX(0)}
-
   .nav-item{width:100%;position:relative}
   .nav-link{
     width:100%;padding:.85rem 1rem;font-size:.9rem;border-radius:8px;
     color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.7)
   }
   .nav-link::after{display:none}
-
-  /* ── Mobile accordion dropdown — expands inline, never goes off-screen ── */
   .nav-dropdown{
     position:static !important;
     top:auto !important;left:auto !important;
@@ -894,8 +870,26 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   }
   .nav-dd-item i{margin-right:.5rem;color:var(--gold);font-size:.7rem}
   .nav-dd-item:hover{color:var(--gold);background:rgba(201,162,39,.08)}
-
   .btn-nav-donate{margin:.5rem 0 0;width:100%;text-align:center;justify-content:center}
+}
+@media(max-width:1000px){
+  .about-grid,.contact-grid,.newsletter-layout{grid-template-columns:1fr;gap:3rem}
+  .about-collage{max-width:540px;margin:0 auto}
+  .events-grid,.work-grid,.videos-grid{grid-template-columns:1fr 1fr}
+  .platforms-grid{grid-template-columns:1fr}
+  .video-feature{grid-template-columns:1fr}
+  .video-feature-info{padding:1.75rem}
+  .founders-block{grid-template-columns:1fr;text-align:center}
+  .founders-photo-wrap{margin:0 auto}
+  .founders-quote{text-align:left}
+  .tl-item{grid-template-columns:48px 1fr}
+  .tl-dot{grid-column:1}
+  .tl-card{grid-column:2}
+  .tl-item.right{direction:ltr}
+  .timeline::before{left:24px}
+  .donor-tiers{grid-template-columns:1fr}
+}
+@media(max-width:960px){
   .committee-grid,.chapters-grid{grid-template-columns:repeat(2,1fr)}
   .tl-item{grid-template-columns:40px 1fr;gap:0 1rem}
   .tl-dot{width:40px;height:40px}
