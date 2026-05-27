@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CALUNAH — Club des Alumni de l'Université Adventiste d'Haïti. A 501(c)(3) nonprofit founded in 1993 uniting UNAH graduates worldwide.">
+  <meta property="og:title"       content="CALUNAH | Alumni de l'Université Adventiste d'Haïti">
+  <meta property="og:description" content="Founded 1993 · Excellence · Unity · Legacy · 501(c)(3) Nonprofit">
+  <meta property="og:image"       content="images/logo.png">
+  <title>CALUNAH | Club des Alumni de l'Université Adventiste d'Haïti</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══ SPLASH ══════════════════════════════════════════ -->
+<div id="splash" class="splash-screen">
+  <canvas id="particles-canvas"></canvas>
+  <div class="splash-content">
+    <div class="splash-logo-ring">
+      <img src="images/logo.png" alt="CALUNAH Logo" class="splash-logo" id="splash-logo">
+    </div>
+    <div class="splash-text">
+      <h1 class="splash-title">CALUNAH</h1>
+      <p class="splash-sub">Club des Alumni de l'Université Adventiste d'Haïti</p>
+      <p class="splash-tagline">Founded 1993 &nbsp;·&nbsp; Excellence &nbsp;·&nbsp; Unity &nbsp;·&nbsp; Legacy</p>
+      <p class="splash-501c3"><i class="fas fa-certificate"></i> 501(c)(3) Nonprofit Organization</p>
+    </div>
+    <div class="splash-loader">
+      <div class="splash-progress-track"><div class="splash-progress-fill" id="splash-progress"></div></div>
+    </div>
+    <button class="splash-btn" id="splash-btn"><span>Enter Website</span><i class="fas fa-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand">
+      <img src="images/logo.png" alt="CALUNAH" class="nav-logo">
+      <div>
+        <span class="nav-name">CALUNAH</span>
+        <span class="nav-tagline">Alumni UNAH · 501(c)(3)</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" id="nav-links">
+
+      <li class="nav-item"><a href="#hero" class="nav-link"><i class="fas fa-home nav-icon"></i><span data-i18n="nav.home">Home</span></a></li>
+
+      <!-- ABOUT — DROPDOWN -->
+      <li class="nav-item has-dropdown">
+        <a href="#about" class="nav-link nav-has-arrow">
+          <i class="fas fa-info-circle nav-icon"></i><span data-i18n="nav.about">About</span>
+          <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-dropdown">
+          <li><a href="#about"     class="nav-dd-item"><i class="fas fa-heart"></i><span data-i18n="nav.dd.mission">Mission &amp; Values</span></a></li>
+          <li><a href="#history"   class="nav-dd-item"><i class="fas fa-scroll"></i><span data-i18n="nav.dd.history">Our History</span></a></li>
+          <li><a href="#committee" class="nav-dd-item"><i class="fas fa-users-cog"></i><span data-i18n="nav.dd.committee">Executive Committee</span></a></li>
+          <li><a href="#chapters"  class="nav-dd-item"><i class="fas fa-map-marker-alt"></i><span data-i18n="nav.dd.chapters">Chapter Presidents</span></a></li>
+          <li><a href="#donors"    class="nav-dd-item"><i class="fas fa-hand-holding-heart"></i><span data-i18n="nav.dd.donors">Donors &amp; Partners</span></a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item"><a href="#our-work"    class="nav-link"><i class="fas fa-hands-helping nav-icon"></i><span data-i18n="nav.work">Our Work</span></a></li>
+      <li class="nav-item"><a href="#events"      class="nav-link"><i class="fas fa-calendar-alt nav-icon"></i><span data-i18n="nav.events">Events</span></a></li>
+      <li class="nav-item"><a href="#gallery"     class="nav-link"><i class="fas fa-images nav-icon"></i><span data-i18n="nav.gallery">Gallery</span></a></li>
+      <li class="nav-item"><a href="#videos"      class="nav-link"><i class="fas fa-video nav-icon"></i><span data-i18n="nav.videos">Videos</span></a></li>
+      <li class="nav-item"><a href="#enewsletter" class="nav-link"><i class="fas fa-newspaper nav-icon"></i><span data-i18n="nav.newsletter">e-Newsletter</span></a></li>
+      <li class="nav-item"><a href="#membership"  class="nav-link"><i class="fas fa-id-card nav-icon"></i><span data-i18n="nav.membership">Membership</span></a></li>
+      <li class="nav-item"><a href="#contact"     class="nav-link"><i class="fas fa-envelope nav-icon"></i><span data-i18n="nav.contact">Contact</span></a></li>
+      <li class="nav-item"><a href="#donate"      class="nav-link btn-nav-donate"><i class="fas fa-heart"></i><span data-i18n="nav.donate">Donate</span></a></li>
+    </ul>
+
+    <div class="lang-switcher" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="en" title="English">EN</button>
+      <button class="lang-btn" data-lang="fr" title="Français">FR</button>
+      <button class="lang-btn" data-lang="kr" title="Kreyòl">KR</button>
+    </div>
+
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ HERO ════════════════════════════════════════════ -->
+<section id="hero" class="hero">
+  <div class="hero-slides" id="hero-slides">
+    <div class="hero-slide active" style="background-image:url('images/campus/main-building.jpg')"></div>
+    <div class="hero-slide"        style="background-image:url('images/campus/aerial-2.jpg')"></div>
+    <div class="hero-slide"        style="background-image:url('images/campus/aerial-1.jpg')"></div>
+    <div class="hero-slide"        style="background-image:url('images/campus/auditorium.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-star"></i>&nbsp; Est. 1993 &nbsp;<i class="fas fa-star"></i></div>
+    <h1 class="hero-title">
+      <span class="hero-main">CALUNAH</span>
+      <span class="hero-sub">Club des Alumni de<br>l'Université Adventiste d'Haïti</span>
+    </h1>
+    <p class="hero-desc" data-i18n="hero.desc">Uniting UNAH graduates across the globe through shared faith,<br>fellowship, and an unwavering commitment to excellence.</p>
+    <div class="hero-501"><i class="fas fa-certificate"></i> 501(c)(3) Nonprofit &nbsp;·&nbsp; <i class="fas fa-globe"></i> Global Community</div>
+    <div class="hero-btns">
+      <a href="#about"      class="btn btn-gold"        data-i18n="hero.btn1">Our Story</a>
+      <a href="#membership" class="btn btn-ghost"       data-i18n="hero.btn2">Join CALUNAH</a>
+      <a href="#donate"     class="btn btn-donate-hero"><i class="fas fa-heart"></i><span data-i18n="hero.btn3"> Donate</span></a>
+    </div>
+  </div>
+  <div class="hero-nav">
+    <button class="hero-arrow" id="hero-prev"><i class="fas fa-chevron-left"></i></button>
+    <div class="hero-dots" id="hero-dots">
+      <button class="hdot active"></button><button class="hdot"></button>
+      <button class="hdot"></button><button class="hdot"></button>
+    </div>
+    <button class="hero-arrow" id="hero-next"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <a href="#stats" class="scroll-cue">
+    <div class="scroll-mouse"><div class="scroll-wheel"></div></div><span>Scroll</span>
+  </a>
+</section>
+
+<!-- ══ STATS ═══════════════════════════════════════════ -->
+<section id="stats" class="stats-ribbon">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat" data-aos="zoom-in" data-aos-delay="0">
+        <i class="fas fa-calendar-alt stat-icon"></i>
+        <div class="stat-num" data-target="32">0</div><div class="stat-lbl" data-i18n="stats.years">Years Strong</div>
+      </div>
+      <div class="stat" data-aos="zoom-in" data-aos-delay="100">
+        <i class="fas fa-user-graduate stat-icon"></i>
+        <div class="stat-num" data-target="5000">0</div><div class="stat-lbl" data-i18n="stats.alumni">Alumni Worldwide</div>
+      </div>
+      <div class="stat" data-aos="zoom-in" data-aos-delay="200">
+        <i class="fas fa-globe-americas stat-icon"></i>
+        <div class="stat-num" data-target="20">0</div><div class="stat-lbl" data-i18n="stats.countries">Countries</div>
+      </div>
+      <div class="stat" data-aos="zoom-in" data-aos-delay="300">
+        <i class="fas fa-hand-holding-usd stat-icon"></i>
+        <div class="stat-num" data-target="500">0</div><div class="stat-lbl" data-i18n="stats.scholarships">Scholarships Awarded</div>
+      </div>
+      <div class="stat" data-aos="zoom-in" data-aos-delay="400">
+        <i class="fas fa-calendar-check stat-icon"></i>
+        <div class="stat-num" data-target="12">0</div><div class="stat-lbl" data-i18n="stats.events">Annual Events</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ════════════════════════════════════════════ -->
+<section id="about" class="section about-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge" data-i18n="about.badge">Who We Are</span>
+      <h2 class="section-title" data-i18n="about.title">About CALUNAH</h2>
+      <div class="divider"><span></span><i class="fas fa-graduation-cap"></i><span></span></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text" data-aos="fade-right" data-aos-delay="100">
+        <div class="nonprofit-seal">
+          <i class="fas fa-certificate"></i>
+          <div><strong>501(c)(3) Nonprofit Organization</strong><small>All donations are tax-deductible to the extent permitted by law</small></div>
+        </div>
+        <h3 class="about-lead-heading" data-i18n="about.missionHead">Our Mission</h3>
+        <p class="about-lead"><strong>CALUNAH</strong>, the <em>Club des Alumni de l'Université Adventiste d'Haïti</em>, is the official alumni association of <strong>UNAH</strong>, founded in 1993 to unite graduates across generations, professions, and continents.</p>
+        <p>We are devoted to fostering lifelong bonds among UNAH alumni, advancing the university's Christian mission, and contributing to Haiti's development through academic excellence, social responsibility, and spiritual growth.</p>
+        <p>From UNAH's lush campus in Carrefour to alumni chapters spanning multiple continents, CALUNAH bridges our shared past with a brighter future for Haiti, for UNAH, and for every graduate who carries the flame of excellence.</p>
+        <div class="values-grid">
+          <div class="value-card"><div class="value-icon"><i class="fas fa-cross"></i></div><h4 data-i18n="about.val.faith">Faith</h4><p data-i18n="about.val.faith.desc">Grounded in Seventh-day Adventist Christian values and principles</p></div>
+          <div class="value-card"><div class="value-icon"><i class="fas fa-handshake"></i></div><h4 data-i18n="about.val.unity">Unity</h4><p data-i18n="about.val.unity.desc">Connecting alumni across generations, professions, and continents</p></div>
+          <div class="value-card"><div class="value-icon"><i class="fas fa-award"></i></div><h4 data-i18n="about.val.excellence">Excellence</h4><p data-i18n="about.val.excellence.desc">Upholding UNAH's legacy of academic and professional achievement</p></div>
+          <div class="value-card"><div class="value-icon"><i class="fas fa-heart"></i></div><h4 data-i18n="about.val.service">Service</h4><p data-i18n="about.val.service.desc">Giving back to Haiti and empowering the next generation of students</p></div>
+        </div>
+        <div class="about-actions">
+          <a href="#membership" class="btn btn-primary" data-i18n="about.btn1">Become a Member</a>
+          <a href="#history"    class="btn btn-outline" data-i18n="about.btn2">Our History</a>
+        </div>
+      </div>
+      <div class="about-collage" data-aos="fade-left" data-aos-delay="200">
+
+        <!-- Main hero campus photo — Auditorium Michel Toussaint -->
+        <div class="collage-main campus-lb-trigger" data-lb-group="campus" data-lb-index="0">
+          <img src="images/campus/main-building.jpg" alt="Auditorium Michel Toussaint at UNAH">
+          <div class="collage-badge"><span class="cb-num">30+</span><span class="cb-lbl">Years of Excellence</span></div>
+          <div class="collage-view-btn"><i class="fas fa-expand-alt"></i> View Photos</div>
+        </div>
+
+        <!-- Campus photo strip — 4 thumbnails -->
+        <div class="campus-strip">
+          <div class="campus-thumb campus-lb-trigger" data-lb-group="campus" data-lb-index="1">
+            <img src="images/campus/aerial-2.jpg" alt="UNAH Campus Skyview — UNAH written on grass">
+            <div class="campus-thumb-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="campus-thumb campus-lb-trigger" data-lb-group="campus" data-lb-index="2">
+            <img src="images/campus/aerial-1.jpg" alt="UNAH Campus Aerial View">
+            <div class="campus-thumb-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="campus-thumb campus-lb-trigger" data-lb-group="campus" data-lb-index="3">
+            <img src="images/campus/auditorium.jpg" alt="UNAH Campus Building">
+            <div class="campus-thumb-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="campus-thumb campus-lb-trigger" data-lb-group="campus" data-lb-index="4">
+            <img src="images/campus/campus-path.jpg" alt="UNAH Campus Pathway">
+            <div class="campus-thumb-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+        </div>
+
+        <!-- Lightbox data -->
+        <div id="campus-lb-data" style="display:none"
+          data-images='[
+            {"src":"images/campus/main-building.jpg","cap":"Auditorium Michel Toussaint — UNAH, Carrefour, Haïti"},
+            {"src":"images/campus/aerial-2.jpg","cap":"UNAH Campus — Aerial Skyview (UNAH written on grass)"},
+            {"src":"images/campus/aerial-1.jpg","cap":"UNAH Campus — Aerial View of Grounds"},
+            {"src":"images/campus/auditorium.jpg","cap":"UNAH Campus — Academic Building"},
+            {"src":"images/campus/campus-path.jpg","cap":"UNAH Campus — Beautiful Campus Pathways"}
+          ]'>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OUR HISTORY (TIMELINE) ══════════════════════════ -->
+<section id="history" class="section history-section">
+  <div class="section-bg-pattern"></div>
+  <div class="container">
+    <div class="section-head light" data-aos="fade-up">
+      <span class="section-badge gold" data-i18n="history.badge">Our Story</span>
+      <h2 class="section-title white" data-i18n="history.title">Our History</h2>
+      <div class="divider light"><span></span><i class="fas fa-scroll"></i><span></span></div>
+      <p class="section-sub white" data-i18n="history.sub">Three decades of excellence, unity, and service to Haiti and the world</p>
+    </div>
+    <div class="timeline" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="tl-item left">
+        <div class="tl-dot"><i class="fas fa-flag"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">1993</div>
+          <h4>Foundation</h4>
+          <p>CALUNAH was founded by passionate graduates of the Université Adventiste d'Haïti committed to maintaining bonds of fellowship and giving back to their alma mater. The organization was established with a vision to unite every UNAH graduate across Haiti and the diaspora.</p>
+        </div>
+      </div>
+
+      <div class="tl-item right">
+        <div class="tl-dot"><i class="fas fa-star"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">1995</div>
+          <h4>First Annual Reunion</h4>
+          <p>CALUNAH held its inaugural annual reunion event, bringing together dozens of UNAH graduates for a weekend of fellowship, celebration, and planning for the future of the association.</p>
+        </div>
+      </div>
+
+      <div class="tl-item left">
+        <div class="tl-dot"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">1998</div>
+          <h4>Florida Chapter Founded</h4>
+          <p>As the Haitian diaspora grew in South Florida, CALUNAH established its first international chapter in Miami, FL, becoming a hub for alumni networking and community events in the United States.</p>
+        </div>
+      </div>
+
+      <div class="tl-item right">
+        <div class="tl-dot"><i class="fas fa-graduation-cap"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">2003</div>
+          <h4>Scholarship Program Launched</h4>
+          <p>CALUNAH officially launched its scholarship program, awarding its first grants to deserving UNAH students. This program has since grown into one of our most impactful initiatives.</p>
+        </div>
+      </div>
+
+      <div class="tl-item left">
+        <div class="tl-dot"><i class="fas fa-globe-americas"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">2007</div>
+          <h4>National Expansion</h4>
+          <p>New chapters were established across the United States, including New York, New England, and the DMV region, reflecting the growing reach of the UNAH alumni community across the American diaspora.</p>
+        </div>
+      </div>
+
+      <div class="tl-item right">
+        <div class="tl-dot"><i class="fas fa-certificate"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">2010</div>
+          <h4>501(c)(3) Status Obtained</h4>
+          <p>CALUNAH was officially recognized as a 501(c)(3) nonprofit organization by the IRS, enabling tax-deductible donations and unlocking new funding opportunities to amplify our mission.</p>
+        </div>
+      </div>
+
+      <div class="tl-item left">
+        <div class="tl-dot"><i class="fas fa-hands-helping"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">2010</div>
+          <h4>Haiti Earthquake Relief</h4>
+          <p>Following the devastating January 2010 earthquake, CALUNAH mobilized alumni worldwide to raise emergency relief funds and coordinate support for UNAH and the broader Haitian community.</p>
+        </div>
+      </div>
+
+      <div class="tl-item right">
+        <div class="tl-dot"><i class="fas fa-laptop"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">2015</div>
+          <h4>Digital Transformation</h4>
+          <p>CALUNAH launched its official website and social media presence, dramatically expanding our reach and ability to connect with alumni around the world in real time.</p>
+        </div>
+      </div>
+
+      <div class="tl-item left">
+        <div class="tl-dot"><i class="fas fa-virus-slash"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">2020</div>
+          <h4>Resilience Through COVID-19</h4>
+          <p>When the pandemic forced the world online, CALUNAH pivoted swiftly to virtual events, webinars, and digital networking, keeping our alumni family connected across all borders.</p>
+        </div>
+      </div>
+
+      <div class="tl-item right">
+        <div class="tl-dot"><i class="fas fa-birthday-cake"></i></div>
+        <div class="tl-card">
+          <div class="tl-year">2023</div>
+          <h4>30th Anniversary Celebration</h4>
+          <p>CALUNAH celebrated three decades of excellence with a landmark anniversary gala, honoring the founders, celebrating achievements, and charting a bold vision for the next 30 years.</p>
+        </div>
+      </div>
+
+      <div class="tl-item left">
+        <div class="tl-dot"><i class="fas fa-rocket"></i></div>
+        <div class="tl-card tl-present">
+          <div class="tl-year present">Today</div>
+          <h4>Growing Stronger</h4>
+          <p>With over 5,000 alumni in 20+ countries, CALUNAH continues to expand its scholarship programs, community impact, and global network, standing stronger than ever as we look toward a future filled with promise for Haiti and UNAH.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ OUR WORK ══════════════════════════════════════════ -->
+<section id="our-work" class="section ourwork-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge" data-i18n="work.badge">Making a Difference</span>
+      <h2 class="section-title" data-i18n="work.title">Our Work</h2>
+      <div class="divider"><span></span><i class="fas fa-hands-helping"></i><span></span></div>
+      <p class="section-sub" data-i18n="work.sub">Six pillars of impact, transforming lives in Haiti and across the diaspora</p>
+    </div>
+
+    <div class="work-impact-bar" data-aos="fade-up">
+      <div class="impact-stat"><span class="impact-num">$250K+</span><span class="impact-lbl">Scholarships Awarded</span></div>
+      <div class="impact-stat"><span class="impact-num">500+</span><span class="impact-lbl">Students Mentored</span></div>
+      <div class="impact-stat"><span class="impact-num">30+</span><span class="impact-lbl">Projects Completed</span></div>
+      <div class="impact-stat"><span class="impact-num">32</span><span class="impact-lbl">Years of Service</span></div>
+    </div>
+
+    <div class="work-grid" data-aos="fade-up" data-aos-delay="100">
+      <div class="work-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="work-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3>Scholarship Program</h3>
+        <p>We award annual scholarships to outstanding UNAH students demonstrating academic excellence and financial need. Our scholarships have helped hundreds of students achieve their educational dreams.</p>
+        <a href="#donate" class="work-link">Support a Student <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="work-card" data-aos="fade-up" data-aos-delay="80">
+        <div class="work-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>Mentorship Program</h3>
+        <p>Our alumni mentorship initiative connects experienced professionals with current UNAH students, providing career guidance, industry insights, and the support needed to thrive after graduation.</p>
+        <a href="#contact" class="work-link">Become a Mentor <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="work-card" data-aos="fade-up" data-aos-delay="160">
+        <div class="work-icon"><i class="fas fa-university"></i></div>
+        <h3>Campus Development</h3>
+        <p>We actively support the physical and academic development of UNAH's campus, from library resources and laboratory equipment to infrastructure projects that enhance the student experience.</p>
+        <a href="#donate" class="work-link">Invest in UNAH <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="work-card" data-aos="fade-up" data-aos-delay="240">
+        <div class="work-icon"><i class="fas fa-seedling"></i></div>
+        <h3>Community Service</h3>
+        <p>Rooted in Christian values of service, CALUNAH organizes annual community projects both in Haiti and within diaspora communities, from health fairs and food drives to disaster relief efforts.</p>
+        <a href="#contact" class="work-link">Volunteer <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="work-card" data-aos="fade-up" data-aos-delay="320">
+        <div class="work-icon"><i class="fas fa-briefcase"></i></div>
+        <h3>Professional Network</h3>
+        <p>Our global alumni network is an invaluable career resource. CALUNAH facilitates job connections, professional referrals, and networking events that open doors for UNAH graduates worldwide.</p>
+        <a href="#membership" class="work-link">Join the Network <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="work-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="work-icon"><i class="fas fa-music"></i></div>
+        <h3>Cultural Preservation</h3>
+        <p>We celebrate and preserve Haitian culture, history, and Adventist heritage through events, publications, and arts programs that connect our community to its roots while building pride for future generations.</p>
+        <a href="#events" class="work-link">See Our Events <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXECUTIVE COMMITTEE ══════════════════════════════ -->
+<section id="committee" class="section committee-section">
+  <div class="section-bg-pattern dark"></div>
+  <div class="container">
+    <div class="section-head light" data-aos="fade-up">
+      <span class="section-badge gold" data-i18n="committee.badge">Leadership</span>
+      <h2 class="section-title white" data-i18n="committee.title">Executive Committee</h2>
+      <div class="divider light"><span></span><i class="fas fa-users-cog"></i><span></span></div>
+      <p class="section-sub white" data-i18n="committee.sub">Dedicated leaders serving our alumni community with integrity and vision</p>
+    </div>
+    <div class="committee-grid" id="committee-grid" data-aos="fade-up" data-aos-delay="100">
+      <!-- Built dynamically from JS config -->
+    </div>
+    <div class="section-cta" data-aos="fade-up">
+      <p class="committee-note" data-i18n="committee.note">Committee members are elected by the CALUNAH membership for 2-year terms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CHAPTER PRESIDENTS ══════════════════════════════ -->
+<section id="chapters" class="section chapters-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge" data-i18n="chapters.badge">Around the World</span>
+      <h2 class="section-title" data-i18n="chapters.title">Chapter Presidents</h2>
+      <div class="divider"><span></span><i class="fas fa-map-marker-alt"></i><span></span></div>
+      <p class="section-sub" data-i18n="chapters.sub">CALUNAH chapters unite our alumni family across cities, countries, and continents</p>
+    </div>
+    <div class="chapters-grid" id="chapters-grid" data-aos="fade-up" data-aos-delay="100">
+      <!-- Built dynamically from JS config -->
+    </div>
+    <div class="section-cta" data-aos="fade-up">
+      <a href="#contact" class="btn btn-outline"><span data-i18n="chapters.cta">Start a Chapter in Your City</span> <i class="fas fa-plus-circle"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DONORS & PARTNERS ════════════════════════════════ -->
+<section id="donors" class="section donors-section">
+  <div class="section-bg-pattern"></div>
+  <div class="container">
+    <div class="section-head light" data-aos="fade-up">
+      <span class="section-badge gold" data-i18n="donors.badge">With Gratitude</span>
+      <h2 class="section-title white" data-i18n="donors.title">Donors &amp; Partners</h2>
+      <div class="divider light"><span></span><i class="fas fa-hand-holding-heart"></i><span></span></div>
+      <p class="section-sub white" data-i18n="donors.sub">We are deeply grateful to the generous individuals and organizations who make our mission possible</p>
+    </div>
+
+    <div class="donor-tiers" data-aos="fade-up" data-aos-delay="50">
+      <div class="donor-tier platinum">
+        <div class="tier-badge"><i class="fas fa-gem"></i> <span data-i18n="donors.platinum">Platinum Partners</span></div>
+        <div class="donor-names" id="donors-platinum"><!-- JS --></div>
+      </div>
+      <div class="donor-tier gold-tier">
+        <div class="tier-badge"><i class="fas fa-star"></i> <span data-i18n="donors.gold">Gold Partners</span></div>
+        <div class="donor-names" id="donors-gold"><!-- JS --></div>
+      </div>
+      <div class="donor-tier silver-tier">
+        <div class="tier-badge"><i class="fas fa-medal"></i> <span data-i18n="donors.silver">Silver Partners</span></div>
+        <div class="donor-names" id="donors-silver"><!-- JS --></div>
+      </div>
+    </div>
+
+    <div class="become-donor" data-aos="fade-up">
+      <div class="donor-cta-box">
+        <i class="fas fa-heart donor-cta-icon"></i>
+        <div>
+          <h3 data-i18n="donors.become">Become a Partner</h3>
+          <p>Your generosity directly funds scholarships, campus development, and community programs. As a 501(c)(3) nonprofit, all donations are <strong>tax-deductible</strong>.</p>
+        </div>
+        <a href="#donate" class="btn btn-gold" data-i18n="donors.cta.btn">Partner With Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EVENTS ════════════════════════════════════════════ -->
+<section id="events" class="section events-section">
+  <div class="section-bg-pattern"></div>
+  <div class="container">
+    <div class="section-head light" data-aos="fade-up">
+      <span class="section-badge gold" data-i18n="events.badge">Stay Connected</span>
+      <h2 class="section-title white" data-i18n="events.title">Upcoming Events</h2>
+      <div class="divider light"><span></span><i class="fas fa-calendar-star"></i><span></span></div>
+      <p class="section-sub white" data-i18n="events.sub">Enriching experiences that strengthen our alumni family. Submit your own event below.</p>
+    </div>
+    <div class="events-grid" id="events-grid" data-aos="fade-up" data-aos-delay="100"></div>
+    <div class="section-cta" data-aos="fade-up">
+      <a href="#contact" class="btn btn-gold-outline">Submit Your Event <i class="fas fa-plus-circle"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GALLERY ═══════════════════════════════════════════ -->
+<section id="gallery" class="section gallery-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge" data-i18n="gallery.badge">Moments We Cherish</span>
+      <h2 class="section-title" data-i18n="gallery.title">Photo Gallery</h2>
+      <div class="divider"><span></span><i class="fas fa-images"></i><span></span></div>
+      <p class="section-sub" data-i18n="gallery.sub">Celebrating togetherness, achievement, and our beautiful community</p>
+    </div>
+    <div class="gallery-filters" data-aos="fade-up" data-aos-delay="50">
+      <button class="gf-btn active" data-filter="all">All Photos</button>
+      <button class="gf-btn" data-filter="campus">Campus</button>
+      <button class="gf-btn" data-filter="events">Events</button>
+      <button class="gf-btn" data-filter="gala">Galas</button>
+      <button class="gf-btn" data-filter="community">Community</button>
+    </div>
+    <div class="gallery-grid" id="gallery-grid" data-aos="fade-up" data-aos-delay="100"></div>
+    <div class="section-cta" data-aos="fade-up">
+      <a href="#contact" class="btn btn-outline">Submit Photos <i class="fas fa-camera"></i></a>
+    </div>
+  </div>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lb-overlay" id="lb-overlay"></div>
+    <div class="lb-box">
+      <button class="lb-close" id="lb-close"><i class="fas fa-times"></i></button>
+      <button class="lb-prev"  id="lb-prev"><i class="fas fa-chevron-left"></i></button>
+      <button class="lb-next"  id="lb-next"><i class="fas fa-chevron-right"></i></button>
+      <img src="" alt="" id="lb-img" class="lb-img">
+      <p class="lb-caption" id="lb-caption"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VIDEOS + LIVESTREAM ══════════════════════════════ -->
+<section id="videos" class="section videos-section">
+  <div class="section-bg-pattern dark"></div>
+  <div class="container">
+    <div class="section-head light" data-aos="fade-up">
+      <span class="section-badge gold" data-i18n="videos.badge">Watch &amp; Relive</span>
+      <h2 class="section-title white" data-i18n="videos.title">Videos &amp; Live Stream</h2>
+      <div class="divider light"><span></span><i class="fab fa-youtube"></i><span></span></div>
+      <p class="section-sub white" data-i18n="videos.sub">Relive our events and catch us LIVE on your favorite platform</p>
+    </div>
+
+    <!-- ── LIVESTREAM BOX ── -->
+    <div class="livestream-box" id="livestream-box" data-aos="fade-up">
+      <div class="live-header">
+        <div class="live-indicator" id="live-indicator">
+          <span class="live-dot"></span>
+          <span id="live-status-text">LIVE NOW</span>
+        </div>
+        <h3 class="live-title" id="live-title">CALUNAH Live Stream</h3>
+        <div class="live-platform-tabs">
+          <button class="lp-tab active" data-platform="youtube"><i class="fab fa-youtube"></i> YouTube</button>
+          <button class="lp-tab"        data-platform="facebook"><i class="fab fa-facebook"></i> Facebook</button>
+          <button class="lp-tab"        data-platform="instagram"><i class="fab fa-instagram"></i> Instagram</button>
+        </div>
+      </div>
+
+      <!-- Active stream embed -->
+      <div class="live-embed-wrapper" id="live-embed-wrapper">
+        <div class="live-embed" id="live-embed">
+          <!-- Injected by JS when stream is active -->
+        </div>
+      </div>
+
+      <!-- No-stream placeholder -->
+      <div class="live-placeholder" id="live-placeholder">
+        <div class="live-ph-content">
+          <i class="fas fa-broadcast-tower live-ph-icon"></i>
+          <h4>No Live Stream at This Moment</h4>
+          <p class="live-next-label">Next Scheduled Stream:</p>
+          <div class="live-next-event" id="live-next-event">
+            <!-- JS fills this in -->
+          </div>
+          <div class="live-platform-links">
+            <p>Follow us to get notified when we go live:</p>
+            <div class="live-follow-btns">
+              <a href="https://www.youtube.com/@CALUNAH"  target="_blank" class="btn btn-youtube"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="https://www.facebook.com/CALUNAH"  target="_blank" class="btn btn-facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+              <a href="https://www.instagram.com/CALUNAH" target="_blank" class="btn btn-instagram"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /livestream-box -->
+
+    <!-- ── Videos Coming Soon ── -->
+    <div class="videos-coming-soon" data-aos="fade-up">
+      <div class="vcs-icon"><i class="fab fa-youtube"></i></div>
+      <h3>Videos Coming Soon</h3>
+      <p>We are currently uploading our event highlights, ceremony recordings, and community videos. Subscribe to our channel to be notified when they go live.</p>
+      <a href="https://www.youtube.com/@CALUNAH" target="_blank" rel="noopener" class="btn btn-youtube">
+        <i class="fab fa-youtube"></i> Subscribe on YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ E-NEWSLETTER ══════════════════════════════════════ -->
+<section id="enewsletter" class="section newsletter-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge" data-i18n="nl.badge">Stay Informed</span>
+      <h2 class="section-title" data-i18n="nl.title">e-Newsletter</h2>
+      <div class="divider"><span></span><i class="fas fa-newspaper"></i><span></span></div>
+      <p class="section-sub" data-i18n="nl.sub">Alumni news, success stories, scholarship updates, and upcoming events delivered right to your inbox</p>
+    </div>
+    <div class="newsletter-layout">
+      <!-- Signup -->
+      <div class="newsletter-signup-box" data-aos="fade-right" data-aos-delay="100">
+        <div class="nl-icon-wrap"><i class="fas fa-envelope-open-text"></i></div>
+        <h3 data-i18n="nl.signupTitle">Subscribe to Our Newsletter</h3>
+        <p>Join thousands of CALUNAH alumni receiving our quarterly newsletter packed with community news, scholarship announcements, and inspiring alumni stories.</p>
+        <form class="nl-form" id="nl-signup-form">
+          <div class="nl-row">
+            <input type="text"  name="firstName" placeholder="First Name" required>
+            <input type="text"  name="lastName"  placeholder="Last Name"  required>
+          </div>
+          <input type="email" name="email" placeholder="Your email address" required>
+          <select name="chapter">
+            <option value="">Select your chapter / location (optional)</option>
+            <option>New York Chapter</option>
+            <option>New England Chapter (CT · MA · RI)</option>
+            <option>DMV Chapter (DC · MD · VA)</option>
+            <option>South Florida Chapter</option>
+            <option>Central Florida Chapter</option>
+            <option>Georgia Chapter</option>
+            <option>Haiti (National)</option>
+            <option>Other / International</option>
+          </select>
+          <button type="submit" class="btn btn-primary btn-full">
+            <i class="fas fa-paper-plane"></i> Subscribe Now. It's Free!
+          </button>
+          <div class="nl-success-msg" id="nl-signup-success">
+            <i class="fas fa-check-circle"></i> Welcome! You're now subscribed to the CALUNAH Newsletter.
+          </div>
+        </form>
+        <p class="nl-privacy"><i class="fas fa-lock"></i> We respect your privacy. Unsubscribe at any time.</p>
+      </div>
+      <!-- Past Issues -->
+      <div class="newsletter-issues" data-aos="fade-left" data-aos-delay="100">
+        <h3 data-i18n="nl.issuesTitle">Past Issues</h3>
+        <p class="issues-sub" data-i18n="nl.issuesSub">Download and read our recent newsletters:</p>
+        <div class="issues-list" id="issues-list">
+          <!-- Built from JS config -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MEMBERSHIP ════════════════════════════════════════ -->
+<section id="membership" class="section membership-section">
+  <div class="section-bg-pattern"></div>
+  <div class="container">
+    <div class="section-head light" data-aos="fade-up">
+      <span class="section-badge gold" data-i18n="membership.badge">Join the Family</span>
+      <h2 class="section-title white" data-i18n="membership.title">Membership</h2>
+      <div class="divider light"><span></span><i class="fas fa-id-card"></i><span></span></div>
+      <p class="section-sub white" data-i18n="membership.sub">Be part of a global community of UNAH graduates committed to excellence, faith, and service</p>
+    </div>
+
+    <div class="membership-benefits-bar" data-aos="fade-up">
+      <div class="mb-benefit"><i class="fas fa-network-wired"></i><span>Global Network</span></div>
+      <div class="mb-benefit"><i class="fas fa-graduation-cap"></i><span>Scholarship Opportunities</span></div>
+      <div class="mb-benefit"><i class="fas fa-briefcase"></i><span>Career Resources</span></div>
+      <div class="mb-benefit"><i class="fas fa-newspaper"></i><span>Newsletter Access</span></div>
+      <div class="mb-benefit"><i class="fas fa-ticket-alt"></i><span>Event Discounts</span></div>
+      <div class="mb-benefit"><i class="fas fa-vote-yea"></i><span>Voting Rights</span></div>
+    </div>
+
+    <div class="membership-grid" id="membership-grid" data-aos="fade-up" data-aos-delay="100">
+      <!-- Built from JS config -->
+    </div>
+
+    <!-- ── Recurring Membership Widget ── -->
+    <div class="recurring-wrap" data-aos="fade-up" id="recurring-section">
+      <div class="recurring-header">
+        <div class="recurring-icon"><i class="fas fa-sync-alt"></i></div>
+        <div>
+          <h3 class="recurring-title">Become a Recurring Member</h3>
+          <p class="recurring-sub">Support CALUNAH automatically · Cancel anytime · 100% tax-deductible</p>
+        </div>
+      </div>
+
+      <!-- Billing toggle -->
+      <div class="recurring-toggle-wrap">
+        <button class="rec-period-btn active" data-period="monthly">Monthly</button>
+        <button class="rec-period-btn" data-period="yearly">Yearly <span class="rec-save-tag">Save 17%</span></button>
+      </div>
+
+      <!-- Amount selector -->
+      <div class="recurring-amounts">
+        <button class="rec-amt-btn" data-amount="25">$25</button>
+        <button class="rec-amt-btn active" data-amount="50">$50</button>
+        <button class="rec-amt-btn" data-amount="100">$100</button>
+        <button class="rec-amt-btn" data-amount="250">$250</button>
+        <div class="rec-custom-wrap">
+          <span class="rec-custom-dollar">$</span>
+          <input class="rec-custom-input" id="rec-custom" type="number" min="25" placeholder="Other" aria-label="Custom amount">
+        </div>
+      </div>
+
+      <p class="recurring-summary" id="recurring-summary">You'll be charged <strong>$50 / month</strong></p>
+
+      <!-- Payment CTAs -->
+      <div class="recurring-ctas">
+        <a class="btn rec-btn-zelle" id="rec-zelle-btn" href="https://www.zellepay.com" target="_blank" rel="noopener">
+          <span class="rec-zelle-z">Z</span> Pay with Zelle &nbsp;<span class="rec-phone">321-890-5764</span>
+        </a>
+        <a class="btn rec-btn-paypal" id="rec-paypal-btn" href="https://www.paypal.com/donate?business=donate%40calunah.org&currency_code=USD" target="_blank" rel="noopener">
+          <i class="fab fa-paypal"></i> Pay with PayPal
+        </a>
+        <a class="btn rec-btn-stripe" id="rec-stripe-btn" href="https://buy.stripe.com/your-link" target="_blank" rel="noopener">
+          <i class="fas fa-lock"></i> Pay with Card
+        </a>
+      </div>
+
+      <p class="recurring-note"><i class="fas fa-shield-alt"></i> Secure payment · 501(c)(3) · Cancel anytime by emailing us</p>
+    </div>
+
+    <!-- Membership Application Form -->
+    <div class="membership-form-wrap" data-aos="fade-up" id="membership-form-section">
+      <h3 class="mem-form-title"><i class="fas fa-pen-alt"></i> Membership Application</h3>
+      <form class="membership-form" id="membership-form">
+        <div class="form-row">
+          <div class="form-group"><label>First Name <span>*</span></label><input type="text" name="firstName" placeholder="Jean" required></div>
+          <div class="form-group"><label>Last Name <span>*</span></label><input type="text" name="lastName" placeholder="Pierre" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Email <span>*</span></label><input type="email" name="email" placeholder="you@email.com" required></div>
+          <div class="form-group"><label>Phone</label><input type="tel" name="phone" placeholder="+1 (305) 000-0000"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Graduation Year</label><input type="number" name="gradYear" placeholder="e.g. 2005" min="1975" max="2030"></div>
+          <div class="form-group"><label>Field of Study</label><input type="text" name="field" placeholder="e.g. Business Administration"></div>
+        </div>
+        <div class="form-group"><label>Membership Type <span>*</span></label>
+          <select name="membershipType" required>
+            <option value="">Select membership level…</option>
+            <option>Student Member (Free)</option>
+            <option>Associate Member ($25/year)</option>
+            <option>Regular Member ($50/year)</option>
+            <option>Life Member ($500 one-time)</option>
+            <option>Corporate Sponsor (Custom)</option>
+          </select>
+        </div>
+        <div class="form-group"><label>City &amp; Country of Residence</label><input type="text" name="location" placeholder="e.g. Miami, FL, USA"></div>
+        <div class="form-group"><label>Why do you want to join CALUNAH?</label>
+          <textarea name="motivation" rows="4" placeholder="Tell us about yourself and your connection to UNAH…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold btn-full"><i class="fas fa-paper-plane"></i> Submit Application</button>
+        <div class="form-success" id="mem-success"><i class="fas fa-check-circle"></i> Application received! We'll be in touch soon.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DONATE ════════════════════════════════════════════ -->
+<section id="donate" class="section donate-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge" data-i18n="donate.badge">Make an Impact</span>
+      <h2 class="section-title" data-i18n="donate.title">Support Our Mission</h2>
+      <div class="divider"><span></span><i class="fas fa-heart"></i><span></span></div>
+      <p class="section-sub">CALUNAH is a registered <strong>501(c)(3) nonprofit</strong>. Your donation is fully tax-deductible and directly funds scholarships, community programs, and campus development.</p>
+    </div>
+
+    <div class="donate-grid" data-aos="fade-up" data-aos-delay="100">
+      <div class="donate-card" data-amount="25">
+        <div class="donate-amount">$25</div>
+        <div class="donate-tier">Friend</div>
+        <p>Provides school supplies for one UNAH student for a semester</p>
+        <a href="#contact" class="btn btn-outline">Give $25</a>
+      </div>
+      <div class="donate-card featured" data-amount="100">
+        <div class="donate-ribbon">Most Popular</div>
+        <div class="donate-amount">$100</div>
+        <div class="donate-tier">Supporter</div>
+        <p>Covers one month of textbooks and academic materials for a student</p>
+        <a href="#contact" class="btn btn-gold">Give $100</a>
+      </div>
+      <div class="donate-card" data-amount="500">
+        <div class="donate-amount">$500</div>
+        <div class="donate-tier">Champion</div>
+        <p>Funds a full semester scholarship for one deserving UNAH student</p>
+        <a href="#contact" class="btn btn-outline">Give $500</a>
+      </div>
+      <div class="donate-card" data-amount="1000">
+        <div class="donate-amount">$1,000+</div>
+        <div class="donate-tier">Patron</div>
+        <p>Sponsors a full academic year and earns recognition in our annual report</p>
+        <a href="#contact" class="btn btn-outline">Give $1,000+</a>
+      </div>
+    </div>
+
+    <div class="donate-methods" data-aos="fade-up">
+      <h3 class="donate-methods-title">4 Ways to Donate</h3>
+      <div class="donate-ways">
+
+        <!-- Zelle -->
+        <div class="donate-way dw-zelle">
+          <div class="dw-icon-wrap"><span class="dw-zelle-badge">Z</span></div>
+          <h4>Zelle</h4>
+          <p class="dw-detail">Download the Zelle app &amp; send to:</p>
+          <p class="dw-highlight">321-890-5764</p>
+          <a href="https://www.zellepay.com" target="_blank" rel="noopener" class="btn dw-btn dw-btn-zelle">
+            <i class="fas fa-download"></i> Download Zelle
+          </a>
+        </div>
+
+        <!-- PayPal -->
+        <div class="donate-way dw-paypal">
+          <div class="dw-icon-wrap"><i class="fab fa-paypal dw-icon"></i></div>
+          <h4>PayPal</h4>
+          <p class="dw-detail">Click below to give via PayPal</p>
+          <p class="dw-highlight">Secure &amp; Instant</p>
+          <a href="https://www.paypal.com/donate?business=donate%40calunah.org&currency_code=USD" target="_blank" rel="noopener" class="btn dw-btn dw-btn-paypal">
+            <i class="fab fa-paypal"></i> PayPal — Buy Now
+          </a>
+        </div>
+
+        <!-- Check / Money Order -->
+        <div class="donate-way dw-check">
+          <div class="dw-icon-wrap"><i class="fas fa-envelope-open-text dw-icon"></i></div>
+          <h4>Check / Money Order</h4>
+          <p class="dw-detail">Make payable to <strong>CALUNAH</strong> and mail to:</p>
+          <address class="dw-address">
+            P.O. Box 110373<br>
+            Palm Bay, FL 32908
+          </address>
+        </div>
+
+        <!-- Credit / Debit Card via Stripe -->
+        <div class="donate-way dw-stripe">
+          <div class="dw-icon-wrap"><span class="dw-stripe-badge">S</span></div>
+          <h4>Credit / Debit Card</h4>
+          <p class="dw-detail">Secure checkout powered by Stripe</p>
+          <p class="dw-highlight">Visa &nbsp;·&nbsp; MC &nbsp;·&nbsp; Amex</p>
+          <a href="https://buy.stripe.com/your-link" target="_blank" rel="noopener" class="btn dw-btn dw-btn-stripe" id="stripe-donate-btn">
+            <i class="fas fa-lock"></i> Donate with Card
+          </a>
+        </div>
+
+      </div>
+      <div class="donate-501"><i class="fas fa-certificate"></i><p>CALUNAH is a 501(c)(3) nonprofit organization. All donations are tax-deductible to the extent permitted by law. You will receive a donation receipt for your records.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOCIAL CONNECT ════════════════════════════════════ -->
+<section id="social" class="section social-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge">Be Part of the Community</span>
+      <h2 class="section-title">Follow &amp; Connect</h2>
+      <div class="divider"><span></span><i class="fas fa-share-alt"></i><span></span></div>
+      <p class="section-sub">Stay up-to-date, share memories, and engage with fellow alumni everywhere</p>
+    </div>
+    <div class="platforms-grid" data-aos="fade-up" data-aos-delay="50">
+      <a href="https://www.facebook.com/CALUNAH" target="_blank" rel="noopener" class="platform-card facebook">
+        <div class="platform-icon"><i class="fab fa-facebook-f"></i></div>
+        <div class="platform-info"><h3>Facebook</h3><p>News, photos, community discussions &amp; events</p><span class="platform-handle">@CALUNAH</span></div>
+        <div class="platform-arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="https://www.instagram.com/CALUNAH" target="_blank" rel="noopener" class="platform-card instagram">
+        <div class="platform-icon"><i class="fab fa-instagram"></i></div>
+        <div class="platform-info"><h3>Instagram</h3><p>Beautiful moments, alumni spotlights &amp; highlights</p><span class="platform-handle">@CALUNAH</span></div>
+        <div class="platform-arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="https://www.x.com/CALUNAH" target="_blank" rel="noopener" class="platform-card twitter">
+        <div class="platform-icon"><i class="fab fa-x-twitter"></i></div>
+        <div class="platform-info"><h3>X (Twitter)</h3><p>Real-time news, announcements &amp; conversations</p><span class="platform-handle">@CALUNAH</span></div>
+        <div class="platform-arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+      <a href="https://www.youtube.com/@CALUNAH" target="_blank" rel="noopener" class="platform-card youtube">
+        <div class="platform-icon"><i class="fab fa-youtube"></i></div>
+        <div class="platform-info"><h3>YouTube</h3><p>Event recordings, speeches &amp; live streams</p><span class="platform-handle">CALUNAH Official</span></div>
+        <div class="platform-arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ═══════════════════════════════════════════ -->
+<section id="contact" class="section contact-section">
+  <div class="section-bg-green"></div>
+  <div class="container">
+    <div class="section-head light" data-aos="fade-up">
+      <span class="section-badge gold" data-i18n="contact.badge">Reach Out</span>
+      <h2 class="section-title white" data-i18n="contact.title">Contact Us</h2>
+      <div class="divider light"><span></span><i class="fas fa-envelope-open-text"></i><span></span></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
+        <h3 data-i18n="contact.heading">Connect With CALUNAH</h3>
+        <p>Whether you are a UNAH graduate, a supporter, or simply curious about our mission, we would love to hear from you. Submit events, share photos, ask about membership, or learn about our programs.</p>
+        <div class="contact-items">
+          <div class="ci"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><a href="mailto:info@calunah.org">info@calunah.org</a></div></div>
+          <div class="ci"><div class="ci-icon"><i class="fas fa-globe"></i></div><div><h4>Website</h4><a href="https://www.calunah.org" target="_blank">www.calunah.org</a></div></div>
+          <div class="ci"><div class="ci-icon"><i class="fas fa-university"></i></div><div><h4>Campus</h4><p>Université Adventiste d'Haïti<br>Carrefour, Haïti</p></div></div>
+          <div class="ci"><div class="ci-icon"><i class="fas fa-certificate"></i></div><div><h4>501(c)(3) Status</h4><p>EIN: [XX-XXXXXXX]<br>Donations are tax-deductible</p></div></div>
+        </div>
+        <div class="contact-socials">
+          <a href="https://www.facebook.com/CALUNAH"  target="_blank" class="cs-btn facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/CALUNAH" target="_blank" class="cs-btn instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.x.com/CALUNAH"         target="_blank" class="cs-btn twitter"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.youtube.com/@CALUNAH"  target="_blank" class="cs-btn youtube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="contact-form-wrap" data-aos="fade-left" data-aos-delay="100">
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-row">
+            <div class="form-group"><label>First Name <span>*</span></label><input type="text" name="firstName" placeholder="Jean" required></div>
+            <div class="form-group"><label>Last Name <span>*</span></label><input type="text" name="lastName" placeholder="Pierre" required></div>
+          </div>
+          <div class="form-group"><label>Email <span>*</span></label><input type="email" name="email" placeholder="you@email.com" required></div>
+          <div class="form-group"><label>Graduation Year</label><input type="number" name="gradYear" placeholder="e.g. 2005" min="1975" max="2030"></div>
+          <div class="form-group"><label>Subject <span>*</span></label>
+            <select name="subject" required>
+              <option value="">Select a topic…</option>
+              <option>Membership Inquiry</option><option>Event Submission</option>
+              <option>Gallery / Photo Submission</option><option>Donations &amp; Sponsorship</option>
+              <option>Scholarship Program</option><option>Newsletter</option>
+              <option>Volunteer / Mentorship</option><option>Media / Press</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Message <span>*</span></label><textarea name="message" rows="5" placeholder="How can we help you?" required></textarea></div>
+          <button type="submit" class="btn btn-gold btn-full"><i class="fas fa-paper-plane"></i> Send Message</button>
+          <div class="form-success" id="form-success"><i class="fas fa-check-circle"></i> Thank you! Your message has been sent.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="images/logo.png" alt="CALUNAH Logo" class="footer-logo">
+          <p class="footer-desc">Club des Alumni de l'Université Adventiste d'Haïti</p>
+          <p class="footer-est"><em>Founded in 1993 — Excellence · Unity · Legacy</em></p>
+          <div class="footer-501c3">
+            <i class="fas fa-certificate"></i>
+            <div>
+              <strong>501(c)(3) Nonprofit Organization</strong>
+              <small>EIN: [XX-XXXXXXX] · Donations are tax-deductible</small>
+            </div>
+          </div>
+          <div class="footer-socials">
+            <a href="https://www.facebook.com/CALUNAH"  target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/CALUNAH" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.x.com/CALUNAH"         target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.youtube.com/@CALUNAH"  target="_blank"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer.about">About CALUNAH</h4>
+          <ul>
+            <li><a href="#about">Mission &amp; Values</a></li>
+            <li><a href="#history">Our History</a></li>
+            <li><a href="#committee">Executive Committee</a></li>
+            <li><a href="#chapters">Chapter Presidents</a></li>
+            <li><a href="#donors">Donors &amp; Partners</a></li>
+            <li><a href="#our-work">Our Work</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer.involved">Get Involved</h4>
+          <ul>
+            <li><a href="#membership">Become a Member</a></li>
+            <li><a href="#donate">Donate</a></li>
+            <li><a href="#membership">Scholarships</a></li>
+            <li><a href="#contact">Volunteer</a></li>
+            <li><a href="#contact">Mentor a Student</a></li>
+            <li><a href="#contact">Start a Chapter</a></li>
+            <li><a href="#contact">Submit an Event</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-newsletter">
+          <h4 data-i18n="footer.updated">Stay Updated</h4>
+          <p>Subscribe for news, events &amp; alumni spotlights.</p>
+          <form class="newsletter-form" id="newsletter-form">
+            <input type="email" placeholder="Your email address" required>
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          </form>
+          <div class="nl-success" id="nl-success"><i class="fas fa-check"></i> You're subscribed!</div>
+          <div class="footer-links-extra">
+            <a href="#events">Events</a> · <a href="#gallery">Gallery</a> · <a href="#videos">Videos</a> · <a href="#enewsletter">Newsletter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; 2025 CALUNAH — Club des Alumni de l'Université Adventiste d'Haïti. All rights reserved.</p>
+      <p class="footer-note">
+        <a href="https://www.calunah.org" target="_blank">www.calunah.org</a> &nbsp;·&nbsp;
+        501(c)(3) Nonprofit &nbsp;·&nbsp;
+        Designed with <i class="fas fa-heart" style="color:var(--gold)"></i> for our UNAH family
+      </p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "CALUNAH Website",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5500", "--directory", "/Users/rockboisrond/calunah-website"],
+      "port": 5500
+    }
+  ]
+}
