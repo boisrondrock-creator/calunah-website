@@ -334,6 +334,20 @@ const CALUNAH_CONFIG = {
       upcoming:    true
     },
     {
+      id:          'georgia2025',
+      title:       'Georgia Chapter Installation',
+      date:        'February 22, 2025',
+      time:        'Meet & Greet Luncheon',
+      location:    'Ebenezer SDA Church, Atlanta, GA',
+      flyer:       'images/community/georgia-1.webp',
+      tags:        ['Chapter', 'Installation', 'Georgia', 'Community'],
+      description: 'A new CALUNAH chapter was established in Atlanta, Georgia — growing our reach across the states and carrying on the mission and vision of CALUNAH through a Meet & Greet luncheon.',
+      fullInfo:    'As a nonprofit organization, CALUNAH believes in growing and reaching out to all alumni around the states. A new chapter was officially established on February 22, 2025 at Ebenezer SDA Church in Atlanta, Georgia — with the ultimate goal to carry on the Mission and Vision of CALUNAH. The installation was celebrated through a Meet & Greet amid a luncheon, welcoming alumni in the Georgia area into the CALUNAH family.',
+      ticketUrl:   '',
+      ctaLabel:    'View Photos',
+      upcoming:    false
+    },
+    {
       id:          'prayer2025',
       title:       '3-Day Prayer Session for Haiti',
       date:        'April 2–4, 2025',
@@ -409,6 +423,15 @@ const CALUNAH_CONFIG = {
     { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds — High Tea Fundraiser 2026',  cat: 'events'    },
     { src: 'images/events/backpack2025.webp',    caption: 'Backpack Drive Community Service 2025',       cat: 'events'    },
     { src: 'images/events/prayer2025.webp',      caption: '3-Day Prayer Session for Haiti — April 2025', cat: 'events'   },
+    { src: 'images/community/georgia-1.webp',   caption: 'Georgia Chapter Installation — Feb 2025',      cat: 'community' },
+    { src: 'images/community/georgia-2.webp',   caption: 'Georgia Chapter — Meet & Greet Luncheon',      cat: 'community' },
+    { src: 'images/community/georgia-3.webp',   caption: 'Georgia Chapter — Ebenezer SDA Church, Atlanta', cat: 'community' },
+    { src: 'images/community/georgia-4.webp',   caption: 'Georgia Chapter — Alumni Gathering',           cat: 'community' },
+    { src: 'images/community/georgia-5.webp',   caption: 'Georgia Chapter — New Members Welcomed',       cat: 'community' },
+    { src: 'images/community/georgia-6.webp',   caption: 'Georgia Chapter — Celebration & Fellowship',   cat: 'community' },
+    { src: 'images/community/georgia-7.webp',   caption: 'Georgia Chapter — CALUNAH Family Grows',       cat: 'community' },
+    { src: 'images/community/georgia-8.webp',   caption: 'Georgia Chapter — Installation Ceremony',      cat: 'community' },
+    { src: 'images/community/georgia-9.webp',   caption: 'Georgia Chapter — United in Mission',          cat: 'community' },
   ],
 
   /* ---------- Videos ---------- */
