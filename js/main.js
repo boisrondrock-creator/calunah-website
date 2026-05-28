@@ -421,12 +421,8 @@ const CALUNAH_CONFIG = {
   /* ---------- e-Newsletter Issues ---------- */
   newsletters: [
     { title: 'Perspectives — Spring 2026', date: 'Spring 2026', pdf: 'data/perspectives-spring-2026.pdf', preview: 'High Tea fundraiser, scholarship spotlights, alumni stories, chapter updates & community impact.', featured: true },
-    { title: 'CALUNAH Quarterly, Winter 2025', date: 'January 2026',  pdf: 'newsletters/winter2025.pdf', preview: 'Year in review with achievements, financials, and member stories.'   },
-    { title: 'CALUNAH Quarterly, Fall 2025',   date: 'October 2025',  pdf: 'newsletters/fall2025.pdf',   preview: 'Convention recap, leadership updates, and Haiti project news.'        },
-    { title: 'CALUNAH Quarterly, Summer 2025', date: 'July 2025',     pdf: 'newsletters/summer2025.pdf', preview: 'Gala highlights, new chapters, and community service roundup.'      },
-    { title: 'CALUNAH Quarterly, Spring 2025', date: 'April 2025',    pdf: 'newsletters/spring2025.pdf', preview: 'Scholarship announcements, membership drive, and board profiles.'   },
-    { title: 'CALUNAH Annual Report 2024',      date: 'December 2024', pdf: 'newsletters/annual2024.pdf', preview: 'Full-year impact report covering financials, programs, and donors.' }
   ]
+  /* More issues will be added as they are published */
 
 }; // end CALUNAH_CONFIG
 
@@ -515,7 +511,21 @@ function initParticles() {
 
   for (let i = 0; i < 90; i++) particles.push(new Particle());
 
+  let particleActive = true;
+  // Stop the particle loop when splash hides to free CPU
+  const splashEl = qs('#splash');
+  if (splashEl) {
+    const obs = new MutationObserver(() => {
+      if (splashEl.classList.contains('hidden') || !splashEl.isConnected) {
+        particleActive = false;
+        obs.disconnect();
+      }
+    });
+    obs.observe(splashEl, { attributes: true, childList: true });
+  }
+
   (function loop() {
+    if (!particleActive) return; // stop drawing once splash is gone
     ctx.clearRect(0, 0, W, H);
     particles.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(loop);
@@ -590,7 +600,7 @@ function initNav() {
     const trigger = qs('.nav-link', item);
     if (!trigger) return;
     trigger.addEventListener('click', e => {
-      if (window.innerWidth > 960) return;
+      if (window.innerWidth > 1200) return;
       e.preventDefault();
       item.classList.toggle('mobile-open');
       ddItems.forEach(other => {
@@ -999,13 +1009,13 @@ function buildVideos() {
   const vids  = CALUNAH_CONFIG.videos;
   const chUrl = CALUNAH_CONFIG.social.youtube;
 
-  /* ── Featured video ── */
+  /* ── Featured video (data-src for lazy load) ── */
   const featureEl = qs('#video-feature');
   if (featureEl && fv && fv.youtubeId) {
     featureEl.innerHTML = `
       <div class="video-feature" data-aos="fade-up">
         <div class="video-thumb">
-          <iframe src="https://www.youtube.com/embed/${fv.youtubeId}?rel=0"
+          <iframe data-src="https://www.youtube.com/embed/${fv.youtubeId}?rel=0"
             title="${fv.title}" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen loading="lazy"></iframe>
@@ -1021,13 +1031,13 @@ function buildVideos() {
       </div>`;
   }
 
-  /* ── Past recordings grid ── */
+  /* ── Past recordings grid (data-src for lazy load) ── */
   const gridEl = qs('#videos-grid');
   if (gridEl && vids && vids.length) {
     gridEl.innerHTML = vids.map((v, i) => `
       <div class="video-card" data-aos="fade-up" data-aos-delay="${i * 120}">
         <div class="video-thumb">
-          <iframe src="https://www.youtube.com/embed/${v.youtubeId}?rel=0"
+          <iframe data-src="https://www.youtube.com/embed/${v.youtubeId}?rel=0"
             title="${v.title}" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen loading="lazy"></iframe>
@@ -1105,6 +1115,7 @@ function initLivestream() {
     if (statusText) statusText.textContent = 'LIVE NOW';
     setEmbed(activePlatform);
   } else {
+    box.classList.add('offline');
     if (statusText) statusText.textContent = 'OFFLINE';
     if (embedEl) { embedEl.style.display = 'none'; }
 
@@ -1156,7 +1167,7 @@ function buildNewsletterIssues() {
         </a>
       </div>
       <div class="nl-book-viewer">
-        <iframe src="${featured.pdf}#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
+        <iframe data-src="${featured.pdf}#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
           class="nl-iframe" title="${featured.title}" loading="lazy"
           allowfullscreen></iframe>
         <div class="nl-mobile-fallback">
@@ -1232,11 +1243,16 @@ function initMembershipForm() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
     btn.disabled = true;
 
+    const data = Object.fromEntries(new FormData(form));
+    data._subject  = 'New CALUNAH Membership Application';
+    data._template = 'table';
+    data._captcha  = 'false';
+
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
         method:  'POST',
-        body:    new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(data)
       });
       if (res.ok) {
         form.innerHTML = `
@@ -1324,25 +1340,27 @@ function initRecurringMembership() {
    17. NEWSLETTER SIGNUP FORM
    ============================================================ */
 function initNLSignupForm() {
-  qsa('#nl-signup-form, .nl-form').forEach(form => {
+  qsa('#nl-signup-form, .nl-form, #newsletter-form').forEach(form => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const btn     = qs('[type=submit]', form);
       const orig    = btn.innerHTML;
-      const success = qs('#nl-signup-success', form) || qs('.nl-success-msg', form);
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing…';
+      const success = qs('#nl-signup-success', form) || qs('.nl-success-msg', form) || qs('#nl-success', form);
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
       btn.disabled  = true;
 
-      try {
-        // form.action may be '#' or empty — skip network if no real action set
-        const action = form.action && !form.action.endsWith('#') ? form.action : null;
-        const ok = !action || (await fetch(action, {
-          method:  'POST',
-          body:    new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        })).ok;
+      const data = Object.fromEntries(new FormData(form));
+      data._subject = 'New CALUNAH Newsletter Subscriber';
+      data._captcha = 'false';
 
-        if (ok) {
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(data)
+        });
+
+        if (res.ok) {
           if (success) {
             success.style.display = 'flex';
             btn.style.display     = 'none';
@@ -1358,7 +1376,7 @@ function initNLSignupForm() {
       } catch {
         btn.innerHTML = orig;
         btn.disabled  = false;
-        showFormError(form, 'Subscription failed. Please try again or email us directly.');
+        showFormError(form, 'Subscription failed. Please try again or email newsletter@calunah.org.');
       }
     });
   });
@@ -1379,11 +1397,16 @@ function initContactForm() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
     btn.disabled  = true;
 
+    const data = Object.fromEntries(new FormData(form));
+    data._subject  = 'New Message from CALUNAH Website';
+    data._template = 'table';
+    data._captcha  = 'false';
+
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
         method:  'POST',
-        body:    new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(data)
       });
       if (res.ok) {
         form.innerHTML = `
@@ -1469,7 +1492,7 @@ function initFallingLogos() {
   const ctx = canvas.getContext('2d');
   let W, H;
   const logos = [];
-  const COUNT = 22;
+  const COUNT = window.innerWidth < 768 ? 8 : 14; // fewer on mobile for performance
   const logoImg = new Image();
   logoImg.src = 'images/logo.png';
 
@@ -1544,23 +1567,24 @@ function initFallingLogos() {
       ctx.translate(this.x, this.y);
       ctx.rotate(this.rot);
       ctx.globalAlpha = Math.min(this.alpha, 1);
-      // Glow
-      const glow = Math.min(this.alpha * 2.8, 1);
-      if (glow > 0.15) {
-        ctx.shadowColor = `rgba(201,162,39,${glow})`;
-        ctx.shadowBlur  = this.size * 1.4;
-      }
+      // shadowBlur removed — was causing scroll lag on all devices
       ctx.drawImage(logoImg, -this.size / 2, -this.size / 2, this.size, this.size);
       ctx.restore();
     }
   }
 
+  // Pause animation when tab is not visible to save CPU/GPU
+  let logoPaused = false;
+  document.addEventListener('visibilitychange', () => { logoPaused = document.hidden; });
+
   function initLogoParticles() {
     for (let i = 0; i < COUNT; i++) logos.push(new Logo(i));
     (function loop() {
-      ctx.clearRect(0, 0, W, H);
-      if (logoImg.complete && logoImg.naturalWidth > 0) {
-        logos.forEach(l => { l.update(); l.draw(); });
+      if (!logoPaused) {
+        ctx.clearRect(0, 0, W, H);
+        if (logoImg.complete && logoImg.naturalWidth > 0) {
+          logos.forEach(l => { l.update(); l.draw(); });
+        }
       }
       requestAnimationFrame(loop);
     })();
