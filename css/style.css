@@ -1210,8 +1210,8 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* ══ EVENT TICKET TIERS ══════════════════════════════════ */
 .event-tickets{margin:1.2rem 0 0;background:linear-gradient(135deg,rgba(201,162,39,.07),rgba(26,107,47,.05));border:1.5px solid rgba(201,162,39,.25);border-radius:14px;padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.9rem}
 .et-heading{font-family:var(--font-body);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.5rem}
-.et-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
-.et-tier{background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1rem;display:flex;flex-direction:column;gap:.4rem;align-items:center;text-align:center;transition:var(--transition)}
+.et-tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.75rem}
+.et-tier{background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1rem;display:flex;flex-direction:column;gap:.4rem;align-items:center;text-align:center;transition:var(--transition);min-width:0}
 .et-tier:hover{border-color:var(--gold);box-shadow:0 6px 20px rgba(201,162,39,.14);transform:translateY(-3px)}
 .et-tier-top{display:flex;flex-direction:column;align-items:center;gap:.15rem}
 .et-tier-label{font-family:var(--font-body);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mid)}
@@ -1224,7 +1224,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .et-at-door{font-size:.72rem;color:var(--text-light);margin-top:.3rem;display:flex;align-items:center;gap:.3rem;justify-content:center}
 .et-reserve-all-btn{background:rgba(201,162,39,.1);border:1.5px dashed rgba(201,162,39,.4);color:var(--green-dark);font-family:var(--font-body);font-size:.8rem;font-weight:700;padding:.65rem 1rem;border-radius:50px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%}
 .et-reserve-all-btn:hover{background:rgba(201,162,39,.18);border-color:var(--gold)}
-@media(max-width:480px){.et-tiers{grid-template-columns:1fr}}
+@media(max-width:380px){.et-tiers{grid-template-columns:1fr}}
 
 /* ══ TICKET RESERVATION MODAL ════════════════════════════ */
 .ticket-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}

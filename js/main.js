@@ -301,8 +301,13 @@ const CALUNAH_CONFIG = {
       tags:        ['High Tea', 'Fundraiser', 'Education'],
       description: 'An elegant High Tea fundraising evening to support education. Featuring keynote speaker Modoline Altenor, Esq., MC Marjory Sheba, and live performances by Emmanuel Garilus, JP Sonics, Marielle Donatien & Stephanie Garilus.',
       fullInfo:    'Join CALUNAH for Blooming Minds, an upscale High Tea Fundraising Event raising funds for education. Keynote: Modoline Altenor, Esq. | MC: Marjory Sheba. Featured Performers: Emmanuel Garilus (Saxophonist), JP Sonics (Classic Band), Marielle Donatien (Solo Artist), Stephanie Garilus (Solo Artist). 📍 1217 Trinity Woods Ln, Orlando, FL 32751. 🎟 $60 Advance · $30 Children under 12 · $70 At the Door.',
-      ticketUrl:   'https://www.eventbrite.com/',
-      ctaLabel:    'Buy Tickets, $60',
+      tickets: [
+        { label: 'Advance',     price: 60, note: 'General admission',  url: 'https://www.paypal.com/donate?business=donate%40calunah.org&amount=60&currency_code=USD&item_name=Blooming+Minds+2026+Advance+Ticket' },
+        { label: 'Children',    price: 30, note: 'Under 12 years old', url: 'https://www.paypal.com/donate?business=donate%40calunah.org&amount=30&currency_code=USD&item_name=Blooming+Minds+2026+Children+Ticket' },
+        { label: 'At the Door', price: 70, note: 'Available at venue', url: '' }
+      ],
+      ticketUrl:   '',
+      ctaLabel:    'Get Tickets',
       upcoming:    true
     },
     {
