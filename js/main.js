@@ -2151,20 +2151,26 @@ function initLanguageSwitcher() {
    ============================================================ */
 async function loadCMSContent() {
   const files = {
-    events:   'data/events.json',
-    blog:     'data/blog.json',
-    gallery:  'data/gallery.json',
-    chapters: 'data/chapters.json'
+    events:      'data/events.json',
+    blog:        'data/blog.json',
+    gallery:     'data/gallery.json',
+    chapters:    'data/chapters.json',
+    committee:   'data/committee.json',
+    newsletters: 'data/newsletters.json',
+    donors:      'data/donors.json'
   };
   await Promise.all(Object.entries(files).map(async ([key, path]) => {
     try {
       const r = await fetch(path + '?t=' + Date.now());
       if (!r.ok) return;
       const json = await r.json();
-      if (key === 'events'   && json.events)   CALUNAH_CONFIG.events   = json.events;
-      if (key === 'blog')                       CALUNAH_CONFIG.blog     = json.posts || [];
-      if (key === 'gallery'  && json.items)     CALUNAH_CONFIG.gallery  = json.items;
-      if (key === 'chapters' && json.chapters)  CALUNAH_CONFIG.chapters = json.chapters;
+      if (key === 'events'      && json.events)      CALUNAH_CONFIG.events      = json.events;
+      if (key === 'blog')                             CALUNAH_CONFIG.blog        = json.posts || [];
+      if (key === 'gallery'     && json.items)        CALUNAH_CONFIG.gallery     = json.items;
+      if (key === 'chapters'    && json.chapters)     CALUNAH_CONFIG.chapters    = json.chapters;
+      if (key === 'committee'   && json.committee)    CALUNAH_CONFIG.committee   = json.committee;
+      if (key === 'newsletters' && json.newsletters)  CALUNAH_CONFIG.newsletters = json.newsletters;
+      if (key === 'donors'      && json.platinum)     CALUNAH_CONFIG.donors      = { platinum: json.platinum, gold: json.gold, silver: json.silver };
     } catch (e) { /* silently fall back to config defaults */ }
   }));
 }
