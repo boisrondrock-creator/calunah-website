@@ -103,80 +103,101 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* ════════════════════════════════════════
    NAVIGATION, ANIMATED DROPDOWN
 ════════════════════════════════════════ */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);display:flex;align-items:center;background:transparent;transition:background .4s ease,box-shadow .4s ease,height .4s ease}
-/* Scrolled: frosted dark glass so text stays readable over any section color */
-.navbar.scrolled{background:linear-gradient(to bottom,rgba(5,18,8,.88),rgba(5,18,8,.72));-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 2px 28px rgba(0,0,0,.25);height:64px}
+/* ════════════════════════════════════════
+   NAVBAR — redesigned
+════════════════════════════════════════ */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);display:flex;align-items:center;background:transparent;transition:background .45s ease,box-shadow .45s ease,height .45s ease,border-color .45s ease;border-bottom:1px solid transparent}
+
+/* Gold shimmer line at the very top when scrolled */
+.navbar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(201,162,39,.0) 20%,rgba(201,162,39,.0) 80%,transparent 100%);transition:background .45s ease;pointer-events:none;z-index:1}
+
+/* Rich frosted dark glass on scroll */
+.navbar.scrolled{background:linear-gradient(180deg,rgba(3,10,5,.97) 0%,rgba(4,14,6,.90) 100%);-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);box-shadow:0 8px 40px rgba(0,0,0,.50),0 1px 0 rgba(201,162,39,.12) inset;border-bottom:1px solid rgba(201,162,39,.18);height:64px}
+.navbar.scrolled::before{background:linear-gradient(90deg,transparent 0%,rgba(201,162,39,.55) 30%,rgba(255,220,80,.7) 50%,rgba(201,162,39,.55) 70%,transparent 100%)}
+
+/* ── Layout ── */
 .nav-inner{max-width:1600px;margin:0 auto;padding:0 1.5rem;width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.nav-brand{display:flex;align-items:center;gap:.85rem;flex-shrink:0}
-.nav-logo{width:60px;height:60px;object-fit:contain;transition:transform var(--transition);animation:logoPulse 3.5s ease-in-out infinite;filter:drop-shadow(0 2px 10px rgba(201,162,39,.45))}
+
+/* ── Brand ── */
+.nav-brand{display:flex;align-items:center;gap:.85rem;flex-shrink:0;position:relative;padding-right:1.4rem}
+.nav-brand::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:32px;background:linear-gradient(to bottom,transparent,rgba(201,162,39,.4),transparent)}
+.nav-logo{width:52px;height:52px;object-fit:contain;transition:transform .4s ease;animation:logoPulse 3.5s ease-in-out infinite;filter:drop-shadow(0 2px 10px rgba(201,162,39,.45))}
 @keyframes logoPulse{0%,100%{filter:drop-shadow(0 0 6px rgba(201,162,39,.45)) drop-shadow(0 2px 8px rgba(0,0,0,.55))}50%{filter:drop-shadow(0 0 22px rgba(201,162,39,.9)) drop-shadow(0 2px 8px rgba(0,0,0,.55))}}
-.nav-brand:hover .nav-logo{transform:rotate(8deg) scale(1.05)}
-/* Text shadow keeps name/tagline readable on any background */
-.nav-name{display:block;font-family:var(--font-head);font-size:1.3rem;font-weight:900;color:var(--gold);letter-spacing:.08em;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.7),0 0 20px rgba(0,0,0,.4)}
-.nav-tagline{display:block;font-size:.6rem;color:rgba(255,255,255,.85);letter-spacing:.08em;text-transform:uppercase;margin-top:.15rem;text-shadow:0 1px 6px rgba(0,0,0,.8)}
+.navbar.scrolled .nav-logo{width:44px;height:44px}
+.nav-brand:hover .nav-logo{transform:rotate(6deg) scale(1.08)}
+.nav-name{display:block;font-family:var(--font-head);font-size:1.25rem;font-weight:900;color:var(--gold);letter-spacing:.09em;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.nav-tagline{display:block;font-size:.58rem;color:rgba(255,255,255,.75);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;text-shadow:0 1px 6px rgba(0,0,0,.8)}
 
 /* ── Nav links list ── */
-.nav-links{display:flex;align-items:center;gap:0}
-
-/* ── Individual nav item + hover effects ── */
+.nav-links{display:flex;align-items:center;gap:.1rem}
 .nav-item{position:relative}
-.nav-link{display:flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.9);padding:.5rem .55rem;border-radius:8px;letter-spacing:.04em;text-transform:uppercase;transition:color .25s ease,background .25s ease;position:relative;cursor:pointer;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.8),0 0 16px rgba(0,0,0,.5)}
-/* Icons hidden on desktop, they consume layout space and all 10 items must fit */
-.nav-icon{display:none;font-size:.65rem;color:var(--gold);opacity:0;transform:translateY(-2px);transition:opacity .25s ease,transform .25s ease}
-.nav-link:hover .nav-icon,.nav-link.active .nav-icon{opacity:1;transform:translateY(0)}
 
-/* Gold underline sweep on hover */
-.nav-link::after{content:'';position:absolute;bottom:2px;left:50%;width:0;height:1.5px;background:var(--gold);transform:translateX(-50%);transition:width .3s ease;border-radius:2px}
-.nav-link:hover::after,.nav-link.active::after{width:70%}
+/* ── Individual link ── */
+.nav-link{display:flex;align-items:center;gap:.28rem;font-size:.71rem;font-weight:700;color:rgba(255,255,255,.88);padding:.46rem .58rem;border-radius:8px;letter-spacing:.05em;text-transform:uppercase;transition:color .25s,background .25s,box-shadow .25s;position:relative;cursor:pointer;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.7);border:1px solid transparent}
+.nav-icon{display:none;font-size:.6rem;color:var(--gold)}
 
-/* Background glow on hover */
-.nav-link::before{content:'';position:absolute;inset:0;border-radius:8px;background:rgba(201,162,39,.0);transition:background .3s ease}
-.nav-link:hover::before{background:rgba(201,162,39,.1)}
-.nav-link:hover,.nav-link.active{color:var(--gold)}
+/* Pill hover: soft gold background + border */
+.nav-link::before{content:'';position:absolute;inset:0;border-radius:8px;background:transparent;transition:background .25s,border-color .25s}
+.nav-link:hover::before{background:rgba(201,162,39,.11)}
+.nav-link:hover,.nav-link.active{color:var(--gold);text-shadow:0 0 12px rgba(201,162,39,.4)}
+.nav-link.active::before{background:rgba(201,162,39,.14)}
 
-/* ── Dropdown parent indicator ── */
-.nav-arrow{font-size:.55rem;margin-left:.15rem;transition:transform .3s ease}
-.nav-item:hover .nav-arrow{transform:rotate(180deg)}
+/* Thin gold underline dot indicator */
+.nav-link::after{content:'';position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;transition:width .3s ease}
+.nav-link:hover::after,.nav-link.active::after{width:55%}
 
-/* ── DROPDOWN MENU ── */
-.nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-8px);background:rgba(5,18,8,.98);backdrop-filter:blur(20px);border:1px solid rgba(201,162,39,.2);border-top:2px solid var(--gold);border-radius:0 0 var(--radius) var(--radius);min-width:240px;padding:.6rem 0;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease,transform .3s ease;box-shadow:0 20px 50px rgba(0,0,0,.55);z-index:200}
+.nav-arrow{font-size:.52rem;margin-left:.12rem;color:rgba(201,162,39,.6);transition:transform .3s,color .25s}
+.nav-item:hover .nav-arrow{transform:rotate(180deg);color:var(--gold)}
 
-/* Triangle pointer */
-.nav-dropdown::before{content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%);border:9px solid transparent;border-bottom-color:var(--gold);border-top:none}
+/* ── DROPDOWN ── */
+.nav-dropdown{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-10px);background:linear-gradient(160deg,rgba(4,12,6,.99) 0%,rgba(6,18,8,.97) 100%);-webkit-backdrop-filter:blur(24px) saturate(1.6);backdrop-filter:blur(24px) saturate(1.6);border:1px solid rgba(201,162,39,.22);border-top:2px solid var(--gold);border-radius:4px 4px 14px 14px;min-width:260px;padding:.5rem 0 .8rem;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease,transform .3s ease;box-shadow:0 24px 60px rgba(0,0,0,.65),0 0 0 1px rgba(201,162,39,.06);z-index:200;overflow:hidden}
+
+/* Gold arrow pointer */
+.nav-dropdown::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);border:10px solid transparent;border-bottom-color:var(--gold);border-top:none;filter:drop-shadow(0 -2px 4px rgba(0,0,0,.3))}
+
+/* Subtle gold glow at top of dropdown */
+.nav-dropdown::after{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:radial-gradient(ellipse at 50% -20%,rgba(201,162,39,.12) 0%,transparent 70%);pointer-events:none}
 
 .nav-item:hover .nav-dropdown,.nav-item:focus-within .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 
-/* Dropdown items */
-.nav-dd-item{display:flex;align-items:center;gap:.85rem;padding:.65rem 1.3rem;color:rgba(255,255,255,.72);font-size:.8rem;font-weight:600;letter-spacing:.05em;transition:all .22s ease;border-left:2px solid transparent;cursor:pointer}
-.nav-dd-item i{width:18px;text-align:center;color:rgba(201,162,39,.6);font-size:.8rem;transition:color .22s ease}
-.nav-dd-item:hover{color:var(--gold);background:rgba(201,162,39,.07);border-left-color:var(--gold);padding-left:1.6rem}
-.nav-dd-item:hover i{color:var(--gold)}
+/* Dropdown header label */
+.nav-dropdown li:first-child{position:relative}
+.nav-dropdown li:first-child::before{content:'ABOUT CALUNAH';display:block;font-family:var(--font-body);font-size:.6rem;font-weight:800;letter-spacing:.18em;color:rgba(201,162,39,.55);padding:.65rem 1.3rem .25rem;text-transform:uppercase}
 
-/* Dropdown items slide in with delay */
+.nav-dd-item{display:flex;align-items:center;gap:.9rem;padding:.55rem 1.3rem;color:rgba(255,255,255,.75);font-size:.78rem;font-weight:600;letter-spacing:.04em;transition:all .2s ease;cursor:pointer;position:relative}
+.nav-dd-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:transparent;transition:background .2s ease,transform .2s ease;transform:scaleY(0)}
+.nav-dd-item i{width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:5px;background:rgba(201,162,39,.1);color:rgba(201,162,39,.65);font-size:.72rem;flex-shrink:0;transition:all .2s ease}
+.nav-dd-item:hover{color:#fff;background:rgba(201,162,39,.08);padding-left:1.6rem}
+.nav-dd-item:hover::before{background:var(--gold);transform:scaleY(1)}
+.nav-dd-item:hover i{background:rgba(201,162,39,.2);color:var(--gold)}
+
+/* Staggered fade-in */
 .nav-dropdown li:nth-child(1) .nav-dd-item{transition-delay:0ms}
-.nav-dropdown li:nth-child(2) .nav-dd-item{transition-delay:30ms}
-.nav-dropdown li:nth-child(3) .nav-dd-item{transition-delay:60ms}
-.nav-dropdown li:nth-child(4) .nav-dd-item{transition-delay:90ms}
-.nav-dropdown li:nth-child(5) .nav-dd-item{transition-delay:120ms}
+.nav-dropdown li:nth-child(2) .nav-dd-item{transition-delay:25ms}
+.nav-dropdown li:nth-child(3) .nav-dd-item{transition-delay:50ms}
+.nav-dropdown li:nth-child(4) .nav-dd-item{transition-delay:75ms}
+.nav-dropdown li:nth-child(5) .nav-dd-item{transition-delay:100ms}
 
-/* ── Donate CTA button in nav ── */
-.btn-nav-donate{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--green-dark) !important;padding:.45rem 1rem;border-radius:50px;margin-left:.25rem;font-size:.7rem;font-weight:800;box-shadow:0 3px 14px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.15);text-shadow:none !important}
-.btn-nav-donate:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light));transform:translateY(-2px) !important;box-shadow:0 6px 20px rgba(201,162,39,.45)}
+/* ── Donate CTA ── */
+@keyframes donateShimmer{0%{left:-80%}60%,100%{left:130%}}
+.btn-nav-donate{background:linear-gradient(135deg,#b8920a 0%,var(--gold) 50%,#e8c84a 100%);color:var(--green-dark)!important;padding:.46rem 1.1rem;border-radius:50px;margin-left:.3rem;font-size:.7rem;font-weight:900;box-shadow:0 3px 16px rgba(201,162,39,.45),0 1px 0 rgba(255,255,255,.15) inset;text-shadow:none!important;letter-spacing:.06em;position:relative;overflow:hidden;border:1px solid rgba(255,220,80,.3)!important}
+.btn-nav-donate::before{content:'';position:absolute;top:0;left:-80%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);animation:donateShimmer 2.8s ease infinite;pointer-events:none;border-radius:50px}
 .btn-nav-donate::after{display:none}
-.btn-nav-donate::before{display:none}
+.btn-nav-donate:hover{background:linear-gradient(135deg,var(--gold) 0%,#e8c84a 60%,var(--gold) 100%);transform:translateY(-2px)!important;box-shadow:0 8px 24px rgba(201,162,39,.55),0 1px 0 rgba(255,255,255,.2) inset}
 
-/* ── Hamburger ── */
-.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:transparent;border:none;padding:.4rem;filter:drop-shadow(0 1px 6px rgba(0,0,0,.8))}
-.nav-hamburger span{display:block;width:26px;height:2px;background:var(--white);border-radius:2px;transition:var(--transition);box-shadow:0 1px 4px rgba(0,0,0,.7)}
+/* ── Hamburger (mobile) ── */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.25);border-radius:8px;padding:.45rem .5rem;transition:background .25s,border-color .25s}
+.nav-hamburger:hover{background:rgba(201,162,39,.16);border-color:rgba(201,162,39,.45)}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--gold);border-radius:2px;transition:var(--transition)}
 .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* ── Language Switcher ── */
-.lang-switcher{display:flex;align-items:center;gap:3px;margin-left:.35rem;flex-shrink:0}
-.lang-btn{padding:4px 9px;border:1.5px solid rgba(201,162,39,.45);background:transparent;color:rgba(255,255,255,.75);font-size:.62rem;font-weight:800;letter-spacing:.1em;border-radius:5px;cursor:pointer;font-family:var(--font-body);transition:all .22s ease;text-shadow:0 1px 6px rgba(0,0,0,.6);line-height:1;min-width:28px;text-align:center}
-.lang-btn:hover{background:rgba(201,162,39,.2);color:var(--gold);border-color:var(--gold)}
-.lang-btn.active{background:var(--gold);color:var(--green-dark);border-color:var(--gold);text-shadow:none}
+.lang-switcher{display:flex;align-items:center;gap:2px;margin-left:.3rem;flex-shrink:0;background:rgba(255,255,255,.05);border:1px solid rgba(201,162,39,.2);border-radius:8px;padding:3px}
+.lang-btn{padding:4px 8px;border:none;background:transparent;color:rgba(255,255,255,.65);font-size:.6rem;font-weight:800;letter-spacing:.1em;border-radius:5px;cursor:pointer;font-family:var(--font-body);transition:all .22s ease;line-height:1;min-width:28px;text-align:center}
+.lang-btn:hover{background:rgba(201,162,39,.15);color:var(--gold)}
+.lang-btn.active{background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--green-dark);font-weight:900;box-shadow:0 2px 8px rgba(201,162,39,.35)}
 
 /* ════════════════════════════════════════
    HERO
