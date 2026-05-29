@@ -333,7 +333,7 @@ select.form-control{cursor:pointer}
         <div class="tip-item"><i class="fas fa-rocket"></i><span>Click <strong>"Publish Changes"</strong> top-right to push all edits live to the website.</span></div>
         <div class="tip-item"><i class="fas fa-clock"></i><span>The website <strong>auto-updates in ~30 seconds</strong> after publishing.</span></div>
         <div class="tip-item"><i class="fas fa-image"></i><span>Upload photos/PDFs directly from any section — they're stored on the website automatically.</span></div>
-        <div class="tip-item"><i class="fas fa-key"></i><span>Go to <strong>Settings</strong> to save your GitHub token (required for publishing) and change your password.</span></div>
+        <div class="tip-item"><i class="fas fa-key"></i><span>First time? Go to <strong>Settings → Setup Guide</strong> to configure the one-time GitHub token (required for Publish to work).</span></div>
       </div>
     </div>
 
@@ -424,12 +424,28 @@ select.form-control{cursor:pointer}
     <!-- SETTINGS -->
     <div class="page" id="page-settings">
       <div class="section-header"><div><h2>Settings</h2><p>Credentials, social links, and site configuration</p></div></div>
-      <div class="token-setup">
-        <h4><i class="fas fa-key"></i> GitHub Publish Token</h4>
-        <p>Required to publish changes live. Stored only in this browser — never transmitted except to GitHub.</p>
-        <div style="display:flex;gap:.7rem;align-items:center">
-          <input class="form-control" type="password" id="gh-token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex:1">
-          <button class="btn btn-gold" onclick="saveToken()" style="white-space:nowrap"><i class="fas fa-save"></i> Save</button>
+
+      <!-- One-time Setup Guide -->
+      <div class="token-setup" id="setup-guide">
+        <h4><i class="fas fa-rocket"></i> One-Time Setup — GitHub Token</h4>
+        <p style="margin-bottom:1rem">Publishing saves your changes directly to GitHub so Vercel rebuilds the website automatically. You only need to do this <strong style="color:var(--gold2)">once</strong>.</p>
+        <div style="counter-reset:steps;display:flex;flex-direction:column;gap:.85rem">
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <span style="background:var(--gold);color:#0a1f0e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0">1</span>
+            <div style="font-size:.83rem;color:rgba(255,255,255,.85)">Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank" style="color:var(--gold2);text-decoration:underline">github.com → Settings → Developer Settings → Fine-grained tokens</a></div>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <span style="background:var(--gold);color:#0a1f0e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0">2</span>
+            <div style="font-size:.83rem;color:rgba(255,255,255,.85)">Click <strong style="color:#fff">Generate new token</strong>. Set the name to <strong style="color:#fff">calunah-publish</strong>, expiration to <strong style="color:#fff">No expiration</strong>. Under <em>Repository access</em> → Only select repositories → choose <strong style="color:#fff">calunah-website</strong>. Under <em>Permissions → Repository permissions → Contents</em> → choose <strong style="color:#fff">Read and write</strong>. Click <strong style="color:#fff">Generate token</strong> and copy it.</div>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <span style="background:var(--gold);color:#0a1f0e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0">3</span>
+            <div style="font-size:.83rem;color:rgba(255,255,255,.85)">Go to <a href="https://vercel.com/boisrondrock-2926s-projects/calunah-website/settings/environment-variables" target="_blank" style="color:var(--gold2);text-decoration:underline">Vercel → calunah-website → Settings → Environment Variables</a>. Add a new variable:<br><strong style="color:#fff">Name:</strong> <code style="background:rgba(255,255,255,.12);padding:2px 7px;border-radius:4px;font-size:.8rem">GITHUB_TOKEN</code><br><strong style="color:#fff">Value:</strong> <em>paste your token here</em><br>Check <strong style="color:#fff">Production, Preview, Development</strong>. Click Save.</div>
+          </div>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <span style="background:var(--gold);color:#0a1f0e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0">4</span>
+            <div style="font-size:.83rem;color:rgba(255,255,255,.85)">Go to <a href="https://vercel.com/boisrondrock-2926s-projects/calunah-website/deployments" target="_blank" style="color:var(--gold2);text-decoration:underline">Vercel → Deployments</a>, click the three dots on the latest deployment → <strong style="color:#fff">Redeploy</strong>. Wait 30 seconds. <strong style="color:var(--gold2)">Publishing will work automatically after this!</strong></div>
+          </div>
         </div>
       </div>
       <div class="settings-card">
@@ -624,12 +640,10 @@ select.form-control{cursor:pointer}
 <script>
 'use strict';
 
-const REPO_OWNER = 'boisrondrock-creator';
-const REPO_NAME  = 'calunah-website';
-const BRANCH     = 'main';
-
 /* ── AUTH ── */
 const DEFAULT_HASH = 'Q2FsdW5haEAyMDI0'; // btoa('Calunah@2024')
+let SESSION_SECRET = DEFAULT_HASH; // set at login; used as publish secret for /api/publish
+
 function sha256(msg) {
   try { return Promise.resolve(btoa(unescape(encodeURIComponent(msg)))); }
   catch(e) { return Promise.resolve(btoa(msg)); }
@@ -643,6 +657,7 @@ async function doLogin() {
   const hash   = await sha256(pass);
   const stored = localStorage.getItem('calunah_admin_hash') || DEFAULT_HASH;
   if (user === 'admin' && hash === stored) {
+    SESSION_SECRET = hash; // store for publish
     document.getElementById('login-screen').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     await loadAllData();
@@ -1156,14 +1171,7 @@ function saveVideos() { toast('Video settings saved. Click "Publish Changes" to 
 
 /* ── SETTINGS ── */
 function populateSettings() {
-  const tok = localStorage.getItem('calunah_gh_token') || '';
-  if (tok) document.getElementById('gh-token-input').value = tok;
-}
-function saveToken() {
-  const tok = document.getElementById('gh-token-input').value.trim();
-  if (!tok) { toast('Please enter a GitHub token.','error'); return; }
-  localStorage.setItem('calunah_gh_token', tok);
-  toast('GitHub token saved!','success');
+  /* No longer needs to load a GitHub token — it's now stored server-side in Vercel env vars */
 }
 async function changePassword() {
   const np = document.getElementById('new-pass').value.trim();
@@ -1179,55 +1187,36 @@ async function changePassword() {
 }
 function saveSettings() { toast('Settings saved. Click "Publish Changes" to apply.','success'); }
 
-/* ── GITHUB UPLOAD ── */
+/* ── GITHUB IMAGE UPLOAD via /api/upload ── */
 async function uploadFileToGitHub(file, path) {
-  const token = localStorage.getItem('calunah_gh_token');
-  if (!token) { toast('No GitHub token set. Go to Settings first.','error'); return false; }
   return new Promise(resolve => {
     const reader = new FileReader();
     reader.onload = async e => {
-      const b64 = e.target.result.split(',')[1];
+      const b64 = e.target.result.split(',')[1]; // strip data:...;base64, prefix
       try {
-        let sha;
-        const check = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, { headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json' } });
-        if (check.ok) { const j = await check.json(); sha = j.sha; }
-        const body = { message:`Upload: ${path}`, content:b64, branch:BRANCH };
-        if (sha) body.sha = sha;
-        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, { method:'PUT', headers:{ Authorization:`Bearer ${token}`, 'Content-Type':'application/json', Accept:'application/vnd.github+json' }, body:JSON.stringify(body) });
-        resolve(res.ok || res.status === 201);
+        const r = await fetch('/api/upload', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ secret: SESSION_SECRET, path, content: b64 })
+        });
+        resolve(r.ok);
       } catch(err) { resolve(false); }
     };
     reader.readAsDataURL(file);
   });
 }
 
-async function getFileSHA(token, path) {
-  const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, { headers:{ Authorization:`Bearer ${token}`, Accept:'application/vnd.github+json' } });
-  if (!r.ok) return null;
-  return (await r.json()).sha;
-}
-async function pushJSON(token, path, content, message) {
-  const sha = await getFileSHA(token, path);
-  const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
-  const body = { message, content:b64, branch:BRANCH };
-  if (sha) body.sha = sha;
-  const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, { method:'PUT', headers:{ Authorization:`Bearer ${token}`, 'Content-Type':'application/json', Accept:'application/vnd.github+json' }, body:JSON.stringify(body) });
-  return r.ok || r.status === 201;
-}
-
-/* ── PUBLISH ── */
+/* ── PUBLISH via /api/publish (serverless — no browser token needed) ── */
 function openPublish() {
-  const token = localStorage.getItem('calunah_gh_token');
-  if (!token) { toast('No GitHub token. Go to Settings → GitHub Publish Token.','error'); showPage('settings'); return; }
   const steps = [
-    { id:'s-events',     label:'Saving Events' },
-    { id:'s-blog',       label:'Saving Blog Posts' },
-    { id:'s-gallery',    label:'Saving Gallery' },
-    { id:'s-chapters',   label:'Saving Chapters' },
-    { id:'s-committee',  label:'Saving Executive Committee' },
-    { id:'s-newsletters',label:'Saving Newsletters' },
-    { id:'s-donors',     label:'Saving Donors & Partners' },
-    { id:'s-deploy',     label:'Triggering Website Rebuild' }
+    { id:'s-events',      label:'Saving Events' },
+    { id:'s-blog',        label:'Saving Blog Posts' },
+    { id:'s-gallery',     label:'Saving Gallery' },
+    { id:'s-chapters',    label:'Saving Chapters' },
+    { id:'s-committee',   label:'Saving Executive Committee' },
+    { id:'s-newsletters', label:'Saving Newsletters' },
+    { id:'s-donors',      label:'Saving Donors & Partners' },
+    { id:'s-deploy',      label:'Triggering Website Rebuild' }
   ];
   document.getElementById('publish-steps').innerHTML = steps.map(s => `
     <div class="publish-step" id="${s.id}">
@@ -1237,31 +1226,84 @@ function openPublish() {
     </div>`).join('');
   document.getElementById('publish-close-btn').style.display = 'none';
   document.getElementById('publish-modal').classList.add('open');
-  runPublish(token);
+  runPublish();
 }
-async function runPublish(token) {
-  const files = [
-    { stepId:'s-events',      path:'data/events.json',      data:DATA.events },
-    { stepId:'s-blog',        path:'data/blog.json',         data:DATA.blog },
-    { stepId:'s-gallery',     path:'data/gallery.json',      data:DATA.gallery },
-    { stepId:'s-chapters',    path:'data/chapters.json',     data:DATA.chapters },
-    { stepId:'s-committee',   path:'data/committee.json',    data:DATA.committee },
-    { stepId:'s-newsletters', path:'data/newsletters.json',  data:DATA.newsletters },
-    { stepId:'s-donors',      path:'data/donors.json',       data:DATA.donors }
-  ];
+
+async function runPublish() {
+  const fileMap = {
+    'data/events.json':      DATA.events,
+    'data/blog.json':        DATA.blog,
+    'data/gallery.json':     DATA.gallery,
+    'data/chapters.json':    DATA.chapters,
+    'data/committee.json':   DATA.committee,
+    'data/newsletters.json': DATA.newsletters,
+    'data/donors.json':      DATA.donors,
+    'data/.deploy':          { ts: Date.now(), by: 'admin' }
+  };
+  const stepMap = {
+    'data/events.json':      's-events',
+    'data/blog.json':        's-blog',
+    'data/gallery.json':     's-gallery',
+    'data/chapters.json':    's-chapters',
+    'data/committee.json':   's-committee',
+    'data/newsletters.json': 's-newsletters',
+    'data/donors.json':      's-donors',
+    'data/.deploy':          's-deploy'
+  };
+
+  /* Show all as spinning */
+  Object.values(stepMap).forEach(sid => setStep(sid, 'spin', 'Saving...'));
+  setStep('s-deploy', 'wait', 'Waiting...');
+
+  let response, data;
+  try {
+    response = await fetch('/api/publish', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ secret: SESSION_SECRET, files: fileMap })
+    });
+    data = await response.json();
+  } catch(e) {
+    /* Network or parse error */
+    Object.values(stepMap).forEach(sid => setStep(sid, 'fail', 'Network error'));
+    document.getElementById('publish-close-btn').style.display = 'flex';
+    toast('Network error. Check your internet connection.', 'error');
+    return;
+  }
+
+  if (!response.ok) {
+    const msg = data.error || `Server error ${response.status}`;
+    Object.values(stepMap).forEach(sid => setStep(sid, 'fail', 'Failed'));
+    setStep('s-deploy', 'fail', 'Failed');
+    document.getElementById('publish-close-btn').style.display = 'flex';
+    /* Special message if GITHUB_TOKEN not set */
+    if (response.status === 500 && data.error && data.error.includes('GITHUB_TOKEN')) {
+      toast('⚠️ GitHub token not configured. See Settings → Setup Guide.', 'error');
+      setTimeout(() => showPage('settings'), 2000);
+    } else if (response.status === 401) {
+      toast('Session expired. Please log out and log back in.', 'error');
+    } else {
+      toast('Publish failed: ' + msg, 'error');
+    }
+    return;
+  }
+
+  /* Update each step based on results */
+  const results = data.results || {};
   let allOk = true;
-  for (const f of files) {
-    setStep(f.stepId, 'spin', 'Saving...');
-    const ok = await pushJSON(token, f.path, f.data, `Admin: update ${f.path}`);
-    setStep(f.stepId, ok?'done':'fail', ok?'Done ✓':'Failed ✗');
+  for (const [path, sid] of Object.entries(stepMap)) {
+    if (path === 'data/.deploy') continue; // handled separately below
+    const ok = results[path] !== false;
+    setStep(sid, ok ? 'done' : 'fail', ok ? 'Done ✓' : 'Failed ✗');
     if (!ok) allOk = false;
   }
-  setStep('s-deploy','spin','Rebuilding...');
-  const deployOk = await pushJSON(token, 'data/.deploy', {ts:Date.now(),by:'admin'}, 'Admin: trigger deploy');
-  setStep('s-deploy', deployOk?'done':'done', 'Rebuilding (~30s) ✓');
+  /* Deploy step */
+  const deployOk = results['data/.deploy'] !== false;
+  setStep('s-deploy', deployOk ? 'done' : 'fail', deployOk ? 'Rebuilding (~30s) ✓' : 'Failed ✗');
+
   document.getElementById('publish-close-btn').style.display = 'flex';
-  if (allOk) toast('Published! Website updates in ~30 seconds.','success');
-  else toast('Some files failed. Check your GitHub token in Settings.','error');
+  if (allOk && deployOk) toast('Published! Website updates in ~30 seconds.', 'success');
+  else toast('Some steps failed. Check Settings → Setup Guide.', 'error');
 }
 function setStep(id, state, status) {
   const icon = document.getElementById(id+'-icon');
