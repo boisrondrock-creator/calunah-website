@@ -874,13 +874,12 @@ function buildGallery() {
   const grid = qs('#gallery-grid');
   if (!grid) return;
 
-  // Filter out known placeholder paths that have no real files
+  // Only exclude known non-existent placeholder paths
   const existingItems = CALUNAH_CONFIG.gallery.filter(item => {
     return !item.src.startsWith('images/campus1') &&
            !item.src.startsWith('images/campus2') &&
            !item.src.startsWith('images/campus3') &&
-           !item.src.startsWith('images/campus4') &&
-           !item.src.startsWith('images/gallery/');
+           !item.src.startsWith('images/campus4');
   });
 
   if (existingItems.length === 0) {
