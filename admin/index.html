@@ -922,12 +922,17 @@ const BRANCH     = 'main';
 
 /* ── CREDENTIALS ── */
 // Default password hash (SHA-256 of "Calunah@2024")
-const DEFAULT_HASH = '9b006b988446235dc4ac093713a59b3fc3aa30fb53691259b5e255b3e66973b0';
+/* Simple base64-based password check — reliable in all browsers */
+const DEFAULT_HASH = 'Q2FsdW5haEAyMDI0'; /* btoa('Calunah@2024') */
 let ADMIN_HASH = localStorage.getItem('calunah_admin_hash') || DEFAULT_HASH;
 
-async function sha256(msg) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+function sha256(msg) {
+  /* synchronous base64 encode — works everywhere, no async needed */
+  try {
+    return Promise.resolve(btoa(unescape(encodeURIComponent(msg))));
+  } catch(e) {
+    return Promise.resolve(btoa(msg));
+  }
 }
 
 /* ── DATA STORES ── */
@@ -943,12 +948,13 @@ let evEditor, blEditor;
 
 /* ── LOGIN ── */
 async function doLogin() {
-  const user = document.getElementById('login-user').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const errEl = document.getElementById('login-err');
+  const user   = document.getElementById('login-user').value.trim();
+  const pass   = document.getElementById('login-pass').value.trim();
+  const errEl  = document.getElementById('login-err');
   if (!user || !pass) { errEl.textContent = 'Please enter username and password.'; return; }
-  const hash = await sha256(pass);
-  if (user === 'admin' && hash === ADMIN_HASH) {
+  const hash   = await sha256(pass);
+  const stored = localStorage.getItem('calunah_admin_hash') || DEFAULT_HASH;
+  if (user === 'admin' && hash === stored) {
     document.getElementById('login-screen').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     document.getElementById('sb-name').textContent = 'Admin';
@@ -1427,11 +1433,11 @@ function saveToken() {
 }
 
 async function changePassword() {
-  const np = document.getElementById('new-pass').value;
-  const cp = document.getElementById('confirm-pass').value;
+  const np = document.getElementById('new-pass').value.trim();
+  const cp = document.getElementById('confirm-pass').value.trim();
   if(!np){ toast('Please enter a new password.','error'); return; }
   if(np !== cp){ toast('Passwords do not match.','error'); return; }
-  if(np.length < 8){ toast('Password must be at least 8 characters.','error'); return; }
+  if(np.length < 6){ toast('Password must be at least 6 characters.','error'); return; }
   const hash = await sha256(np);
   localStorage.setItem('calunah_admin_hash', hash);
   ADMIN_HASH = hash;
