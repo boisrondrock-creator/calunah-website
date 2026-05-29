@@ -1741,7 +1741,7 @@ const CALUNAH_LANG = {
     'nav.events':           'Events',
     'nav.gallery':          'Gallery',
     'nav.videos':           'Videos',
-    'nav.newsletter':       'e-Newsletter',
+    'nav.newsletter':       'Newsletter',
     'nav.membership':       'Membership',
     'nav.contact':          'Contact',
     'nav.donate':           'Donate',
