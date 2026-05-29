@@ -1092,6 +1092,76 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   margin-top:.4rem;display:flex;align-items:center;justify-content:center;gap:.3rem;
 }
 
+/* ══ WHO WE ARE / WHY GIVE STORY SECTION ════════════════ */
+.calunah-story{margin:0 0 3.5rem;display:flex;flex-direction:column;gap:0}
+
+/* Why Give header strip */
+.cs-why-header{position:relative;border-radius:18px 18px 0 0;overflow:hidden;height:280px}
+.cs-why-img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.45)}
+.cs-why-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;gap:.8rem}
+.cs-why-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(201,162,39,.2);border:1px solid rgba(201,162,39,.45);color:var(--gold);font-family:var(--font-body);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.35rem 1rem;border-radius:50px}
+.cs-why-title{font-family:var(--font-head);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#fff;margin:0;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.cs-why-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:rgba(255,255,255,.82);max-width:600px;margin:0;line-height:1.6}
+
+/* Vision · Mission · Community grid */
+.cs-vmc-grid{display:grid;grid-template-columns:repeat(3,1fr);background:var(--off-white);border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.cs-vmc-card{display:flex;flex-direction:column;border-right:1px solid var(--border);transition:var(--transition)}
+.cs-vmc-card:last-child{border-right:none}
+.cs-vmc-card:hover{background:var(--white);box-shadow:inset 0 0 0 2px rgba(201,162,39,.2)}
+.cs-vmc-img-wrap{height:180px;overflow:hidden}
+.cs-vmc-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.cs-vmc-card:hover .cs-vmc-img{transform:scale(1.06)}
+.cs-vmc-body{padding:1.8rem 1.6rem;flex:1;display:flex;flex-direction:column;gap:.6rem}
+.cs-vmc-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-dark));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;margin-bottom:.25rem}
+.cs-vmc-title{font-family:var(--font-head);font-size:1.15rem;font-weight:800;color:var(--text);margin:0;letter-spacing:.02em}
+.cs-vmc-body p{font-size:.88rem;line-height:1.75;color:var(--text-mid);margin:0}
+.cs-vmc-body em{color:var(--green-dark);font-style:italic}
+
+/* Educational Advancement */
+.cs-edu{display:grid;grid-template-columns:1fr 1.6fr;background:var(--white);border:1px solid var(--border);border-top:none}
+.cs-edu-img-col{display:flex;flex-direction:column;gap:0}
+.cs-edu-img{width:100%;flex:1;object-fit:cover;display:block;height:50%}
+.cs-edu-content{padding:2.5rem 2.8rem;display:flex;flex-direction:column;gap:.8rem;justify-content:center}
+.cs-edu-icon{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#e8c84a);display:flex;align-items:center;justify-content:center;color:#1a1200;font-size:1.2rem}
+.cs-edu-title{font-family:var(--font-head);font-size:1.4rem;font-weight:800;color:var(--text);margin:0}
+.cs-edu-intro{font-size:.92rem;color:var(--text-mid);margin:0;font-weight:500}
+.cs-edu-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.75rem}
+.cs-edu-list li{display:flex;align-items:flex-start;gap:.75rem;font-size:.88rem;line-height:1.65;color:var(--text-mid)}
+.cs-edu-list li i{color:var(--green);font-size:.85rem;margin-top:.25rem;flex-shrink:0}
+.cs-edu-list em{color:var(--green-dark);font-style:italic}
+
+/* Core Values row */
+.cs-values-row{display:grid;grid-template-columns:repeat(4,1fr);border-radius:0 0 18px 18px;overflow:hidden}
+.cs-value-card{padding:2.2rem 1.8rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.7rem}
+.cs-val-icon{font-size:2rem;opacity:.9}
+.cs-value-card h5{font-family:var(--font-body);font-size:.75rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin:0}
+.cs-value-card p{font-size:.83rem;line-height:1.65;margin:0;opacity:.85}
+/* Value card color themes */
+.cs-val-integrity{background:#1e2d4a;color:#fff}.cs-val-integrity .cs-val-icon{color:#7fa8d4}
+.cs-val-service{background:#3a3a3a;color:#fff}.cs-val-service .cs-val-icon{color:#aaa}
+.cs-val-quality{background:#f0f0f0;color:#2a2a2a}.cs-val-quality .cs-val-icon{color:var(--green-dark)}
+.cs-val-innovation{background:#b5c4b1;color:#1e2d1e}.cs-val-innovation .cs-val-icon{color:#2a5c2a}
+
+/* Responsive */
+@media(max-width:1024px){
+  .cs-vmc-grid{grid-template-columns:1fr 1fr}
+  .cs-vmc-card:nth-child(2){border-right:none}
+  .cs-vmc-card:nth-child(3){grid-column:1/-1;border-right:none;border-top:1px solid var(--border)}
+  .cs-edu{grid-template-columns:1fr}
+  .cs-edu-img-col{height:220px;flex-direction:row}
+  .cs-edu-img{height:100%;flex:1}
+}
+@media(max-width:768px){
+  .cs-why-header{height:220px}
+  .cs-vmc-grid{grid-template-columns:1fr}
+  .cs-vmc-card{border-right:none;border-bottom:1px solid var(--border)}
+  .cs-values-row{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .cs-values-row{grid-template-columns:1fr}
+  .cs-edu-content{padding:1.8rem 1.4rem}
+}
+
 /* ══ UNAH CAMPUS BUILDING CAMPAIGN ══════════════════════ */
 .unah-campaign{margin:0 0 3rem;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.22)}
 .unah-campaign-inner{display:grid;grid-template-columns:1.1fr 1fr;min-height:520px}
