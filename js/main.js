@@ -1,5 +1,5 @@
 /* ============================================================
-   CALUNAH Website — main.js  v3.0
+   CALUNAH Website, main.js  v3.0
    Club des Alumni de l'Université Adventiste d'Haïti
    501(c)(3) Non-Profit Organization
    ============================================================ */
@@ -7,7 +7,7 @@
 'use strict';
 
 /* ============================================================
-   CALUNAH_CONFIG — Edit all site content here
+   CALUNAH_CONFIG, Edit all site content here
    ============================================================ */
 const CALUNAH_CONFIG = {
 
@@ -284,7 +284,7 @@ const CALUNAH_CONFIG = {
     nextStream: {
       date:     'June 21, 2026',
       time:     '5:30 PM EDT',
-      title:    'Blooming Minds: High Tea Fundraiser 2026 — LIVE Broadcast',
+      title:    'Blooming Minds: High Tea Fundraiser 2026, LIVE Broadcast',
       platform: 'YouTube Live'
     }
   },
@@ -300,9 +300,9 @@ const CALUNAH_CONFIG = {
       flyer:       'images/events/hightea2026.jpg',
       tags:        ['High Tea', 'Fundraiser', 'Education'],
       description: 'An elegant High Tea fundraising evening to support education. Featuring keynote speaker Modoline Altenor, Esq., MC Marjory Sheba, and live performances by Emmanuel Garilus, JP Sonics, Marielle Donatien & Stephanie Garilus.',
-      fullInfo:    'Join CALUNAH for Blooming Minds — an upscale High Tea Fundraising Event raising funds for education. Keynote: Modoline Altenor, Esq. | MC: Marjory Sheba. Featured Performers: Emmanuel Garilus (Saxophonist), JP Sonics (Classic Band), Marielle Donatien (Solo Artist), Stephanie Garilus (Solo Artist). 📍 1217 Trinity Woods Ln, Orlando, FL 32751. 🎟 $60 Advance · $30 Children under 12 · $70 At the Door.',
+      fullInfo:    'Join CALUNAH for Blooming Minds, an upscale High Tea Fundraising Event raising funds for education. Keynote: Modoline Altenor, Esq. | MC: Marjory Sheba. Featured Performers: Emmanuel Garilus (Saxophonist), JP Sonics (Classic Band), Marielle Donatien (Solo Artist), Stephanie Garilus (Solo Artist). 📍 1217 Trinity Woods Ln, Orlando, FL 32751. 🎟 $60 Advance · $30 Children under 12 · $70 At the Door.',
       ticketUrl:   'https://www.eventbrite.com/',
-      ctaLabel:    'Buy Tickets — $60',
+      ctaLabel:    'Buy Tickets, $60',
       upcoming:    true
     },
     {
@@ -313,8 +313,8 @@ const CALUNAH_CONFIG = {
       location:    'Ebenezer SDA Church, Atlanta, GA',
       flyer:       'images/community/georgia-1.webp',
       tags:        ['Chapter', 'Installation', 'Georgia', 'Community'],
-      description: 'A new CALUNAH chapter was established in Atlanta, Georgia — growing our reach across the states and carrying on the mission and vision of CALUNAH through a Meet & Greet luncheon.',
-      fullInfo:    'As a nonprofit organization, CALUNAH believes in growing and reaching out to all alumni around the states. A new chapter was officially established on February 22, 2025 at Ebenezer SDA Church in Atlanta, Georgia — with the ultimate goal to carry on the Mission and Vision of CALUNAH. The installation was celebrated through a Meet & Greet amid a luncheon, welcoming alumni in the Georgia area into the CALUNAH family.',
+      description: 'A new CALUNAH chapter was established in Atlanta, Georgia, growing our reach across the states and carrying on the mission and vision of CALUNAH through a Meet & Greet luncheon.',
+      fullInfo:    'As a nonprofit organization, CALUNAH believes in growing and reaching out to all alumni around the states. A new chapter was officially established on February 22, 2025 at Ebenezer SDA Church in Atlanta, Georgia, with the ultimate goal to carry on the Mission and Vision of CALUNAH. The installation was celebrated through a Meet & Greet amid a luncheon, welcoming alumni in the Georgia area into the CALUNAH family.',
       ticketUrl:   '',
       ctaLabel:    'View Photos',
       upcoming:    false
@@ -324,11 +324,11 @@ const CALUNAH_CONFIG = {
       title:       '3-Day Prayer Session for Haiti',
       date:        'April 2–4, 2025',
       time:        '7:30 PM – 8:30 PM EDT',
-      location:    'Virtual — Zoom',
+      location:    'Virtual, Zoom',
       flyer:       'images/events/prayer2025.webp',
       tags:        ['Prayer', 'Spiritual', 'Virtual', 'Haiti'],
-      description: 'CALUNAH lifted up heartfelt prayers for Haiti — for peace, healing, and strength in the midst of hardship. Three nights of intercession uniting all chapters in one voice before God.',
-      fullInfo:    'As uncertainty was being faced among Haitian immigrants, CALUNAH launched a three-day Prayer Session with the participation of all chapters — calling on God for Forgiveness & Reconciliation (Wednesday), Physical, Emotional & Spiritual Healing (Thursday), and Protection & Deliverance (Friday). 📍 Via Zoom · Meeting ID: 898 1400 5387 · Passcode: prayers · "The prayer of a righteous person is powerful and effective." – James 5:16. As a faithful God — HE CAME THROUGH!',
+      description: 'CALUNAH lifted up heartfelt prayers for Haiti, for peace, healing, and strength in the midst of hardship. Three nights of intercession uniting all chapters in one voice before God.',
+      fullInfo:    'As uncertainty was being faced among Haitian immigrants, CALUNAH launched a three-day Prayer Session with the participation of all chapters, calling on God for Forgiveness & Reconciliation (Wednesday), Physical, Emotional & Spiritual Healing (Thursday), and Protection & Deliverance (Friday). 📍 Via Zoom · Meeting ID: 898 1400 5387 · Passcode: prayers · "The prayer of a righteous person is powerful and effective." – James 5:16. As a faithful God, HE CAME THROUGH!',
       ticketUrl:   '',
       ctaLabel:    'View Recap',
       upcoming:    false
@@ -338,11 +338,11 @@ const CALUNAH_CONFIG = {
       title:       'Backpack Drive Community Service',
       date:        'October 26, 2025',
       time:        'All Day',
-      location:    'Multiple Chapters — Nationwide',
+      location:    'Multiple Chapters, Nationwide',
       flyer:       'images/events/backpack2025.webp',
       tags:        ['Community Service', 'Education', 'Chapters'],
-      description: 'CALUNAH launched a Backpack Drive Community Service event just before school opened, taking place simultaneously across all chapters on the same day — reaching out a hand to children in need across different states.',
-      fullInfo:    'It was a great success where hundreds and hundreds of backpacks were given to different communities. A smile was surely put on many children\'s faces, and a burden lifted upon many parents getting ready for back to school. The event took place simultaneously through the participation of all chapters, on the same day, in different states — uniting CALUNAH in one powerful act of service.',
+      description: 'CALUNAH launched a Backpack Drive Community Service event just before school opened, taking place simultaneously across all chapters on the same day, reaching out a hand to children in need across different states.',
+      fullInfo:    'It was a great success where hundreds and hundreds of backpacks were given to different communities. A smile was surely put on many children\'s faces, and a burden lifted upon many parents getting ready for back to school. The event took place simultaneously through the participation of all chapters, on the same day, in different states, uniting CALUNAH in one powerful act of service.',
       ticketUrl:   '',
       ctaLabel:    'View Photos',
       upcoming:    false
@@ -352,10 +352,10 @@ const CALUNAH_CONFIG = {
       title:       'Saturday Giving Event',
       date:        'November 30, 2024',
       time:        '5:30 PM',
-      location:    'Virtual — YouTube & Facebook Live',
+      location:    'Virtual, YouTube & Facebook Live',
       flyer:       'images/events/saturdaygiving2024.webp',
       tags:        ['Fundraiser', 'Giving', 'Scholarships', 'Community'],
-      description: 'Our community came together for the Saturday Giving Event — a heartfelt initiative raising funds for student scholarships, campus maintenance, building upgrades, new computers, and essential resources that enhance learning and growth.',
+      description: 'Our community came together for the Saturday Giving Event, a heartfelt initiative raising funds for student scholarships, campus maintenance, building upgrades, new computers, and essential resources that enhance learning and growth.',
       fullInfo:    'On November 30, 2024, CALUNAH Executive presented the Saturday Giving Event broadcast live on YouTube and Facebook. The event raised funds for: Scholarships · Renovation & Maintenance · Monitors / Computers · and much more. Thanks to the incredible generosity of donors, partners, and volunteers, the event made a lasting impact that will continue to benefit our school community for years to come. 📺 Broadcast on CALUNAH Executive YouTube & Facebook platforms.',
       ticketUrl:   '',
       ctaLabel:    'View Recap',
@@ -370,7 +370,7 @@ const CALUNAH_CONFIG = {
       flyer:       'images/events/gala2024.avif',
       tags:        ['Gala', 'Fundraiser', 'Annual'],
       description: 'The joy of coming together for a shared purpose was palpable throughout the evening. Each story shared, each laugh exchanged, and each bid placed built a powerful narrative of hope and progress for UNAH education.',
-      fullInfo:    'We extend our deepest gratitude to everyone who helped make this event a success — our sponsors, donors, attendees, and dedicated volunteers. Your support ensures that our mission to support UNAH education initiatives continues to grow and thrive.\n\nLooking back on the evening, it\'s clear that community power is real. Events like these serve as reminders that when we unite, we achieve amazing things. The stories shared during the gala were not just anecdotes — they were poignant reminders of the lives we touch and the change we can create.\n\nThank you to everyone who participated, supported, and believed in our mission. Together, we are not just a community — we are a force for good. Here\'s to many more evenings of impact!',
+      fullInfo:    'We extend our deepest gratitude to everyone who helped make this event a success, our sponsors, donors, attendees, and dedicated volunteers. Your support ensures that our mission to support UNAH education initiatives continues to grow and thrive.\n\nLooking back on the evening, it\'s clear that community power is real. Events like these serve as reminders that when we unite, we achieve amazing things. The stories shared during the gala were not just anecdotes, they were poignant reminders of the lives we touch and the change we can create.\n\nThank you to everyone who participated, supported, and believed in our mission. Together, we are not just a community, we are a force for good. Here\'s to many more evenings of impact!',
       ticketUrl:   '',
       ctaLabel:    'See Photos',
       upcoming:    false
@@ -379,48 +379,48 @@ const CALUNAH_CONFIG = {
 
   /* ---------- Gallery ---------- */
   gallery: [
-    { src: 'images/campus/main-building.jpg',    caption: 'Auditorium Michel Toussaint — UNAH',  cat: 'campus'    },
-    { src: 'images/campus/aerial-2.jpg',         caption: 'UNAH Campus — Aerial Skyview',        cat: 'campus'    },
-    { src: 'images/campus/aerial-1.jpg',         caption: 'UNAH Campus — Aerial View',           cat: 'campus'    },
-    { src: 'images/campus/auditorium.jpg',       caption: 'UNAH Campus — Academic Building',     cat: 'campus'    },
-    { src: 'images/campus/campus-path.jpg',      caption: 'UNAH Campus — Pathways',              cat: 'campus'    },
-    { src: 'images/community/backpack-cover.webp', caption: 'Backpack Drive 2025 — Community Service', cat: 'community' },
-    { src: 'images/community/backpack-1.webp',   caption: 'Backpack Drive 2025 — Giving Backpacks to Children',  cat: 'community' },
-    { src: 'images/community/backpack-2.webp',   caption: 'Backpack Drive 2025 — Chapter Volunteers',            cat: 'community' },
-    { src: 'images/community/backpack-3.webp',   caption: 'Backpack Drive 2025 — Smiles Across Communities',     cat: 'community' },
-    { src: 'images/community/backpack-4.webp',   caption: 'Backpack Drive 2025 — Hundreds of Backpacks Given',   cat: 'community' },
-    { src: 'images/community/backpack-5.webp',   caption: 'Backpack Drive 2025 — Nationwide Chapters United',    cat: 'community' },
-    { src: 'images/community/backpack-6.jpg',    caption: 'Backpack Drive 2025 — Back to School Ready',          cat: 'community' },
-    { src: 'images/community/backpack-7.webp',   caption: 'Backpack Drive 2025 — Impact in the Community',       cat: 'community' },
-    { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds — High Tea Fundraiser 2026',   cat: 'events'    },
+    { src: 'images/campus/main-building.jpg',    caption: 'Auditorium Michel Toussaint, UNAH',  cat: 'campus'    },
+    { src: 'images/campus/aerial-2.jpg',         caption: 'UNAH Campus, Aerial Skyview',        cat: 'campus'    },
+    { src: 'images/campus/aerial-1.jpg',         caption: 'UNAH Campus, Aerial View',           cat: 'campus'    },
+    { src: 'images/campus/auditorium.jpg',       caption: 'UNAH Campus, Academic Building',     cat: 'campus'    },
+    { src: 'images/campus/campus-path.jpg',      caption: 'UNAH Campus, Pathways',              cat: 'campus'    },
+    { src: 'images/community/backpack-cover.webp', caption: 'Backpack Drive 2025, Community Service', cat: 'community' },
+    { src: 'images/community/backpack-1.webp',   caption: 'Backpack Drive 2025, Giving Backpacks to Children',  cat: 'community' },
+    { src: 'images/community/backpack-2.webp',   caption: 'Backpack Drive 2025, Chapter Volunteers',            cat: 'community' },
+    { src: 'images/community/backpack-3.webp',   caption: 'Backpack Drive 2025, Smiles Across Communities',     cat: 'community' },
+    { src: 'images/community/backpack-4.webp',   caption: 'Backpack Drive 2025, Hundreds of Backpacks Given',   cat: 'community' },
+    { src: 'images/community/backpack-5.webp',   caption: 'Backpack Drive 2025, Nationwide Chapters United',    cat: 'community' },
+    { src: 'images/community/backpack-6.jpg',    caption: 'Backpack Drive 2025, Back to School Ready',          cat: 'community' },
+    { src: 'images/community/backpack-7.webp',   caption: 'Backpack Drive 2025, Impact in the Community',       cat: 'community' },
+    { src: 'images/events/hightea2026.jpg',      caption: 'Blooming Minds, High Tea Fundraiser 2026',   cat: 'events'    },
     { src: 'images/events/backpack2025.webp',       caption: 'Backpack Drive Community Service 2025',        cat: 'events'    },
-    { src: 'images/events/saturdaygiving2024.webp', caption: 'Saturday Giving Event — November 30, 2024',   cat: 'events'    },
-    { src: 'images/events/gala2024.avif',           caption: 'Annual Fundraising Gala 2024 — Miami, FL',     cat: 'events'    },
-    { src: 'images/events/prayer2025.webp',      caption: '3-Day Prayer Session for Haiti — April 2025',  cat: 'events'    },
-    { src: 'images/community/georgia-1.webp',   caption: 'Georgia Chapter Installation — Feb 2025',      cat: 'community' },
-    { src: 'images/community/georgia-2.webp',   caption: 'Georgia Chapter — Meet & Greet Luncheon',      cat: 'community' },
-    { src: 'images/community/georgia-3.webp',   caption: 'Georgia Chapter — Ebenezer SDA Church, Atlanta', cat: 'community' },
-    { src: 'images/community/georgia-4.webp',   caption: 'Georgia Chapter — Alumni Gathering',           cat: 'community' },
-    { src: 'images/community/georgia-5.webp',   caption: 'Georgia Chapter — New Members Welcomed',       cat: 'community' },
-    { src: 'images/community/georgia-6.webp',   caption: 'Georgia Chapter — Celebration & Fellowship',   cat: 'community' },
-    { src: 'images/community/georgia-7.webp',   caption: 'Georgia Chapter — CALUNAH Family Grows',       cat: 'community' },
-    { src: 'images/community/georgia-8.webp',   caption: 'Georgia Chapter — Installation Ceremony',      cat: 'community' },
-    { src: 'images/community/georgia-9.webp',   caption: 'Georgia Chapter — United in Mission',          cat: 'community' },
+    { src: 'images/events/saturdaygiving2024.webp', caption: 'Saturday Giving Event, November 30, 2024',   cat: 'events'    },
+    { src: 'images/events/gala2024.avif',           caption: 'Annual Fundraising Gala 2024, Miami, FL',     cat: 'events'    },
+    { src: 'images/events/prayer2025.webp',      caption: '3-Day Prayer Session for Haiti, April 2025',  cat: 'events'    },
+    { src: 'images/community/georgia-1.webp',   caption: 'Georgia Chapter Installation, Feb 2025',      cat: 'community' },
+    { src: 'images/community/georgia-2.webp',   caption: 'Georgia Chapter, Meet & Greet Luncheon',      cat: 'community' },
+    { src: 'images/community/georgia-3.webp',   caption: 'Georgia Chapter, Ebenezer SDA Church, Atlanta', cat: 'community' },
+    { src: 'images/community/georgia-4.webp',   caption: 'Georgia Chapter, Alumni Gathering',           cat: 'community' },
+    { src: 'images/community/georgia-5.webp',   caption: 'Georgia Chapter, New Members Welcomed',       cat: 'community' },
+    { src: 'images/community/georgia-6.webp',   caption: 'Georgia Chapter, Celebration & Fellowship',   cat: 'community' },
+    { src: 'images/community/georgia-7.webp',   caption: 'Georgia Chapter, CALUNAH Family Grows',       cat: 'community' },
+    { src: 'images/community/georgia-8.webp',   caption: 'Georgia Chapter, Installation Ceremony',      cat: 'community' },
+    { src: 'images/community/georgia-9.webp',   caption: 'Georgia Chapter, United in Mission',          cat: 'community' },
   ],
 
   /* ---------- Videos ---------- */
   featuredVideo: {
     youtubeId:   'DFaJBNtm8jg',
     title:       'CALUNAH Saturday Giving 2025',
-    description: 'Relive our 2025 Saturday Giving fundraiser broadcast live — raising funds for student scholarships, campus renovation, monitors, computers, and essential resources for UNAH students.'
+    description: 'Relive our 2025 Saturday Giving fundraiser broadcast live, raising funds for student scholarships, campus renovation, monitors, computers, and essential resources for UNAH students.'
   },
   videos: [
-    { youtubeId: 'pPEFGn-W2s0', title: 'CALUNAH Saturday Giving Fundraiser 2024', description: 'Our Saturday Giving event broadcast live on YouTube & Facebook — November 26, 2024.' }
+    { youtubeId: 'pPEFGn-W2s0', title: 'CALUNAH Saturday Giving Fundraiser 2024', description: 'Our Saturday Giving event broadcast live on YouTube & Facebook, November 26, 2024.' }
   ],
 
   /* ---------- e-Newsletter Issues ---------- */
   newsletters: [
-    { title: 'Perspectives — Spring 2026', date: 'Spring 2026', pdf: 'data/perspectives-spring-2026.pdf', preview: 'High Tea fundraiser, scholarship spotlights, alumni stories, chapter updates & community impact.', featured: true },
+    { title: 'Perspectives, Spring 2026', date: 'Spring 2026', pdf: 'data/perspectives-spring-2026.pdf', preview: 'High Tea fundraiser, scholarship spotlights, alumni stories, chapter updates & community impact.', featured: true },
   ]
   /* More issues will be added as they are published */
 
@@ -559,7 +559,7 @@ function initHeroSlider() {
     timer = setInterval(() => goTo(cur + 1), 5000);
   }
 
-  // HTML already has .active on slide[0] — ensure dots match
+  // HTML already has .active on slide[0], ensure dots match
   dots[0] && dots[0].classList.add('active');
 
   prev && prev.addEventListener('click', () => { goTo(cur - 1); startAuto(); });
@@ -573,7 +573,7 @@ function initHeroSlider() {
 
 
 /* ============================================================
-   4. NAVIGATION — sticky, scroll-spy, mobile accordion
+   4. NAVIGATION, sticky, scroll-spy, mobile accordion
    ============================================================ */
 function initNav() {
   const nav      = qs('#navbar');           // matches id="navbar" in HTML
@@ -586,7 +586,7 @@ function initNav() {
     nav && nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
-  /* Burger toggle — toggles .open on the nav-links <ul> */
+  /* Burger toggle, toggles .open on the nav-links <ul> */
   if (burger && navList) {
     burger.addEventListener('click', () => {
       const open = navList.classList.toggle('open');
@@ -595,7 +595,7 @@ function initNav() {
     });
   }
 
-  /* Mobile dropdown accordion — desktop uses CSS :hover only */
+  /* Mobile dropdown accordion, desktop uses CSS :hover only */
   ddItems.forEach(item => {
     const trigger = qs('.nav-link', item);
     if (!trigger) return;
@@ -647,7 +647,7 @@ function initAOS() {
    6. STATS COUNTER ANIMATION
    ============================================================ */
 function initStats() {
-  // HTML has hardcoded stats with .stat-num[data-target] — animate those in place.
+  // HTML has hardcoded stats with .stat-num[data-target], animate those in place.
   // If a #stats-grid placeholder exists, build from config instead.
   const grid = qs('#stats-grid');
   if (grid) {
@@ -883,13 +883,13 @@ function buildGallery() {
   });
 
   if (existingItems.length === 0) {
-    // Show coming-soon state — collapse columns so it fills the full width
+    // Show coming-soon state, collapse columns so it fills the full width
     grid.classList.add('gallery-empty');
     grid.innerHTML = `
       <div class="gallery-coming-soon">
         <div class="gcs-icon"><i class="fas fa-camera"></i></div>
         <h3>Gallery Coming Soon</h3>
-        <p>We are curating our photo collection of events, campus life, and community moments. Check back soon — and share your own CALUNAH memories!</p>
+        <p>We are curating our photo collection of events, campus life, and community moments. Check back soon, and share your own CALUNAH memories!</p>
         <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Submit Your Photos</a>
       </div>
     `;
@@ -920,7 +920,7 @@ function initGalleryFilter() {
   // HTML uses class="gf-btn" with data-filter attribute
   const btns      = qsa('.gf-btn');
   const items     = qsa('.gallery-item');
-  // Spotlight banners — shown when their matching filter is active
+  // Spotlight banners, shown when their matching filter is active
   const spotlights = {
     gala2023: qs('#gala2023-spotlight'),
     gala2024: qs('#gala2024-spotlight')
@@ -953,11 +953,11 @@ function initLightbox() {
   const lbNext  = qs('#lb-next');
   if (!lb || !lbImg) return;
 
-  // Active image set — swapped between gallery and campus
+  // Active image set, swapped between gallery and campus
   let activeItems = CALUNAH_CONFIG.gallery;
   let cur = 0;
 
-  // Read campus photos from DOM at click time (robust — data is always available)
+  // Read campus photos from DOM at click time (robust, data is always available)
   function getCampusItems() {
     const el = qs('#campus-lb-data');
     if (!el) return [];
@@ -987,7 +987,7 @@ function initLightbox() {
     if (thumb) lbOpen(CALUNAH_CONFIG.gallery, +thumb.dataset.index);
   });
 
-  // Campus photo triggers — read data fresh from DOM at each click
+  // Campus photo triggers, read data fresh from DOM at each click
   document.addEventListener('click', e => {
     const trigger = e.target.closest('.campus-lb-trigger');
     if (!trigger) return;
@@ -1066,7 +1066,7 @@ function buildVideos() {
         <div class="vsb-icon"><i class="fab fa-youtube"></i></div>
         <div class="vsb-text">
           <h4>More Videos Coming Soon</h4>
-          <p>Subscribe to our channel and turn on notifications — be the first to watch event replays, live streams, and announcements.</p>
+          <p>Subscribe to our channel and turn on notifications, be the first to watch event replays, live streams, and announcements.</p>
         </div>
         <a href="${chUrl}?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-youtube">
           <i class="fab fa-youtube"></i> Subscribe to Our Channel
@@ -1258,7 +1258,7 @@ function initMembershipForm() {
     data._captcha   = 'false';
     data._replyto   = data.email || '';
     /* Auto-reply receipt sent back to applicant */
-    data._autoresponse = `Dear ${data.firstName || 'Valued Applicant'},\n\nThank you for applying to become a member of CALUNAH — Club des Alumni de l'Université Adventiste d'Haïti.\n\nYour application for "${data.membershipType || 'CALUNAH Membership'}" has been received and is currently under review. Our team will contact you within 3–5 business days.\n\n────────────────────────\nCALUNAH\n2990 Hester Avenue SE\nPalm Bay, FL 32909\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nThis is a confirmation of your submission. Please keep it for your records.\n\nWith gratitude,\nCALUNAH Membership Team`;
+    data._autoresponse = `Dear ${data.firstName || 'Valued Applicant'},\n\nThank you for applying to become a member of CALUNAH, Club des Alumni de l'Université Adventiste d'Haïti.\n\nYour application for "${data.membershipType || 'CALUNAH Membership'}" has been received and is currently under review. Our team will contact you within 3–5 business days.\n\n────────────────────────\nCALUNAH\n2990 Hester Avenue SE\nPalm Bay, FL 32909\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nThis is a confirmation of your submission. Please keep it for your records.\n\nWith gratitude,\nCALUNAH Membership Team`;
 
     try {
       const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
@@ -1365,7 +1365,7 @@ function initNLSignupForm() {
       data._subject      = 'New CALUNAH Newsletter Subscriber';
       data._captcha      = 'false';
       data._replyto      = data.email || '';
-      data._autoresponse = `Welcome to the CALUNAH Newsletter!\n\nDear ${data.firstName || 'Friend'},\n\nYou have been successfully subscribed to the CALUNAH quarterly newsletter.\n\nYou will receive our next issue with alumni news, scholarship announcements, upcoming events, and community stories.\n\n────────────────────────\nCALUNAH — calunah.org\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nTo unsubscribe, simply reply to this email.\n\nWith gratitude,\nCALUNAH Communications Team`;
+      data._autoresponse = `Welcome to the CALUNAH Newsletter!\n\nDear ${data.firstName || 'Friend'},\n\nYou have been successfully subscribed to the CALUNAH quarterly newsletter.\n\nYou will receive our next issue with alumni news, scholarship announcements, upcoming events, and community stories.\n\n────────────────────────\nCALUNAH, calunah.org\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nTo unsubscribe, simply reply to this email.\n\nWith gratitude,\nCALUNAH Communications Team`;
 
       try {
         const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
@@ -1581,7 +1581,7 @@ function initFallingLogos() {
       ctx.translate(this.x, this.y);
       ctx.rotate(this.rot);
       ctx.globalAlpha = Math.min(this.alpha, 1);
-      // shadowBlur removed — was causing scroll lag on all devices
+      // shadowBlur removed, was causing scroll lag on all devices
       ctx.drawImage(logoImg, -this.size / 2, -this.size / 2, this.size, this.size);
       ctx.restore();
     }
@@ -1743,7 +1743,7 @@ function initLazyIframes() {
 const CALUNAH_LANG = {
 
   en: {
-    /* — Navigation — */
+    /*, Navigation, */
     'nav.home':             'Home',
     'nav.about':            'About',
     'nav.work':             'Our Work',
@@ -1759,18 +1759,18 @@ const CALUNAH_LANG = {
     'nav.dd.committee':     'Executive Committee',
     'nav.dd.chapters':      'Chapter Presidents',
     'nav.dd.donors':        'Donors & Partners',
-    /* — Hero — */
+    /*, Hero, */
     'hero.desc':            'Uniting UNAH graduates across the globe through shared faith, fellowship, and an unwavering commitment to excellence.',
     'hero.btn1':            'Our Story',
     'hero.btn2':            'Join CALUNAH',
     'hero.btn3':            ' Donate',
-    /* — Stats — */
+    /*, Stats, */
     'stats.years':          'Years Strong',
     'stats.alumni':         'Alumni Worldwide',
     'stats.countries':      'Countries',
     'stats.scholarships':   'Scholarships Awarded',
     'stats.events':         'Annual Events',
-    /* — About — */
+    /*, About, */
     'about.badge':          'Who We Are',
     'about.title':          'About CALUNAH',
     'about.missionHead':    'Our Mission',
@@ -1784,28 +1784,28 @@ const CALUNAH_LANG = {
     'about.val.service.desc':'Giving back to Haiti and empowering the next generation of students',
     'about.btn1':           'Become a Member',
     'about.btn2':           'Our History',
-    /* — History — */
+    /*, History, */
     'history.badge':        'Our Story',
     'history.title':        'Our History',
     'history.sub':          'Three decades of excellence, unity, and service to Haiti and the world',
-    /* — Work — */
+    /*, Work, */
     'work.badge':           'Making a Difference',
     'work.title':           'Our Work',
     'work.sub':             'Six pillars of impact, transforming lives in Haiti and across the diaspora',
-    /* — Committee — */
+    /*, Committee, */
     'committee.badge':      'Leadership',
     'committee.title':      'Executive Committee',
     'committee.sub':        'Dedicated leaders serving our alumni community with integrity and vision',
     'committee.note':       'Committee members are elected by the CALUNAH membership for 2-year terms.',
     'committee.contact':    'Contact',
-    /* — Chapters — */
+    /*, Chapters, */
     'chapters.badge':       'Around the World',
     'chapters.title':       'Chapter Presidents',
     'chapters.sub':         'CALUNAH chapters unite our alumni family across cities, countries, and continents',
     'chapters.president':   'Chapter President',
     'chapters.contact':     'Contact Chapter',
     'chapters.cta':         'Start a Chapter in Your City',
-    /* — Donors — */
+    /*, Donors, */
     'donors.badge':         'With Gratitude',
     'donors.title':         'Donors & Partners',
     'donors.sub':           'We are deeply grateful to the generous individuals and organizations who make our mission possible',
@@ -1814,44 +1814,44 @@ const CALUNAH_LANG = {
     'donors.silver':        'Silver Partners',
     'donors.become':        'Become a Partner',
     'donors.cta.btn':       'Partner With Us',
-    /* — Events — */
+    /*, Events, */
     'events.badge':         'Stay Connected',
     'events.title':         'Upcoming Events',
     'events.sub':           'Enriching experiences that strengthen our alumni family. Submit your own event below.',
-    /* — Gallery — */
+    /*, Gallery, */
     'gallery.badge':        'Moments We Cherish',
     'gallery.title':        'Photo Gallery',
     'gallery.sub':          'Celebrating togetherness, achievement, and our beautiful community',
-    /* — Videos — */
+    /*, Videos, */
     'videos.badge':         'Watch & Relive',
     'videos.title':         'Videos & Live Stream',
     'videos.sub':           'Relive our events and catch us LIVE on your favorite platform',
-    /* — Newsletter — */
+    /*, Newsletter, */
     'nl.badge':             'Stay Informed',
     'nl.title':             'e-Newsletter',
     'nl.sub':               'Alumni news, success stories, scholarship updates, and upcoming events delivered right to your inbox',
     'nl.signupTitle':       'Subscribe to Our Newsletter',
     'nl.issuesTitle':       'Past Issues',
     'nl.issuesSub':         'Download and read our recent newsletters:',
-    /* — Membership — */
+    /*, Membership, */
     'membership.badge':     'Join the Family',
     'membership.title':     'Membership',
     'membership.sub':       'Be part of a global community of UNAH graduates committed to excellence, faith, and service',
-    /* — Donate — */
+    /*, Donate, */
     'donate.badge':         'Make an Impact',
     'donate.title':         'Support Our Mission',
-    /* — Contact — */
+    /*, Contact, */
     'contact.badge':        'Reach Out',
     'contact.title':        'Contact Us',
     'contact.heading':      'Connect With CALUNAH',
-    /* — Footer — */
+    /*, Footer, */
     'footer.about':         'About CALUNAH',
     'footer.involved':      'Get Involved',
     'footer.updated':       'Stay Updated',
   },
 
   fr: {
-    /* — Navigation — */
+    /*, Navigation, */
     'nav.home':             'Accueil',
     'nav.about':            'À propos',
     'nav.work':             'Notre action',
@@ -1867,18 +1867,18 @@ const CALUNAH_LANG = {
     'nav.dd.committee':     'Comité exécutif',
     'nav.dd.chapters':      'Présidents de chapitre',
     'nav.dd.donors':        'Donateurs et partenaires',
-    /* — Hero — */
+    /*, Hero, */
     'hero.desc':            'Unissant les diplômés de l\'UNAH à travers le monde par la foi partagée, la fraternité et un engagement indéfectible envers l\'excellence.',
     'hero.btn1':            'Notre histoire',
     'hero.btn2':            'Rejoindre CALUNAH',
     'hero.btn3':            ' Faire un don',
-    /* — Stats — */
+    /*, Stats, */
     'stats.years':          'Années de service',
     'stats.alumni':         'Diplômés mondiaux',
     'stats.countries':      'Pays',
     'stats.scholarships':   'Bourses attribuées',
     'stats.events':         'Événements annuels',
-    /* — About — */
+    /*, About, */
     'about.badge':          'Qui nous sommes',
     'about.title':          'À propos de CALUNAH',
     'about.missionHead':    'Notre mission',
@@ -1892,28 +1892,28 @@ const CALUNAH_LANG = {
     'about.val.service.desc':'Redonner à Haïti et responsabiliser la prochaine génération d\'étudiants',
     'about.btn1':           'Devenir membre',
     'about.btn2':           'Notre histoire',
-    /* — History — */
+    /*, History, */
     'history.badge':        'Notre histoire',
     'history.title':        'Notre histoire',
     'history.sub':          'Trois décennies d\'excellence, d\'unité et de service à Haïti et au monde',
-    /* — Work — */
+    /*, Work, */
     'work.badge':           'Faire la différence',
     'work.title':           'Notre action',
     'work.sub':             'Six piliers d\'impact, transformant des vies en Haïti et dans la diaspora',
-    /* — Committee — */
+    /*, Committee, */
     'committee.badge':      'Direction',
     'committee.title':      'Comité exécutif',
     'committee.sub':        'Des leaders dévoués servant notre communauté d\'anciens élèves avec intégrité et vision',
     'committee.note':       'Les membres du comité sont élus par les membres de CALUNAH pour des mandats de 2 ans.',
     'committee.contact':    'Contacter',
-    /* — Chapters — */
+    /*, Chapters, */
     'chapters.badge':       'À travers le monde',
     'chapters.title':       'Présidents de chapitre',
     'chapters.sub':         'Les chapitres CALUNAH unissent notre famille d\'anciens élèves dans les villes, pays et continents',
     'chapters.president':   'Président de chapitre',
     'chapters.contact':     'Contacter le chapitre',
     'chapters.cta':         'Démarrer un chapitre dans votre ville',
-    /* — Donors — */
+    /*, Donors, */
     'donors.badge':         'Avec gratitude',
     'donors.title':         'Donateurs et partenaires',
     'donors.sub':           'Nous sommes profondément reconnaissants envers les généreux individus et organisations qui rendent notre mission possible',
@@ -1922,44 +1922,44 @@ const CALUNAH_LANG = {
     'donors.silver':        'Partenaires Argent',
     'donors.become':        'Devenir partenaire',
     'donors.cta.btn':       'Nous rejoindre',
-    /* — Events — */
+    /*, Events, */
     'events.badge':         'Restez connecté',
     'events.title':         'Événements à venir',
     'events.sub':           'Des expériences enrichissantes qui renforcent notre famille d\'anciens élèves. Soumettez votre propre événement ci-dessous.',
-    /* — Gallery — */
+    /*, Gallery, */
     'gallery.badge':        'Moments précieux',
     'gallery.title':        'Galerie photos',
     'gallery.sub':          'Célébrant la fraternité, les réalisations et notre belle communauté',
-    /* — Videos — */
+    /*, Videos, */
     'videos.badge':         'Regardez et revivez',
     'videos.title':         'Vidéos et direct',
     'videos.sub':           'Revivez nos événements et regardez-nous EN DIRECT sur votre plateforme préférée',
-    /* — Newsletter — */
+    /*, Newsletter, */
     'nl.badge':             'Restez informé',
     'nl.title':             'Bulletin d\'information',
     'nl.sub':               'Actualités des anciens, histoires de réussite, mises à jour des bourses et événements à venir directement dans votre boîte de réception',
     'nl.signupTitle':       'Abonnez-vous à notre bulletin',
     'nl.issuesTitle':       'Numéros précédents',
     'nl.issuesSub':         'Téléchargez et lisez nos bulletins récents :',
-    /* — Membership — */
+    /*, Membership, */
     'membership.badge':     'Rejoignez la famille',
     'membership.title':     'Adhésion',
     'membership.sub':       'Faites partie d\'une communauté mondiale de diplômés de l\'UNAH engagés dans l\'excellence, la foi et le service',
-    /* — Donate — */
+    /*, Donate, */
     'donate.badge':         'Faites un impact',
     'donate.title':         'Soutenez notre mission',
-    /* — Contact — */
+    /*, Contact, */
     'contact.badge':        'Contactez-nous',
     'contact.title':        'Nous contacter',
     'contact.heading':      'Contactez CALUNAH',
-    /* — Footer — */
+    /*, Footer, */
     'footer.about':         'À propos de CALUNAH',
     'footer.involved':      'S\'impliquer',
     'footer.updated':       'Restez à jour',
   },
 
   kr: {
-    /* — Navigation — */
+    /*, Navigation, */
     'nav.home':             'Akèy',
     'nav.about':            'Sou nou',
     'nav.work':             'Travay nou',
@@ -1975,18 +1975,18 @@ const CALUNAH_LANG = {
     'nav.dd.committee':     'Komite egzekitif',
     'nav.dd.chapters':      'Prezidan chapit',
     'nav.dd.donors':        'Donè ak patnè',
-    /* — Hero — */
+    /*, Hero, */
     'hero.desc':            'Reyini diplome UNAH toupatou nan mond lan atravè lafwa, kominote ak angajman pou ekselans.',
     'hero.btn1':            'Istwa nou',
     'hero.btn2':            'Rantre nan CALUNAH',
     'hero.btn3':            ' Fè yon don',
-    /* — Stats — */
+    /*, Stats, */
     'stats.years':          'Ane Fò',
     'stats.alumni':         'Diplome Mondyal',
     'stats.countries':      'Peyi',
     'stats.scholarships':   'Bous Akòde',
     'stats.events':         'Evènman Anyèl',
-    /* — About — */
+    /*, About, */
     'about.badge':          'Ki nou ye',
     'about.title':          'Sou CALUNAH',
     'about.missionHead':    'Misyon nou',
@@ -2000,28 +2000,28 @@ const CALUNAH_LANG = {
     'about.val.service.desc':'Bay Ayiti retou ak ba jenerasyon pwochen elèv yo pouvwa',
     'about.btn1':           'Vin yon manm',
     'about.btn2':           'Istwa nou',
-    /* — History — */
+    /*, History, */
     'history.badge':        'Istwa nou',
     'history.title':        'Istwa nou',
     'history.sub':          'Twa deseni ekselans, inite ak sèvis pou Ayiti ak mond lan',
-    /* — Work — */
+    /*, Work, */
     'work.badge':           'Fè yon diferans',
     'work.title':           'Travay nou',
     'work.sub':             'Sis pilye enpak, ap transfòme lavi ann Ayiti ak nan dyaspora a',
-    /* — Committee — */
+    /*, Committee, */
     'committee.badge':      'Lidèchip',
     'committee.title':      'Komite egzekitif',
     'committee.sub':        'Lidè dedye k ap sèvi kominote alumni nou an ak entegrite ak vizyon',
     'committee.note':       'Manm komite yo eli pa manm CALUNAH yo pou manda de an.',
     'committee.contact':    'Kontakte',
-    /* — Chapters — */
+    /*, Chapters, */
     'chapters.badge':       'Toupatou nan mond lan',
     'chapters.title':       'Prezidan chapit',
     'chapters.sub':         'Chapit CALUNAH reyini fanmi alumni nou an nan vil, peyi ak kontinan',
     'chapters.president':   'Prezidan chapit',
     'chapters.contact':     'Kontakte chapit',
     'chapters.cta':         'Kòmanse yon chapit nan vil ou',
-    /* — Donors — */
+    /*, Donors, */
     'donors.badge':         'Ak rekonesan',
     'donors.title':         'Donè ak patnè',
     'donors.sub':           'Nou pwofondman rekonesan anvè moun jenere ak òganizasyon ki rann misyon nou posib',
@@ -2030,37 +2030,37 @@ const CALUNAH_LANG = {
     'donors.silver':        'Patnè Ajan',
     'donors.become':        'Vin yon patnè',
     'donors.cta.btn':       'Rantre ak nou',
-    /* — Events — */
+    /*, Events, */
     'events.badge':         'Rete konekte',
     'events.title':         'Evènman k ap vini',
     'events.sub':           'Eksperyans riches ki ranfòse fanmi alumni nou an. Soumèt evènman ou a anba a.',
-    /* — Gallery — */
+    /*, Gallery, */
     'gallery.badge':        'Moman nou choye',
     'gallery.title':        'Galeri foto',
     'gallery.sub':          'Selebre kominote nou an, reyalizasyon ak bèl moman nou yo',
-    /* — Videos — */
+    /*, Videos, */
     'videos.badge':         'Gade ak reviv',
     'videos.title':         'Videyo ak emisyon an dirèk',
     'videos.sub':           'Reviv evènman nou yo epi gade nou AN DIRÈK sou platfòm ou renmen an',
-    /* — Newsletter — */
+    /*, Newsletter, */
     'nl.badge':             'Rete enfòme',
     'nl.title':             'Bilten elektwonik',
     'nl.sub':               'Nouvèl alumni, istwa siksè, mizajou bous ak evènman k ap vini livre dirèkteman nan bwat imèl ou',
     'nl.signupTitle':       'Abòne nan bilten nou an',
     'nl.issuesTitle':       'Nimewo pase',
     'nl.issuesSub':         'Telechaje epi li bilten resan nou yo :',
-    /* — Membership — */
+    /*, Membership, */
     'membership.badge':     'Rantre nan fanmi an',
     'membership.title':     'Manm',
     'membership.sub':       'Fè pati yon kominote mondyal diplome UNAH ki angaje nan ekselans, lafwa ak sèvis',
-    /* — Donate — */
+    /*, Donate, */
     'donate.badge':         'Fè yon efè',
     'donate.title':         'Sipòte misyon nou',
-    /* — Contact — */
+    /*, Contact, */
     'contact.badge':        'Kontakte nou',
     'contact.title':        'Kontakte nou',
     'contact.heading':      'Kontakte CALUNAH',
-    /* — Footer — */
+    /*, Footer, */
     'footer.about':         'Sou CALUNAH',
     'footer.involved':      'Enplike w',
     'footer.updated':       'Rete ajou',
@@ -2082,16 +2082,16 @@ function applyTranslation(lang) {
     const val = t[key];
     if (!val) return;
 
-    // Detect meaningful child elements (icons / spans) — ignore <br> which is a void line-break
+    // Detect meaningful child elements (icons / spans), ignore <br> which is a void line-break
     const childEls = [...el.childNodes].filter(n => n.nodeType === 1 && n.tagName !== 'BR');
     if (childEls.length > 0) {
-      // Has icon / span children — only update the text node(s), keep icons intact
+      // Has icon / span children, only update the text node(s), keep icons intact
       const textNodes = [...el.childNodes].filter(n => n.nodeType === 3 && n.textContent.trim());
       if (textNodes.length > 0) {
         textNodes[textNodes.length - 1].textContent = val;
       }
     } else {
-      // Pure text (or text with only <br>) — replace full text content safely
+      // Pure text (or text with only <br>), replace full text content safely
       el.textContent = val;
     }
   });
@@ -2148,13 +2148,13 @@ function initLanguageSwitcher() {
     btn.addEventListener('click', () => applyTranslation(btn.dataset.lang));
   });
 
-  // Apply saved language on load (skip English — it's the default)
+  // Apply saved language on load (skip English, it's the default)
   if (savedLang !== 'en') applyTranslation(savedLang);
 }
 
 
 /* ============================================================
-   CMS — Load dynamic content from /data/*.json
+   CMS, Load dynamic content from /data/*.json
    Published by the admin panel and served by Vercel.
    Falls back gracefully to CALUNAH_CONFIG defaults.
    ============================================================ */
@@ -2210,7 +2210,7 @@ function buildBlog() {
 
 
 /* ============================================================
-   BOOT — DOMContentLoaded
+   BOOT, DOMContentLoaded
    ============================================================ */
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -2272,7 +2272,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* Done */
   console.log(
-    '%c CALUNAH Website v3.0 — Ready ✓ ',
+    '%c CALUNAH Website v3.0, Ready ✓ ',
     'background:#0a2714;color:#c9a227;font-weight:bold;padding:4px 10px;border-radius:4px;font-size:13px;'
   );
 });
