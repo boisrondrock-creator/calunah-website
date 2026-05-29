@@ -1207,6 +1207,54 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .ucp-stats{gap:.8rem}
 }
 
+/* ══ EVENT TICKET TIERS ══════════════════════════════════ */
+.event-tickets{margin:1.2rem 0 0;background:linear-gradient(135deg,rgba(201,162,39,.07),rgba(26,107,47,.05));border:1.5px solid rgba(201,162,39,.25);border-radius:14px;padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:.9rem}
+.et-heading{font-family:var(--font-body);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.5rem}
+.et-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+.et-tier{background:var(--white);border-radius:10px;border:1px solid var(--border);padding:1rem;display:flex;flex-direction:column;gap:.4rem;align-items:center;text-align:center;transition:var(--transition)}
+.et-tier:hover{border-color:var(--gold);box-shadow:0 6px 20px rgba(201,162,39,.14);transform:translateY(-3px)}
+.et-tier-top{display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.et-tier-label{font-family:var(--font-body);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mid)}
+.et-tier-price{font-family:var(--font-head);font-size:1.7rem;font-weight:900;color:var(--green-dark);line-height:1}
+.et-tier-note{font-size:.72rem;color:var(--text-light);text-align:center}
+.et-buy-btn{background:var(--green);color:#fff;border:none;font-size:.75rem;padding:.45rem .9rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:700;width:100%;text-align:center;text-decoration:none;display:block}
+.et-buy-btn:hover{background:var(--green-dark);color:#fff}
+.et-reserve-btn{background:transparent;border:1.5px solid var(--green);color:var(--green);font-size:.75rem;padding:.42rem .9rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:700;width:100%;transition:var(--transition)}
+.et-reserve-btn:hover{background:var(--green);color:#fff}
+.et-at-door{font-size:.72rem;color:var(--text-light);margin-top:.3rem;display:flex;align-items:center;gap:.3rem;justify-content:center}
+.et-reserve-all-btn{background:rgba(201,162,39,.1);border:1.5px dashed rgba(201,162,39,.4);color:var(--green-dark);font-family:var(--font-body);font-size:.8rem;font-weight:700;padding:.65rem 1rem;border-radius:50px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%}
+.et-reserve-all-btn:hover{background:rgba(201,162,39,.18);border-color:var(--gold)}
+@media(max-width:480px){.et-tiers{grid-template-columns:1fr}}
+
+/* ══ TICKET RESERVATION MODAL ════════════════════════════ */
+.ticket-modal{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+.ticket-modal.open{opacity:1;visibility:visible}
+.ticket-modal-overlay{position:absolute;inset:0;background:rgba(7,26,12,.88);backdrop-filter:blur(6px);cursor:pointer}
+.ticket-modal-box{position:relative;z-index:1;background:var(--white);border-radius:20px;padding:0;max-width:560px;width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.4);animation:tmSlideIn .35s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes tmSlideIn{from{transform:translateY(30px) scale(.95);opacity:0}to{transform:none;opacity:1}}
+.ticket-modal-close{position:absolute;top:1rem;right:1rem;z-index:2;background:rgba(0,0,0,.08);border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:.9rem;transition:var(--transition)}
+.ticket-modal-close:hover{background:rgba(0,0,0,.16)}
+.tm-header{background:linear-gradient(135deg,var(--green-dark),var(--green-deeper));padding:2rem 2rem 1.5rem;border-radius:20px 20px 0 0;text-align:center;color:#fff}
+.tm-header-icon{font-size:2rem;color:var(--gold);margin-bottom:.5rem;display:block}
+.tm-header h3{font-family:var(--font-head);font-size:1.25rem;font-weight:800;margin:.25rem 0 0;color:#fff}
+.tm-event-meta{font-size:.8rem;color:rgba(255,255,255,.7);margin:.3rem 0 0}
+.tm-ticket-selected{padding:.75rem 2rem 0;text-align:center}
+.tm-selected-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,162,39,.12);border:1.5px solid rgba(201,162,39,.35);color:var(--gold);font-size:.8rem;font-weight:700;padding:.4rem 1.2rem;border-radius:50px;letter-spacing:.04em}
+.tm-form{padding:1.5rem 2rem 2rem;display:flex;flex-direction:column;gap:1rem}
+.tm-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tm-form-group{display:flex;flex-direction:column;gap:.35rem}
+.tm-form-group label{font-size:.78rem;font-weight:700;color:var(--text);letter-spacing:.02em}
+.tm-form-group label span{color:var(--gold)}
+.tm-form-group input,.tm-form-group select,.tm-form-group textarea{border:1.5px solid var(--border);border-radius:8px;padding:.6rem .9rem;font-size:.88rem;font-family:var(--font-body);color:var(--text);background:var(--off-white);transition:var(--transition);width:100%}
+.tm-form-group input:focus,.tm-form-group select:focus,.tm-form-group textarea:focus{outline:none;border-color:var(--green);background:var(--white);box-shadow:0 0 0 3px rgba(26,107,47,.1)}
+.tm-pay-info{display:flex;align-items:flex-start;gap:.75rem;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.2);border-radius:10px;padding:1rem}
+.tm-pay-info i{color:var(--gold);margin-top:.15rem;flex-shrink:0}
+.tm-pay-info p{font-size:.8rem;line-height:1.6;color:var(--text-mid);margin:0}
+.tm-submit{margin-top:.25rem}
+.tm-success{display:flex;align-items:center;gap:.75rem;background:#e8f5e9;border:1.5px solid #4caf50;border-radius:10px;padding:1rem 1.2rem;color:#2e7d32;font-size:.88rem;font-weight:600;line-height:1.5}
+.tm-success i{font-size:1.3rem;flex-shrink:0}
+@media(max-width:480px){.tm-form-row{grid-template-columns:1fr}.tm-form{padding:1.2rem 1.2rem 1.6rem}}
+
 /* ── DONATE QR BANNER ───────────────────────────────────── */
 .donate-qr-banner{
   display:flex;align-items:center;gap:2.5rem;

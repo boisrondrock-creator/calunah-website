@@ -1302,5 +1302,88 @@
 <script src="js/main.js"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
+
+<!-- ══ TICKET RESERVATION MODAL ═══════════════════════════ -->
+<div class="ticket-modal" id="ticket-modal" role="dialog" aria-modal="true" aria-label="Reserve your ticket">
+  <div class="ticket-modal-overlay" id="ticket-modal-overlay"></div>
+  <div class="ticket-modal-box">
+    <button class="ticket-modal-close" id="ticket-modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+
+    <div class="tm-header">
+      <i class="fas fa-ticket-alt tm-header-icon"></i>
+      <h3 id="tm-event-name">Reserve Your Spot</h3>
+      <p id="tm-event-date" class="tm-event-meta"></p>
+    </div>
+
+    <div class="tm-ticket-selected" id="tm-ticket-selected"></div>
+
+    <form class="tm-form" id="tm-form"
+          action="https://formsubmit.co/boisrondrock@gmail.com" method="POST">
+      <input type="hidden" name="_subject" id="tm-subject" value="CALUNAH Ticket Reservation">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="Event" id="tm-event-field" value="">
+      <input type="hidden" name="Ticket Type" id="tm-type-field" value="">
+      <input type="hidden" name="Ticket Price" id="tm-price-field" value="">
+
+      <div class="tm-form-row">
+        <div class="tm-form-group">
+          <label>First Name <span>*</span></label>
+          <input type="text" name="First Name" placeholder="Jean" required>
+        </div>
+        <div class="tm-form-group">
+          <label>Last Name <span>*</span></label>
+          <input type="text" name="Last Name" placeholder="Pierre" required>
+        </div>
+      </div>
+      <div class="tm-form-group">
+        <label>Email Address <span>*</span></label>
+        <input type="email" name="Email" placeholder="you@email.com" required>
+      </div>
+      <div class="tm-form-group">
+        <label>Phone Number</label>
+        <input type="tel" name="Phone" placeholder="(321) 000-0000">
+      </div>
+      <div class="tm-form-row">
+        <div class="tm-form-group">
+          <label>Number of Tickets <span>*</span></label>
+          <select name="Number of Tickets" id="tm-qty" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6+</option>
+          </select>
+        </div>
+        <div class="tm-form-group">
+          <label>Payment Method <span>*</span></label>
+          <select name="Payment Method" required>
+            <option value="">Choose…</option>
+            <option>Zelle — 321-890-5764</option>
+            <option>PayPal — donate@calunah.org</option>
+            <option>Check / Money Order</option>
+          </select>
+        </div>
+      </div>
+      <div class="tm-form-group">
+        <label>Special Requests / Notes</label>
+        <textarea name="Notes" rows="2" placeholder="Dietary needs, accessibility, etc."></textarea>
+      </div>
+
+      <div class="tm-pay-info">
+        <i class="fas fa-info-circle"></i>
+        <p>After submitting, please send your payment to the method selected above. Your reservation will be confirmed once payment is received. A receipt will be emailed to you.</p>
+      </div>
+
+      <button type="submit" class="btn btn-gold btn-full tm-submit">
+        <i class="fas fa-paper-plane"></i> Send Reservation Request
+      </button>
+      <div class="tm-success" id="tm-success" hidden>
+        <i class="fas fa-check-circle"></i> Your reservation request has been sent! Please complete your payment to confirm your spot. See you there!
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>

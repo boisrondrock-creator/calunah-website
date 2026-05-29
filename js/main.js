@@ -836,17 +836,44 @@ function buildEvents() {
           <p>${ev.fullInfo}</p>
         </div>
 
+        <!-- Ticket tiers for upcoming events -->
+        ${ev.upcoming && ev.tickets && ev.tickets.length ? `
+        <div class="event-tickets">
+          <div class="et-heading"><i class="fas fa-ticket-alt"></i> Get Your Tickets</div>
+          <div class="et-tiers">
+            ${ev.tickets.map(t => `
+              <div class="et-tier">
+                <div class="et-tier-top">
+                  <span class="et-tier-label">${t.label}</span>
+                  <span class="et-tier-price">$${t.price}</span>
+                </div>
+                <span class="et-tier-note">${t.note}</span>
+                ${t.url
+                  ? `<a href="${t.url}" target="_blank" rel="noopener" class="btn et-buy-btn">
+                       <i class="fas fa-credit-card"></i> Buy Online
+                     </a>`
+                  : t.label === 'At the Door'
+                    ? `<span class="et-at-door"><i class="fas fa-map-marker-alt"></i> Available at venue</span>`
+                    : `<button class="btn et-reserve-btn"
+                         onclick="openTicketReservation('${ev.title}','${ev.date}, ${ev.time}','${t.label}','${t.price}')">
+                         <i class="fas fa-calendar-check"></i> Reserve Spot
+                       </button>`
+                }
+              </div>`).join('')}
+          </div>
+          <button class="et-reserve-all-btn"
+            onclick="openTicketReservation('${ev.title}','${ev.date}, ${ev.time}','General','')">
+            <i class="fas fa-envelope"></i> Reserve &amp; Pay Later (Zelle / PayPal)
+          </button>
+        </div>` : ''}
+
         <div class="event-actions">
           <button class="btn-event-more" onclick="toggleEventInfo('${ev.id}')">
             <i class="fas fa-info-circle"></i> <span>Learn More</span>
           </button>
-          ${ev.ticketUrl
-            ? `<a href="${ev.ticketUrl}" target="_blank" rel="noopener" class="btn btn-gold btn-sm">
-                 <i class="fas fa-ticket-alt"></i> ${ev.ctaLabel}
-               </a>`
-            : ev.ctaLabel
-              ? `<span class="btn btn-outline btn-sm"><i class="fas fa-photo-video"></i> ${ev.ctaLabel}</span>`
-              : ''
+          ${!ev.upcoming && ev.ctaLabel
+            ? `<span class="btn btn-outline btn-sm"><i class="fas fa-photo-video"></i> ${ev.ctaLabel}</span>`
+            : ''
           }
         </div>
       </div>
@@ -865,6 +892,69 @@ function toggleEventInfo(id) {
   if (icon) icon.className = opening ? 'fas fa-chevron-up' : 'fas fa-info-circle';
 }
 window.toggleEventInfo = toggleEventInfo;
+
+/* ── TICKET RESERVATION MODAL ───────────────────────────── */
+function openTicketReservation(eventName, eventDate, ticketType, ticketPrice) {
+  const modal   = qs('#ticket-modal');
+  const nameEl  = qs('#tm-event-name');
+  const dateEl  = qs('#tm-event-date');
+  const selEl   = qs('#tm-ticket-selected');
+  const subjEl  = qs('#tm-subject');
+  const evField = qs('#tm-event-field');
+  const tyField = qs('#tm-type-field');
+  const prField = qs('#tm-price-field');
+  if (!modal) return;
+
+  if (nameEl) nameEl.textContent = eventName;
+  if (dateEl) dateEl.textContent = eventDate;
+  if (subjEl) subjEl.value = `Ticket Reservation: ${eventName}`;
+  if (evField) evField.value = eventName;
+  if (tyField) tyField.value = ticketType || 'General';
+  if (prField) prField.value = ticketPrice ? `$${ticketPrice}` : 'TBD';
+  if (selEl) {
+    selEl.innerHTML = ticketPrice
+      ? `<span class="tm-selected-badge"><i class="fas fa-ticket-alt"></i> ${ticketType} &nbsp;·&nbsp; <strong>$${ticketPrice}</strong></span>`
+      : `<span class="tm-selected-badge"><i class="fas fa-ticket-alt"></i> Reservation Request</span>`;
+  }
+
+  const successEl = qs('#tm-success');
+  const formEl    = qs('#tm-form');
+  if (successEl) successEl.hidden = true;
+  if (formEl) formEl.querySelector('button[type=submit]') && (formEl.querySelector('button[type=submit]').disabled = false);
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTicketModal() {
+  const modal = qs('#ticket-modal');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+window.openTicketReservation = openTicketReservation;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = qs('#ticket-modal-overlay');
+  const closeBtn = qs('#ticket-modal-close');
+  if (overlay)  overlay.addEventListener('click',  closeTicketModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeTicketModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTicketModal(); });
+
+  const tmForm = qs('#tm-form');
+  if (tmForm) {
+    tmForm.addEventListener('submit', function(e) {
+      const btn = this.querySelector('button[type=submit]');
+      const success = qs('#tm-success');
+      if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…'; }
+      // Let FormSubmit handle the actual POST; show success after short delay
+      setTimeout(() => {
+        if (success) success.hidden = false;
+        if (btn) btn.style.display = 'none';
+      }, 2200);
+    });
+  }
+});
 
 
 /* ============================================================
