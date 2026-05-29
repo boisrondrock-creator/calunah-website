@@ -918,8 +918,9 @@ function buildGallery() {
 
 function initGalleryFilter() {
   // HTML uses class="gf-btn" with data-filter attribute
-  const btns  = qsa('.gf-btn');
-  const items = qsa('.gallery-item');
+  const btns     = qsa('.gf-btn');
+  const items    = qsa('.gallery-item');
+  const spotlight = qs('#gala2023-spotlight');
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
       const cat = btn.dataset.filter || btn.dataset.cat || 'all';
@@ -929,6 +930,14 @@ function initGalleryFilter() {
         const show = cat === 'all' || item.dataset.cat === cat;
         item.style.display = show ? '' : 'none';
       });
+      // Show/hide the Spring Gala 2023 spotlight banner
+      if (spotlight) {
+        if (cat === 'gala2023') {
+          spotlight.classList.add('visible');
+        } else {
+          spotlight.classList.remove('visible');
+        }
+      }
     });
   });
 }

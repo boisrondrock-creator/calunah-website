@@ -71,6 +71,20 @@
       "upcoming": false
     },
     {
+      "id": "gala2023",
+      "title": "Spring Fundraising Gala 2023",
+      "date": "March 26, 2023",
+      "time": "Gala Evening · Dinner & Program",
+      "location": "Lauderhill, Florida",
+      "flyer": "images/gallery/gala-2023/1.avif",
+      "tags": ["Gala", "Fundraiser", "Spring", "Education"],
+      "description": "An unforgettable evening of elegance, unity, and purpose. Alumni from across the chapters gathered in Lauderhill, FL, under the theme \"Building for the Future\" — raising vital funds for UNAH student scholarships and campus excellence.",
+      "fullInfo": "On March 26, 2023, CALUNAH hosted its Spring Fundraising Gala in Lauderhill, Florida — a landmark evening that brought together alumni, sponsors, and friends of UNAH from across the diaspora. Under the inspiring theme \"Building for the Future,\" the gala celebrated the enduring legacy of l'Université Adventiste d'Haïti while raising vital funds for student scholarships, campus improvements, and essential educational resources.\n\nThe ballroom glowed with elegance and community spirit. Keynote addresses moved the room to action, heartfelt tributes honored those who have given so much, and spirited fundraising reflected a community united by one powerful belief: that education has the power to transform lives and rebuild nations.\n\nEvery dollar donated, every table filled, every story shared that night became part of a living legacy — one that continues to open doors for the next generation of UNAH graduates. This was more than a gala. It was a declaration that no matter where life has carried us, we remain rooted in faith, united in mission, and committed to building a brighter future — together.",
+      "ticketUrl": "",
+      "ctaLabel": "View Photos",
+      "upcoming": false
+    },
+    {
       "id": "gala2024",
       "title": "Annual Fundraising Gala 2024",
       "date": "December 7, 2024",
