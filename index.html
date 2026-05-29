@@ -613,7 +613,7 @@
           <div class="live-platform-links">
             <p>Follow us to get notified when we go live:</p>
             <div class="live-follow-btns">
-              <a href="https://www.youtube.com/@CALUNAH"  target="_blank" class="btn btn-youtube"><i class="fab fa-youtube"></i> YouTube</a>
+              <a href="https://www.youtube.com/channel/UCGtzefrtPJdErdghKKA2E8g"  target="_blank" class="btn btn-youtube"><i class="fab fa-youtube"></i> YouTube</a>
               <a href="https://www.facebook.com/CALUNAH"  target="_blank" class="btn btn-facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
               <a href="https://www.instagram.com/CALUNAH" target="_blank" class="btn btn-instagram"><i class="fab fa-instagram"></i> Instagram</a>
             </div>
@@ -622,15 +622,30 @@
       </div>
     </div><!-- /livestream-box -->
 
-    <!-- ── Videos Coming Soon ── -->
-    <div class="videos-coming-soon" data-aos="fade-up">
-      <div class="vcs-icon"><i class="fab fa-youtube"></i></div>
-      <h3>Videos Coming Soon</h3>
-      <p>We are currently uploading our event highlights, ceremony recordings, and community videos. Subscribe to our channel to be notified when they go live.</p>
-      <a href="https://www.youtube.com/@CALUNAH" target="_blank" rel="noopener" class="btn btn-youtube">
-        <i class="fab fa-youtube"></i> Subscribe on YouTube
-      </a>
+    <!-- ── Featured Video ── -->
+    <div id="video-feature"></div>
+
+    <!-- ── Past Event Recordings ── -->
+    <div class="videos-section-label" data-aos="fade-up">
+      <h3 class="vsl-title"><i class="fab fa-youtube"></i> Past Event Recordings</h3>
     </div>
+    <div id="videos-grid" class="videos-grid"></div>
+
+    <!-- ── Subscribe Banner ── -->
+    <div id="video-subscribe"></div>
+  </div>
+</section>
+
+<!-- ══ BLOG ══════════════════════════════════════════════ -->
+<section id="blog-section" class="section blog-section" style="display:none">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-badge gold"><i class="fas fa-pen-nib"></i> From Our Community</span>
+      <h2 class="section-title">Latest News &amp; Stories</h2>
+      <div class="divider"><span></span><i class="fas fa-pen-nib"></i><span></span></div>
+      <p class="section-sub">Articles, announcements, and alumni spotlights from the CALUNAH community</p>
+    </div>
+    <div class="blog-grid" id="blog-grid"></div>
   </div>
 </section>
 
@@ -752,9 +767,9 @@
         <a class="btn rec-btn-paypal" id="rec-paypal-btn" href="https://www.paypal.com/donate?business=donate%40calunah.org&currency_code=USD" target="_blank" rel="noopener">
           <i class="fab fa-paypal"></i> Pay with PayPal
         </a>
-        <a class="btn rec-btn-stripe" id="rec-stripe-btn" href="https://buy.stripe.com/your-link" target="_blank" rel="noopener">
-          <i class="fas fa-lock"></i> Pay with Card
-        </a>
+        <span class="btn rec-btn-stripe" style="opacity:.5;cursor:not-allowed" title="Card payments coming soon">
+          <i class="fas fa-lock"></i> Card — Coming Soon
+        </span>
       </div>
 
       <p class="recurring-note"><i class="fas fa-shield-alt"></i> Secure payment · 501(c)(3) · Cancel anytime by emailing us</p>
@@ -878,9 +893,10 @@
           <h4>Credit / Debit Card</h4>
           <p class="dw-detail">Secure checkout powered by Stripe</p>
           <p class="dw-highlight">Visa &nbsp;·&nbsp; MC &nbsp;·&nbsp; Amex</p>
-          <a href="https://buy.stripe.com/your-link" target="_blank" rel="noopener" class="btn dw-btn dw-btn-stripe" id="stripe-donate-btn">
-            <i class="fas fa-lock"></i> Donate with Card
-          </a>
+          <span class="btn dw-btn dw-btn-stripe dw-btn-soon">
+            <i class="fas fa-lock"></i> Coming Soon
+          </span>
+          <p class="dw-coming-soon-note">Stripe card payments will be available soon.</p>
         </div>
 
       </div>
@@ -914,7 +930,7 @@
         <div class="platform-info"><h3>X (Twitter)</h3><p>Real-time news, announcements &amp; conversations</p><span class="platform-handle">@CALUNAH</span></div>
         <div class="platform-arrow"><i class="fas fa-arrow-right"></i></div>
       </a>
-      <a href="https://www.youtube.com/@CALUNAH" target="_blank" rel="noopener" class="platform-card youtube">
+      <a href="https://www.youtube.com/channel/UCGtzefrtPJdErdghKKA2E8g" target="_blank" rel="noopener" class="platform-card youtube">
         <div class="platform-icon"><i class="fab fa-youtube"></i></div>
         <div class="platform-info"><h3>YouTube</h3><p>Event recordings, speeches &amp; live streams</p><span class="platform-handle">CALUNAH Official</span></div>
         <div class="platform-arrow"><i class="fas fa-arrow-right"></i></div>
@@ -940,17 +956,17 @@
           <div class="ci"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><a href="mailto:info@calunah.org">info@calunah.org</a></div></div>
           <div class="ci"><div class="ci-icon"><i class="fas fa-globe"></i></div><div><h4>Website</h4><a href="https://www.calunah.org" target="_blank">www.calunah.org</a></div></div>
           <div class="ci"><div class="ci-icon"><i class="fas fa-university"></i></div><div><h4>Campus</h4><p>Université Adventiste d'Haïti<br>Carrefour, Haïti</p></div></div>
-          <div class="ci"><div class="ci-icon"><i class="fas fa-certificate"></i></div><div><h4>501(c)(3) Status</h4><p>EIN: [XX-XXXXXXX]<br>Donations are tax-deductible</p></div></div>
+          <div class="ci"><div class="ci-icon"><i class="fas fa-certificate"></i></div><div><h4>501(c)(3) Status</h4><p>IRS 501(c)(3) Tax-Exempt<br>Donations are tax-deductible</p></div></div>
         </div>
         <div class="contact-socials">
           <a href="https://www.facebook.com/CALUNAH"  target="_blank" class="cs-btn facebook"><i class="fab fa-facebook-f"></i></a>
           <a href="https://www.instagram.com/CALUNAH" target="_blank" class="cs-btn instagram"><i class="fab fa-instagram"></i></a>
           <a href="https://www.x.com/CALUNAH"         target="_blank" class="cs-btn twitter"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://www.youtube.com/@CALUNAH"  target="_blank" class="cs-btn youtube"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.youtube.com/channel/UCGtzefrtPJdErdghKKA2E8g"  target="_blank" class="cs-btn youtube"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
       <div class="contact-form-wrap" data-aos="fade-left" data-aos-delay="100">
-        <form class="contact-form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <form class="contact-form" id="contact-form" action="https://formsubmit.co/boisrondrock@gmail.com" method="POST">
           <div class="form-row">
             <div class="form-group"><label>First Name <span>*</span></label><input type="text" name="firstName" placeholder="Jean" required></div>
             <div class="form-group"><label>Last Name <span>*</span></label><input type="text" name="lastName" placeholder="Pierre" required></div>
@@ -988,14 +1004,14 @@
             <i class="fas fa-certificate"></i>
             <div>
               <strong>501(c)(3) Nonprofit Organization</strong>
-              <small>EIN: [XX-XXXXXXX] · Donations are tax-deductible</small>
+              <small>IRS 501(c)(3) Tax-Exempt · Donations are tax-deductible</small>
             </div>
           </div>
           <div class="footer-socials">
             <a href="https://www.facebook.com/CALUNAH"  target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.instagram.com/CALUNAH" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.x.com/CALUNAH"         target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://www.youtube.com/@CALUNAH"  target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.youtube.com/channel/UCGtzefrtPJdErdghKKA2E8g"  target="_blank"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
 
@@ -1028,7 +1044,7 @@
           <h4 data-i18n="footer.updated">Stay Updated</h4>
           <p>Subscribe for news, events &amp; alumni spotlights.</p>
           <form class="newsletter-form" id="newsletter-form">
-            <input type="email" placeholder="Your email address" required>
+            <input type="email" name="email" placeholder="Your email address" required>
             <button type="submit"><i class="fas fa-paper-plane"></i></button>
           </form>
           <div class="nl-success" id="nl-success"><i class="fas fa-check"></i> You're subscribed!</div>
@@ -1041,7 +1057,7 @@
   </div>
   <div class="footer-bottom">
     <div class="container">
-      <p>&copy; 2025 CALUNAH — Club des Alumni de l'Université Adventiste d'Haïti. All rights reserved.</p>
+      <p>&copy; <span class="current-year">2025</span> CALUNAH — Club des Alumni de l'Université Adventiste d'Haïti. All rights reserved.</p>
       <p class="footer-note">
         <a href="https://www.calunah.org" target="_blank">www.calunah.org</a> &nbsp;·&nbsp;
         501(c)(3) Nonprofit &nbsp;·&nbsp;

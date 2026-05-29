@@ -1,0 +1,10 @@
+{
+  "chapters": [
+    { "city": "New York",        "country": "New York, USA",            "flag": "🇺🇸", "abbr": "NY",  "color1": "#002868", "color2": "#BF0A30", "iconEmoji": "🍎", "president": "Mackensdy Dorméus",  "photo": "images/chapters/new-york.avif",        "contact": "newyork@calunah.org"        },
+    { "city": "New England",     "country": "CT · MA · RI, USA",        "flag": "🇺🇸", "abbr": "NE",  "color1": "#0C234B", "color2": "#A51C30", "iconEmoji": "🦞", "president": "Gregory Meleance",   "photo": "images/chapters/new-england.avif",     "contact": "newengland@calunah.org"     },
+    { "city": "DMV Region",      "country": "DC · Maryland · Virginia", "flag": "🇺🇸", "abbr": "DMV", "color1": "#003087", "color2": "#D4212D", "iconEmoji": "🏛️", "president": "Ivaline Charles",    "photo": "images/chapters/dmv.avif",             "contact": "dmv@calunah.org"            },
+    { "city": "South Florida",   "country": "Florida, USA",             "flag": "🇺🇸", "abbr": "FL",  "color1": "#005F9E", "color2": "#F4830A", "iconEmoji": "🌴", "president": "Gregere Figaro",     "photo": "images/chapters/south-florida.avif",   "contact": "southflorida@calunah.org"   },
+    { "city": "Central Florida", "country": "Florida, USA",             "flag": "🇺🇸", "abbr": "FL",  "color1": "#006E51", "color2": "#F4830A", "iconEmoji": "🚀", "president": "Rose Ercie Louis",   "photo": "images/chapters/central-florida.avif", "contact": "centralflorida@calunah.org" },
+    { "city": "Georgia",         "country": "Georgia, USA",             "flag": "🇺🇸", "abbr": "GA",  "color1": "#BA0C2F", "color2": "#C4A826", "iconEmoji": "🍑", "president": "Rock E. Boisrond",   "photo": "images/chapters/georgia.webp",         "contact": "georgia@calunah.org"        }
+  ]
+}

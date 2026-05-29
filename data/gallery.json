@@ -1,0 +1,31 @@
+{
+  "items": [
+    { "src": "images/campus/main-building.jpg",      "caption": "Auditorium Michel Toussaint — UNAH",             "cat": "campus"    },
+    { "src": "images/campus/aerial-2.jpg",           "caption": "UNAH Campus — Aerial Skyview",                   "cat": "campus"    },
+    { "src": "images/campus/aerial-1.jpg",           "caption": "UNAH Campus — Aerial View",                      "cat": "campus"    },
+    { "src": "images/campus/auditorium.jpg",         "caption": "UNAH Campus — Academic Building",                "cat": "campus"    },
+    { "src": "images/campus/campus-path.jpg",        "caption": "UNAH Campus — Pathways",                         "cat": "campus"    },
+    { "src": "images/community/backpack-cover.webp", "caption": "Backpack Drive 2025 — Community Service",         "cat": "community" },
+    { "src": "images/community/backpack-1.webp",     "caption": "Backpack Drive 2025 — Giving Backpacks to Children", "cat": "community" },
+    { "src": "images/community/backpack-2.webp",     "caption": "Backpack Drive 2025 — Chapter Volunteers",       "cat": "community" },
+    { "src": "images/community/backpack-3.webp",     "caption": "Backpack Drive 2025 — Smiles Across Communities","cat": "community" },
+    { "src": "images/community/backpack-4.webp",     "caption": "Backpack Drive 2025 — Hundreds of Backpacks Given","cat": "community"},
+    { "src": "images/community/backpack-5.webp",     "caption": "Backpack Drive 2025 — Nationwide Chapters United","cat": "community" },
+    { "src": "images/community/backpack-6.jpg",      "caption": "Backpack Drive 2025 — Back to School Ready",      "cat": "community" },
+    { "src": "images/community/backpack-7.webp",     "caption": "Backpack Drive 2025 — Impact in the Community",  "cat": "community" },
+    { "src": "images/events/hightea2026.jpg",        "caption": "Blooming Minds — High Tea Fundraiser 2026",      "cat": "events"    },
+    { "src": "images/events/backpack2025.webp",      "caption": "Backpack Drive Community Service 2025",           "cat": "events"    },
+    { "src": "images/events/saturdaygiving2024.webp","caption": "Saturday Giving Event — November 30, 2024",      "cat": "events"    },
+    { "src": "images/events/gala2024.avif",          "caption": "Annual Fundraising Gala 2024 — Miami, FL",        "cat": "events"    },
+    { "src": "images/events/prayer2025.webp",        "caption": "3-Day Prayer Session for Haiti — April 2025",    "cat": "events"    },
+    { "src": "images/community/georgia-1.webp",      "caption": "Georgia Chapter Installation — Feb 2025",         "cat": "community" },
+    { "src": "images/community/georgia-2.webp",      "caption": "Georgia Chapter — Meet & Greet Luncheon",         "cat": "community" },
+    { "src": "images/community/georgia-3.webp",      "caption": "Georgia Chapter — Ebenezer SDA Church, Atlanta", "cat": "community" },
+    { "src": "images/community/georgia-4.webp",      "caption": "Georgia Chapter — Alumni Gathering",              "cat": "community" },
+    { "src": "images/community/georgia-5.webp",      "caption": "Georgia Chapter — New Members Welcomed",          "cat": "community" },
+    { "src": "images/community/georgia-6.webp",      "caption": "Georgia Chapter — Celebration & Fellowship",      "cat": "community" },
+    { "src": "images/community/georgia-7.webp",      "caption": "Georgia Chapter — CALUNAH Family Grows",          "cat": "community" },
+    { "src": "images/community/georgia-8.webp",      "caption": "Georgia Chapter — Installation Ceremony",         "cat": "community" },
+    { "src": "images/community/georgia-9.webp",      "caption": "Georgia Chapter — United in Mission",             "cat": "community" }
+  ]
+}

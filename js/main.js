@@ -16,7 +16,7 @@ const CALUNAH_CONFIG = {
     facebook:  'https://www.facebook.com/calunah',
     instagram: 'https://www.instagram.com/calunah',
     twitter:   'https://twitter.com/calunah',
-    youtube:   'https://www.youtube.com/@calunah'
+    youtube:   'https://www.youtube.com/channel/UCGtzefrtPJdErdghKKA2E8g'
   },
 
   /* ---------- Hero Stats ---------- */
@@ -282,9 +282,9 @@ const CALUNAH_CONFIG = {
     facebookUrl:  'https://www.facebook.com/calunah/live',
     instagramUrl: 'https://www.instagram.com/calunah/',
     nextStream: {
-      date:     'June 15, 2026',
-      time:     '7:00 PM EDT',
-      title:    'CALUNAH Annual General Assembly 2026',
+      date:     'June 21, 2026',
+      time:     '5:30 PM EDT',
+      title:    'Blooming Minds: High Tea Fundraiser 2026 — LIVE Broadcast',
       platform: 'YouTube Live'
     }
   },
@@ -410,28 +410,19 @@ const CALUNAH_CONFIG = {
 
   /* ---------- Videos ---------- */
   featuredVideo: {
-    youtubeId:   'dQw4w9WgXcQ',
-    title:       'Welcome to CALUNAH: Who We Are',
-    description: 'Discover the mission, history, and impact of the Club des Alumni de l\'Université Adventiste d\'Haïti.'
+    youtubeId:   'DFaJBNtm8jg',
+    title:       'CALUNAH Saturday Giving 2025',
+    description: 'Relive our 2025 Saturday Giving fundraiser broadcast live — raising funds for student scholarships, campus renovation, monitors, computers, and essential resources for UNAH students.'
   },
   videos: [
-    { youtubeId: 'dQw4w9WgXcQ', title: 'CALUNAH Annual Gala Highlight 2024',      description: 'Relive the magic of our 2024 Annual Gala & Awards Night.'              },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Scholarship Awards Ceremony 2023',         description: 'Celebrating our 2023 scholarship recipients and their achievements.'   },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'CALUNAH Convention Recap 2023',            description: 'Highlights from the 2023 National Convention in Miami.'                 },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Community Outreach: Haiti Relief 2023',      description: 'Our teams on the ground delivering aid to earthquake-affected families.'},
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Message from the President 2025',          description: 'President\'s annual message to all CALUNAH members and supporters.'     },
-    { youtubeId: 'dQw4w9WgXcQ', title: 'Youth Mentorship Program Launch',          description: 'Launching our new mentorship program connecting alumni with UAH students.'}
+    { youtubeId: 'pPEFGn-W2s0', title: 'CALUNAH Saturday Giving Fundraiser 2024', description: 'Our Saturday Giving event broadcast live on YouTube & Facebook — November 26, 2024.' }
   ],
 
   /* ---------- e-Newsletter Issues ---------- */
   newsletters: [
     { title: 'Perspectives — Spring 2026', date: 'Spring 2026', pdf: 'data/perspectives-spring-2026.pdf', preview: 'High Tea fundraiser, scholarship spotlights, alumni stories, chapter updates & community impact.', featured: true },
-    { title: 'CALUNAH Quarterly, Winter 2025', date: 'January 2026',  pdf: 'newsletters/winter2025.pdf', preview: 'Year in review with achievements, financials, and member stories.'   },
-    { title: 'CALUNAH Quarterly, Fall 2025',   date: 'October 2025',  pdf: 'newsletters/fall2025.pdf',   preview: 'Convention recap, leadership updates, and Haiti project news.'        },
-    { title: 'CALUNAH Quarterly, Summer 2025', date: 'July 2025',     pdf: 'newsletters/summer2025.pdf', preview: 'Gala highlights, new chapters, and community service roundup.'      },
-    { title: 'CALUNAH Quarterly, Spring 2025', date: 'April 2025',    pdf: 'newsletters/spring2025.pdf', preview: 'Scholarship announcements, membership drive, and board profiles.'   },
-    { title: 'CALUNAH Annual Report 2024',      date: 'December 2024', pdf: 'newsletters/annual2024.pdf', preview: 'Full-year impact report covering financials, programs, and donors.' }
   ]
+  /* More issues will be added as they are published */
 
 }; // end CALUNAH_CONFIG
 
@@ -520,7 +511,21 @@ function initParticles() {
 
   for (let i = 0; i < 90; i++) particles.push(new Particle());
 
+  let particleActive = true;
+  // Stop the particle loop when splash hides to free CPU
+  const splashEl = qs('#splash');
+  if (splashEl) {
+    const obs = new MutationObserver(() => {
+      if (splashEl.classList.contains('hidden') || !splashEl.isConnected) {
+        particleActive = false;
+        obs.disconnect();
+      }
+    });
+    obs.observe(splashEl, { attributes: true, childList: true });
+  }
+
   (function loop() {
+    if (!particleActive) return; // stop drawing once splash is gone
     ctx.clearRect(0, 0, W, H);
     particles.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(loop);
@@ -595,7 +600,7 @@ function initNav() {
     const trigger = qs('.nav-link', item);
     if (!trigger) return;
     trigger.addEventListener('click', e => {
-      if (window.innerWidth > 960) return;
+      if (window.innerWidth > 1200) return;
       e.preventDefault();
       item.classList.toggle('mobile-open');
       ddItems.forEach(other => {
@@ -1000,10 +1005,65 @@ function initLightbox() {
    12. VIDEOS BUILDER
    ============================================================ */
 function buildVideos() {
-  // Video grid is currently replaced with a "Coming Soon" panel in HTML.
-  // This function is a no-op until real YouTube IDs are added to CALUNAH_CONFIG.videos.
-  // To activate: replace the .videos-coming-soon HTML block with <div id="videos-grid"></div>
-  // and update CALUNAH_CONFIG.videos with real YouTube video IDs.
+  const fv    = CALUNAH_CONFIG.featuredVideo;
+  const vids  = CALUNAH_CONFIG.videos;
+  const chUrl = CALUNAH_CONFIG.social.youtube;
+
+  /* ── Featured video (data-src for lazy load) ── */
+  const featureEl = qs('#video-feature');
+  if (featureEl && fv && fv.youtubeId) {
+    featureEl.innerHTML = `
+      <div class="video-feature" data-aos="fade-up">
+        <div class="video-thumb">
+          <iframe data-src="https://www.youtube.com/embed/${fv.youtubeId}?rel=0"
+            title="${fv.title}" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-feature-info">
+          <span class="section-badge gold"><i class="fab fa-youtube"></i> Latest Video</span>
+          <h3>${fv.title}</h3>
+          <p>${fv.description}</p>
+          <a href="https://www.youtube.com/watch?v=${fv.youtubeId}" target="_blank" rel="noopener" class="btn btn-youtube">
+            <i class="fab fa-youtube"></i> Watch on YouTube
+          </a>
+        </div>
+      </div>`;
+  }
+
+  /* ── Past recordings grid (data-src for lazy load) ── */
+  const gridEl = qs('#videos-grid');
+  if (gridEl && vids && vids.length) {
+    gridEl.innerHTML = vids.map((v, i) => `
+      <div class="video-card" data-aos="fade-up" data-aos-delay="${i * 120}">
+        <div class="video-thumb">
+          <iframe data-src="https://www.youtube.com/embed/${v.youtubeId}?rel=0"
+            title="${v.title}" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-card-info">
+          <h4>${v.title}</h4>
+          <span><i class="fab fa-youtube"></i> ${v.description}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ── Subscribe banner ── */
+  const subEl = qs('#video-subscribe');
+  if (subEl) {
+    subEl.innerHTML = `
+      <div class="video-sub-banner" data-aos="fade-up">
+        <div class="vsb-icon"><i class="fab fa-youtube"></i></div>
+        <div class="vsb-text">
+          <h4>More Videos Coming Soon</h4>
+          <p>Subscribe to our channel and turn on notifications — be the first to watch event replays, live streams, and announcements.</p>
+        </div>
+        <a href="${chUrl}?sub_confirmation=1" target="_blank" rel="noopener" class="btn btn-youtube">
+          <i class="fab fa-youtube"></i> Subscribe to Our Channel
+        </a>
+      </div>`;
+  }
 }
 
 
@@ -1055,6 +1115,7 @@ function initLivestream() {
     if (statusText) statusText.textContent = 'LIVE NOW';
     setEmbed(activePlatform);
   } else {
+    box.classList.add('offline');
     if (statusText) statusText.textContent = 'OFFLINE';
     if (embedEl) { embedEl.style.display = 'none'; }
 
@@ -1106,7 +1167,7 @@ function buildNewsletterIssues() {
         </a>
       </div>
       <div class="nl-book-viewer">
-        <iframe src="${featured.pdf}#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
+        <iframe data-src="${featured.pdf}#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
           class="nl-iframe" title="${featured.title}" loading="lazy"
           allowfullscreen></iframe>
         <div class="nl-mobile-fallback">
@@ -1182,18 +1243,26 @@ function initMembershipForm() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting…';
     btn.disabled = true;
 
+    const data = Object.fromEntries(new FormData(form));
+    data._subject   = 'New CALUNAH Membership Application';
+    data._template  = 'table';
+    data._captcha   = 'false';
+    data._replyto   = data.email || '';
+    /* Auto-reply receipt sent back to applicant */
+    data._autoresponse = `Dear ${data.firstName || 'Valued Applicant'},\n\nThank you for applying to become a member of CALUNAH — Club des Alumni de l'Université Adventiste d'Haïti.\n\nYour application for "${data.membershipType || 'CALUNAH Membership'}" has been received and is currently under review. Our team will contact you within 3–5 business days.\n\n────────────────────────\nCALUNAH\n2990 Hester Avenue SE\nPalm Bay, FL 32909\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nThis is a confirmation of your submission. Please keep it for your records.\n\nWith gratitude,\nCALUNAH Membership Team`;
+
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
         method:  'POST',
-        body:    new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(data)
       });
       if (res.ok) {
         form.innerHTML = `
           <div class="form-success">
             <i class="fas fa-check-circle"></i>
             <h3>Application Received!</h3>
-            <p>Thank you for applying to join CALUNAH. We will review your application and contact you within 3–5 business days.</p>
+            <p>Thank you for applying to join CALUNAH. A confirmation has been sent to <strong>${data.email || 'your email'}</strong>. We will review your application and contact you within 3–5 business days.</p>
           </div>
         `;
       } else throw new Error();
@@ -1274,25 +1343,29 @@ function initRecurringMembership() {
    17. NEWSLETTER SIGNUP FORM
    ============================================================ */
 function initNLSignupForm() {
-  qsa('#nl-signup-form, .nl-form').forEach(form => {
+  qsa('#nl-signup-form, .nl-form, #newsletter-form').forEach(form => {
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const btn     = qs('[type=submit]', form);
       const orig    = btn.innerHTML;
-      const success = qs('#nl-signup-success', form) || qs('.nl-success-msg', form);
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing…';
+      const success = qs('#nl-signup-success', form) || qs('.nl-success-msg', form) || qs('#nl-success', form);
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
       btn.disabled  = true;
 
-      try {
-        // form.action may be '#' or empty — skip network if no real action set
-        const action = form.action && !form.action.endsWith('#') ? form.action : null;
-        const ok = !action || (await fetch(action, {
-          method:  'POST',
-          body:    new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        })).ok;
+      const data = Object.fromEntries(new FormData(form));
+      data._subject      = 'New CALUNAH Newsletter Subscriber';
+      data._captcha      = 'false';
+      data._replyto      = data.email || '';
+      data._autoresponse = `Welcome to the CALUNAH Newsletter!\n\nDear ${data.firstName || 'Friend'},\n\nYou have been successfully subscribed to the CALUNAH quarterly newsletter.\n\nYou will receive our next issue with alumni news, scholarship announcements, upcoming events, and community stories.\n\n────────────────────────\nCALUNAH — calunah.org\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nTo unsubscribe, simply reply to this email.\n\nWith gratitude,\nCALUNAH Communications Team`;
 
-        if (ok) {
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify(data)
+        });
+
+        if (res.ok) {
           if (success) {
             success.style.display = 'flex';
             btn.style.display     = 'none';
@@ -1308,7 +1381,7 @@ function initNLSignupForm() {
       } catch {
         btn.innerHTML = orig;
         btn.disabled  = false;
-        showFormError(form, 'Subscription failed. Please try again or email us directly.');
+        showFormError(form, 'Subscription failed. Please try again or email newsletter@calunah.org.');
       }
     });
   });
@@ -1329,11 +1402,16 @@ function initContactForm() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
     btn.disabled  = true;
 
+    const data = Object.fromEntries(new FormData(form));
+    data._subject  = 'New Message from CALUNAH Website';
+    data._template = 'table';
+    data._captcha  = 'false';
+
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
         method:  'POST',
-        body:    new FormData(form),
-        headers: { 'Accept': 'application/json' }
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(data)
       });
       if (res.ok) {
         form.innerHTML = `
@@ -1419,7 +1497,7 @@ function initFallingLogos() {
   const ctx = canvas.getContext('2d');
   let W, H;
   const logos = [];
-  const COUNT = 22;
+  const COUNT = window.innerWidth < 768 ? 8 : 14; // fewer on mobile for performance
   const logoImg = new Image();
   logoImg.src = 'images/logo.png';
 
@@ -1494,23 +1572,24 @@ function initFallingLogos() {
       ctx.translate(this.x, this.y);
       ctx.rotate(this.rot);
       ctx.globalAlpha = Math.min(this.alpha, 1);
-      // Glow
-      const glow = Math.min(this.alpha * 2.8, 1);
-      if (glow > 0.15) {
-        ctx.shadowColor = `rgba(201,162,39,${glow})`;
-        ctx.shadowBlur  = this.size * 1.4;
-      }
+      // shadowBlur removed — was causing scroll lag on all devices
       ctx.drawImage(logoImg, -this.size / 2, -this.size / 2, this.size, this.size);
       ctx.restore();
     }
   }
 
+  // Pause animation when tab is not visible to save CPU/GPU
+  let logoPaused = false;
+  document.addEventListener('visibilitychange', () => { logoPaused = document.hidden; });
+
   function initLogoParticles() {
     for (let i = 0; i < COUNT; i++) logos.push(new Logo(i));
     (function loop() {
-      ctx.clearRect(0, 0, W, H);
-      if (logoImg.complete && logoImg.naturalWidth > 0) {
-        logos.forEach(l => { l.update(); l.draw(); });
+      if (!logoPaused) {
+        ctx.clearRect(0, 0, W, H);
+        if (logoImg.complete && logoImg.naturalWidth > 0) {
+          logos.forEach(l => { l.update(); l.draw(); });
+        }
       }
       requestAnimationFrame(loop);
     })();
@@ -2066,9 +2145,62 @@ function initLanguageSwitcher() {
 
 
 /* ============================================================
+   CMS — Load dynamic content from /data/*.json
+   Published by the admin panel and served by Vercel.
+   Falls back gracefully to CALUNAH_CONFIG defaults.
+   ============================================================ */
+async function loadCMSContent() {
+  const files = {
+    events:   'data/events.json',
+    blog:     'data/blog.json',
+    gallery:  'data/gallery.json',
+    chapters: 'data/chapters.json'
+  };
+  await Promise.all(Object.entries(files).map(async ([key, path]) => {
+    try {
+      const r = await fetch(path + '?t=' + Date.now());
+      if (!r.ok) return;
+      const json = await r.json();
+      if (key === 'events'   && json.events)   CALUNAH_CONFIG.events   = json.events;
+      if (key === 'blog')                       CALUNAH_CONFIG.blog     = json.posts || [];
+      if (key === 'gallery'  && json.items)     CALUNAH_CONFIG.gallery  = json.items;
+      if (key === 'chapters' && json.chapters)  CALUNAH_CONFIG.chapters = json.chapters;
+    } catch (e) { /* silently fall back to config defaults */ }
+  }));
+}
+
+function buildBlog() {
+  const posts = CALUNAH_CONFIG.blog || [];
+  const section = qs('#blog-section');
+  if (!section) return;
+  const published = posts.filter(p => p.published !== false);
+  if (!published.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+  const grid = qs('#blog-grid', section);
+  if (!grid) return;
+  grid.innerHTML = published.slice(0, 6).map(p => `
+    <article class="blog-card" data-aos="fade-up">
+      ${p.coverImage ? `<div class="blog-card-img"><img src="${p.coverImage}" alt="${p.title}" loading="lazy"></div>` : ''}
+      <div class="blog-card-body">
+        <span class="section-badge">${p.category || 'News'}</span>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt || ''}</p>
+        <div class="blog-card-meta">
+          ${p.author ? `<span><i class="fas fa-user"></i> ${p.author}</span>` : ''}
+          ${p.date ? `<span><i class="fas fa-calendar"></i> ${p.date}</span>` : ''}
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+
+/* ============================================================
    BOOT — DOMContentLoaded
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+  /* Load CMS JSON data first, then build */
+  await loadCMSContent();
 
   /* Core experience */
   initSplash();
@@ -2088,6 +2220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   buildEvents();
   buildGallery();
   buildVideos();
+  buildBlog();
   buildNewsletterIssues();
   buildMembership();
 

@@ -1,0 +1,88 @@
+{
+  "events": [
+    {
+      "id": "hightea2026",
+      "title": "Blooming Minds: Giving Back for Education",
+      "date": "June 21, 2026",
+      "time": "5:30 PM – 9:30 PM",
+      "location": "Holy Trinity Reception Center, Orlando, FL",
+      "flyer": "images/events/hightea2026.jpg",
+      "tags": ["High Tea", "Fundraiser", "Education"],
+      "description": "An elegant High Tea fundraising evening to support education. Featuring keynote speaker Modoline Altenor, Esq., MC Marjory Sheba, and live performances by Emmanuel Garilus, JP Sonics, Marielle Donatien & Stephanie Garilus.",
+      "fullInfo": "Join CALUNAH for Blooming Minds — an upscale High Tea Fundraising Event raising funds for education. Keynote: Modoline Altenor, Esq. | MC: Marjory Sheba. Featured Performers: Emmanuel Garilus (Saxophonist), JP Sonics (Classic Band), Marielle Donatien (Solo Artist), Stephanie Garilus (Solo Artist). 📍 1217 Trinity Woods Ln, Orlando, FL 32751. 🎟 $60 Advance · $30 Children under 12 · $70 At the Door.",
+      "ticketUrl": "https://www.eventbrite.com/",
+      "ctaLabel": "Buy Tickets — $60",
+      "upcoming": true
+    },
+    {
+      "id": "georgia2025",
+      "title": "Georgia Chapter Installation",
+      "date": "February 22, 2025",
+      "time": "Meet & Greet Luncheon",
+      "location": "Ebenezer SDA Church, Atlanta, GA",
+      "flyer": "images/community/georgia-1.webp",
+      "tags": ["Chapter", "Installation", "Georgia", "Community"],
+      "description": "A new CALUNAH chapter was established in Atlanta, Georgia — growing our reach across the states and carrying on the mission and vision of CALUNAH through a Meet & Greet luncheon.",
+      "fullInfo": "As a nonprofit organization, CALUNAH believes in growing and reaching out to all alumni around the states. A new chapter was officially established on February 22, 2025 at Ebenezer SDA Church in Atlanta, Georgia — with the ultimate goal to carry on the Mission and Vision of CALUNAH. The installation was celebrated through a Meet & Greet amid a luncheon, welcoming alumni in the Georgia area into the CALUNAH family.",
+      "ticketUrl": "",
+      "ctaLabel": "View Photos",
+      "upcoming": false
+    },
+    {
+      "id": "prayer2025",
+      "title": "3-Day Prayer Session for Haiti",
+      "date": "April 2–4, 2025",
+      "time": "7:30 PM – 8:30 PM EDT",
+      "location": "Virtual — Zoom",
+      "flyer": "images/events/prayer2025.webp",
+      "tags": ["Prayer", "Spiritual", "Virtual", "Haiti"],
+      "description": "CALUNAH lifted up heartfelt prayers for Haiti — for peace, healing, and strength in the midst of hardship. Three nights of intercession uniting all chapters in one voice before God.",
+      "fullInfo": "As uncertainty was being faced among Haitian immigrants, CALUNAH launched a three-day Prayer Session with the participation of all chapters — calling on God for Forgiveness & Reconciliation (Wednesday), Physical, Emotional & Spiritual Healing (Thursday), and Protection & Deliverance (Friday). 📍 Via Zoom · Meeting ID: 898 1400 5387 · Passcode: prayers · \"The prayer of a righteous person is powerful and effective.\" – James 5:16.",
+      "ticketUrl": "",
+      "ctaLabel": "View Recap",
+      "upcoming": false
+    },
+    {
+      "id": "backpack2025",
+      "title": "Backpack Drive Community Service",
+      "date": "October 26, 2025",
+      "time": "All Day",
+      "location": "Multiple Chapters — Nationwide",
+      "flyer": "images/events/backpack2025.webp",
+      "tags": ["Community Service", "Education", "Chapters"],
+      "description": "CALUNAH launched a Backpack Drive Community Service event just before school opened, taking place simultaneously across all chapters on the same day — reaching out a hand to children in need across different states.",
+      "fullInfo": "It was a great success where hundreds and hundreds of backpacks were given to different communities. A smile was surely put on many children's faces, and a burden lifted upon many parents getting ready for back to school. The event took place simultaneously through the participation of all chapters, on the same day, in different states — uniting CALUNAH in one powerful act of service.",
+      "ticketUrl": "",
+      "ctaLabel": "View Photos",
+      "upcoming": false
+    },
+    {
+      "id": "saturdaygiving2024",
+      "title": "Saturday Giving Event",
+      "date": "November 30, 2024",
+      "time": "5:30 PM",
+      "location": "Virtual — YouTube & Facebook Live",
+      "flyer": "images/events/saturdaygiving2024.webp",
+      "tags": ["Fundraiser", "Giving", "Scholarships", "Community"],
+      "description": "Our community came together for the Saturday Giving Event — a heartfelt initiative raising funds for student scholarships, campus maintenance, building upgrades, new computers, and essential resources that enhance learning and growth.",
+      "fullInfo": "On November 30, 2024, CALUNAH Executive presented the Saturday Giving Event broadcast live on YouTube and Facebook. The event raised funds for: Scholarships · Renovation & Maintenance · Monitors / Computers · and much more. Thanks to the incredible generosity of donors, partners, and volunteers, the event made a lasting impact that will continue to benefit our school community for years to come.",
+      "ticketUrl": "",
+      "ctaLabel": "View Recap",
+      "upcoming": false
+    },
+    {
+      "id": "gala2024",
+      "title": "Annual Fundraising Gala 2024",
+      "date": "December 7, 2024",
+      "time": "7:00 PM EST",
+      "location": "Miami, FL",
+      "flyer": "images/events/gala2024.avif",
+      "tags": ["Gala", "Fundraiser", "Annual"],
+      "description": "The joy of coming together for a shared purpose was palpable throughout the evening. Each story shared, each laugh exchanged, and each bid placed built a powerful narrative of hope and progress for UNAH education.",
+      "fullInfo": "We extend our deepest gratitude to everyone who helped make this event a success — our sponsors, donors, attendees, and dedicated volunteers. Your support ensures that our mission to support UNAH education initiatives continues to grow and thrive.",
+      "ticketUrl": "",
+      "ctaLabel": "See Photos",
+      "upcoming": false
+    }
+  ]
+}
