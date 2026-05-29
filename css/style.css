@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════
-   CALUNAH — Complete Stylesheet  v3.0
+   CALUNAH, Complete Stylesheet  v3.0
    Palette: Deep Green · Gold · White
 ══════════════════════════════════════════════════════ */
 :root {
@@ -101,7 +101,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .splash-btn:hover{background:var(--gold);color:var(--green-dark);box-shadow:0 8px 28px rgba(201,162,39,.45);transform:translateY(-3px)}
 
 /* ════════════════════════════════════════
-   NAVIGATION — ANIMATED DROPDOWN
+   NAVIGATION, ANIMATED DROPDOWN
 ════════════════════════════════════════ */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);display:flex;align-items:center;background:transparent;transition:background .4s ease,box-shadow .4s ease,height .4s ease}
 /* Scrolled: frosted dark glass so text stays readable over any section color */
@@ -121,7 +121,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* ── Individual nav item + hover effects ── */
 .nav-item{position:relative}
 .nav-link{display:flex;align-items:center;gap:.3rem;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.9);padding:.5rem .55rem;border-radius:8px;letter-spacing:.04em;text-transform:uppercase;transition:color .25s ease,background .25s ease;position:relative;cursor:pointer;white-space:nowrap;text-shadow:0 1px 8px rgba(0,0,0,.8),0 0 16px rgba(0,0,0,.5)}
-/* Icons hidden on desktop — they consume layout space and all 10 items must fit */
+/* Icons hidden on desktop, they consume layout space and all 10 items must fit */
 .nav-icon{display:none;font-size:.65rem;color:var(--gold);opacity:0;transform:translateY(-2px);transition:opacity .25s ease,transform .25s ease}
 .nav-link:hover .nav-icon,.nav-link.active .nav-icon{opacity:1;transform:translateY(0)}
 
@@ -262,7 +262,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .campus-thumb-overlay i{font-size:1.4rem;color:rgba(255,255,255,.9);filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
 
 /* ════════════════════════════════════════
-   OUR HISTORY — TIMELINE
+   OUR HISTORY, TIMELINE
 ════════════════════════════════════════ */
 /* Founders block */
 .founders-block{display:grid;grid-template-columns:260px 1fr;gap:3rem;align-items:start;background:rgba(255,255,255,.05);border:1px solid rgba(201,162,39,.25);border-radius:var(--radius-lg);padding:2.5rem;margin-bottom:4rem;backdrop-filter:blur(8px)}
@@ -319,7 +319,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .committee-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
 .committee-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:1.75rem 1.25rem;text-align:center;transition:var(--transition)}
 .committee-card:hover{background:rgba(255,255,255,.08);border-color:rgba(201,162,39,.3);transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
-/* Committee photo wrapper — positions the role-icon badge */
+/* Committee photo wrapper, positions the role-icon badge */
 .committee-photo-wrap{position:relative;width:100px;margin:0 auto 1.1rem}
 .committee-photo{width:100px;height:100px;border-radius:50%;border:3px solid rgba(201,162,39,.45);overflow:hidden;background:linear-gradient(135deg,var(--green),var(--green-light));display:flex;align-items:center;justify-content:center;color:var(--gold);transition:var(--transition);box-shadow:0 4px 18px rgba(0,0,0,.35)}
 .committee-photo.photo-fallback{background:linear-gradient(135deg,var(--green),var(--green-light))}
@@ -328,7 +328,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .committee-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;border-radius:50%}
 /* Initials fallback */
 .committee-initials{font-family:var(--font-head);font-size:1.75rem;font-weight:900;color:var(--gold);letter-spacing:.04em;line-height:1;user-select:none}
-/* Role icon badge — bottom-right of photo circle */
+/* Role icon badge, bottom-right of photo circle */
 .committee-role-badge{position:absolute;bottom:2px;right:2px;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--green-dark);display:flex;align-items:center;justify-content:center;font-size:.62rem;border:2.5px solid var(--green-deeper);box-shadow:0 2px 8px rgba(0,0,0,.4);transition:transform .25s ease}
 .committee-card:hover .committee-role-badge{transform:scale(1.15)}
 .committee-role{font-size:.68rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.3rem}
@@ -341,7 +341,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 ════════════════════════════════════════ */
 .chapters-section{background:var(--white)}
 .chapters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
-/* Chapter cards — CSS custom props --ch-c1/--ch-c2 set per-card from JS */
+/* Chapter cards, CSS custom props --ch-c1/--ch-c2 set per-card from JS */
 .chapter-card{--ch-c1:var(--green);--ch-c2:var(--gold);background:var(--off-white);border-radius:var(--radius-lg);padding:0;border:1px solid var(--border);border-top:3.5px solid var(--ch-c1);transition:var(--transition);position:relative;overflow:hidden}
 .chapter-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.13);border-color:var(--ch-c1);border-top-color:var(--ch-c1)}
 /* Subtle color wash on hover */
@@ -724,6 +724,13 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .dw-btn-stripe:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,91,255,.32)}
 .dw-btn-soon{opacity:.55;cursor:not-allowed;pointer-events:none}
 .dw-coming-soon-note{font-size:.75rem;color:var(--text-light);margin-top:.5rem;text-align:center}
+/* Donorbox card */
+.dw-donorbox-badge{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;font-size:1.3rem}
+.dw-donorbox{border-color:rgba(231,76,60,.2)}
+.dw-donorbox:hover{border-color:rgba(231,76,60,.5);box-shadow:0 12px 40px rgba(231,76,60,.13)}
+.dw-btn-donorbox{background:linear-gradient(135deg,#c0392b,#e74c3c)!important;color:#fff!important;border:none;font-weight:700;letter-spacing:.04em;padding:.6rem 1.4rem;border-radius:50px;margin-top:.25rem;text-decoration:none}
+.dw-btn-donorbox:hover{background:linear-gradient(135deg,#a93226,#c0392b)!important;color:#fff!important;transform:translateY(-2px);box-shadow:0 8px 24px rgba(192,57,43,.35)}
+.dw-donorbox-note{font-size:.72rem;color:var(--text-light);margin-top:.4rem;text-align:center;letter-spacing:.02em}
 /* Shared text helpers */
 .donate-way h4{font-size:.95rem;font-weight:800;color:var(--text);margin:0;font-family:var(--font-head)}
 .dw-detail{font-size:.8rem;color:var(--text-light);line-height:1.5;margin:0}
@@ -972,7 +979,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 }
 
 /* ============================================================
-   SUPPLEMENTAL STYLES — v3.0 dynamic components
+   SUPPLEMENTAL STYLES, v3.0 dynamic components
    ============================================================ */
 
 /* Committee email link */
@@ -1044,7 +1051,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* Keyboard navigation focus ring */
 .keyboard-nav *:focus{outline:2px solid var(--gold);outline-offset:3px}
 
-/* Mobile nav open state — handled in main @media(max-width:960px) block above */
+/* Mobile nav open state, handled in main @media(max-width:960px) block above */
 
 /* ── BLOG SECTION ─────────────────────────────────────── */
 .blog-section{background:var(--off-white)}

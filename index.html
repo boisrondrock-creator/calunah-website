@@ -956,16 +956,21 @@
           </address>
         </div>
 
-        <!-- Credit / Debit Card via Stripe -->
-        <div class="donate-way dw-stripe">
-          <div class="dw-icon-wrap"><span class="dw-stripe-badge">S</span></div>
-          <h4>Credit / Debit Card</h4>
-          <p class="dw-detail">Secure checkout powered by Stripe</p>
-          <p class="dw-highlight">Visa &nbsp;·&nbsp; MC &nbsp;·&nbsp; Amex</p>
-          <span class="btn dw-btn dw-btn-stripe dw-btn-soon">
-            <i class="fas fa-lock"></i> Coming Soon
-          </span>
-          <p class="dw-coming-soon-note">Stripe card payments will be available soon.</p>
+        <!-- Donorbox — Online Giving -->
+        <!-- ⬇ REPLACE the href URL with your Donorbox campaign link when ready ⬇ -->
+        <div class="donate-way dw-donorbox">
+          <div class="dw-icon-wrap">
+            <span class="dw-donorbox-badge"><i class="fas fa-hand-holding-heart"></i></span>
+          </div>
+          <h4>Donate Online</h4>
+          <p class="dw-detail">One-time or monthly giving via</p>
+          <p class="dw-highlight">Card &nbsp;·&nbsp; Google Pay &nbsp;·&nbsp; Bank</p>
+          <a class="btn dw-btn dw-btn-donorbox dbox-donation-button"
+             href="https://donorbox.org/calunah"
+             target="_blank" rel="noopener">
+            <i class="fas fa-heart"></i> Donate Now
+          </a>
+          <p class="dw-donorbox-note">Powered by Donorbox &nbsp;·&nbsp; 100% Secure</p>
         </div>
 
       </div>
@@ -1140,5 +1145,7 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="js/main.js"></script>
+<!-- Donorbox widget — powers the "Donate Online" card -->
+<script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 </body>
 </html>
