@@ -900,7 +900,7 @@ function buildGallery() {
   }
 
   grid.innerHTML = existingItems.map((item, i) => `
-    <div class="gallery-item" data-cat="${item.cat}" data-aos="zoom-in" data-aos-delay="${(i % 4) * 60}">
+    <div class="gallery-item gi-enter" data-cat="${item.cat}" style="animation-delay:${(i % 12) * 40}ms">
       <div class="gallery-thumb" data-index="${i}">
         <img src="${item.src}" alt="${item.caption}" loading="lazy"
              onerror="this.closest('.gallery-item').style.display='none'">
@@ -2238,6 +2238,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   buildBlog();
   buildNewsletterIssues();
   buildMembership();
+
+  /* Re-scan AOS after all dynamic content is injected */
+  if (window.AOS) AOS.refresh();
 
   /* Interactive widgets */
   initLightbox();
