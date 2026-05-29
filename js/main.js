@@ -1244,9 +1244,12 @@ function initMembershipForm() {
     btn.disabled = true;
 
     const data = Object.fromEntries(new FormData(form));
-    data._subject  = 'New CALUNAH Membership Application';
-    data._template = 'table';
-    data._captcha  = 'false';
+    data._subject   = 'New CALUNAH Membership Application';
+    data._template  = 'table';
+    data._captcha   = 'false';
+    data._replyto   = data.email || '';
+    /* Auto-reply receipt sent back to applicant */
+    data._autoresponse = `Dear ${data.firstName || 'Valued Applicant'},\n\nThank you for applying to become a member of CALUNAH — Club des Alumni de l'Université Adventiste d'Haïti.\n\nYour application for "${data.membershipType || 'CALUNAH Membership'}" has been received and is currently under review. Our team will contact you within 3–5 business days.\n\n────────────────────────\nCALUNAH\n2990 Hester Avenue SE\nPalm Bay, FL 32909\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nThis is a confirmation of your submission. Please keep it for your records.\n\nWith gratitude,\nCALUNAH Membership Team`;
 
     try {
       const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
@@ -1259,7 +1262,7 @@ function initMembershipForm() {
           <div class="form-success">
             <i class="fas fa-check-circle"></i>
             <h3>Application Received!</h3>
-            <p>Thank you for applying to join CALUNAH. We will review your application and contact you within 3–5 business days.</p>
+            <p>Thank you for applying to join CALUNAH. A confirmation has been sent to <strong>${data.email || 'your email'}</strong>. We will review your application and contact you within 3–5 business days.</p>
           </div>
         `;
       } else throw new Error();
@@ -1350,8 +1353,10 @@ function initNLSignupForm() {
       btn.disabled  = true;
 
       const data = Object.fromEntries(new FormData(form));
-      data._subject = 'New CALUNAH Newsletter Subscriber';
-      data._captcha = 'false';
+      data._subject      = 'New CALUNAH Newsletter Subscriber';
+      data._captcha      = 'false';
+      data._replyto      = data.email || '';
+      data._autoresponse = `Welcome to the CALUNAH Newsletter!\n\nDear ${data.firstName || 'Friend'},\n\nYou have been successfully subscribed to the CALUNAH quarterly newsletter.\n\nYou will receive our next issue with alumni news, scholarship announcements, upcoming events, and community stories.\n\n────────────────────────\nCALUNAH — calunah.org\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nTo unsubscribe, simply reply to this email.\n\nWith gratitude,\nCALUNAH Communications Team`;
 
       try {
         const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
@@ -2140,9 +2145,62 @@ function initLanguageSwitcher() {
 
 
 /* ============================================================
+   CMS — Load dynamic content from /data/*.json
+   Published by the admin panel and served by Vercel.
+   Falls back gracefully to CALUNAH_CONFIG defaults.
+   ============================================================ */
+async function loadCMSContent() {
+  const files = {
+    events:   'data/events.json',
+    blog:     'data/blog.json',
+    gallery:  'data/gallery.json',
+    chapters: 'data/chapters.json'
+  };
+  await Promise.all(Object.entries(files).map(async ([key, path]) => {
+    try {
+      const r = await fetch(path + '?t=' + Date.now());
+      if (!r.ok) return;
+      const json = await r.json();
+      if (key === 'events'   && json.events)   CALUNAH_CONFIG.events   = json.events;
+      if (key === 'blog')                       CALUNAH_CONFIG.blog     = json.posts || [];
+      if (key === 'gallery'  && json.items)     CALUNAH_CONFIG.gallery  = json.items;
+      if (key === 'chapters' && json.chapters)  CALUNAH_CONFIG.chapters = json.chapters;
+    } catch (e) { /* silently fall back to config defaults */ }
+  }));
+}
+
+function buildBlog() {
+  const posts = CALUNAH_CONFIG.blog || [];
+  const section = qs('#blog-section');
+  if (!section) return;
+  const published = posts.filter(p => p.published !== false);
+  if (!published.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+  const grid = qs('#blog-grid', section);
+  if (!grid) return;
+  grid.innerHTML = published.slice(0, 6).map(p => `
+    <article class="blog-card" data-aos="fade-up">
+      ${p.coverImage ? `<div class="blog-card-img"><img src="${p.coverImage}" alt="${p.title}" loading="lazy"></div>` : ''}
+      <div class="blog-card-body">
+        <span class="section-badge">${p.category || 'News'}</span>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt || ''}</p>
+        <div class="blog-card-meta">
+          ${p.author ? `<span><i class="fas fa-user"></i> ${p.author}</span>` : ''}
+          ${p.date ? `<span><i class="fas fa-calendar"></i> ${p.date}</span>` : ''}
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+
+/* ============================================================
    BOOT — DOMContentLoaded
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+  /* Load CMS JSON data first, then build */
+  await loadCMSContent();
 
   /* Core experience */
   initSplash();
@@ -2162,6 +2220,7 @@ document.addEventListener('DOMContentLoaded', () => {
   buildEvents();
   buildGallery();
   buildVideos();
+  buildBlog();
   buildNewsletterIssues();
   buildMembership();
 
