@@ -798,7 +798,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .ci{display:flex;align-items:flex-start;gap:1rem}
 .ci-icon{width:44px;height:44px;background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.9rem}
 .ci h4{font-size:.72rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem}
-.ci a,.ci p{color:rgba(255,255,255,.75);font-size:.9rem;margin:0;transition:var(--transition)} .ci a:hover{color:var(--gold)}
+.ci a,.ci p,.ci address{color:#ffffff;font-size:.9rem;font-weight:400;font-style:normal;margin:0;transition:var(--transition)} .ci a:hover{color:var(--gold)}
 .contact-socials{display:flex;gap:.75rem}
 .cs-btn{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:.9rem;transition:var(--transition);border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06)}
 .cs-btn:hover{transform:translateY(-4px) scale(1.1)}
