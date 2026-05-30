@@ -1060,20 +1060,60 @@ function initLightbox() {
     catch(e) { return []; }
   }
 
+  const spinner = qs('#lb-spinner');
+
   function lbOpen(items, i) {
     activeItems = items;
     if (!activeItems.length) return;
     cur = ((i % activeItems.length) + activeItems.length) % activeItems.length;
-    lbImg.src = activeItems[cur].src;
-    lbImg.alt = activeItems[cur].caption || '';
-    if (lbCap) lbCap.textContent = activeItems[cur].caption || '';
+
+    const src     = activeItems[cur].src;
+    const caption = activeItems[cur].caption || '';
+
+    // Open overlay immediately so user gets instant feedback
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
+    if (lbCap) lbCap.textContent = caption;
+
+    // Show spinner, hide image until loaded
+    lbImg.style.opacity = '0';
+    lbImg.style.transform = 'scale(.93)';
+    if (spinner) spinner.style.display = 'flex';
+
+    // Pre-load via JS Image object — show only when fully ready
+    const loader = new window.Image();
+    loader.onload = () => {
+      lbImg.src     = src;
+      lbImg.alt     = caption;
+      if (spinner) spinner.style.display = 'none';
+      // Small rAF delay so browser paints the src before animating
+      requestAnimationFrame(() => {
+        lbImg.style.transition = 'opacity .25s ease, transform .4s cubic-bezier(.34,1.56,.64,1)';
+        lbImg.style.opacity    = '1';
+        lbImg.style.transform  = 'scale(1)';
+      });
+    };
+    loader.onerror = () => {
+      // Even on error, hide spinner and show what we have
+      if (spinner) spinner.style.display = 'none';
+      lbImg.src = src;
+      lbImg.style.opacity = '1';
+      lbImg.style.transform = 'scale(1)';
+    };
+    loader.src = src;
   }
   function lbClose2() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
+    // Reset image so next open starts clean (no flash of previous photo)
+    setTimeout(() => {
+      lbImg.src             = '';
+      lbImg.style.opacity   = '0';
+      lbImg.style.transform = 'scale(.93)';
+      lbImg.style.transition = '';
+      if (spinner) spinner.style.display = 'none';
+    }, 350); // wait for close animation to finish
   }
 
   // Safety valve: if body overflow gets stuck hidden but lightbox is closed, reset on any scroll attempt
@@ -1091,11 +1131,26 @@ function initLightbox() {
   }, { passive: true });
   function nav(delta) { lbOpen(activeItems, cur + delta); }
 
-  // Gallery grid triggers
-  qs('#gallery-grid') && qs('#gallery-grid').addEventListener('click', e => {
-    const thumb = e.target.closest('.gallery-thumb');
-    if (thumb) lbOpen(CALUNAH_CONFIG.gallery, +thumb.dataset.index);
-  });
+  // Gallery grid — click to open, hover to pre-fetch
+  const galleryGrid = qs('#gallery-grid');
+  if (galleryGrid) {
+    galleryGrid.addEventListener('click', e => {
+      const thumb = e.target.closest('.gallery-thumb');
+      if (thumb) lbOpen(CALUNAH_CONFIG.gallery, +thumb.dataset.index);
+    });
+    // Pre-fetch image on hover so it's in cache before click
+    galleryGrid.addEventListener('mouseover', e => {
+      const thumb = e.target.closest('.gallery-thumb');
+      if (!thumb) return;
+      const idx  = +thumb.dataset.index;
+      const item = CALUNAH_CONFIG.gallery[idx];
+      if (item && item.src && !thumb._prefetched) {
+        thumb._prefetched = true;
+        const pre = new window.Image();
+        pre.src = item.src;
+      }
+    });
+  }
 
   // Campus photo triggers, read data fresh from DOM at each click
   document.addEventListener('click', e => {

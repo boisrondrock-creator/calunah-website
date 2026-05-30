@@ -515,21 +515,25 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   margin-top:35px;
 }
 
-/* Image — hard-capped to never exceed viewport */
+/* Image — hard-capped to never exceed viewport; opacity+transform driven by JS after load */
 .lb-img{
   display:block;
   width:auto;
   height:auto;
   max-width:100%;
-  max-height:calc(100vh - 140px);  /* 70px top + 70px caption+bottom */
+  max-height:calc(100vh - 140px);
   object-fit:contain;
   border-radius:10px;
   box-shadow:0 32px 80px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);
+  opacity:0;
   transform:scale(.93);
-  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
   flex-shrink:1;
 }
-.lightbox.open .lb-img{transform:scale(1)}
+
+/* Spinner shown while image is loading */
+@keyframes lbSpin{to{transform:rotate(360deg)}}
+.lb-spinner{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1;pointer-events:none}
+.lb-spin-ring{width:56px;height:56px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--gold);border-radius:50%;animation:lbSpin .75s linear infinite}
 
 /* Caption */
 .lb-caption{color:rgba(255,255,255,.72);font-size:.85rem;text-align:center;font-style:italic;max-width:700px;padding:0 1rem;line-height:1.55;letter-spacing:.02em}
