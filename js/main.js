@@ -1047,6 +1047,13 @@ function initLightbox() {
   const btnNext  = qs('#lb-next');
   if (!lb || !lbImg) return;
 
+  // ROOT FIX: move the lightbox to be a direct child of <body>. It currently
+  // lives inside the gallery <section>, which has `contain:layout style`. That
+  // CSS makes the section a containing block for position:fixed descendants —
+  // so the lightbox anchored to the tall section, not the screen, and the image
+  // appeared low and cut off. Appending to body anchors it to the real viewport.
+  if (lb.parentElement !== document.body) document.body.appendChild(lb);
+
   let activeItems = CALUNAH_CONFIG.gallery;
   let cur = 0;
 
