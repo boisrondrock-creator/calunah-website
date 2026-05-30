@@ -515,7 +515,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   margin-top:35px;
 }
 
-/* Image */
+/* Image — always visible, just constrained to viewport */
 .lb-img{
   display:block;
   width:auto;
@@ -526,14 +526,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   border-radius:10px;
   box-shadow:0 32px 80px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);
   flex-shrink:1;
-  transition:opacity .3s ease;
 }
-.lb-img.lb-loading{opacity:0}
-
-/* Spinner shown while image is loading */
-@keyframes lbSpin{to{transform:rotate(360deg)}}
-.lb-spinner{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1;pointer-events:none}
-.lb-spin-ring{width:56px;height:56px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--gold);border-radius:50%;animation:lbSpin .75s linear infinite}
 
 /* Caption */
 .lb-caption{color:rgba(255,255,255,.72);font-size:.85rem;text-align:center;font-style:italic;max-width:700px;padding:0 1rem;line-height:1.55;letter-spacing:.02em}

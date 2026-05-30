@@ -1060,51 +1060,30 @@ function initLightbox() {
     catch(e) { return []; }
   }
 
-  const spinner = qs('#lb-spinner');
+  const logoCanvas = qs('#logo-canvas');
 
   function lbOpen(items, i) {
+    if (!items || !items.length) return;
     activeItems = items;
-    if (!activeItems.length) return;
-    cur = ((i % activeItems.length) + activeItems.length) % activeItems.length;
-
+    cur = ((i % items.length) + items.length) % items.length;
     const item = activeItems[cur];
-
-    // Open immediately so user sees the black overlay at once
+    // Hide floating logos — they sit above the lightbox otherwise
+    if (logoCanvas) logoCanvas.style.visibility = 'hidden';
+    // Open
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
-
-    // Set caption
-    if (lbCap) lbCap.textContent = item.caption || '';
-
-    // Hide image, show spinner while loading
-    lbImg.classList.add('lb-loading');
-    if (spinner) spinner.style.display = 'flex';
-
-    // When image finishes loading — show it
-    lbImg.onload = function() {
-      if (spinner) spinner.style.display = 'none';
-      lbImg.classList.remove('lb-loading');
-    };
-    lbImg.onerror = function() {
-      if (spinner) spinner.style.display = 'none';
-      lbImg.classList.remove('lb-loading');
-    };
-
-    // Set the image
+    // Set image and caption — straightforward, no opacity tricks
+    lbImg.src = '';                      // force reset so onload always fires
+    lbImg.src = item.src || '';
     lbImg.alt = item.caption || '';
-    lbImg.src = item.src;
-
-    // Already cached? Show immediately
-    if (lbImg.complete) {
-      if (spinner) spinner.style.display = 'none';
-      lbImg.classList.remove('lb-loading');
-    }
+    if (lbCap) lbCap.textContent = item.caption || '';
   }
+
   function lbClose2() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
-    if (spinner) spinner.style.display = 'none';
+    if (logoCanvas) logoCanvas.style.visibility = '';
   }
 
   // Safety valve: if body overflow gets stuck hidden but lightbox is closed, reset on any scroll attempt
