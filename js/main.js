@@ -1067,16 +1067,19 @@ function initLightbox() {
     lbImg.classList.remove('loaded');
     if (spinner) spinner.classList.add('active');
     if (lbCap) lbCap.textContent = caption;
-    lbImg.onload = function() {
+
+    function reveal() {
       if (spinner) spinner.classList.remove('active');
       lbImg.classList.add('loaded');
-    };
-    lbImg.onerror = function() {
-      if (spinner) spinner.classList.remove('active');
-      lbImg.classList.add('loaded');
-    };
+    }
+
+    lbImg.onload  = reveal;
+    lbImg.onerror = reveal;
     lbImg.src = src;
     lbImg.alt = caption;
+
+    // Cached images: onload may never fire — check immediately after setting src
+    if (lbImg.complete && lbImg.naturalWidth > 0) reveal();
   }
 
   function lbOpen(items, i) {
