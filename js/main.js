@@ -1062,61 +1062,49 @@ function initLightbox() {
 
   const spinner = qs('#lb-spinner');
 
-  function showImage() {
-    if (spinner) spinner.style.display = 'none';
-    requestAnimationFrame(() => {
-      lbImg.style.transition = 'opacity .3s ease, transform .4s cubic-bezier(.34,1.56,.64,1)';
-      lbImg.style.opacity    = '1';
-      lbImg.style.transform  = 'scale(1)';
-    });
-  }
-
   function lbOpen(items, i) {
     activeItems = items;
     if (!activeItems.length) return;
     cur = ((i % activeItems.length) + activeItems.length) % activeItems.length;
 
-    const src     = activeItems[cur].src;
-    const caption = activeItems[cur].caption || '';
+    const item = activeItems[cur];
 
-    // Open overlay immediately — user sees dark background right away
+    // Open immediately so user sees the black overlay at once
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
-    if (lbCap) lbCap.textContent = caption;
 
-    // Reset image state
-    lbImg.style.transition = '';
-    lbImg.style.opacity    = '0';
-    lbImg.style.transform  = 'scale(.93)';
-    lbImg.alt = caption;
+    // Set caption
+    if (lbCap) lbCap.textContent = item.caption || '';
 
-    // Show spinner
+    // Hide image, show spinner while loading
+    lbImg.classList.add('lb-loading');
     if (spinner) spinner.style.display = 'flex';
 
-    // Listen for load on the actual img element
-    lbImg.onload  = showImage;
-    lbImg.onerror = showImage; // show even if image fails
+    // When image finishes loading — show it
+    lbImg.onload = function() {
+      if (spinner) spinner.style.display = 'none';
+      lbImg.classList.remove('lb-loading');
+    };
+    lbImg.onerror = function() {
+      if (spinner) spinner.style.display = 'none';
+      lbImg.classList.remove('lb-loading');
+    };
 
-    // Set src — triggers load (or uses cache instantly)
-    lbImg.src = src;
+    // Set the image
+    lbImg.alt = item.caption || '';
+    lbImg.src = item.src;
 
-    // If image is already cached, onload won't fire — detect and show immediately
-    if (lbImg.complete && lbImg.naturalWidth > 0) {
-      showImage();
+    // Already cached? Show immediately
+    if (lbImg.complete) {
+      if (spinner) spinner.style.display = 'none';
+      lbImg.classList.remove('lb-loading');
     }
   }
   function lbClose2() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
-    // Reset image so next open starts clean (no flash of previous photo)
-    setTimeout(() => {
-      lbImg.src             = '';
-      lbImg.style.opacity   = '0';
-      lbImg.style.transform = 'scale(.93)';
-      lbImg.style.transition = '';
-      if (spinner) spinner.style.display = 'none';
-    }, 350); // wait for close animation to finish
+    if (spinner) spinner.style.display = 'none';
   }
 
   // Safety valve: if body overflow gets stuck hidden but lightbox is closed, reset on any scroll attempt
