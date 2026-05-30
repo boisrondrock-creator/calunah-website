@@ -1073,7 +1073,22 @@ function initLightbox() {
   function lbClose2() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   }
+
+  // Safety valve: if body overflow gets stuck hidden but lightbox is closed, reset on any scroll attempt
+  window.addEventListener('wheel', () => {
+    if (!lb.classList.contains('open') && document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+  }, { passive: true });
+  window.addEventListener('touchmove', () => {
+    if (!lb.classList.contains('open') && document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+  }, { passive: true });
   function nav(delta) { lbOpen(activeItems, cur + delta); }
 
   // Gallery grid triggers

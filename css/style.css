@@ -19,7 +19,7 @@
   --nav-h: 80px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px;-webkit-overflow-scrolling:touch}
+html{font-size:16px;-webkit-overflow-scrolling:touch}
 body{font-family:var(--font-body);color:var(--text);background:var(--white);line-height:1.7;overflow-x:hidden}
 body.splash-open{overflow:hidden}
 img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-style:none}
@@ -112,7 +112,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .navbar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(201,162,39,.0) 20%,rgba(201,162,39,.0) 80%,transparent 100%);transition:background .45s ease;pointer-events:none;z-index:1}
 
 /* Rich frosted dark glass on scroll */
-.navbar.scrolled{background:linear-gradient(180deg,rgba(3,10,5,.97) 0%,rgba(4,14,6,.90) 100%);-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);box-shadow:0 8px 40px rgba(0,0,0,.50),0 1px 0 rgba(201,162,39,.12) inset;border-bottom:1px solid rgba(201,162,39,.18);height:64px}
+.navbar.scrolled{background:linear-gradient(180deg,rgba(3,10,5,.97) 0%,rgba(4,14,6,.92) 100%);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,.50),0 1px 0 rgba(201,162,39,.12) inset;border-bottom:1px solid rgba(201,162,39,.18);height:64px}
 .navbar.scrolled::before{background:linear-gradient(90deg,transparent 0%,rgba(201,162,39,.55) 30%,rgba(255,220,80,.7) 50%,rgba(201,162,39,.55) 70%,transparent 100%)}
 
 /* ── Layout ── */
@@ -496,8 +496,9 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .lightbox{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;pointer-events:none}
 .lightbox.open{opacity:1;visibility:visible;pointer-events:auto}
 
-/* Pure-black overlay */
-.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.93);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer;z-index:0}
+/* Pure-black overlay — hidden via display:none when lightbox is closed so it NEVER blocks page events */
+.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.93);cursor:pointer;z-index:0;display:none}
+.lightbox.open .lb-overlay{display:block}
 
 /* Central box: strictly limited to viewport, never overflows */
 .lb-box{
