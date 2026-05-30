@@ -1039,18 +1039,17 @@ function initGalleryFilter() {
 }
 
 function initLightbox() {
-  const lb      = qs('#lightbox');
-  const lbImg   = qs('#lb-img');
-  const lbCap   = qs('#lb-caption');
-  const lbClose = qs('#lb-close');
-  const lbPrev  = qs('#lb-prev');
-  const lbNext  = qs('#lb-next');
-  const lbSpin  = qs('#lb-spinner');
+  const lb       = qs('#lightbox');
+  const lbImg    = qs('#lb-img');
+  const lbCap    = qs('#lb-caption');
+  const btnClose = qs('#lb-close');
+  const btnPrev  = qs('#lb-prev');
+  const btnNext  = qs('#lb-next');
+  const lbSpin   = qs('#lb-spinner');
   if (!lb || !lbImg) return;
 
   let activeItems = CALUNAH_CONFIG.gallery;
   let cur = 0;
-  let lbSeq = 0; // sequence counter to cancel stale loads
 
   const logoCanvas = qs('#logo-canvas');
 
@@ -1058,76 +1057,79 @@ function initLightbox() {
     const el = qs('#campus-lb-data');
     if (!el) return [];
     try { return JSON.parse(el.dataset.images).map(o => ({ src: o.src, caption: o.cap })); }
-    catch(e) { return []; }
+    catch (e) { return []; }
   }
 
-  function showSpinner(on) {
-    if (!lbSpin) return;
-    lbSpin.style.display = on ? 'block' : 'none';
+  // Set max image size from the REAL visible viewport (window.innerHeight is
+  // correct on iOS Safari; 100vh is not — that's why images were cut off)
+  function sizeImage() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const sideGap = w < 600 ? 70 : 150;   // room for arrows
+    const vertGap = w < 600 ? 120 : 150;  // room for close btn + caption
+    lbImg.style.maxWidth  = (w - sideGap) + 'px';
+    lbImg.style.maxHeight = (h - vertGap) + 'px';
   }
+  window.addEventListener('resize', () => { if (lb.classList.contains('open')) sizeImage(); }, { passive: true });
 
-  function lbOpen(items, i) {
+  function openLightbox(items, i) {
     if (!items || !items.length) return;
     activeItems = items;
     cur = ((i % items.length) + items.length) % items.length;
     const item = activeItems[cur];
-    const mySeq = ++lbSeq;
 
-    // Hide logo canvas
     if (logoCanvas) logoCanvas.style.display = 'none';
-
-    // Open lightbox (black background instant)
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
+    sizeImage();
 
-    // Caption
     if (lbCap) lbCap.textContent = item.caption || '';
 
-    // Hide image, show spinner
+    // Show spinner, hide old image
     lbImg.style.display = 'none';
-    showSpinner(true);
+    if (lbSpin) lbSpin.style.display = 'block';
 
-    // Load image using decode() — most reliable on iOS Safari
-    const newImg = new Image();
-    newImg.onload = function() {
-      if (mySeq !== lbSeq) return; // navigated away, ignore
-      lbImg.src = newImg.src;
-      lbImg.alt = item.caption || '';
+    // Load the image, then reveal it
+    lbImg.onload = function () {
       lbImg.style.display = 'block';
-      showSpinner(false);
+      if (lbSpin) lbSpin.style.display = 'none';
     };
-    newImg.onerror = function() {
-      if (mySeq !== lbSeq) return;
-      lbImg.src = newImg.src;
+    lbImg.onerror = function () {
       lbImg.style.display = 'block';
-      showSpinner(false);
+      if (lbSpin) lbSpin.style.display = 'none';
     };
-    newImg.src = item.src || '';
+    lbImg.src = item.src || '';
+    lbImg.alt = item.caption || '';
+
+    // Cached images: onload may not fire — reveal right away
+    if (lbImg.complete && lbImg.naturalWidth > 0) {
+      lbImg.style.display = 'block';
+      if (lbSpin) lbSpin.style.display = 'none';
+    }
   }
 
-  function lbClose() {
+  function closeLightbox() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     if (logoCanvas) logoCanvas.style.display = '';
     lbImg.style.display = 'none';
     lbImg.src = '';
-    showSpinner(false);
-    lbSeq++; // cancel any pending loads
+    if (lbSpin) lbSpin.style.display = 'none';
   }
 
-  // Safety valve: if body overflow gets stuck, reset on scroll
+  function nav(delta) { openLightbox(activeItems, cur + delta); }
+
+  // Safety valve: if body scroll gets stuck while lightbox is closed, free it
   window.addEventListener('wheel',     () => { if (!lb.classList.contains('open')) document.body.style.overflow = ''; }, { passive: true });
   window.addEventListener('touchmove', () => { if (!lb.classList.contains('open')) document.body.style.overflow = ''; }, { passive: true });
-
-  function nav(delta) { lbOpen(activeItems, cur + delta); }
 
   // Gallery grid clicks
   const galleryGrid = qs('#gallery-grid');
   if (galleryGrid) {
     galleryGrid.addEventListener('click', e => {
       const thumb = e.target.closest('.gallery-thumb');
-      if (thumb) lbOpen(CALUNAH_CONFIG.gallery, +thumb.dataset.index);
+      if (thumb) openLightbox(CALUNAH_CONFIG.gallery, +thumb.dataset.index);
     });
   }
 
@@ -1136,22 +1138,20 @@ function initLightbox() {
     const trigger = e.target.closest('.campus-lb-trigger');
     if (!trigger) return;
     const items = getCampusItems();
-    if (items.length) lbOpen(items, +(trigger.dataset.lbIndex || 0));
+    if (items.length) openLightbox(items, +(trigger.dataset.lbIndex || 0));
   });
 
-  // Controls — clicking lightbox bg closes, clicking image content does not
-  lb.addEventListener('click', e => {
-    if (e.target === lb) lbClose();
-  });
-  lbClose && lbClose.addEventListener('click', lbClose);
-  lbPrev  && lbPrev.addEventListener('click',  e => { e.stopPropagation(); nav(-1); });
-  lbNext  && lbNext.addEventListener('click',  e => { e.stopPropagation(); nav(+1); });
+  // Click the dark background to close; clicks on image/caption do not bubble here
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+  btnClose && btnClose.addEventListener('click', e => { e.stopPropagation(); closeLightbox(); });
+  btnPrev  && btnPrev.addEventListener('click',  e => { e.stopPropagation(); nav(-1); });
+  btnNext  && btnNext.addEventListener('click',  e => { e.stopPropagation(); nav(+1); });
 
   document.addEventListener('keydown', e => {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'ArrowLeft')  nav(-1);
     if (e.key === 'ArrowRight') nav(+1);
-    if (e.key === 'Escape')     lbClose();
+    if (e.key === 'Escape')     closeLightbox();
   });
 }
 
