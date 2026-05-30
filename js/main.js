@@ -1062,6 +1062,15 @@ function initLightbox() {
 
   const spinner = qs('#lb-spinner');
 
+  function showImage() {
+    if (spinner) spinner.style.display = 'none';
+    requestAnimationFrame(() => {
+      lbImg.style.transition = 'opacity .3s ease, transform .4s cubic-bezier(.34,1.56,.64,1)';
+      lbImg.style.opacity    = '1';
+      lbImg.style.transform  = 'scale(1)';
+    });
+  }
+
   function lbOpen(items, i) {
     activeItems = items;
     if (!activeItems.length) return;
@@ -1070,37 +1079,31 @@ function initLightbox() {
     const src     = activeItems[cur].src;
     const caption = activeItems[cur].caption || '';
 
-    // Open overlay immediately so user gets instant feedback
+    // Open overlay immediately — user sees dark background right away
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
     if (lbCap) lbCap.textContent = caption;
 
-    // Show spinner, hide image until loaded
-    lbImg.style.opacity = '0';
-    lbImg.style.transform = 'scale(.93)';
+    // Reset image state
+    lbImg.style.transition = '';
+    lbImg.style.opacity    = '0';
+    lbImg.style.transform  = 'scale(.93)';
+    lbImg.alt = caption;
+
+    // Show spinner
     if (spinner) spinner.style.display = 'flex';
 
-    // Pre-load via JS Image object — show only when fully ready
-    const loader = new window.Image();
-    loader.onload = () => {
-      lbImg.src     = src;
-      lbImg.alt     = caption;
-      if (spinner) spinner.style.display = 'none';
-      // Small rAF delay so browser paints the src before animating
-      requestAnimationFrame(() => {
-        lbImg.style.transition = 'opacity .25s ease, transform .4s cubic-bezier(.34,1.56,.64,1)';
-        lbImg.style.opacity    = '1';
-        lbImg.style.transform  = 'scale(1)';
-      });
-    };
-    loader.onerror = () => {
-      // Even on error, hide spinner and show what we have
-      if (spinner) spinner.style.display = 'none';
-      lbImg.src = src;
-      lbImg.style.opacity = '1';
-      lbImg.style.transform = 'scale(1)';
-    };
-    loader.src = src;
+    // Listen for load on the actual img element
+    lbImg.onload  = showImage;
+    lbImg.onerror = showImage; // show even if image fails
+
+    // Set src — triggers load (or uses cache instantly)
+    lbImg.src = src;
+
+    // If image is already cached, onload won't fire — detect and show immediately
+    if (lbImg.complete && lbImg.naturalWidth > 0) {
+      showImage();
+    }
   }
   function lbClose2() {
     lb.classList.remove('open');
