@@ -1045,7 +1045,6 @@ function initLightbox() {
   const btnClose = qs('#lb-close');
   const btnPrev  = qs('#lb-prev');
   const btnNext  = qs('#lb-next');
-  const lbSpin   = qs('#lb-spinner');
   if (!lb || !lbImg) return;
 
   let activeItems = CALUNAH_CONFIG.gallery;
@@ -1060,18 +1059,6 @@ function initLightbox() {
     catch (e) { return []; }
   }
 
-  // Set max image size from the REAL visible viewport (window.innerHeight is
-  // correct on iOS Safari; 100vh is not — that's why images were cut off)
-  function sizeImage() {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    const sideGap = w < 600 ? 70 : 150;   // room for arrows
-    const vertGap = w < 600 ? 120 : 150;  // room for close btn + caption
-    lbImg.style.maxWidth  = (w - sideGap) + 'px';
-    lbImg.style.maxHeight = (h - vertGap) + 'px';
-  }
-  window.addEventListener('resize', () => { if (lb.classList.contains('open')) sizeImage(); }, { passive: true });
-
   function openLightbox(items, i) {
     if (!items || !items.length) return;
     activeItems = items;
@@ -1079,33 +1066,13 @@ function initLightbox() {
     const item = activeItems[cur];
 
     if (logoCanvas) logoCanvas.style.display = 'none';
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    sizeImage();
-
-    if (lbCap) lbCap.textContent = item.caption || '';
-
-    // Show spinner, hide old image
-    lbImg.style.display = 'none';
-    if (lbSpin) lbSpin.style.display = 'block';
-
-    // Load the image, then reveal it
-    lbImg.onload = function () {
-      lbImg.style.display = 'block';
-      if (lbSpin) lbSpin.style.display = 'none';
-    };
-    lbImg.onerror = function () {
-      lbImg.style.display = 'block';
-      if (lbSpin) lbSpin.style.display = 'none';
-    };
+    // Set the image source and caption, then show the lightbox.
+    // The image is always display:block via CSS — it simply appears as it loads.
     lbImg.src = item.src || '';
     lbImg.alt = item.caption || '';
-
-    // Cached images: onload may not fire — reveal right away
-    if (lbImg.complete && lbImg.naturalWidth > 0) {
-      lbImg.style.display = 'block';
-      if (lbSpin) lbSpin.style.display = 'none';
-    }
+    if (lbCap) lbCap.textContent = item.caption || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeLightbox() {
@@ -1113,9 +1080,7 @@ function initLightbox() {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     if (logoCanvas) logoCanvas.style.display = '';
-    lbImg.style.display = 'none';
     lbImg.src = '';
-    if (lbSpin) lbSpin.style.display = 'none';
   }
 
   function nav(delta) { openLightbox(activeItems, cur + delta); }
