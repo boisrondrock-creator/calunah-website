@@ -515,24 +515,17 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   margin-top:35px;
 }
 
-/* Spinner — shown while image loads */
-@keyframes lbSpin{to{transform:rotate(360deg)}}
-.lb-spinner{width:52px;height:52px;border:3px solid rgba(255,255,255,.15);border-top-color:var(--gold);border-radius:50%;animation:lbSpin .8s linear infinite;display:none}
-.lb-spinner.active{display:block}
-
-/* Image — 70vh keeps it fully visible on any mobile browser (toolbar-safe) */
+/* Image — always block, no display tricks that can fail */
 .lb-img{
-  display:none;
+  display:block;
   width:auto;
   height:auto;
-  max-width:100%;
+  max-width:90vw;
   max-height:70vh;
   object-fit:contain;
   border-radius:10px;
   box-shadow:0 32px 80px rgba(0,0,0,.75);
-  flex-shrink:1;
 }
-.lb-img.loaded{display:block}
 
 /* Caption */
 .lb-caption{color:rgba(255,255,255,.72);font-size:.85rem;text-align:center;font-style:italic;max-width:700px;padding:0 1rem;line-height:1.55;letter-spacing:.02em}
@@ -1032,8 +1025,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .lb-prev{left:.3rem} .lb-next{right:.3rem}
   .lb-close{top:.6rem;right:.6rem;width:40px;height:40px}
   .lb-prev,.lb-next{width:40px;height:40px;font-size:.9rem}
-  .lb-box{width:min(96vw,calc(100vw - 90px));max-height:calc(100vh - 80px);margin-top:25px}
-  .lb-img{max-height:calc(100vh - 120px)}
+  .lb-box{width:min(96vw,calc(100vw - 90px));max-height:85vh;margin-top:20px}
   .campus-strip{grid-template-columns:repeat(2,1fr)}
   .work-impact-bar{flex-direction:column;padding:1.5rem}
   .membership-benefits-bar{gap:.75rem}

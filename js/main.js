@@ -1061,36 +1061,21 @@ function initLightbox() {
   }
 
   const logoCanvas = qs('#logo-canvas');
-  const spinner    = qs('#lb-spinner');
-
-  function lbShow(src, caption) {
-    lbImg.classList.remove('loaded');
-    if (spinner) spinner.classList.add('active');
-    if (lbCap) lbCap.textContent = caption;
-
-    function reveal() {
-      if (spinner) spinner.classList.remove('active');
-      lbImg.classList.add('loaded');
-    }
-
-    lbImg.onload  = reveal;
-    lbImg.onerror = reveal;
-    lbImg.src = src;
-    lbImg.alt = caption;
-
-    // Cached images: onload may never fire — check immediately after setting src
-    if (lbImg.complete && lbImg.naturalWidth > 0) reveal();
-  }
 
   function lbOpen(items, i) {
     if (!items || !items.length) return;
     activeItems = items;
     cur = ((i % items.length) + items.length) % items.length;
     const item = activeItems[cur];
+    // Hide floating logo canvas
     if (logoCanvas) logoCanvas.style.display = 'none';
+    // Open lightbox
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
-    lbShow(item.src || '', item.caption || '');
+    // Set image — simple and direct, no display tricks
+    lbImg.src = item.src || '';
+    lbImg.alt = item.caption || '';
+    if (lbCap) lbCap.textContent = item.caption || '';
   }
 
   function lbClose2() {
@@ -1098,8 +1083,6 @@ function initLightbox() {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     if (logoCanvas) logoCanvas.style.display = '';
-    if (spinner) spinner.classList.remove('active');
-    lbImg.classList.remove('loaded');
     lbImg.src = '';
   }
 
