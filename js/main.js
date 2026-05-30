@@ -995,7 +995,7 @@ function buildGallery() {
   }
 
   grid.innerHTML = existingItems.map((item, i) => `
-    <div class="gallery-item gi-enter" data-cat="${item.cat}" style="animation-delay:${(i % 12) * 40}ms">
+    <div class="gallery-item" data-cat="${item.cat}">
       <div class="gallery-thumb" data-index="${i}">
         <img src="${item.src}" alt="${item.caption}" loading="lazy"
              onerror="this.closest('.gallery-item').style.display='none'">
@@ -1061,21 +1061,43 @@ function initLightbox() {
   }
 
   const logoCanvas = qs('#logo-canvas');
+  const lbSpinner  = qs('#lb-spinner');
 
   function lbOpen(items, i) {
     if (!items || !items.length) return;
     activeItems = items;
     cur = ((i % items.length) + items.length) % items.length;
     const item = activeItems[cur];
-    // Hide floating logo canvas
+
+    // Hide floating logos, open lightbox
     if (logoCanvas) logoCanvas.style.display = 'none';
-    // Open lightbox
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Set image — simple and direct, no display tricks
+
+    // Show spinner, hide image until loaded
+    lbImg.classList.remove('ready');
+    if (lbSpinner) lbSpinner.style.display = 'flex';
+
+    // Set caption immediately
+    if (lbCap) lbCap.textContent = item.caption || '';
+
+    // Load image — show when done
+    lbImg.onload = function() {
+      lbImg.classList.add('ready');
+      if (lbSpinner) lbSpinner.style.display = 'none';
+    };
+    lbImg.onerror = function() {
+      lbImg.classList.add('ready'); // show broken icon rather than nothing
+      if (lbSpinner) lbSpinner.style.display = 'none';
+    };
     lbImg.src = item.src || '';
     lbImg.alt = item.caption || '';
-    if (lbCap) lbCap.textContent = item.caption || '';
+
+    // Already in cache? Show immediately
+    if (lbImg.complete && lbImg.naturalWidth > 0) {
+      lbImg.classList.add('ready');
+      if (lbSpinner) lbSpinner.style.display = 'none';
+    }
   }
 
   function lbClose2() {
@@ -1083,7 +1105,9 @@ function initLightbox() {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     if (logoCanvas) logoCanvas.style.display = '';
+    lbImg.classList.remove('ready');
     lbImg.src = '';
+    if (lbSpinner) lbSpinner.style.display = 'none';
   }
 
   // Safety valve: if body overflow gets stuck hidden but lightbox is closed, reset on any scroll attempt
