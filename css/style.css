@@ -493,40 +493,46 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 
 /* Lightbox */
 /* ── LIGHTBOX ─────────────────────────────────────────────── */
-.lightbox{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;pointer-events:none}
-.lightbox.open{opacity:1;visibility:visible;pointer-events:auto}
+/* Lightbox container — hidden/shown with visibility only, NO opacity fade
+   (opacity fade on the container was making the overlay semi-transparent
+   and showing the green page behind it during the animation) */
+.lightbox{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;pointer-events:none}
+.lightbox.open{display:flex;pointer-events:auto}
 
-/* Pure-black overlay */
-.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.96);cursor:pointer;z-index:9998;display:none}
-.lightbox.open .lb-overlay{display:block}
+/* Pure-black overlay — instant, no fade, covers everything */
+.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.95);cursor:pointer;z-index:9998}
 
-/* Central box: strictly limited to viewport, never overflows */
+/* Central box */
 .lb-box{
   position:relative;
-  z-index:9999;
+  z-index:10000;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:.65rem;
-  /* Leave 70px each side for arrows, 70px top for close btn, 30px bottom */
   width:min(92vw, calc(100vw - 140px));
   max-height:calc(100vh - 100px);
-  overflow:hidden;
   margin-top:35px;
 }
 
-/* Image — always visible, just constrained to viewport */
+/* Spinner — shown while image loads */
+@keyframes lbSpin{to{transform:rotate(360deg)}}
+.lb-spinner{width:52px;height:52px;border:3px solid rgba(255,255,255,.15);border-top-color:var(--gold);border-radius:50%;animation:lbSpin .8s linear infinite;display:none}
+.lb-spinner.active{display:block}
+
+/* Image */
 .lb-img{
-  display:block;
+  display:none;
   width:auto;
   height:auto;
   max-width:100%;
-  max-height:calc(100vh - 140px);
+  max-height:calc(100vh - 160px);
   object-fit:contain;
   border-radius:10px;
-  box-shadow:0 32px 80px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);
+  box-shadow:0 32px 80px rgba(0,0,0,.75);
   flex-shrink:1;
 }
+.lb-img.loaded{display:block}
 
 /* Caption */
 .lb-caption{color:rgba(255,255,255,.72);font-size:.85rem;text-align:center;font-style:italic;max-width:700px;padding:0 1rem;line-height:1.55;letter-spacing:.02em}

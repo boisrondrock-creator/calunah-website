@@ -1061,29 +1061,43 @@ function initLightbox() {
   }
 
   const logoCanvas = qs('#logo-canvas');
+  const spinner    = qs('#lb-spinner');
+
+  function lbShow(src, caption) {
+    lbImg.classList.remove('loaded');
+    if (spinner) spinner.classList.add('active');
+    if (lbCap) lbCap.textContent = caption;
+    lbImg.onload = function() {
+      if (spinner) spinner.classList.remove('active');
+      lbImg.classList.add('loaded');
+    };
+    lbImg.onerror = function() {
+      if (spinner) spinner.classList.remove('active');
+      lbImg.classList.add('loaded');
+    };
+    lbImg.src = src;
+    lbImg.alt = caption;
+  }
 
   function lbOpen(items, i) {
     if (!items || !items.length) return;
     activeItems = items;
     cur = ((i % items.length) + items.length) % items.length;
     const item = activeItems[cur];
-    // Hide floating logos — they sit above the lightbox otherwise
-    if (logoCanvas) logoCanvas.style.visibility = 'hidden';
-    // Open
+    if (logoCanvas) logoCanvas.style.display = 'none';
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Set image and caption — straightforward, no opacity tricks
-    lbImg.src = '';                      // force reset so onload always fires
-    lbImg.src = item.src || '';
-    lbImg.alt = item.caption || '';
-    if (lbCap) lbCap.textContent = item.caption || '';
+    lbShow(item.src || '', item.caption || '');
   }
 
   function lbClose2() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
-    if (logoCanvas) logoCanvas.style.visibility = '';
+    if (logoCanvas) logoCanvas.style.display = '';
+    if (spinner) spinner.classList.remove('active');
+    lbImg.classList.remove('loaded');
+    lbImg.src = '';
   }
 
   // Safety valve: if body overflow gets stuck hidden but lightbox is closed, reset on any scroll attempt
