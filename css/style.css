@@ -496,14 +496,14 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .lightbox{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;pointer-events:none}
 .lightbox.open{opacity:1;visibility:visible;pointer-events:auto}
 
-/* Pure-black overlay — hidden via display:none when lightbox is closed so it NEVER blocks page events */
-.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.93);cursor:pointer;z-index:0;display:none}
+/* Pure-black overlay */
+.lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.96);cursor:pointer;z-index:9998;display:none}
 .lightbox.open .lb-overlay{display:block}
 
 /* Central box: strictly limited to viewport, never overflows */
 .lb-box{
   position:relative;
-  z-index:1;
+  z-index:9999;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -532,11 +532,11 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .lb-caption{color:rgba(255,255,255,.72);font-size:.85rem;text-align:center;font-style:italic;max-width:700px;padding:0 1rem;line-height:1.55;letter-spacing:.02em}
 
 /* Close — fixed top-right, always in viewport */
-.lb-close{position:fixed;top:1.2rem;right:1.2rem;width:46px;height:46px;background:rgba(20,20,20,.7);border:1.5px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:background .22s,border-color .22s,color .22s,transform .22s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:2}
+.lb-close{position:fixed;top:1.2rem;right:1.2rem;width:46px;height:46px;background:rgba(20,20,20,.7);border:1.5px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:background .22s,border-color .22s,color .22s,transform .22s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:10000}
 .lb-close:hover{background:var(--gold);border-color:var(--gold);color:var(--green-dark);transform:rotate(90deg) scale(1.1)}
 
 /* Prev / Next — fixed vertically centered on left & right edges */
-.lb-prev,.lb-next{position:fixed;top:50%;transform:translateY(-50%);width:52px;height:52px;background:rgba(20,20,20,.6);border:1.5px solid rgba(255,255,255,.18);color:#fff;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:background .22s,border-color .22s,color .22s,transform .22s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:2}
+.lb-prev,.lb-next{position:fixed;top:50%;transform:translateY(-50%);width:52px;height:52px;background:rgba(20,20,20,.6);border:1.5px solid rgba(255,255,255,.18);color:#fff;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:background .22s,border-color .22s,color .22s,transform .22s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:10000}
 .lb-prev{left:1rem} .lb-next{right:1rem}
 .lb-prev:hover{background:var(--gold);border-color:var(--gold);color:var(--green-dark);transform:translateY(-50%) scale(1.08)}
 .lb-next:hover{background:var(--gold);border-color:var(--gold);color:var(--green-dark);transform:translateY(-50%) scale(1.08)}
