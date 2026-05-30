@@ -493,17 +493,41 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 
 /* Lightbox */
 /* ── LIGHTBOX ─────────────────────────────────────────────── */
-.lightbox{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:5rem 1.5rem 1.5rem;box-sizing:border-box;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;pointer-events:none}
+.lightbox{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;pointer-events:none}
 .lightbox.open{opacity:1;visibility:visible;pointer-events:auto}
 
-/* Pure-black overlay — position:fixed so it always covers the full viewport */
+/* Pure-black overlay */
 .lb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.93);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer;z-index:0}
 
-/* Central box holds the image + caption */
-.lb-box{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.8rem;max-width:min(92vw,1100px);max-height:calc(100vh - 7rem);width:auto}
+/* Central box: strictly limited to viewport, never overflows */
+.lb-box{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.65rem;
+  /* Leave 70px each side for arrows, 70px top for close btn, 30px bottom */
+  width:min(92vw, calc(100vw - 140px));
+  max-height:calc(100vh - 100px);
+  overflow:hidden;
+  margin-top:35px;
+}
 
-/* Image */
-.lb-img{display:block;max-width:100%;max-height:calc(90vh - 5rem);width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 32px 80px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);transform:scale(.93);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+/* Image — hard-capped to never exceed viewport */
+.lb-img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  max-height:calc(100vh - 140px);  /* 70px top + 70px caption+bottom */
+  object-fit:contain;
+  border-radius:10px;
+  box-shadow:0 32px 80px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);
+  transform:scale(.93);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  flex-shrink:1;
+}
 .lightbox.open .lb-img{transform:scale(1)}
 
 /* Caption */
@@ -1001,10 +1025,11 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .donor-cta-box{flex-direction:column;text-align:center}
   .recurring-wrap{padding:2rem 1.5rem}
   .recurring-ctas{flex-direction:column}
-  .lb-prev{left:.4rem} .lb-next{right:.4rem}
-  .lb-close{top:.8rem;right:.8rem}
-  .lb-prev,.lb-next{width:42px;height:42px;font-size:.9rem}
-  .lightbox{padding:4rem 1rem 1rem}
+  .lb-prev{left:.3rem} .lb-next{right:.3rem}
+  .lb-close{top:.6rem;right:.6rem;width:40px;height:40px}
+  .lb-prev,.lb-next{width:40px;height:40px;font-size:.9rem}
+  .lb-box{width:min(96vw,calc(100vw - 90px));max-height:calc(100vh - 80px);margin-top:25px}
+  .lb-img{max-height:calc(100vh - 120px)}
   .campus-strip{grid-template-columns:repeat(2,1fr)}
   .work-impact-bar{flex-direction:column;padding:1.5rem}
   .membership-benefits-bar{gap:.75rem}
