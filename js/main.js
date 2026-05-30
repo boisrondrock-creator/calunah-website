@@ -1039,20 +1039,21 @@ function initGalleryFilter() {
 }
 
 function initLightbox() {
-  // HTML uses ids: #lightbox, #lb-close, #lb-prev, #lb-next, #lb-img, #lb-caption
   const lb      = qs('#lightbox');
   const lbImg   = qs('#lb-img');
   const lbCap   = qs('#lb-caption');
   const lbClose = qs('#lb-close');
   const lbPrev  = qs('#lb-prev');
   const lbNext  = qs('#lb-next');
+  const lbSpin  = qs('#lb-spinner');
   if (!lb || !lbImg) return;
 
-  // Active image set, swapped between gallery and campus
   let activeItems = CALUNAH_CONFIG.gallery;
   let cur = 0;
+  let lbSeq = 0; // sequence counter to cancel stale loads
 
-  // Read campus photos from DOM at click time (robust, data is always available)
+  const logoCanvas = qs('#logo-canvas');
+
   function getCampusItems() {
     const el = qs('#campus-lb-data');
     if (!el) return [];
@@ -1060,93 +1061,77 @@ function initLightbox() {
     catch(e) { return []; }
   }
 
-  const logoCanvas = qs('#logo-canvas');
-  const lbSpinner  = qs('#lb-spinner');
+  function showSpinner(on) {
+    if (!lbSpin) return;
+    lbSpin.style.display = on ? 'block' : 'none';
+  }
 
   function lbOpen(items, i) {
     if (!items || !items.length) return;
     activeItems = items;
     cur = ((i % items.length) + items.length) % items.length;
     const item = activeItems[cur];
+    const mySeq = ++lbSeq;
 
-    // Hide floating logos, open lightbox
+    // Hide logo canvas
     if (logoCanvas) logoCanvas.style.display = 'none';
+
+    // Open lightbox (black background instant)
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
 
-    // Show spinner, hide image until loaded
-    lbImg.classList.remove('ready');
-    if (lbSpinner) lbSpinner.style.display = 'flex';
-
-    // Set caption immediately
+    // Caption
     if (lbCap) lbCap.textContent = item.caption || '';
 
-    // Load image — show when done
-    lbImg.onload = function() {
-      lbImg.classList.add('ready');
-      if (lbSpinner) lbSpinner.style.display = 'none';
-    };
-    lbImg.onerror = function() {
-      lbImg.classList.add('ready'); // show broken icon rather than nothing
-      if (lbSpinner) lbSpinner.style.display = 'none';
-    };
-    lbImg.src = item.src || '';
-    lbImg.alt = item.caption || '';
+    // Hide image, show spinner
+    lbImg.style.display = 'none';
+    showSpinner(true);
 
-    // Already in cache? Show immediately
-    if (lbImg.complete && lbImg.naturalWidth > 0) {
-      lbImg.classList.add('ready');
-      if (lbSpinner) lbSpinner.style.display = 'none';
-    }
+    // Load image using decode() — most reliable on iOS Safari
+    const newImg = new Image();
+    newImg.onload = function() {
+      if (mySeq !== lbSeq) return; // navigated away, ignore
+      lbImg.src = newImg.src;
+      lbImg.alt = item.caption || '';
+      lbImg.style.display = 'block';
+      showSpinner(false);
+    };
+    newImg.onerror = function() {
+      if (mySeq !== lbSeq) return;
+      lbImg.src = newImg.src;
+      lbImg.style.display = 'block';
+      showSpinner(false);
+    };
+    newImg.src = item.src || '';
   }
 
-  function lbClose2() {
+  function lbClose() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     if (logoCanvas) logoCanvas.style.display = '';
-    lbImg.classList.remove('ready');
+    lbImg.style.display = 'none';
     lbImg.src = '';
-    if (lbSpinner) lbSpinner.style.display = 'none';
+    showSpinner(false);
+    lbSeq++; // cancel any pending loads
   }
 
-  // Safety valve: if body overflow gets stuck hidden but lightbox is closed, reset on any scroll attempt
-  window.addEventListener('wheel', () => {
-    if (!lb.classList.contains('open') && document.body.style.overflow === 'hidden') {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    }
-  }, { passive: true });
-  window.addEventListener('touchmove', () => {
-    if (!lb.classList.contains('open') && document.body.style.overflow === 'hidden') {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-    }
-  }, { passive: true });
+  // Safety valve: if body overflow gets stuck, reset on scroll
+  window.addEventListener('wheel',     () => { if (!lb.classList.contains('open')) document.body.style.overflow = ''; }, { passive: true });
+  window.addEventListener('touchmove', () => { if (!lb.classList.contains('open')) document.body.style.overflow = ''; }, { passive: true });
+
   function nav(delta) { lbOpen(activeItems, cur + delta); }
 
-  // Gallery grid — click to open, hover to pre-fetch
+  // Gallery grid clicks
   const galleryGrid = qs('#gallery-grid');
   if (galleryGrid) {
     galleryGrid.addEventListener('click', e => {
       const thumb = e.target.closest('.gallery-thumb');
       if (thumb) lbOpen(CALUNAH_CONFIG.gallery, +thumb.dataset.index);
     });
-    // Pre-fetch image on hover so it's in cache before click
-    galleryGrid.addEventListener('mouseover', e => {
-      const thumb = e.target.closest('.gallery-thumb');
-      if (!thumb) return;
-      const idx  = +thumb.dataset.index;
-      const item = CALUNAH_CONFIG.gallery[idx];
-      if (item && item.src && !thumb._prefetched) {
-        thumb._prefetched = true;
-        const pre = new window.Image();
-        pre.src = item.src;
-      }
-    });
   }
 
-  // Campus photo triggers, read data fresh from DOM at each click
+  // Campus photo triggers
   document.addEventListener('click', e => {
     const trigger = e.target.closest('.campus-lb-trigger');
     if (!trigger) return;
@@ -1154,17 +1139,19 @@ function initLightbox() {
     if (items.length) lbOpen(items, +(trigger.dataset.lbIndex || 0));
   });
 
-  lbClose && lbClose.addEventListener('click', lbClose2);
-  lbPrev  && lbPrev.addEventListener('click',  () => nav(-1));
-  lbNext  && lbNext.addEventListener('click',  () => nav(+1));
-  const overlay = qs('#lb-overlay');
-  overlay && overlay.addEventListener('click', lbClose2);
-  lb.addEventListener('click', e => { if (e.target === lb) lbClose2(); });
+  // Controls — clicking lightbox bg closes, clicking image content does not
+  lb.addEventListener('click', e => {
+    if (e.target === lb) lbClose();
+  });
+  lbClose && lbClose.addEventListener('click', lbClose);
+  lbPrev  && lbPrev.addEventListener('click',  e => { e.stopPropagation(); nav(-1); });
+  lbNext  && lbNext.addEventListener('click',  e => { e.stopPropagation(); nav(+1); });
+
   document.addEventListener('keydown', e => {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'ArrowLeft')  nav(-1);
     if (e.key === 'ArrowRight') nav(+1);
-    if (e.key === 'Escape')     lbClose2();
+    if (e.key === 'Escape')     lbClose();
   });
 }
 
