@@ -898,6 +898,74 @@ function toggleEventInfo(id) {
 }
 window.toggleEventInfo = toggleEventInfo;
 
+/* Escape a string for safe use inside an HTML attribute */
+function escAttr(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+window.escAttr = escAttr;
+
+/* ── STRIPE TICKET CHECKOUT ─────────────────────────────────
+   Reads the event/ticket data from the clicked button, asks
+   /api/checkout to create a Stripe Checkout Session, then sends
+   the buyer to Stripe's secure hosted payment page. Stripe emails
+   a professional receipt automatically after payment. */
+async function buyTicket(btn) {
+  if (!btn) return;
+  const eventTitle  = btn.getAttribute('data-ev')    || 'CALUNAH Event';
+  const eventId     = btn.getAttribute('data-evid')  || '';
+  const ticketLabel = btn.getAttribute('data-label') || 'Ticket';
+  const price       = parseFloat(btn.getAttribute('data-price') || '0');
+
+  const original = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading…';
+
+  try {
+    const r = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ eventTitle, eventId, ticketLabel, price, quantity: 1 })
+    });
+    const data = await r.json();
+    if (r.ok && data.url) {
+      window.location.href = data.url;          // go to Stripe checkout
+      return;
+    }
+    alert(data.error || 'Sorry, checkout is unavailable right now. Please try Zelle/PayPal or contact us.');
+  } catch (e) {
+    alert('Network error starting checkout. Please try again, or use Zelle/PayPal.');
+  }
+  btn.disabled = false;
+  btn.innerHTML = original;
+}
+window.buyTicket = buyTicket;
+
+/* Show a thank-you banner when returning from a successful Stripe payment */
+function initTicketReturn() {
+  const params = new URLSearchParams(window.location.search);
+  const state  = params.get('ticket');
+  if (!state) return;
+
+  const banner = document.createElement('div');
+  banner.className = 'ticket-toast ' + (state === 'success' ? 'tt-success' : 'tt-cancel');
+  banner.innerHTML = state === 'success'
+    ? '<i class="fas fa-check-circle"></i><div><strong>Thank you! Your tickets are confirmed.</strong><br>A receipt has been emailed to you. We can\'t wait to see you!</div><button class="tt-close" aria-label="Close">&times;</button>'
+    : '<i class="fas fa-info-circle"></i><div><strong>Checkout cancelled.</strong><br>No charge was made. You can try again anytime.</div><button class="tt-close" aria-label="Close">&times;</button>';
+  document.body.appendChild(banner);
+  requestAnimationFrame(() => banner.classList.add('show'));
+
+  function dismiss() { banner.classList.remove('show'); setTimeout(() => banner.remove(), 400); }
+  banner.querySelector('.tt-close').addEventListener('click', dismiss);
+  setTimeout(dismiss, 9000);
+
+  /* Clean the ?ticket= param from the URL without reloading */
+  const clean = window.location.pathname + window.location.hash;
+  window.history.replaceState({}, '', clean);
+}
+window.initTicketReturn = initTicketReturn;
+
 /* ── TICKET RESERVATION MODAL ───────────────────────────── */
 function openTicketReservation(eventName, eventDate, ticketType, ticketPrice) {
   const modal   = qs('#ticket-modal');

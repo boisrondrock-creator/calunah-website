@@ -1240,8 +1240,21 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .et-tier-label{font-family:var(--font-body);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mid)}
 .et-tier-price{font-family:var(--font-head);font-size:1.7rem;font-weight:900;color:var(--green-dark);line-height:1}
 .et-tier-note{font-size:.72rem;color:var(--text-light);text-align:center}
-.et-buy-btn{background:var(--green);color:#fff;border:none;font-size:.75rem;padding:.45rem .9rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:700;width:100%;text-align:center;text-decoration:none;display:block}
-.et-buy-btn:hover{background:var(--green-dark);color:#fff}
+.et-buy-btn{background:linear-gradient(135deg,#635bff,#7c73ff);color:#fff;border:none;font-size:.78rem;padding:.5rem .9rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:800;width:100%;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:.4rem;transition:var(--transition)}
+.et-buy-btn:hover{background:linear-gradient(135deg,#5048e0,#635bff);color:#fff;transform:translateY(-2px);box-shadow:0 6px 18px rgba(99,91,255,.4)}
+.et-buy-btn:disabled{opacity:.7;cursor:wait;transform:none}
+.et-secure-note{font-size:.7rem;color:var(--text-light);text-align:center;margin:.9rem 0 .2rem;display:flex;align-items:center;justify-content:center;gap:.4rem;flex-wrap:wrap}
+.et-secure-note i{color:var(--green)}
+/* Ticket thank-you / cancel toast */
+.ticket-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);z-index:99999;display:flex;align-items:flex-start;gap:.8rem;max-width:440px;width:calc(100% - 32px);padding:1rem 1.1rem;border-radius:14px;box-shadow:0 16px 48px rgba(0,0,0,.3);font-size:.9rem;line-height:1.45;transition:transform .45s cubic-bezier(.34,1.56,.64,1)}
+.ticket-toast.show{transform:translate(-50%,0)}
+.ticket-toast i{font-size:1.4rem;flex-shrink:0;margin-top:.1rem}
+.ticket-toast .tt-close{margin-left:auto;background:none;border:none;font-size:1.4rem;line-height:1;cursor:pointer;color:inherit;opacity:.6;padding:0 .2rem}
+.ticket-toast .tt-close:hover{opacity:1}
+.tt-success{background:linear-gradient(135deg,#1a6b2f,#0d4d1f);color:#fff}
+.tt-success i{color:#7CFC9A}
+.tt-cancel{background:#fff;color:var(--text);border:1px solid var(--border)}
+.tt-cancel i{color:var(--gold)}
 .et-reserve-btn{background:transparent;border:1.5px solid var(--green);color:var(--green);font-size:.75rem;padding:.42rem .9rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:700;width:100%;transition:var(--transition)}
 .et-reserve-btn:hover{background:var(--green);color:#fff}
 .et-at-door{font-size:.72rem;color:var(--text-light);margin-top:.3rem;display:flex;align-items:center;gap:.3rem;justify-content:center}
