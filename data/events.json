@@ -40,18 +40,19 @@
     },
     {
       "id": "nychapter2026",
-      "title": "New York Chapter Annual Event",
-      "date": "TBD, 2026",
-      "time": "TBD",
-      "location": "New York, NY",
-      "flyer": "",
+      "title": "CALUNAH Sabbath \u2014 New York Chapter",
+      "date": "June 6, 2026",
+      "time": "Divine Worship 11 AM \u2013 1:30 PM \u00b7 Concert 4:00 PM",
+      "location": "Gethsemane French SDA Church, 357 Empire Boulevard, Brooklyn, NY 11225",
+      "flyer": "images/events/nychapter2026.jpg",
       "tags": [
-        "Chapter",
+        "Sabbath",
+        "Worship",
         "New York",
-        "Upcoming"
+        "Chapter"
       ],
-      "description": "The New York Chapter of CALUNAH invites all alumni and friends to our upcoming event. Details to be announced soon.",
-      "fullInfo": "Stay tuned for full details on the New York Chapter event. Contact the chapter president for more information.",
+      "description": "The New York Chapter welcomes you to CALUNAH Sabbath \u2014 Learn, Grow, & Serve Together. Special Guest Speaker Dr. Pierre E. Omeler (VP, General Conference of SDA), hosted by Pastor Pierre Desruisseaux.",
+      "fullInfo": "CALUNAH New York Chapter welcomes you to CALUNAH Sabbath. Theme: Learn, Grow, & Serve Together.\n\nSpecial Guest Speaker: Dr. Pierre E. Omeler, VP \u2013 General Conference of SDA. Host: Pastor Pierre Desruisseaux.\n\n\ud83d\udcc5 Saturday, June 6, 2026 | Divine Worship 11 AM \u2013 1:30 PM\n\ud83d\udccd Gethsemane French SDA Church, 357 Empire Boulevard, Brooklyn, NY 11225\n\n\ud83c\udfb5 Concert at 4:00 PM \u2014 An Afternoon of Praise & Uplifting Melodies! Musical participants: Ruben Myrtil, Farah Chery, Rose Mesadieu, C\u0153ur D'Hommes de Geths\u00e9man\u00e9, Mitsuka Attys No\u00ebl, and others.\n\n\ud83d\udcfa Live Streaming: Tele Gethsemane (YouTube).",
       "ticketUrl": "",
       "ctaLabel": "Learn More",
       "upcoming": true
