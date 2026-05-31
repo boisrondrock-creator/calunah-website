@@ -446,6 +446,21 @@ select.form-control{cursor:pointer}
             <span style="background:var(--gold);color:#0a1f0e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0">4</span>
             <div style="font-size:.83rem;color:rgba(255,255,255,.85)">Go to <a href="https://vercel.com/boisrondrock-2926s-projects/calunah-website/deployments" target="_blank" style="color:var(--gold2);text-decoration:underline">Vercel → Deployments</a>, click the three dots on the latest deployment → <strong style="color:#fff">Redeploy</strong>. Wait 30 seconds. <strong style="color:var(--gold2)">Publishing will work automatically after this!</strong></div>
           </div>
+
+          <div style="margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.12)">
+            <div style="font-weight:800;color:var(--gold2);margin-bottom:.7rem"><i class="fab fa-cc-stripe"></i> Enable Online Ticket Sales (Stripe)</div>
+            <div style="display:flex;flex-direction:column;gap:.7rem">
+              <div style="display:flex;gap:.8rem;align-items:flex-start">
+                <span style="background:var(--gold);color:#0a1f0e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0">1</span>
+                <div style="font-size:.83rem;color:rgba(255,255,255,.85)">In your <a href="https://dashboard.stripe.com/apikeys" target="_blank" style="color:var(--gold2);text-decoration:underline">Stripe Dashboard → Developers → API keys</a>, copy your <strong style="color:#fff">Secret key</strong> (<code style="background:rgba(255,255,255,.12);padding:2px 7px;border-radius:4px;font-size:.8rem">sk_live_…</code>)</div>
+              </div>
+              <div style="display:flex;gap:.8rem;align-items:flex-start">
+                <span style="background:var(--gold);color:#0a1f0e;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0">2</span>
+                <div style="font-size:.83rem;color:rgba(255,255,255,.85)">In <a href="https://vercel.com/boisrondrock-2926s-projects/calunah-website/settings/environment-variables" target="_blank" style="color:var(--gold2);text-decoration:underline">Vercel → Settings → Environment Variables</a>, add:<br><strong style="color:#fff">Name:</strong> <code style="background:rgba(255,255,255,.12);padding:2px 7px;border-radius:4px;font-size:.8rem">STRIPE_SECRET_KEY</code><br><strong style="color:#fff">Value:</strong> <em>paste your Stripe secret key</em><br>Check <strong style="color:#fff">Production, Preview, Development</strong>. Save, then Redeploy.</div>
+              </div>
+              <div style="font-size:.8rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);padding:.7rem .9rem;border-radius:8px"><i class="fas fa-magic" style="color:var(--gold2)"></i> After setup, <strong style="color:#fff">any event you add with ticket prices automatically shows a "Buy Tickets" button.</strong> Buyers pay by card / Apple Pay / Google Pay and Stripe emails them a receipt automatically. Tip: use a <code style="background:rgba(255,255,255,.12);padding:1px 5px;border-radius:4px">sk_test_…</code> key first to test without real charges.</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="settings-card">
