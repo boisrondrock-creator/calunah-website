@@ -2273,28 +2273,41 @@ const CALUNAH_LANG = {
 /* ============================================================
    29. APPLY TRANSLATION
    ============================================================ */
+let CURRENT_LANG = 'en';
+
 function applyTranslation(lang) {
   const t = CALUNAH_LANG[lang];
   if (!t) return;
+  CURRENT_LANG = lang;
 
   // Translate all [data-i18n] elements
   qsa('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     const val = t[key];
-    if (!val) return;
+    if (val == null) return;
 
-    // Detect meaningful child elements (icons / spans), ignore <br> which is a void line-break
+    // 1) Rich text: translation contains HTML tags → replace innerHTML wholesale.
+    //    (Lets long paragraphs keep their <strong>/<em> formatting per language.)
+    if (/[<&]/.test(val) && /<[a-z!/]/i.test(val)) {
+      el.innerHTML = val;
+      return;
+    }
+
+    // 2) Element holds a leading icon/span we must preserve (e.g. nav links, buttons)
     const childEls = [...el.childNodes].filter(n => n.nodeType === 1 && n.tagName !== 'BR');
     if (childEls.length > 0) {
-      // Has icon / span children, only update the text node(s), keep icons intact
       const textNodes = [...el.childNodes].filter(n => n.nodeType === 3 && n.textContent.trim());
       if (textNodes.length > 0) {
         textNodes[textNodes.length - 1].textContent = val;
+      } else {
+        // No existing text node — append one after the icon
+        el.appendChild(document.createTextNode(val));
       }
-    } else {
-      // Pure text (or text with only <br>), replace full text content safely
-      el.textContent = val;
+      return;
     }
+
+    // 3) Plain text
+    el.textContent = val;
   });
 
   // Translate dynamically-built chapter cards
