@@ -82,7 +82,7 @@ module.exports = async function handler(req, res) {
   const priceUSD    = Number(body.price);
   let   quantity    = parseInt(body.quantity, 10);
   if (!quantity || quantity < 1) quantity = 1;
-  if (quantity > 20) quantity = 20;
+  if (quantity > 30) quantity = 30;
 
   if (!priceUSD || priceUSD <= 0) {
     res.status(400).json({ error: 'Invalid ticket price' });
@@ -107,7 +107,7 @@ module.exports = async function handler(req, res) {
     ['line_items[0][quantity]', String(quantity)],
     ['line_items[0][adjustable_quantity][enabled]', 'true'],
     ['line_items[0][adjustable_quantity][minimum]', '1'],
-    ['line_items[0][adjustable_quantity][maximum]', '20'],
+    ['line_items[0][adjustable_quantity][maximum]', '30'],
     ['line_items[0][price_data][currency]', 'usd'],
     ['line_items[0][price_data][unit_amount]', String(unitAmount)],
     ['line_items[0][price_data][product_data][name]', productName],

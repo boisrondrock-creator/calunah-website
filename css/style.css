@@ -425,10 +425,12 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .event-flyer i{font-size:3rem;color:rgba(201,162,39,.3)}
 .event-flyer span{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
 .event-card:hover .event-flyer img{transform:scale(1.06)}
-.event-date-badge{position:absolute;top:14px;right:14px;background:var(--gold);color:var(--green-dark);text-align:center;padding:.5rem .85rem;border-radius:10px;line-height:1.2;box-shadow:0 4px 14px rgba(0,0,0,.25)}
-.event-date-badge .day{display:block;font-size:1.6rem;font-weight:900;font-family:var(--font-head)}
-.event-date-badge .month{display:block;font-size:.7rem;font-weight:700;letter-spacing:.1em}
-.event-date-badge .year{display:block;font-size:.65rem;font-weight:600;opacity:.75}
+.event-date-badge{position:absolute;top:14px;right:14px;background:var(--gold);color:var(--green-dark);text-align:center;padding:.45rem .6rem;border-radius:12px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.32);min-width:54px}
+.event-date-badge .day{display:block;font-size:1.5rem;font-weight:900;font-family:var(--font-head);line-height:1}
+.event-date-badge .month{display:block;font-size:.7rem;font-weight:800;letter-spacing:.12em;margin-top:2px}
+.event-date-badge .year{display:block;font-size:.6rem;font-weight:600;opacity:.72;margin-top:2px}
+.event-date-badge.past{background:rgba(15,15,15,.65);color:#fff;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.event-date-badge .badge-flag{display:block;font-size:.72rem;font-weight:800;letter-spacing:.12em;padding:.2rem .1rem}
 .event-info{padding:1.5rem}
 .event-category{font-size:.68rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.12em}
 .event-title{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--white);margin:.4rem 0 .75rem;line-height:1.3}
@@ -1240,7 +1242,8 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .et-tier-label{font-family:var(--font-body);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-mid)}
 .et-tier-price{font-family:var(--font-head);font-size:1.7rem;font-weight:900;color:var(--green-dark);line-height:1}
 .et-tier-note{font-size:.72rem;color:var(--text-light);text-align:center}
-.et-buy-btn{background:linear-gradient(135deg,#635bff,#7c73ff);color:#fff;border:none;font-size:.78rem;padding:.5rem .9rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:800;width:100%;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:.4rem;transition:var(--transition)}
+.et-buy-btn{background:linear-gradient(135deg,#635bff,#7c73ff);color:#fff;border:none;font-size:.66rem;letter-spacing:.03em;padding:.55rem .5rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:800;width:100%;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:.35rem;transition:var(--transition);overflow:visible;white-space:nowrap}
+.et-buy-btn i{font-size:.85rem}
 .et-buy-btn:hover{background:linear-gradient(135deg,#5048e0,#635bff);color:#fff;transform:translateY(-2px);box-shadow:0 6px 18px rgba(99,91,255,.4)}
 .et-buy-btn:disabled{opacity:.7;cursor:wait;transform:none}
 .et-secure-note{font-size:.7rem;color:var(--text-light);text-align:center;margin:.9rem 0 .2rem;display:flex;align-items:center;justify-content:center;gap:.4rem;flex-wrap:wrap}

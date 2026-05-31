@@ -814,17 +814,8 @@ function buildEvents() {
                   onerror="this.remove()">`
           : `<i class="fas fa-calendar-star"></i><span>Event Flyer</span>`
         }
-        <!-- Upcoming/Past badge -->
-        <div class="event-date-badge" style="${ev.upcoming
-          ? 'background:var(--gold);color:var(--green-dark)'
-          : 'background:rgba(255,255,255,.15);color:#fff'}">
-          <span class="day">${ev.upcoming ? '📅' : '✓'}</span>
-          <span class="month">${ev.upcoming ? 'Coming' : 'Past'}</span>
-        </div>
-        <!-- Tags overlay -->
-        <div class="event-tags" style="position:absolute;bottom:.75rem;left:.75rem;right:.75rem;">
-          ${ev.tags.map(t => `<span class="event-tag">${t}</span>`).join('')}
-        </div>
+        <!-- Date badge — shows the real event date (no emoji) -->
+        <div class="event-date-badge ${ev.upcoming ? 'upcoming' : 'past'}">${eventBadgeHTML(ev)}</div>
       </div>
 
       <div class="event-info">
@@ -835,6 +826,7 @@ function buildEvents() {
           <span><i class="fas fa-clock"></i> ${ev.time}</span>
           <span><i class="fas fa-map-marker-alt"></i> ${ev.location}</span>
         </div>
+        ${ev.tags && ev.tags.length ? `<div class="event-tags">${ev.tags.map(t => `<span class="event-tag">${t}</span>`).join('')}</div>` : ''}
         <p class="event-desc">${ev.description}</p>
 
         <div class="event-full-info" id="info-${ev.id}" hidden>
@@ -862,9 +854,7 @@ function buildEvents() {
                        data-evid="${escAttr(ev.id)}"
                        data-label="${escAttr(t.label)}"
                        data-price="${t.price}"
-                       onclick="buyTicket(this)">
-                       <i class="fab fa-cc-stripe"></i> Buy Tickets
-                     </button>`
+                       onclick="buyTicket(this)">Buy Tickets</button>`
                 }
               </div>`; }).join('')}
           </div>
@@ -900,6 +890,28 @@ function toggleEventInfo(id) {
   if (icon) icon.className = opening ? 'fas fa-chevron-up' : 'fas fa-info-circle';
 }
 window.toggleEventInfo = toggleEventInfo;
+
+/* Parse an event date string into { day, mon, year } for the date badge.
+   Handles "June 21, 2026", "April 2–4, 2025", etc. Returns null if unparseable. */
+function parseEventDate(str) {
+  if (!str) return null;
+  const months = { january:'JAN', february:'FEB', march:'MAR', april:'APR', may:'MAY', june:'JUN',
+                   july:'JUL', august:'AUG', september:'SEP', october:'OCT', november:'NOV', december:'DEC' };
+  const m = String(str).match(/([A-Za-z]+)\s+(\d{1,2})[^,]*,?\s*(\d{4})/);
+  if (!m) return null;
+  const mon = months[m[1].toLowerCase()];
+  if (!mon) return null;
+  return { mon, day: m[2], year: m[3] };
+}
+
+/* Build the inner HTML for an event's date badge */
+function eventBadgeHTML(ev) {
+  const d = parseEventDate(ev.date);
+  if (ev.upcoming && d) {
+    return `<span class="day">${d.day}</span><span class="month">${d.mon}</span><span class="year">${d.year}</span>`;
+  }
+  return `<span class="badge-flag">${ev.upcoming ? 'SOON' : 'PAST'}</span>`;
+}
 
 /* Escape a string for safe use inside an HTML attribute */
 function escAttr(s) {
