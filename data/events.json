@@ -58,6 +58,44 @@
       "upcoming": true
     },
     {
+      "id": "saturdaygiving2025",
+      "title": "Saturday Giving \u2014 Together for Education",
+      "date": "November 22, 2025",
+      "time": "5:30 PM",
+      "location": "Virtual \u2014 YouTube & Facebook Live",
+      "flyer": "images/events/saturdaygiving2025.jpg",
+      "tags": [
+        "Fundraiser",
+        "Giving",
+        "Scholarships",
+        "Virtual"
+      ],
+      "description": "Presented by CALUNAH Executive \u2014 Saturday Giving: \"Together for Education, Together for Change.\" Your generosity provides scholarships, monitors/projectors, and classroom chairs for UNAH.",
+      "fullInfo": "Saturday Giving, presented by CALUNAH Executive on Saturday, November 22, 2025 @ 5:30 PM. Theme: Together for Education, Together for Change.\n\nYour generosity will greatly provide for: Scholarships \u00b7 Monitors / Projectors \u00b7 Classroom Chairs.\n\nThe program was broadcast on CALUNAH Executive YouTube (@calunahexecutive4985) and Facebook (/calunahexecutive). Consider giving via https://www.calunah.org/donate.",
+      "ticketUrl": "",
+      "ctaLabel": "View Recap",
+      "upcoming": false
+    },
+    {
+      "id": "gachapter2025",
+      "title": "CALUNAH Georgia Chapter \u2014 Sabbath Welcome",
+      "date": "August 16, 2025",
+      "time": "11:00 AM \u2014 Worship",
+      "location": "Ebenezer French SDA Church, 851 Constitution Rd, Atlanta, GA 30315",
+      "flyer": "images/events/gachapter2025.jpg",
+      "tags": [
+        "Sabbath",
+        "Georgia",
+        "Chapter",
+        "Worship"
+      ],
+      "description": "CALUNAH Georgia Chapter's very first event \u2014 Sabbath Welcome: Meet, Learn & Connect. A special opportunity to socialize and learn how CALUNAH supports UNAH and its students.",
+      "fullInfo": "CALUNAH GA Chapter Sabbath Welcome \u2014 Meet, Learn & Connect. You're invited!\n\nJoin us for our very first event in Georgia. A special opportunity to socialize and get to know each other while learning how CALUNAH supports UNAH and the students.\n\n\u2022 Meet the GA-Chapter team\n\u2022 Learn about our mission\n\u2022 Know about our projects\n\u2022 Build connection\n\n\ud83d\udcc5 Saturday, August 16, 2025 \u00b7 Start at 11:00 AM (Worship)\n\ud83d\udccd Ebenezer French SDA Church, 851 Constitution Rd, Atlanta, GA 30315.",
+      "ticketUrl": "",
+      "ctaLabel": "View Photos",
+      "upcoming": false
+    },
+    {
       "id": "sabbat2026",
       "title": "Sabbat CALUNAH \u2014 Central Florida Chapter",
       "date": "February 28, 2026",
