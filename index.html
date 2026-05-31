@@ -764,12 +764,12 @@
     </div>
 
     <div class="membership-benefits-bar" data-aos="fade-up">
-      <div class="mb-benefit"><i class="fas fa-network-wired"></i><span>Global Network</span></div>
-      <div class="mb-benefit"><i class="fas fa-graduation-cap"></i><span>Scholarship Opportunities</span></div>
-      <div class="mb-benefit"><i class="fas fa-briefcase"></i><span>Career Resources</span></div>
-      <div class="mb-benefit"><i class="fas fa-newspaper"></i><span>Newsletter Access</span></div>
-      <div class="mb-benefit"><i class="fas fa-ticket-alt"></i><span>Event Discounts</span></div>
-      <div class="mb-benefit"><i class="fas fa-vote-yea"></i><span>Voting Rights</span></div>
+      <div class="mb-benefit"><i class="fas fa-network-wired"></i><span data-i18n="mb.network">Global Network</span></div>
+      <div class="mb-benefit"><i class="fas fa-graduation-cap"></i><span data-i18n="mb.scholarships">Scholarship Opportunities</span></div>
+      <div class="mb-benefit"><i class="fas fa-briefcase"></i><span data-i18n="mb.career">Career Resources</span></div>
+      <div class="mb-benefit"><i class="fas fa-newspaper"></i><span data-i18n="mb.newsletter">Newsletter Access</span></div>
+      <div class="mb-benefit"><i class="fas fa-ticket-alt"></i><span data-i18n="mb.events">Event Discounts</span></div>
+      <div class="mb-benefit"><i class="fas fa-vote-yea"></i><span data-i18n="mb.voting">Voting Rights</span></div>
     </div>
 
     <div class="membership-grid" id="membership-grid">
@@ -781,15 +781,15 @@
       <div class="recurring-header">
         <div class="recurring-icon"><i class="fas fa-sync-alt"></i></div>
         <div>
-          <h3 class="recurring-title">Become a Recurring Member</h3>
-          <p class="recurring-sub">Support CALUNAH automatically · Cancel anytime · 100% tax-deductible</p>
+          <h3 class="recurring-title" data-i18n="mem.recurring.title">Become a Recurring Member</h3>
+          <p class="recurring-sub" data-i18n="mem.recurring.sub">Support CALUNAH automatically · Cancel anytime · 100% tax-deductible</p>
         </div>
       </div>
 
       <!-- Billing toggle -->
       <div class="recurring-toggle-wrap">
-        <button class="rec-period-btn active" data-period="monthly">Monthly</button>
-        <button class="rec-period-btn" data-period="yearly">Yearly <span class="rec-save-tag">Save 17%</span></button>
+        <button class="rec-period-btn active" data-period="monthly" data-i18n="mem.monthly">Monthly</button>
+        <button class="rec-period-btn" data-period="yearly"><span data-i18n="mem.yearly">Yearly</span> <span class="rec-save-tag" data-i18n="mem.save17">Save 17%</span></button>
       </div>
 
       <!-- Amount selector -->
@@ -819,12 +819,12 @@
         </span>
       </div>
 
-      <p class="recurring-note"><i class="fas fa-shield-alt"></i> Secure payment · 501(c)(3) · Cancel anytime by emailing us</p>
+      <p class="recurring-note"><i class="fas fa-shield-alt"></i> <span data-i18n="mem.recurring.note">Secure payment · 501(c)(3) · Cancel anytime by emailing us</span></p>
     </div>
 
     <!-- Membership Application Form -->
     <div class="membership-form-wrap" data-aos="fade-up" id="membership-form-section">
-      <h3 class="mem-form-title"><i class="fas fa-pen-alt"></i> Membership Application</h3>
+      <h3 class="mem-form-title"><i class="fas fa-pen-alt"></i> <span data-i18n="mem.form.title">Membership Application</span></h3>
       <form class="membership-form" id="membership-form">
         <div class="form-row">
           <div class="form-group"><label>First Name <span>*</span></label><input type="text" name="firstName" placeholder="Jean" required></div>
@@ -853,7 +853,7 @@
           <textarea name="motivation" rows="4" placeholder="Tell us about yourself and your connection to UNAH…"></textarea>
         </div>
         <button type="submit" class="btn btn-gold btn-full"><i class="fas fa-paper-plane"></i> Submit Application</button>
-        <div class="form-success" id="mem-success"><i class="fas fa-check-circle"></i> Application received! We'll be in touch soon.</div>
+        <div class="form-success" id="mem-success"><i class="fas fa-check-circle"></i> <span data-i18n="mem.form.success">Application received! We'll be in touch soon.</span></div>
       </form>
     </div>
   </div>
@@ -866,7 +866,7 @@
       <span class="section-badge" data-i18n="donate.badge">Make an Impact</span>
       <h2 class="section-title" data-i18n="donate.title">Support Our Mission</h2>
       <div class="divider"><span></span><i class="fas fa-heart"></i><span></span></div>
-      <p class="section-sub">CALUNAH is a registered <strong>501(c)(3) nonprofit</strong>. Your donation is fully tax-deductible and directly funds scholarships, community programs, and campus development.</p>
+      <p class="section-sub" data-i18n="donate.sub">CALUNAH is a registered <strong>501(c)(3) nonprofit</strong>. Your donation is fully tax-deductible and directly funds scholarships, community programs, and campus development.</p>
     </div>
 
     <!-- ══ WHY GIVE / WHO WE ARE ══════════════════════════ -->
@@ -877,8 +877,8 @@
         <img src="images/campus/build/2.jpg" alt="UNAH Campus" class="cs-why-img">
         <div class="cs-why-overlay">
           <span class="cs-why-badge"><i class="fas fa-university"></i>&nbsp; About CALUNAH</span>
-          <h3 class="cs-why-title">Why Give to CALUNAH?</h3>
-          <p class="cs-why-sub">Your donation transforms lives at l'Université Adventiste d'Haïti and empowers communities across Haiti and the diaspora.</p>
+          <h3 class="cs-why-title" data-i18n="donate.why.title">Why Give to CALUNAH?</h3>
+          <p class="cs-why-sub" data-i18n="donate.why.sub">Your donation transforms lives at l'Université Adventiste d'Haïti and empowers communities across Haiti and the diaspora.</p>
         </div>
       </div>
 
@@ -891,8 +891,8 @@
           </div>
           <div class="cs-vmc-body">
             <div class="cs-vmc-icon"><i class="fas fa-eye"></i></div>
-            <h4 class="cs-vmc-title">Our Vision</h4>
-            <p>To build strong communities in both Haiti and abroad through education and communal engagement.</p>
+            <h4 class="cs-vmc-title" data-i18n="donate.vision.title">Our Vision</h4>
+            <p data-i18n="donate.vision.desc">To build strong communities in both Haiti and abroad through education and communal engagement.</p>
           </div>
         </div>
 
@@ -902,7 +902,7 @@
           </div>
           <div class="cs-vmc-body">
             <div class="cs-vmc-icon"><i class="fas fa-bullseye"></i></div>
-            <h4 class="cs-vmc-title">Our Mission</h4>
+            <h4 class="cs-vmc-title" data-i18n="donate.mission.title">Our Mission</h4>
             <p>CALUNAH is dedicated to provide scholarships and financial assistance toward maintaining student learning and school infrastructure.</p>
             <p>Our humanitarian mission is <em>'sans frontières'</em> (without borders), which means that we endeavor to support students from all walks of life.</p>
           </div>
@@ -914,7 +914,7 @@
           </div>
           <div class="cs-vmc-body">
             <div class="cs-vmc-icon"><i class="fas fa-users"></i></div>
-            <h4 class="cs-vmc-title">Our Community</h4>
+            <h4 class="cs-vmc-title" data-i18n="donate.community.title">Our Community</h4>
             <p>CALUNAH remains a progressive network of strength, togetherness, and service to its large constituency of faithful alumni, students, friends, and supporters.</p>
             <p>Our mission is to provide continuous support to communities through scholarships, construction projects, and financial assistance.</p>
           </div>
@@ -930,8 +930,8 @@
         </div>
         <div class="cs-edu-content">
           <div class="cs-edu-icon"><i class="fas fa-graduation-cap"></i></div>
-          <h4 class="cs-edu-title">Emphasizing Educational Advancement</h4>
-          <p class="cs-edu-intro">Our main focus is education. Some of our goals are:</p>
+          <h4 class="cs-edu-title" data-i18n="donate.edu.title">Emphasizing Educational Advancement</h4>
+          <p class="cs-edu-intro" data-i18n="donate.edu.intro">Our main focus is education. Some of our goals are:</p>
           <ul class="cs-edu-list">
             <li><i class="fas fa-check-circle"></i> Intensify the recruitment process and keep a more up-to-date database.</li>
             <li><i class="fas fa-check-circle"></i> Restructure CALUNAH at its administrative level for a better service to all our constituency world.</li>
@@ -945,23 +945,23 @@
       <div class="cs-values-row">
         <div class="cs-value-card cs-val-integrity">
           <i class="fas fa-handshake cs-val-icon"></i>
-          <h5>Integrity</h5>
-          <p>We keep our promises. Our reputation rests on honesty, fairness, and treating everyone with respect.</p>
+          <h5 data-i18n="val.integrity">Integrity</h5>
+          <p data-i18n="val.integrity.desc">We keep our promises. Our reputation rests on honesty, fairness, and treating everyone with respect.</p>
         </div>
         <div class="cs-value-card cs-val-service">
           <i class="fas fa-hands-helping cs-val-icon"></i>
-          <h5>Service</h5>
-          <p>We go the extra mile. We provide the highest levels of service to our members, the university, and all alumni.</p>
+          <h5 data-i18n="val.service">Service</h5>
+          <p data-i18n="val.service.desc">We go the extra mile. We provide the highest levels of service to our members, the university, and all alumni.</p>
         </div>
         <div class="cs-value-card cs-val-quality">
           <i class="fas fa-star cs-val-icon"></i>
-          <h5>Quality</h5>
-          <p>We pursue excellence in both what we do and how we do it.</p>
+          <h5 data-i18n="val.quality">Quality</h5>
+          <p data-i18n="val.quality.desc">We pursue excellence in both what we do and how we do it.</p>
         </div>
         <div class="cs-value-card cs-val-innovation">
           <i class="fas fa-lightbulb cs-val-icon"></i>
-          <h5>Innovation</h5>
-          <p>Our success depends on continuous improvement and openness to new ideas.</p>
+          <h5 data-i18n="val.innovation">Innovation</h5>
+          <p data-i18n="val.innovation.desc">Our success depends on continuous improvement and openness to new ideas.</p>
         </div>
       </div>
 
@@ -1190,7 +1190,7 @@
     <div class="contact-grid">
       <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
         <h3 data-i18n="contact.heading">Connect With CALUNAH</h3>
-        <p>Whether you are a UNAH graduate, a supporter, or simply curious about our mission, we would love to hear from you. Submit events, share photos, ask about membership, or learn about our programs.</p>
+        <p data-i18n="contact.desc">Whether you are a UNAH graduate, a supporter, or simply curious about our mission, we would love to hear from you. Submit events, share photos, ask about membership, or learn about our programs.</p>
         <div class="contact-items">
           <div class="ci"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><a href="mailto:info@calunah.org">info@calunah.org</a></div></div>
           <div class="ci"><div class="ci-icon"><i class="fas fa-globe"></i></div><div><h4>Website</h4><a href="https://www.calunah.org" target="_blank">www.calunah.org</a></div></div>
@@ -1224,7 +1224,7 @@
           </div>
           <div class="form-group"><label>Message <span>*</span></label><textarea name="message" rows="5" placeholder="How can we help you?" required></textarea></div>
           <button type="submit" class="btn btn-gold btn-full"><i class="fas fa-paper-plane"></i> Send Message</button>
-          <div class="form-success" id="form-success"><i class="fas fa-check-circle"></i> Thank you! Your message has been sent.</div>
+          <div class="form-success" id="form-success"><i class="fas fa-check-circle"></i> <span data-i18n="contact.success">Thank you! Your message has been sent.</span></div>
         </form>
       </div>
     </div>
@@ -1282,12 +1282,12 @@
 
         <div class="footer-col footer-newsletter">
           <h4 data-i18n="footer.updated">Stay Updated</h4>
-          <p>Subscribe for news, events &amp; alumni spotlights.</p>
+          <p data-i18n="footer.nl.sub">Subscribe for news, events &amp; alumni spotlights.</p>
           <form class="newsletter-form" id="newsletter-form">
             <input type="email" name="email" placeholder="Your email address" required>
             <button type="submit"><i class="fas fa-paper-plane"></i></button>
           </form>
-          <div class="nl-success" id="nl-success"><i class="fas fa-check"></i> You're subscribed!</div>
+          <div class="nl-success" id="nl-success"><i class="fas fa-check"></i> <span data-i18n="footer.nl.success">You're subscribed!</span></div>
           <div class="footer-links-extra">
             <a href="#events">Events</a> · <a href="#gallery">Gallery</a> · <a href="#videos">Videos</a> · <a href="#enewsletter">Newsletter</a>
           </div>
