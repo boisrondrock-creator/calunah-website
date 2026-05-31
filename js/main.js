@@ -841,34 +841,37 @@ function buildEvents() {
           <p>${ev.fullInfo}</p>
         </div>
 
-        <!-- Ticket tiers for upcoming events -->
+        <!-- Ticket tiers for upcoming events (auto-generated when tickets exist) -->
         ${ev.upcoming && ev.tickets && ev.tickets.length ? `
         <div class="event-tickets">
           <div class="et-heading"><i class="fas fa-ticket-alt"></i> Get Your Tickets</div>
           <div class="et-tiers">
-            ${ev.tickets.map(t => `
+            ${ev.tickets.map(t => {
+              const atDoor = (t.label || '').toLowerCase().includes('door');
+              return `
               <div class="et-tier">
                 <div class="et-tier-top">
                   <span class="et-tier-label">${t.label}</span>
                   <span class="et-tier-price">$${t.price}</span>
                 </div>
-                <span class="et-tier-note">${t.note}</span>
-                ${t.url
-                  ? `<a href="${t.url}" target="_blank" rel="noopener" class="btn et-buy-btn">
-                       <i class="fas fa-credit-card"></i> Buy Online
-                     </a>`
-                  : t.label === 'At the Door'
-                    ? `<span class="et-at-door"><i class="fas fa-map-marker-alt"></i> Available at venue</span>`
-                    : `<button class="btn et-reserve-btn"
-                         onclick="openTicketReservation('${ev.title}','${ev.date}, ${ev.time}','${t.label}','${t.price}')">
-                         <i class="fas fa-calendar-check"></i> Reserve Spot
-                       </button>`
+                <span class="et-tier-note">${t.note || ''}</span>
+                ${atDoor
+                  ? `<span class="et-at-door"><i class="fas fa-map-marker-alt"></i> Available at venue</span>`
+                  : `<button class="btn et-buy-btn"
+                       data-ev="${escAttr(ev.title)}"
+                       data-evid="${escAttr(ev.id)}"
+                       data-label="${escAttr(t.label)}"
+                       data-price="${t.price}"
+                       onclick="buyTicket(this)">
+                       <i class="fab fa-cc-stripe"></i> Buy Tickets
+                     </button>`
                 }
-              </div>`).join('')}
+              </div>`; }).join('')}
           </div>
+          <p class="et-secure-note"><i class="fas fa-lock"></i> Secure checkout by Stripe · Card &amp; Apple/Google Pay · Emailed receipt</p>
           <button class="et-reserve-all-btn"
-            onclick="openTicketReservation('${ev.title}','${ev.date}, ${ev.time}','General','')">
-            <i class="fas fa-envelope"></i> Reserve &amp; Pay Later (Zelle / PayPal)
+            onclick="openTicketReservation('${escAttr(ev.title)}','${escAttr(ev.date)}, ${escAttr(ev.time)}','General','')">
+            <i class="fas fa-envelope"></i> Prefer Zelle / PayPal? Reserve here
           </button>
         </div>` : ''}
 
@@ -2435,6 +2438,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMembershipForm();
   initRecurringMembership();
   initNLSignupForm();
+  initTicketReturn();
 
   /* Event spotlight dismiss */
   const spotlightClose = qs('#spotlight-close');
