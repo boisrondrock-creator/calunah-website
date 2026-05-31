@@ -768,6 +768,31 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .dw-btn-paypal{background:#003087;color:#fff}
 .dw-btn-paypal:hover{background:#002070;transform:translateY(-2px)}
 .donate-address{font-style:normal;font-size:.85rem;color:var(--text);font-weight:600;line-height:1.7}
+/* ══ FUNDRAISING TRACKER ═══════════════════════════════ */
+.fundraise-tracker{background:linear-gradient(135deg,#0d3d1a 0%,#1a6b2f 60%,#0d3d1a 100%);border-radius:20px;padding:2.5rem 2.8rem;margin-bottom:2.5rem;border:1px solid rgba(201,162,39,.2);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.ft-header{text-align:center;margin-bottom:2rem}
+.ft-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.35);color:var(--gold);font-size:.7rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:.4rem 1rem;border-radius:50px;margin-bottom:1rem}
+.ft-title{font-family:var(--font-head);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:#fff;margin:0 0 .6rem}
+.ft-goal{color:var(--gold)}
+.ft-tagline{font-size:.9rem;color:rgba(255,255,255,.7);font-style:italic;margin:0}
+.ft-milestones{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:2rem}
+.ft-milestone{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.9rem .6rem;text-align:center;display:flex;flex-direction:column;gap:.2rem}
+.ft-milestone.ft-final{background:rgba(201,162,39,.12);border-color:rgba(201,162,39,.35)}
+.ft-qtr{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.ft-target{font-family:var(--font-head);font-size:1.2rem;font-weight:900;color:var(--gold)}
+.ft-period{font-size:.65rem;color:rgba(255,255,255,.45)}
+.ft-bar-label{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.55);margin-bottom:.4rem}
+.ft-bar-track{position:relative;height:22px;background:rgba(255,255,255,.1);border-radius:50px;overflow:visible;margin-bottom:.6rem}
+.ft-bar-fill{height:100%;background:linear-gradient(90deg,#1a6b2f,var(--gold));border-radius:50px;transition:width 1.5s ease;min-width:4px}
+.ft-bar-markers{position:absolute;top:0;left:0;right:0;height:100%;pointer-events:none}
+.ft-bar-markers span{position:absolute;transform:translateX(-50%);top:calc(100% + 4px);font-size:.6rem;color:rgba(255,255,255,.45);white-space:nowrap}
+.ft-note{font-size:.72rem;color:rgba(255,255,255,.45);margin:.8rem 0 0;display:flex;align-items:center;gap:.4rem}
+.ft-note i{color:var(--gold);opacity:.7}
+.ft-cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;margin-top:1.5rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--green-dark);font-family:var(--font-body);font-size:.9rem;font-weight:800;letter-spacing:.06em;padding:.85rem 2.2rem;border-radius:50px;text-decoration:none;border:none;cursor:pointer;transition:var(--transition);box-shadow:0 8px 24px rgba(201,162,39,.35)}
+.ft-cta-btn:hover{background:linear-gradient(135deg,var(--gold),#e8c84a);transform:translateY(-3px);box-shadow:0 14px 36px rgba(201,162,39,.5);color:var(--green-dark)}
+@media(max-width:640px){.ft-milestones{grid-template-columns:repeat(2,1fr)}.fundraise-tracker{padding:1.8rem 1.4rem}}
+@media(max-width:380px){.ft-milestones{grid-template-columns:1fr 1fr}}
+
 .donate-501{display:flex;align-items:flex-start;gap:1rem;padding:1.5rem;background:linear-gradient(135deg,rgba(201,162,39,.08),rgba(201,162,39,.04));border:1px solid rgba(201,162,39,.25);border-radius:var(--radius)}
 .donate-501 i{font-size:1.5rem;color:var(--gold);flex-shrink:0;margin-top:.15rem}
 .donate-501 p{font-size:.84rem;color:var(--text-mid);line-height:1.7;margin:0}

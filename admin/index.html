@@ -1291,12 +1291,14 @@ async function runPublish() {
     Object.values(stepMap).forEach(sid => setStep(sid, 'fail', 'Failed'));
     setStep('s-deploy', 'fail', 'Failed');
     document.getElementById('publish-close-btn').style.display = 'flex';
-    /* Special message if GITHUB_TOKEN not set */
+    /* Specific guidance for common failures */
     if (response.status === 500 && data.error && data.error.includes('GITHUB_TOKEN')) {
       toast('⚠️ GitHub token not configured. See Settings → Setup Guide.', 'error');
       setTimeout(() => showPage('settings'), 2000);
     } else if (response.status === 401) {
-      toast('Session expired. Please log out and log back in.', 'error');
+      toast('⚠️ Auth failed — your admin password may differ from the PUBLISH_SECRET in Vercel. Try logging out and back in, or check Settings.', 'error');
+    } else if (response.status === 422 || (data.error && data.error.toLowerCase().includes('token'))) {
+      toast('⚠️ GitHub token may be expired. Go to github.com/settings/tokens and regenerate it, then update it in Vercel → Environment Variables → GITHUB_TOKEN.', 'error');
     } else {
       toast('Publish failed: ' + msg, 'error');
     }
