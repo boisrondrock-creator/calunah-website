@@ -1517,6 +1517,7 @@ function initRecurringMembership() {
   const zelleBtnEl = qs('#rec-zelle-btn', wrap);
   const ppBtnEl    = qs('#rec-paypal-btn', wrap);
   const customEl   = qs('#rec-custom', wrap);
+  const stripeBtnEl= qs('#rec-stripe-btn', wrap);
 
   /* Build PayPal URL with pre-filled amount */
   function paypalURL(amt) {
@@ -1560,6 +1561,35 @@ function initRecurringMembership() {
         qsa('.rec-amt-btn', wrap).forEach(b => b.classList.remove('active'));
         refresh();
       }
+    });
+  }
+
+  /* Card payment via Stripe (one-time charge for the selected amount) */
+  if (stripeBtnEl) {
+    stripeBtnEl.addEventListener('click', async () => {
+      const orig = stripeBtnEl.innerHTML;
+      stripeBtnEl.disabled = true;
+      stripeBtnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading…';
+      try {
+        const r = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            eventTitle:  'CALUNAH Membership Contribution',
+            eventId:     'membership',
+            ticketLabel: `${period === 'yearly' ? 'Yearly' : 'Monthly'} Support`,
+            price:       amount,
+            quantity:    1
+          })
+        });
+        const data = await r.json();
+        if (r.ok && data.url) { window.location.href = data.url; return; }
+        alert(data.error || 'Card checkout is unavailable right now. Please use Zelle or PayPal.');
+      } catch (e) {
+        alert('Network error starting checkout. Please try again, or use Zelle/PayPal.');
+      }
+      stripeBtnEl.disabled = false;
+      stripeBtnEl.innerHTML = orig;
     });
   }
 
@@ -2069,6 +2099,7 @@ const CALUNAH_LANG = {
     'mem.yearly':           'Yearly',
     'mem.save17':           'Save 17%',
     'mem.recurring.note':   'Secure payment · 501(c)(3) · Cancel anytime by emailing us',
+    'mem.pay.card':         'Pay with Card',
     'mem.form.title':       'Membership Application',
     'mem.form.success':     "Application received! We'll be in touch soon.",
     /*, Donate extras, */
@@ -2294,6 +2325,7 @@ const CALUNAH_LANG = {
     'mem.yearly':           'Annuel',
     'mem.save17':           'Économisez 17%',
     'mem.recurring.note':   'Paiement sécurisé · 501(c)(3) · Annulez à tout moment par e-mail',
+    'mem.pay.card':         'Payer par carte',
     'mem.form.title':       'Formulaire d\'adhésion',
     'mem.form.success':     'Candidature reçue ! Nous vous contacterons bientôt.',
     /*, Donate extras FR, */
@@ -2518,6 +2550,7 @@ const CALUNAH_LANG = {
     'mem.yearly':           'Chak ane',
     'mem.save17':           'Ekonomize 17%',
     'mem.recurring.note':   'Pèman sekirize · 501(c)(3) · Anile nenpòt kilè pa imèl',
+    'mem.pay.card':         'Peye ak kat',
     'mem.form.title':       'Fòm manmbèchip',
     'mem.form.success':     'Aplikasyon resevwa! Nou pral kontakte ou byento.',
     /*, Donate extras KR, */

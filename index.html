@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/style.css?v=20260601c">
+  <link rel="stylesheet" href="css/style.css?v=20260601d">
 </head>
 <body>
 
@@ -840,9 +840,9 @@
         <a class="btn rec-btn-paypal" id="rec-paypal-btn" href="https://www.paypal.com/donate?business=donate%40calunah.org&currency_code=USD" target="_blank" rel="noopener">
           <i class="fab fa-paypal"></i> Pay with PayPal
         </a>
-        <span class="btn rec-btn-stripe" style="opacity:.5;cursor:not-allowed" title="Card payments coming soon">
-          <i class="fas fa-lock"></i> Card, Coming Soon
-        </span>
+        <button type="button" class="btn rec-btn-stripe" id="rec-stripe-btn" title="Pay by card via Stripe">
+          <i class="fas fa-credit-card"></i> <span data-i18n="mem.pay.card">Pay with Card</span>
+        </button>
       </div>
 
       <p class="recurring-note"><i class="fas fa-shield-alt"></i> <span data-i18n="mem.recurring.note">Secure payment · 501(c)(3) · Cancel anytime by emailing us</span></p>
@@ -1354,8 +1354,8 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <!-- PDF.js — renders the magazine pages for the flipbook reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="js/flipbook.js?v=20260601c"></script>
-<script src="js/main.js?v=20260601c"></script>
+<script src="js/flipbook.js?v=20260601d"></script>
+<script src="js/main.js?v=20260601d"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 

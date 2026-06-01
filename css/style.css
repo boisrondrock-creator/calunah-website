@@ -770,8 +770,9 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .rec-phone{font-size:.78rem;opacity:.8;font-weight:600}
 .rec-btn-paypal{background:#003087;color:#fff;border:none}
 .rec-btn-paypal:hover{background:#002070;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,48,135,.35)}
-.rec-btn-stripe{background:linear-gradient(135deg,#635bff,#7c73ff);color:#fff;border:none}
+.rec-btn-stripe{background:linear-gradient(135deg,#635bff,#7c73ff);color:#fff;border:none;cursor:pointer}
 .rec-btn-stripe:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 8px 24px rgba(99,91,255,.38)}
+.rec-btn-stripe:disabled{opacity:.7;cursor:wait;transform:none}
 /* Note line */
 .recurring-note{font-size:.78rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:.5rem;margin:0}
 .recurring-note i{color:var(--gold);opacity:.7}
