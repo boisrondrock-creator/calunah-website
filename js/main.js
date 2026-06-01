@@ -2126,6 +2126,8 @@ const CALUNAH_LANG = {
     'qr.donate.note':       'Point your phone camera here to give securely',
     'qr.tickets.title':     'Scan for Event Tickets',
     'qr.tickets.note':      'Buy tickets for the High Tea & upcoming events',
+    'qr.download':          'Download',
+    'donate.ways.title':    '4 Ways to Donate',
     /*, Donors extras, */
     'donors.become.desc':     'Your generosity directly funds scholarships, campus development, and community programs. As a 501(c)(3) nonprofit, all donations are <strong>tax-deductible</strong>.',
     /*, Timeline, */
@@ -2349,6 +2351,8 @@ const CALUNAH_LANG = {
     'qr.donate.note':       'Pointez l\'appareil photo de votre téléphone ici pour donner en toute sécurité',
     'qr.tickets.title':     'Scannez pour les billets',
     'qr.tickets.note':      'Achetez des billets pour le High Tea et les événements à venir',
+    'qr.download':          'Télécharger',
+    'donate.ways.title':    '4 façons de faire un don',
     /*, Donors extras FR, */
     'donors.become.desc':     'Votre générosité finance directement les bourses, le développement du campus et les programmes communautaires. En tant qu\'organisation 501(c)(3), tous les dons sont <strong>déductibles des impôts</strong>.',
     /*, Timeline FR, */
@@ -2571,6 +2575,8 @@ const CALUNAH_LANG = {
     'qr.donate.note':       'Pwente kamera telefòn ou isit la pou bay an sekirite',
     'qr.tickets.title':     'Eskane pou tikè evènman',
     'qr.tickets.note':      'Achte tikè pou High Tea ak evènman kap vini yo',
+    'qr.download':          'Telechaje',
+    'donate.ways.title':    '4 fason pou bay don',
     /*, Donors extras KR, */
     'donors.become.desc':     'Jenerozite ou finanse dirèkteman bous etid, devlopman kampis ak pwogram kominotè. Kòm yon òganizasyon 501(c)(3), tout don yo <strong>dediktibl nan taks</strong>.',
     /*, Timeline KR, */

@@ -780,6 +780,9 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .qr-tickets{border-color:rgba(26,107,47,.25)}
 .qr-img{width:100%;max-width:230px;height:auto;border-radius:12px}
 .qr-card-note{font-size:.82rem;color:var(--text-light);margin:0;line-height:1.5}
+.qr-download-btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:700;padding:.5rem 1.2rem;border-radius:50px;text-decoration:none;transition:var(--transition);border:1.5px solid var(--border);color:var(--text-mid);background:var(--off-white)}
+.qr-download-btn:hover{background:var(--green);color:#fff;border-color:var(--green);transform:translateY(-2px)}
+.qr-donate .qr-download-btn:hover{background:#c0392b;border-color:#c0392b}
 @media(max-width:600px){.qr-scan-row{grid-template-columns:1fr;max-width:340px;margin-left:auto;margin-right:auto}}
 
 .fundraise-tracker{background:linear-gradient(135deg,#0d3d1a 0%,#1a6b2f 60%,#0d3d1a 100%);border-radius:20px;padding:2.5rem 2.8rem;margin-bottom:2.5rem;border:1px solid rgba(201,162,39,.2);box-shadow:0 20px 60px rgba(0,0,0,.25)}
