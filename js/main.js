@@ -2839,7 +2839,8 @@ async function loadCMSContent() {
     chapters:    'data/chapters.json',
     committee:   'data/committee.json',
     newsletters: 'data/newsletters.json',
-    donors:      'data/donors.json'
+    donors:      'data/donors.json',
+    menu:        'data/menu.json'
   };
   await Promise.all(Object.entries(files).map(async ([key, path]) => {
     try {
@@ -2853,8 +2854,40 @@ async function loadCMSContent() {
       if (key === 'committee'   && json.committee)    CALUNAH_CONFIG.committee   = json.committee;
       if (key === 'newsletters' && json.newsletters)  CALUNAH_CONFIG.newsletters = json.newsletters;
       if (key === 'donors'      && json.platinum)     CALUNAH_CONFIG.donors      = { platinum: json.platinum, gold: json.gold, silver: json.silver };
+      if (key === 'menu'        && json.menu && json.menu.length) CALUNAH_CONFIG.menu = json.menu;
     } catch (e) { /* silently fall back to config defaults */ }
   }));
+}
+
+/* Render the top navigation from CALUNAH_CONFIG.menu (managed in admin).
+   If no menu config is present, the existing hardcoded HTML is left as-is. */
+function buildNav() {
+  const menu = CALUNAH_CONFIG.menu;
+  const ul = qs('#nav-links');
+  if (!ul || !menu || !menu.length) return;   // safe fallback: keep HTML nav
+
+  ul.innerHTML = menu.map(item => {
+    const i18n = item.i18n ? ` data-i18n="${item.i18n}"` : '';
+    const icon = item.icon ? `<i class="${item.icon} nav-icon"></i>` : '';
+    if (item.dropdown && item.dropdown.length) {
+      const dd = item.dropdown.map(d => {
+        const di18n = d.i18n ? ` data-i18n="${d.i18n}"` : '';
+        const dicon = d.icon ? `<i class="${d.icon}"></i>` : '';
+        return `<li><a href="${d.href}" class="nav-dd-item">${dicon}<span${di18n}>${d.label}</span></a></li>`;
+      }).join('');
+      return `<li class="nav-item has-dropdown">
+        <a href="${item.href}" class="nav-link nav-has-arrow">
+          <i class="${item.icon || 'fas fa-info-circle'} nav-icon"></i><span${i18n}>${item.label}</span>
+          <i class="fas fa-chevron-down nav-arrow"></i>
+        </a>
+        <ul class="nav-dropdown">${dd}</ul>
+      </li>`;
+    }
+    if (item.donate) {
+      return `<li class="nav-item"><a href="${item.href}" class="nav-link btn-nav-donate"><i class="${item.icon || 'fas fa-heart'}"></i><span${i18n}>${item.label}</span></a></li>`;
+    }
+    return `<li class="nav-item"><a href="${item.href}" class="nav-link">${icon}<span${i18n}>${item.label}</span></a></li>`;
+  }).join('');
 }
 
 function buildBlog() {
@@ -2895,6 +2928,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initParticles();
   initFallingLogos();
   initHeroSlider();
+  buildNav();        // render nav from menu.json (if present) before wiring handlers
   initNav();
   initAOS();
   initSmoothScroll();

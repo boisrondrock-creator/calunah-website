@@ -1,0 +1,23 @@
+{
+  "menu": [
+    { "label": "Home", "href": "#hero", "icon": "fas fa-home", "i18n": "nav.home" },
+    {
+      "label": "About", "href": "#about", "icon": "fas fa-info-circle", "i18n": "nav.about",
+      "dropdown": [
+        { "label": "Mission & Values", "href": "#about", "icon": "fas fa-heart", "i18n": "nav.dd.mission" },
+        { "label": "Our History", "href": "#history", "icon": "fas fa-scroll", "i18n": "nav.dd.history" },
+        { "label": "Executive Committee", "href": "#committee", "icon": "fas fa-users-cog", "i18n": "nav.dd.committee" },
+        { "label": "Chapter Presidents", "href": "#chapters", "icon": "fas fa-map-marker-alt", "i18n": "nav.dd.chapters" },
+        { "label": "Donors & Partners", "href": "#donors", "icon": "fas fa-hand-holding-heart", "i18n": "nav.dd.donors" }
+      ]
+    },
+    { "label": "Our Work", "href": "#our-work", "icon": "fas fa-hands-helping", "i18n": "nav.work" },
+    { "label": "Events", "href": "#events", "icon": "fas fa-calendar-alt", "i18n": "nav.events" },
+    { "label": "Gallery", "href": "#gallery", "icon": "fas fa-images", "i18n": "nav.gallery" },
+    { "label": "Videos", "href": "#videos", "icon": "fas fa-video", "i18n": "nav.videos" },
+    { "label": "Newsletter", "href": "#enewsletter", "icon": "fas fa-newspaper", "i18n": "nav.newsletter" },
+    { "label": "Membership", "href": "#membership", "icon": "fas fa-id-card", "i18n": "nav.membership" },
+    { "label": "Contact", "href": "#contact", "icon": "fas fa-envelope", "i18n": "nav.contact" },
+    { "label": "Donate", "href": "#donate", "icon": "fas fa-heart", "i18n": "nav.donate", "donate": true }
+  ]
+}

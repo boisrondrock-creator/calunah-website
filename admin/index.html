@@ -290,6 +290,10 @@ select.form-control{cursor:pointer}
       <a class="sb-link" onclick="showPage('chapters')"><i class="fas fa-globe"></i> Chapters<span class="sb-badge" id="badge-chapters">0</span></a>
       <a class="sb-link" onclick="showPage('donors')"><i class="fas fa-hand-holding-heart"></i> Donors &amp; Partners</a>
 
+      <div class="sb-section">Site</div>
+      <a class="sb-link" onclick="showPage('menu')"><i class="fas fa-bars"></i> Navigation Menu</a>
+      <a class="sb-link" onclick="showPage('templates')"><i class="fas fa-file-image"></i> Flyer Templates</a>
+
       <div class="sb-section">System</div>
       <a class="sb-link" onclick="showPage('settings')"><i class="fas fa-cog"></i> Settings</a>
     </nav>
@@ -392,6 +396,21 @@ select.form-control{cursor:pointer}
     <div class="page" id="page-donors">
       <div class="section-header"><div><h2>Donors &amp; Partners</h2><p>Manage your donor recognition tiers</p></div></div>
       <div class="donors-grid" id="donors-grid"></div>
+    </div>
+
+    <!-- NAVIGATION MENU -->
+    <div class="page" id="page-menu">
+      <div class="section-header"><div><h2>Navigation Menu</h2><p>Add, remove, rename and reorder the top menu items</p></div><button class="btn-add" onclick="addMenuItem()"><i class="fas fa-plus"></i> Add Menu Item</button></div>
+      <div class="settings-card">
+        <p class="form-hint" style="margin-bottom:1rem"><i class="fas fa-info-circle"></i> Use ↑ ↓ to reorder. The <strong>Link</strong> should be a section anchor like <code>#events</code> or a full URL. Click <i class="fas fa-trash"></i> to remove. Remember to <strong>Publish</strong> when done.</p>
+        <div id="menu-list"></div>
+      </div>
+    </div>
+
+    <!-- FLYER TEMPLATES -->
+    <div class="page" id="page-templates">
+      <div class="section-header"><div><h2>Flyer Templates</h2><p>Download a branded starting template, then customize it in Canva, Word, or any editor</p></div></div>
+      <div class="templates-grid" id="templates-grid"></div>
     </div>
 
     <!-- VIDEOS -->
@@ -693,7 +712,7 @@ function doLogout() {
 }
 
 /* ── PAGE NAV ── */
-const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', videos:'Videos', settings:'Settings' };
+const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', videos:'Videos', menu:'Navigation Menu', templates:'Flyer Templates', settings:'Settings' };
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
@@ -703,15 +722,17 @@ function showPage(id) {
     if (l.getAttribute('onclick') && l.getAttribute('onclick').includes("'"+id+"'")) l.classList.add('active');
   });
   document.getElementById('topbar-title').textContent = PAGE_TITLES[id] || id;
-  if (id === 'videos') loadVideoSettings();
-  if (id === 'media')  renderMediaLibrary();
+  if (id === 'videos')    loadVideoSettings();
+  if (id === 'media')     renderMediaLibrary();
+  if (id === 'menu')      renderMenu();
+  if (id === 'templates') renderTemplates();
 }
 
 /* ── DATA ── */
-let DATA = { events:{events:[]}, blog:{posts:[]}, gallery:{items:[]}, chapters:{chapters:[]}, committee:{committee:[]}, newsletters:{newsletters:[]}, donors:{platinum:[],gold:[],silver:[]} };
+let DATA = { events:{events:[]}, blog:{posts:[]}, gallery:{items:[]}, chapters:{chapters:[]}, committee:{committee:[]}, newsletters:{newsletters:[]}, donors:{platinum:[],gold:[],silver:[]}, menu:{menu:[]} };
 
 async function loadAllData() {
-  const files = ['events','blog','gallery','chapters','committee','newsletters','donors'];
+  const files = ['events','blog','gallery','chapters','committee','newsletters','donors','menu'];
   await Promise.all(files.map(async f => {
     try {
       const r = await fetch('../data/'+f+'.json?t='+Date.now());
@@ -720,7 +741,7 @@ async function loadAllData() {
   }));
   renderAll();
 }
-function renderAll() { renderEvents(); renderBlog(); renderGallery(); renderChapters(); renderCommittee(); renderNewsletter(); updateStats(); }
+function renderAll() { renderEvents(); renderBlog(); renderGallery(); renderChapters(); renderCommittee(); renderNewsletter(); renderMenu(); updateStats(); }
 
 /* ── STATS ── */
 function updateStats() {
@@ -1127,6 +1148,72 @@ function deleteChapter(i) { if (!confirm('Delete this chapter?')) return; DATA.c
 
 /* ── DONORS ── */
 function loadDonors() { renderDonors(); }
+/* ══ NAVIGATION MENU EDITOR ══════════════════════════════ */
+function renderMenu() {
+  const wrap = document.getElementById('menu-list');
+  if (!wrap) return;
+  if (!DATA.menu || !DATA.menu.menu) DATA.menu = { menu: [] };
+  const items = DATA.menu.menu;
+  if (!items.length) { wrap.innerHTML = '<p class="form-hint">No menu items yet. Click “Add Menu Item”.</p>'; return; }
+  wrap.innerHTML = items.map((it, i) => `
+    <div class="menu-row" style="display:flex;gap:.6rem;align-items:center;padding:.7rem;border:1px solid var(--line,#e2e8f0);border-radius:10px;margin-bottom:.6rem;background:#fff">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <button class="btn-icon" title="Move up" onclick="moveMenuItem(${i},-1)" ${i===0?'disabled':''}><i class="fas fa-chevron-up"></i></button>
+        <button class="btn-icon" title="Move down" onclick="moveMenuItem(${i},1)" ${i===items.length-1?'disabled':''}><i class="fas fa-chevron-down"></i></button>
+      </div>
+      <div style="flex:1;display:grid;grid-template-columns:1fr 1fr auto;gap:.5rem;align-items:center">
+        <input class="form-control" value="${(it.label||'').replace(/"/g,'&quot;')}" placeholder="Label (e.g. Events)" oninput="updateMenuField(${i},'label',this.value)">
+        <input class="form-control" value="${(it.href||'').replace(/"/g,'&quot;')}" placeholder="Link (e.g. #events)" oninput="updateMenuField(${i},'href',this.value)">
+        <span class="menu-badge" style="font-size:.7rem;color:var(--muted,#64748b);white-space:nowrap">${it.dropdown&&it.dropdown.length?('▾ '+it.dropdown.length+' sub'):(it.donate?'★ Donate':'link')}</span>
+      </div>
+      <button class="btn-icon danger" title="Remove" onclick="deleteMenuItem(${i})"><i class="fas fa-trash"></i></button>
+    </div>`).join('');
+}
+function addMenuItem() {
+  if (!DATA.menu || !DATA.menu.menu) DATA.menu = { menu: [] };
+  DATA.menu.menu.push({ label:'New Item', href:'#hero', icon:'fas fa-circle' });
+  renderMenu();
+  toast('Menu item added. Edit it, then Publish.', 'success');
+}
+function deleteMenuItem(i) {
+  if (!confirm('Remove this menu item?')) return;
+  DATA.menu.menu.splice(i,1);
+  renderMenu();
+}
+function moveMenuItem(i, dir) {
+  const arr = DATA.menu.menu;
+  const j = i + dir;
+  if (j < 0 || j >= arr.length) return;
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+  renderMenu();
+}
+function updateMenuField(i, field, val) {
+  if (DATA.menu.menu[i]) DATA.menu.menu[i][field] = val;
+}
+
+/* ══ FLYER TEMPLATES ═════════════════════════════════════ */
+const FLYER_TEMPLATES = [
+  { name:'Event / High Tea',  file:'images/templates/template-event.png',   desc:'Elegant event flyer — title, date, speakers, tickets' },
+  { name:'Gala / Fundraiser', file:'images/templates/template-gala.png',    desc:'Formal gala flyer — theme, performers, venue' },
+  { name:'Week of Prayer',    file:'images/templates/template-prayer.png',  desc:'Spiritual program — nights, speakers, Zoom info' },
+  { name:'Sabbath / Worship', file:'images/templates/template-sabbath.png', desc:'Sabbath service — guest speaker, location, livestream' }
+];
+function renderTemplates() {
+  const g = document.getElementById('templates-grid');
+  if (!g) return;
+  g.innerHTML = FLYER_TEMPLATES.map(t => `
+    <div class="template-card" style="background:#fff;border:1px solid var(--line,#e2e8f0);border-radius:14px;overflow:hidden;display:flex;flex-direction:column">
+      <div style="aspect-ratio:3/4;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        <img src="../${t.file}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<div style=\\'color:#94a3b8;text-align:center;padding:1rem\\'><i class=\\'fas fa-file-image\\' style=\\'font-size:2.5rem\\'></i><br>Coming soon</div>'">
+      </div>
+      <div style="padding:1rem;flex:1;display:flex;flex-direction:column;gap:.5rem">
+        <strong>${t.name}</strong>
+        <span style="font-size:.82rem;color:var(--muted,#64748b);flex:1">${t.desc}</span>
+        <a href="../${t.file}" download class="btn-add" style="text-align:center;justify-content:center"><i class="fas fa-download"></i> Download</a>
+      </div>
+    </div>`).join('');
+}
+
 function renderDonors() {
   const g = document.getElementById('donors-grid');
   if (!g) return;
@@ -1231,6 +1318,7 @@ function openPublish() {
     { id:'s-committee',   label:'Saving Executive Committee' },
     { id:'s-newsletters', label:'Saving Newsletters' },
     { id:'s-donors',      label:'Saving Donors & Partners' },
+    { id:'s-menu',        label:'Saving Navigation Menu' },
     { id:'s-deploy',      label:'Triggering Website Rebuild' }
   ];
   document.getElementById('publish-steps').innerHTML = steps.map(s => `
@@ -1253,6 +1341,7 @@ async function runPublish() {
     'data/committee.json':   DATA.committee,
     'data/newsletters.json': DATA.newsletters,
     'data/donors.json':      DATA.donors,
+    'data/menu.json':        DATA.menu,
     'data/.deploy':          { ts: Date.now(), by: 'admin' }
   };
   const stepMap = {
@@ -1263,6 +1352,7 @@ async function runPublish() {
     'data/committee.json':   's-committee',
     'data/newsletters.json': 's-newsletters',
     'data/donors.json':      's-donors',
+    'data/menu.json':        's-menu',
     'data/.deploy':          's-deploy'
   };
 
