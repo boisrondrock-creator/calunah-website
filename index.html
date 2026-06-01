@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/style.css?v=20260601b">
+  <link rel="stylesheet" href="css/style.css?v=20260601c">
 </head>
 <body>
 
@@ -705,8 +705,34 @@
       <div class="divider"><span></span><i class="fas fa-newspaper"></i><span></span></div>
       <p class="section-sub" data-i18n="nl.sub">Alumni news, success stories, scholarship updates, and upcoming events delivered right to your inbox</p>
     </div>
-    <!-- ── Featured Newsletter Reader ── -->
+    <!-- ── Featured Newsletter Flipbook Reader ── -->
     <div class="nl-reader-wrap" id="nl-reader-wrap" data-aos="fade-up"></div>
+
+    <!-- ══ FLIPBOOK MODAL (realistic page-flipping reader) ══ -->
+    <div class="flipbook-modal" id="flipbook-modal" role="dialog" aria-modal="true" aria-label="Magazine reader">
+      <div class="fb-topbar">
+        <div class="fb-title" id="fb-title">CALUNAH Perspectives</div>
+        <div class="fb-tools">
+          <button class="fb-tool" id="fb-zoom-out" title="Zoom out"><i class="fas fa-search-minus"></i></button>
+          <button class="fb-tool" id="fb-zoom-in" title="Zoom in"><i class="fas fa-search-plus"></i></button>
+          <a class="fb-tool" id="fb-download" href="#" download title="Download PDF"><i class="fas fa-download"></i></a>
+          <button class="fb-tool fb-close" id="fb-close" title="Close"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <div class="fb-stage" id="fb-stage">
+        <button class="fb-nav fb-prev" id="fb-prev" aria-label="Previous page"><i class="fas fa-chevron-left"></i></button>
+        <div class="fb-book-area" id="fb-book-area">
+          <div class="fb-loading" id="fb-loading"><div class="fb-spinner"></div><span>Loading magazine…</span></div>
+          <div class="fb-book" id="fb-book"></div>
+        </div>
+        <button class="fb-nav fb-next" id="fb-next" aria-label="Next page"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="fb-bottombar">
+        <span class="fb-pagenum" id="fb-pagenum">Page 1</span>
+        <input type="range" class="fb-slider" id="fb-slider" min="1" max="1" value="1">
+        <span class="fb-total" id="fb-total">of 1</span>
+      </div>
+    </div>
 
     <div class="newsletter-layout">
       <!-- Signup -->
@@ -1326,7 +1352,10 @@
 <button class="back-to-top" id="back-to-top" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="js/main.js?v=20260601b"></script>
+<!-- PDF.js — renders the magazine pages for the flipbook reader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="js/flipbook.js?v=20260601c"></script>
+<script src="js/main.js?v=20260601c"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 

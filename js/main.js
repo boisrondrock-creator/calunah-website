@@ -425,7 +425,7 @@ const CALUNAH_CONFIG = {
 
   /* ---------- e-Newsletter Issues ---------- */
   newsletters: [
-    { title: 'Perspectives, Spring 2026', date: 'Spring 2026', pdf: 'data/perspectives-spring-2026.pdf', preview: 'High Tea fundraiser, scholarship spotlights, alumni stories, chapter updates & community impact.', featured: true },
+    { title: 'Perspectives, Spring 2026', date: 'Spring 2026', pdf: 'data/perspectives-spring-2026.pdf', cover: 'images/newsletter-cover.jpg', preview: 'High Tea fundraiser, scholarship spotlights, alumni stories, chapter updates & community impact.', featured: true },
   ]
   /* More issues will be added as they are published */
 
@@ -1364,31 +1364,49 @@ function buildNewsletterIssues() {
   const featured = CALUNAH_CONFIG.newsletters.find(n => n.featured);
   const readerWrap = qs('#nl-reader-wrap');
   if (featured && readerWrap) {
+    const coverImg = featured.cover || 'images/newsletter-cover.jpg';
     readerWrap.innerHTML = `
-      <div class="nl-featured-header">
-        <div class="nl-featured-badge"><i class="fas fa-star"></i> Latest Issue</div>
-        <h3 class="nl-featured-title">${featured.title}</h3>
-        <p class="nl-featured-sub">${featured.preview}</p>
-        <a href="${featured.pdf}" download class="btn btn-gold nl-download-btn">
-          <i class="fas fa-download"></i> Download PDF
-        </a>
-        <a href="${featured.pdf}" target="_blank" rel="noopener" class="btn btn-ghost nl-open-btn">
-          <i class="fas fa-external-link-alt"></i> Open Full Screen
-        </a>
-      </div>
-      <div class="nl-book-viewer">
-        <iframe data-src="${featured.pdf}#toolbar=1&navpanes=1&scrollbar=1&view=FitH"
-          class="nl-iframe" title="${featured.title}" loading="lazy"
-          allowfullscreen></iframe>
-        <div class="nl-mobile-fallback">
-          <i class="fas fa-book-open"></i>
-          <p>Tap to read the newsletter</p>
-          <a href="${featured.pdf}" target="_blank" rel="noopener" class="btn btn-gold">
-            <i class="fas fa-file-pdf"></i> Open Newsletter
-          </a>
+      <div class="nl-magazine">
+        <div class="nl-mag-cover" id="nl-mag-cover" role="button" tabindex="0"
+             aria-label="Open ${featured.title}">
+          <div class="nl-mag-book">
+            <img src="${coverImg}" alt="${featured.title} cover"
+                 onerror="this.style.display='none';this.parentElement.classList.add('nl-mag-nocover')">
+            <div class="nl-mag-fallback">
+              <i class="fas fa-book-open"></i>
+              <span class="nl-mag-fallback-title">CALUNAH</span>
+              <span class="nl-mag-fallback-sub">Perspectives</span>
+            </div>
+            <div class="nl-mag-shine"></div>
+            <div class="nl-mag-spine"></div>
+          </div>
+          <div class="nl-mag-open-hint"><i class="fas fa-book-open"></i> Click to Read</div>
+        </div>
+        <div class="nl-mag-info">
+          <div class="nl-featured-badge"><i class="fas fa-star"></i> Latest Issue</div>
+          <h3 class="nl-featured-title">${featured.title}</h3>
+          <p class="nl-featured-sub">${featured.preview}</p>
+          <div class="nl-mag-actions">
+            <button class="btn btn-gold nl-read-btn" id="nl-read-btn">
+              <i class="fas fa-book-open"></i> Read the Magazine
+            </button>
+            <a href="${featured.pdf}" download class="btn btn-ghost nl-download-btn">
+              <i class="fas fa-download"></i> Download PDF
+            </a>
+          </div>
+          <p class="nl-mag-tip"><i class="fas fa-hand-pointer"></i> Flip through the pages like a real book</p>
         </div>
       </div>
     `;
+    // Wire up the open-flipbook triggers
+    const open = () => window.openFlipbook && window.openFlipbook(featured.pdf, featured.title);
+    const cover = qs('#nl-mag-cover');
+    const readBtn = qs('#nl-read-btn');
+    if (cover) {
+      cover.addEventListener('click', open);
+      cover.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    }
+    if (readBtn) readBtn.addEventListener('click', open);
   }
 
   // Past issues list (skip featured)
