@@ -117,7 +117,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* ════════════════════════════════════════
    NAVBAR — redesigned
 ════════════════════════════════════════ */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);display:flex;align-items:center;background:transparent;transition:background .45s ease,box-shadow .45s ease,height .45s ease,border-color .45s ease;border-bottom:1px solid transparent}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);display:flex;align-items:center;background:transparent;transition:background .45s ease,box-shadow .45s ease,height .45s ease,border-color .45s ease;border-bottom:1px solid transparent;max-width:100vw}
 
 /* Gold shimmer line at the very top when scrolled */
 .navbar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(201,162,39,.0) 20%,rgba(201,162,39,.0) 80%,transparent 100%);transition:background .45s ease;pointer-events:none;z-index:1}
@@ -1008,7 +1008,11 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
   .donate-grid{grid-template-columns:repeat(2,1fr)}
   .donate-ways{grid-template-columns:repeat(2,1fr)}
-  /* ── Nav: show hamburger on all screens ≤ 1200px ── */
+}
+/* ── Nav: switch to hamburger at ≤1340px so all 9 items + Donate + 3
+   languages always fit on one line (French/Kreyòl words are longer and
+   were pushing KR off-screen between 1200–1340px). ── */
+@media(max-width:1340px){
   .nav-hamburger{display:flex}
   .lang-switcher{margin-left:auto;margin-right:.6rem}
   /* Restore icons in mobile slide-out drawer */
