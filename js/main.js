@@ -2821,8 +2821,14 @@ function initLanguageSwitcher() {
     btn.addEventListener('click', () => applyTranslation(btn.dataset.lang));
   });
 
-  // Apply saved language on load (skip English, it's the default)
-  if (savedLang !== 'en') applyTranslation(savedLang);
+  // Apply saved language on load. For English we normally skip (it's the
+  // HTML default) — but if the admin has edited any English text via the
+  // Content editor, apply it so those overrides show.
+  if (savedLang !== 'en') {
+    applyTranslation(savedLang);
+  } else if (CALUNAH_CONFIG.contentOverrides) {
+    applyTranslation('en');
+  }
 }
 
 
@@ -2840,7 +2846,8 @@ async function loadCMSContent() {
     committee:   'data/committee.json',
     newsletters: 'data/newsletters.json',
     donors:      'data/donors.json',
-    menu:        'data/menu.json'
+    menu:        'data/menu.json',
+    content:     'data/content.json'
   };
   await Promise.all(Object.entries(files).map(async ([key, path]) => {
     try {
@@ -2855,6 +2862,14 @@ async function loadCMSContent() {
       if (key === 'newsletters' && json.newsletters)  CALUNAH_CONFIG.newsletters = json.newsletters;
       if (key === 'donors'      && json.platinum)     CALUNAH_CONFIG.donors      = { platinum: json.platinum, gold: json.gold, silver: json.silver };
       if (key === 'menu'        && json.menu && json.menu.length) CALUNAH_CONFIG.menu = json.menu;
+      if (key === 'content'     && json.content && typeof json.content === 'object') {
+        // Admin-edited English text overrides — merge into the EN dictionary
+        // so the existing data-i18n translation system applies them.
+        if (typeof CALUNAH_LANG !== 'undefined' && CALUNAH_LANG.en) {
+          Object.assign(CALUNAH_LANG.en, json.content);
+        }
+        CALUNAH_CONFIG.contentOverrides = json.content;
+      }
     } catch (e) { /* silently fall back to config defaults */ }
   }));
 }
