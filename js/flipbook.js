@@ -36,6 +36,7 @@
   let totalPages = 0;
   let current = 1;            // left page of the current spread (odd page)
   let rendered = {};          // cache: page number -> dataURL
+  const renderPromises = {};  // num -> in-flight render Promise (dedupe)
   let zoom = 1;
   let isAnimating = false;
   let twoPage = window.innerWidth > 900;
@@ -60,9 +61,13 @@
       slider.max = totalPages;
       slider.value = 1;
       totalEl.textContent = 'of ' + totalPages;
+      // Render the first spread, then warm the next several pages up front
+      // so the first flips are instant.
+      await Promise.all([renderPage(1), renderPage(2)]);
       await renderSpread(1);
       loading.style.display = 'none';
       updateUI();
+      for (let n = 3; n <= Math.min(8, totalPages); n++) renderPage(n);
     } catch (e) {
       loading.innerHTML = '<p style="color:#fff;text-align:center">Could not load the magazine.<br>' +
         '<a href="' + pdfUrl + '" target="_blank" style="color:#e8c84a;text-decoration:underline">Open the PDF directly</a></p>';
@@ -74,70 +79,89 @@
     modal.classList.remove('open');
     document.body.style.overflow = '';
     pdfDoc = null;
+    for (const k in renderPromises) delete renderPromises[k];
   }
 
-  /* ---- Render a single PDF page to a data URL (cached) ---- */
+  /* ---- Render a single PDF page to a data URL (cached + deduped) ---- */
   async function renderPage(num) {
     if (num < 1 || num > totalPages) return null;
     if (rendered[num]) return rendered[num];
-    const page = await pdfDoc.getPage(num);
-    const baseViewport = page.getViewport({ scale: 1 });
-    // Render at a crisp scale based on the viewport height
-    const targetH = Math.min(1400, Math.max(900, window.innerHeight * 1.4));
-    const scale = targetH / baseViewport.height;
-    const viewport = page.getViewport({ scale });
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-    await page.render({ canvasContext: ctx, viewport }).promise;
-    const url = canvas.toDataURL('image/jpeg', 0.85);
-    rendered[num] = url;
-    return url;
+    if (renderPromises[num]) return renderPromises[num];
+
+    renderPromises[num] = (async () => {
+      const page = await pdfDoc.getPage(num);
+      const baseViewport = page.getViewport({ scale: 1 });
+      // Crisp but capped resolution — large canvases are slow to render & decode.
+      // DPR-aware up to 2x, target ~1200px tall.
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const targetH = 1200 * dpr;
+      const scale = Math.min(targetH / baseViewport.height, 2.5);
+      const viewport = page.getViewport({ scale });
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      const url = canvas.toDataURL('image/jpeg', 0.82);
+      rendered[num] = url;
+      delete renderPromises[num];
+      return url;
+    })();
+    return renderPromises[num];
   }
 
-  /* ---- Build the visible spread (two pages on desktop, one on mobile) ---- */
+  /* ---- Build the visible spread. Uses cached images instantly; if a page
+         isn't cached yet it shows immediately and fills in when ready. ---- */
   async function renderSpread(leftPage) {
     book.innerHTML = '';
     book.classList.toggle('two-page', twoPage);
 
-    if (twoPage) {
-      // Show pages leftPage and leftPage+1 (cover shows alone on page 1)
-      const lUrl = await renderPage(leftPage);
-      const rUrl = await renderPage(leftPage + 1);
+    const pageEls = {};   // page number -> img container, so we can fill async ones
 
-      const spread = document.createElement('div');
-      spread.className = 'fb-spread';
-
-      const lDiv = document.createElement('div');
-      lDiv.className = 'fb-page fb-page-left';
-      if (lUrl) lDiv.innerHTML = '<img src="' + lUrl + '" alt="Page ' + leftPage + '">';
-      else lDiv.classList.add('fb-page-blank');
-
-      const rDiv = document.createElement('div');
-      rDiv.className = 'fb-page fb-page-right';
-      if (rUrl) rDiv.innerHTML = '<img src="' + rUrl + '" alt="Page ' + (leftPage+1) + '">';
-      else rDiv.classList.add('fb-page-blank');
-
-      spread.appendChild(lDiv);
-      spread.appendChild(rDiv);
-      book.appendChild(spread);
-    } else {
-      const url = await renderPage(leftPage);
-      const spread = document.createElement('div');
-      spread.className = 'fb-spread single';
-      const pg = document.createElement('div');
-      pg.className = 'fb-page';
-      if (url) pg.innerHTML = '<img src="' + url + '" alt="Page ' + leftPage + '">';
-      spread.appendChild(pg);
-      book.appendChild(spread);
+    function makePage(num, cls) {
+      const div = document.createElement('div');
+      div.className = 'fb-page ' + cls;
+      const cachedUrl = rendered[num];
+      if (cachedUrl) {
+        div.innerHTML = '<img src="' + cachedUrl + '" alt="Page ' + num + '">';
+      } else if (num >= 1 && num <= totalPages) {
+        div.classList.add('fb-page-rendering');
+        pageEls[num] = div;   // fill in below
+      } else {
+        div.classList.add('fb-page-blank');
+      }
+      return div;
     }
+
+    const spread = document.createElement('div');
+    spread.className = twoPage ? 'fb-spread' : 'fb-spread single';
+
+    if (twoPage) {
+      spread.appendChild(makePage(leftPage, 'fb-page-left'));
+      spread.appendChild(makePage(leftPage + 1, 'fb-page-right'));
+    } else {
+      spread.appendChild(makePage(leftPage, ''));
+    }
+    book.appendChild(spread);
     book.style.transform = 'scale(' + zoom + ')';
-    // preload neighbors
-    renderPage(leftPage + 2); renderPage(leftPage - 1);
+
+    // Fill any not-yet-cached pages as they finish (rare — usually pre-warmed).
+    // Guard with the spread we built, so a fast flip doesn't fill a stale page.
+    const spreadToken = spread;
+    Object.keys(pageEls).forEach(async (numStr) => {
+      const num = parseInt(numStr, 10);
+      const url = await renderPage(num);
+      if (url && pageEls[num] && spreadToken.isConnected) {
+        pageEls[num].classList.remove('fb-page-rendering');
+        pageEls[num].innerHTML = '<img src="' + url + '" alt="Page ' + num + '">';
+      }
+    });
+
+    // Keep neighbours warm
+    warmNeighbors(leftPage, 1);
   }
 
-  /* ---- Page turn with flip animation ---- */
+  /* ---- Page turn — instant when pages are cached ---- */
   async function turn(dir) {
     if (isAnimating || !pdfDoc) return;
     const step = twoPage ? 2 : 1;
@@ -148,15 +172,44 @@
     if (next === current) return;
 
     isAnimating = true;
-    // Animate the book with a quick flip class
-    book.classList.add(dir > 0 ? 'flip-next' : 'flip-prev');
-    setTimeout(async () => {
-      current = next;
-      await renderSpread(current);
-      book.classList.remove('flip-next', 'flip-prev');
-      isAnimating = false;
-      updateUI();
-    }, 280);
+
+    // Are the destination pages already rendered? (the common case thanks to preloading)
+    const needed = twoPage ? [next, next + 1] : [next];
+    const cached = needed.every(n => n < 1 || n > totalPages || rendered[n]);
+
+    if (cached) {
+      // Instant: tiny flip animation, swap content mid-flip, done in ~180ms
+      book.classList.add(dir > 0 ? 'flip-next' : 'flip-prev');
+      setTimeout(() => {
+        current = next;
+        renderSpread(current);           // synchronous from cache
+        book.classList.remove('flip-next', 'flip-prev');
+        isAnimating = false;
+        updateUI();
+      }, 150);
+    } else {
+      // Not cached yet — render first (off-screen), THEN flip, so no frozen gap
+      await Promise.all(needed.map(n => renderPage(n)));
+      book.classList.add(dir > 0 ? 'flip-next' : 'flip-prev');
+      setTimeout(() => {
+        current = next;
+        renderSpread(current);
+        book.classList.remove('flip-next', 'flip-prev');
+        isAnimating = false;
+        updateUI();
+      }, 150);
+    }
+    // Aggressively warm the next several spreads so future flips stay instant
+    warmNeighbors(next, dir);
+  }
+
+  /* Pre-render pages around the current spread so flips never wait */
+  function warmNeighbors(centerPage, dir) {
+    const span = 4;  // pages ahead/behind to keep ready
+    for (let i = 1; i <= span; i++) {
+      renderPage(centerPage + i);
+      renderPage(centerPage - i);
+    }
   }
 
   function goTo(page) {
