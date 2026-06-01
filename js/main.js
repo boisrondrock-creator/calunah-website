@@ -2847,7 +2847,8 @@ async function loadCMSContent() {
     newsletters: 'data/newsletters.json',
     donors:      'data/donors.json',
     menu:        'data/menu.json',
-    content:     'data/content.json'
+    content:     'data/content.json',
+    sections:    'data/sections.json'
   };
   await Promise.all(Object.entries(files).map(async ([key, path]) => {
     try {
@@ -2870,8 +2871,35 @@ async function loadCMSContent() {
         }
         CALUNAH_CONFIG.contentOverrides = json.content;
       }
+      if (key === 'sections'    && Array.isArray(json.sections)) CALUNAH_CONFIG.customSections = json.sections;
     } catch (e) { /* silently fall back to config defaults */ }
   }));
+}
+
+/* Render admin-created custom sections into #custom-sections.
+   Each section: { title, subtitle, body (HTML allowed), image, bg } */
+function buildCustomSections() {
+  const wrap = qs('#custom-sections');
+  const list = CALUNAH_CONFIG.customSections;
+  if (!wrap || !list || !list.length) return;
+  wrap.innerHTML = list.filter(s => s && s.visible !== false).map((s, i) => {
+    const alt = i % 2 === 1;
+    const img = s.image
+      ? `<div class="cx-media"><img src="${s.image}" alt="${(s.title||'').replace(/"/g,'&quot;')}" loading="lazy" decoding="async"></div>`
+      : '';
+    return `<section class="section cx-section ${alt ? 'cx-alt' : ''}" ${s.bg ? `style="background:${s.bg}"` : ''}>
+      <div class="container cx-inner ${img ? 'cx-haswide' : ''}">
+        <div class="cx-text">
+          ${s.badge ? `<span class="section-badge">${s.badge}</span>` : ''}
+          ${s.title ? `<h2 class="section-title">${s.title}</h2>` : ''}
+          ${s.subtitle ? `<p class="section-sub">${s.subtitle}</p>` : ''}
+          ${s.body ? `<div class="cx-body">${s.body}</div>` : ''}
+          ${s.ctaLabel && s.ctaHref ? `<a href="${s.ctaHref}" class="btn btn-gold cx-cta">${s.ctaLabel}</a>` : ''}
+        </div>
+        ${img}
+      </div>
+    </section>`;
+  }).join('');
 }
 
 /* Render the top navigation from CALUNAH_CONFIG.menu (managed in admin).
@@ -2960,6 +2988,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   buildBlog();
   buildNewsletterIssues();
   buildMembership();
+  buildCustomSections();
 
   /* Re-scan AOS after all dynamic content is injected */
   if (window.AOS) AOS.refresh();

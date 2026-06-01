@@ -899,6 +899,18 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* ════════════════════════════════════════
    SOCIAL SECTION
 ════════════════════════════════════════ */
+/* ══ CUSTOM ADMIN-CREATED SECTIONS ═════════════════════ */
+.cx-section{background:var(--white)}
+.cx-section.cx-alt{background:var(--off-white)}
+.cx-inner{display:block}
+.cx-inner.cx-haswide{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.cx-text .section-title{margin-bottom:1rem}
+.cx-body{font-size:1rem;line-height:1.8;color:var(--text-mid);margin-top:1rem}
+.cx-body p{margin-bottom:1rem}
+.cx-media img{width:100%;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);display:block}
+.cx-cta{margin-top:1.5rem;display:inline-flex}
+@media(max-width:860px){.cx-inner.cx-haswide{grid-template-columns:1fr;gap:2rem}}
+
 .social-section{background:var(--white)}
 .platforms-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 .platform-card{display:flex;align-items:center;gap:1.5rem;padding:1.75rem;border-radius:var(--radius-lg);border:1.5px solid var(--border);background:var(--off-white);transition:var(--transition);cursor:pointer}

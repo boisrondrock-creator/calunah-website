@@ -293,6 +293,7 @@ select.form-control{cursor:pointer}
       <div class="sb-section">Site</div>
       <a class="sb-link" onclick="showPage('menu')"><i class="fas fa-bars"></i> Navigation Menu</a>
       <a class="sb-link" onclick="showPage('content')"><i class="fas fa-pen-fancy"></i> Page Text</a>
+      <a class="sb-link" onclick="showPage('sections')"><i class="fas fa-layer-group"></i> Custom Sections</a>
       <a class="sb-link" onclick="showPage('templates')"><i class="fas fa-file-image"></i> Flyer Templates</a>
 
       <div class="sb-section">System</div>
@@ -414,6 +415,15 @@ select.form-control{cursor:pointer}
       <div class="settings-card">
         <p class="form-hint" style="margin-bottom:1rem"><i class="fas fa-info-circle"></i> Leave a field blank to keep the original wording. You can use simple HTML like &lt;strong&gt; or &lt;em&gt;. Remember to <strong>Publish</strong> when done.</p>
         <div id="content-fields"></div>
+      </div>
+    </div>
+
+    <!-- CUSTOM SECTIONS -->
+    <div class="page" id="page-sections">
+      <div class="section-header"><div><h2>Custom Sections</h2><p>Create new content blocks that appear near the bottom of the homepage</p></div><button class="btn-add" onclick="addCustomSection()"><i class="fas fa-plus"></i> Add Section</button></div>
+      <div class="settings-card">
+        <p class="form-hint" style="margin-bottom:1rem"><i class="fas fa-info-circle"></i> Each section shows a title, optional subtitle, body text (HTML allowed), an optional image, and an optional button. Toggle visibility or remove anytime. Remember to <strong>Publish</strong>.</p>
+        <div id="sections-list"></div>
       </div>
     </div>
 
@@ -723,7 +733,7 @@ function doLogout() {
 }
 
 /* ── PAGE NAV ── */
-const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', videos:'Videos', menu:'Navigation Menu', content:'Page Text', templates:'Flyer Templates', settings:'Settings' };
+const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', videos:'Videos', menu:'Navigation Menu', content:'Page Text', sections:'Custom Sections', templates:'Flyer Templates', settings:'Settings' };
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
@@ -738,13 +748,14 @@ function showPage(id) {
   if (id === 'menu')      renderMenu();
   if (id === 'templates') renderTemplates();
   if (id === 'content')   renderContentEditor();
+  if (id === 'sections')  renderSectionsEditor();
 }
 
 /* ── DATA ── */
-let DATA = { events:{events:[]}, blog:{posts:[]}, gallery:{items:[]}, chapters:{chapters:[]}, committee:{committee:[]}, newsletters:{newsletters:[]}, donors:{platinum:[],gold:[],silver:[]}, menu:{menu:[]}, content:{content:{}} };
+let DATA = { events:{events:[]}, blog:{posts:[]}, gallery:{items:[]}, chapters:{chapters:[]}, committee:{committee:[]}, newsletters:{newsletters:[]}, donors:{platinum:[],gold:[],silver:[]}, menu:{menu:[]}, content:{content:{}}, sections:{sections:[]} };
 
 async function loadAllData() {
-  const files = ['events','blog','gallery','chapters','committee','newsletters','donors','menu','content'];
+  const files = ['events','blog','gallery','chapters','committee','newsletters','donors','menu','content','sections'];
   await Promise.all(files.map(async f => {
     try {
       const r = await fetch('../data/'+f+'.json?t='+Date.now());
@@ -1203,6 +1214,56 @@ function updateMenuField(i, field, val) {
   if (DATA.menu.menu[i]) DATA.menu.menu[i][field] = val;
 }
 
+/* ══ CUSTOM SECTIONS EDITOR ══════════════════════════════ */
+function renderSectionsEditor() {
+  const wrap = document.getElementById('sections-list');
+  if (!wrap) return;
+  if (!DATA.sections || !DATA.sections.sections) DATA.sections = { sections: [] };
+  const arr = DATA.sections.sections;
+  if (!arr.length) { wrap.innerHTML = '<p class="form-hint">No custom sections yet. Click “Add Section”.</p>'; return; }
+  wrap.innerHTML = arr.map((s, i) => `
+    <div style="border:1px solid var(--line,#e2e8f0);border-radius:12px;padding:1rem;margin-bottom:1rem;background:#fff">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem">
+        <strong>Section ${i+1}</strong>
+        <div style="display:flex;gap:.4rem;align-items:center">
+          <button class="btn-icon" title="Move up" onclick="moveSection(${i},-1)" ${i===0?'disabled':''}><i class="fas fa-chevron-up"></i></button>
+          <button class="btn-icon" title="Move down" onclick="moveSection(${i},1)" ${i===arr.length-1?'disabled':''}><i class="fas fa-chevron-down"></i></button>
+          <label style="font-size:.78rem;display:flex;align-items:center;gap:.3rem"><input type="checkbox" ${s.visible!==false?'checked':''} onchange="updateSection(${i},'visible',this.checked)"> Visible</label>
+          <button class="btn-icon danger" title="Remove" onclick="deleteSection(${i})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group"><label>Badge (small label)</label><input class="form-control" value="${(s.badge||'').replace(/"/g,'&quot;')}" oninput="updateSection(${i},'badge',this.value)" placeholder="e.g. New"></div>
+        <div class="form-group"><label>Title</label><input class="form-control" value="${(s.title||'').replace(/"/g,'&quot;')}" oninput="updateSection(${i},'title',this.value)" placeholder="Section heading"></div>
+        <div class="form-group" style="grid-column:1/-1"><label>Subtitle</label><input class="form-control" value="${(s.subtitle||'').replace(/"/g,'&quot;')}" oninput="updateSection(${i},'subtitle',this.value)" placeholder="Optional subtitle"></div>
+        <div class="form-group" style="grid-column:1/-1"><label>Body (HTML allowed)</label><textarea class="form-control" rows="4" oninput="updateSection(${i},'body',this.value)" placeholder="Paragraph text…">${(s.body||'').replace(/</g,'&lt;')}</textarea></div>
+        <div class="form-group"><label>Image URL (optional)</label><input class="form-control" value="${(s.image||'').replace(/"/g,'&quot;')}" oninput="updateSection(${i},'image',this.value)" placeholder="images/…"></div>
+        <div class="form-group"><label>Button text (optional)</label><input class="form-control" value="${(s.ctaLabel||'').replace(/"/g,'&quot;')}" oninput="updateSection(${i},'ctaLabel',this.value)" placeholder="e.g. Learn More"></div>
+        <div class="form-group"><label>Button link</label><input class="form-control" value="${(s.ctaHref||'').replace(/"/g,'&quot;')}" oninput="updateSection(${i},'ctaHref',this.value)" placeholder="#donate or https://…"></div>
+      </div>
+    </div>`).join('');
+}
+function addCustomSection() {
+  if (!DATA.sections || !DATA.sections.sections) DATA.sections = { sections: [] };
+  DATA.sections.sections.push({ title:'New Section', subtitle:'', body:'', visible:true });
+  renderSectionsEditor();
+  toast('Section added. Fill it in, then Publish.', 'success');
+}
+function deleteSection(i) {
+  if (!confirm('Remove this section?')) return;
+  DATA.sections.sections.splice(i,1);
+  renderSectionsEditor();
+}
+function moveSection(i, dir) {
+  const arr = DATA.sections.sections, j = i + dir;
+  if (j < 0 || j >= arr.length) return;
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+  renderSectionsEditor();
+}
+function updateSection(i, field, val) {
+  if (DATA.sections.sections[i]) DATA.sections.sections[i][field] = val;
+}
+
 /* ══ PAGE TEXT (CONTENT) EDITOR ══════════════════════════ */
 /* Curated list of the most useful editable text blocks, keyed by the
    site's data-i18n keys. Editing these writes data/content.json which
@@ -1404,6 +1465,7 @@ function openPublish() {
     { id:'s-donors',      label:'Saving Donors & Partners' },
     { id:'s-menu',        label:'Saving Navigation Menu' },
     { id:'s-content',     label:'Saving Page Text' },
+    { id:'s-sections',    label:'Saving Custom Sections' },
     { id:'s-deploy',      label:'Triggering Website Rebuild' }
   ];
   document.getElementById('publish-steps').innerHTML = steps.map(s => `
@@ -1428,6 +1490,7 @@ async function runPublish() {
     'data/donors.json':      DATA.donors,
     'data/menu.json':        DATA.menu,
     'data/content.json':     DATA.content,
+    'data/sections.json':    DATA.sections,
     'data/.deploy':          { ts: Date.now(), by: 'admin' }
   };
   const stepMap = {
@@ -1440,6 +1503,7 @@ async function runPublish() {
     'data/donors.json':      's-donors',
     'data/menu.json':        's-menu',
     'data/content.json':     's-content',
+    'data/sections.json':    's-sections',
     'data/.deploy':          's-deploy'
   };
 
