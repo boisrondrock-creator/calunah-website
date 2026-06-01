@@ -643,7 +643,16 @@ function initNav() {
    ============================================================ */
 function initAOS() {
   if (typeof AOS !== 'undefined') {
-    AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 60 });
+    const isMobile = window.innerWidth < 768;
+    AOS.init({
+      duration: isMobile ? 400 : 550,   // snappier reveal, less time on screen
+      easing:   'ease-out',
+      once:     true,                    // never re-animate (no work on scroll-back)
+      offset:   40,
+      disable:  isMobile ? false : false,
+      throttleDelay: 80,                 // fewer scroll recalcs
+      startEvent: 'DOMContentLoaded'
+    });
   }
 }
 
@@ -1080,7 +1089,7 @@ function buildGallery() {
   grid.innerHTML = existingItems.map((item, i) => `
     <div class="gallery-item" data-cat="${item.cat}">
       <div class="gallery-thumb" data-index="${i}">
-        <img src="${item.src}" alt="${item.caption}" loading="lazy"
+        <img src="${item.src}" alt="${item.caption}" loading="lazy" decoding="async"
              onerror="this.closest('.gallery-item').style.display='none'">
         <div class="gallery-overlay">
           <span class="gallery-caption">${item.caption}</span>
@@ -1752,10 +1761,11 @@ function initFallingLogos() {
     });
     document.body.appendChild(canvas);
   }
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
   let W, H;
   const logos = [];
-  const COUNT = window.innerWidth < 768 ? 8 : 14; // fewer on mobile for performance
+  // Lighter counts — the full-screen canvas composites every frame, so fewer = smoother scroll
+  const COUNT = window.innerWidth < 768 ? 4 : 8;
   const logoImg = new Image();
   logoImg.src = 'images/logo.png';
 
@@ -1840,17 +1850,28 @@ function initFallingLogos() {
   let logoPaused = false;
   document.addEventListener('visibilitychange', () => { logoPaused = document.hidden; });
 
+  // Pause the canvas while actively scrolling — frees the GPU so scrolling stays buttery
+  let scrolling = false, scrollTimer = null;
+  window.addEventListener('scroll', () => {
+    scrolling = true;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => { scrolling = false; }, 140);
+  }, { passive: true });
+
   function initLogoParticles() {
     for (let i = 0; i < COUNT; i++) logos.push(new Logo(i));
-    (function loop() {
-      if (!logoPaused) {
-        ctx.clearRect(0, 0, W, H);
-        if (logoImg.complete && logoImg.naturalWidth > 0) {
-          logos.forEach(l => { l.update(); l.draw(); });
-        }
-      }
+    const FRAME_MS = 1000 / 30;   // cap at 30fps (plenty for slow-falling logos)
+    let last = 0;
+    (function loop(now) {
       requestAnimationFrame(loop);
-    })();
+      if (logoPaused || scrolling) return;          // skip work while scrolling
+      if (now - last < FRAME_MS) return;            // throttle to 30fps
+      last = now;
+      ctx.clearRect(0, 0, W, H);
+      if (logoImg.complete && logoImg.naturalWidth > 0) {
+        logos.forEach(l => { l.update(); l.draw(); });
+      }
+    })(0);
   }
 }
 

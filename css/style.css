@@ -23,8 +23,19 @@ html{font-size:16px;-webkit-overflow-scrolling:touch}
 body{font-family:var(--font-body);color:var(--text);background:var(--white);line-height:1.7;overflow-x:hidden}
 body.splash-open{overflow:hidden}
 img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-style:none}
+/* Perf: hint the compositor for images so decode/paint doesn't block scroll */
+.gallery-item img,.event-flyer img,.work-card img{content-visibility:auto}
+/* Respect users who ask for less motion — also a perf win on weak devices */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  #logo-canvas,#particles-canvas{display:none!important}
+}
 .container{max-width:1260px;margin:0 auto;padding:0 1.5rem}
 .section{padding:100px 0;contain:layout style}
+/* Performance: skip rendering off-screen sections until scrolled near.
+   contain-intrinsic-size reserves space so the scrollbar stays stable
+   (prevents the "blank then pop" jank). Hero/nav excluded (always visible). */
+.section:not(.hero):not(.events-section){content-visibility:auto;contain-intrinsic-size:auto 700px}
 
 /* ── BUTTONS ───────────────────────────────────────── */
 .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 2rem;font-family:var(--font-body);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:50px;border:2px solid transparent;cursor:pointer;transition:var(--transition);white-space:nowrap;position:relative;overflow:hidden}
@@ -112,7 +123,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .navbar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,rgba(201,162,39,.0) 20%,rgba(201,162,39,.0) 80%,transparent 100%);transition:background .45s ease;pointer-events:none;z-index:1}
 
 /* Rich frosted dark glass on scroll */
-.navbar.scrolled{background:linear-gradient(180deg,rgba(3,10,5,.97) 0%,rgba(4,14,6,.92) 100%);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,.50),0 1px 0 rgba(201,162,39,.12) inset;border-bottom:1px solid rgba(201,162,39,.18);height:64px}
+.navbar.scrolled{background:linear-gradient(180deg,rgba(3,10,5,.985) 0%,rgba(4,14,6,.96) 100%);box-shadow:0 8px 40px rgba(0,0,0,.50),0 1px 0 rgba(201,162,39,.12) inset;border-bottom:1px solid rgba(201,162,39,.18);height:64px}
 .navbar.scrolled::before{background:linear-gradient(90deg,transparent 0%,rgba(201,162,39,.55) 30%,rgba(255,220,80,.7) 50%,rgba(201,162,39,.55) 70%,transparent 100%)}
 
 /* ── Layout ── */
