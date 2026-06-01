@@ -600,12 +600,22 @@ function initNav() {
     });
   }
 
+  const NAV_BP = 1340;  // must match the CSS hamburger breakpoint
+
+  function closeMobileMenu() {
+    if (!navList) return;
+    navList.classList.remove('open');
+    burger && burger.classList.remove('open');
+    burger && burger.setAttribute('aria-expanded', 'false');
+    ddItems.forEach(i => i.classList.remove('mobile-open'));
+  }
+
   /* Mobile dropdown accordion, desktop uses CSS :hover only */
   ddItems.forEach(item => {
     const trigger = qs('.nav-link', item);
     if (!trigger) return;
     trigger.addEventListener('click', e => {
-      if (window.innerWidth > 1200) return;
+      if (window.innerWidth > NAV_BP) return;   // desktop: let the link work normally
       e.preventDefault();
       item.classList.toggle('mobile-open');
       ddItems.forEach(other => {
@@ -614,14 +624,32 @@ function initNav() {
     });
   });
 
-  /* Close mobile menu when any nav link is clicked */
+  /* Close mobile menu when any nav link is clicked.
+     Dropdown PARENT links (.nav-has-arrow) only toggle the accordion on
+     mobile, so don't close the menu for those. */
   navList && qsa('a', navList).forEach(a => {
     a.addEventListener('click', () => {
-      navList.classList.remove('open');
-      burger && burger.classList.remove('open');
-      burger && burger.setAttribute('aria-expanded', 'false');
+      if (window.innerWidth <= NAV_BP && a.classList.contains('nav-has-arrow')) return;
+      closeMobileMenu();
     });
   });
+
+  /* Click anywhere outside the open menu (and not on the burger) closes it */
+  document.addEventListener('click', e => {
+    if (!navList || !navList.classList.contains('open')) return;
+    if (navList.contains(e.target) || (burger && burger.contains(e.target))) return;
+    closeMobileMenu();
+  });
+
+  /* Escape key closes the menu */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+
+  /* If resized up to desktop while open, reset state */
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > NAV_BP) closeMobileMenu();
+  }, { passive: true });
 
   /* Scroll-spy */
   const sections = qsa('section[id]');
