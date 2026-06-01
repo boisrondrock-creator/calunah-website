@@ -1,19 +1,139 @@
 {
   "committee": [
-    { "name": "Dr. Roberne J. Saint Louis", "role": "Chairman",               "icon": "fa-gavel",          "bio": "Providing leadership and governance oversight for CALUNAH, guiding the organization's strategic vision and institutional integrity.", "photo": "images/team/chairman.avif",             "email": "chairman@calunah.org",        "initials": "RS" },
-    { "name": "Nadine Benoit",              "role": "Executive President",     "icon": "fa-crown",          "bio": "Leading CALUNAH's mission to unite and empower UNAH alumni worldwide through education, fellowship, and dedicated service.",           "photo": "images/team/president.avif",            "email": "president@calunah.org",       "initials": "NB" },
-    { "name": "Ethny Obas",                 "role": "Executive Vice President","icon": "fa-shield-halved",  "bio": "Supporting organizational leadership, coordinating chapter development, and ensuring CALUNAH's vision is executed across all regions.", "photo": "images/team/vp.avif",                   "email": "vp@calunah.org",              "initials": "EO" },
-    { "name": "Yannick Nozil",              "role": "Executive Secretary",     "icon": "fa-file-pen",       "bio": "Managing official records, correspondence, and the organizational calendar to maintain operational excellence across all CALUNAH initiatives.", "photo": "images/team/secretary.avif",         "email": "secretary@calunah.org",       "initials": "YN" },
-    { "name": "Valentine Bossous",          "role": "Assistant Secretary",     "icon": "fa-file-lines",     "bio": "Assisting in the management of organizational records, meeting minutes, and administrative communications.",                              "photo": "images/team/asst-secretary.avif",       "email": "asst.secretary@calunah.org",  "initials": "VB" },
-    { "name": "Jacquelin Germian",          "role": "Executive Treasurer",     "icon": "fa-coins",          "bio": "Overseeing CALUNAH's financial stewardship, budgeting, and 501(c)(3) compliance to maximize impact for our mission.",                    "photo": "images/team/treasurer.avif",            "email": "treasurer@calunah.org",       "initials": "JG" },
-    { "name": "Witly Paul",                 "role": "Finance Controller",      "icon": "fa-chart-line",     "bio": "Monitoring financial operations, overseeing expenditures, and ensuring fiscal accountability across all CALUNAH programs.",              "photo": "images/team/finance-controller.avif",   "email": "finance@calunah.org",         "initials": "WP" },
-    { "name": "Moselle Bossous",            "role": "Communications Director", "icon": "fa-bullhorn",       "bio": "Amplifying CALUNAH's voice through digital media, newsletters, and strategic communications campaigns across the diaspora.",             "photo": "images/team/communications-director.avif","email": "comms@calunah.org",          "initials": "MB" },
-    { "name": "Ivaline O. Charles",         "role": "Membership Director",     "icon": "fa-users",          "bio": "Growing and strengthening our member community through engagement, recruitment, and retention strategies across all chapters.",            "photo": "images/team/membership-director.avif",  "email": "membership@calunah.org",      "initials": "IC" },
-    { "name": "Rock E. Boisrond",           "role": "IT Director",             "icon": "fa-laptop-code",    "bio": "Leading CALUNAH's digital infrastructure, website development, and technology initiatives to advance the organization's online presence.", "photo": "images/team/it-director.webp",          "email": "it@calunah.org",              "initials": "RB" },
-    { "name": "Lynouse D. Saint Louis",     "role": "Executive Editor",        "icon": "fa-pen-nib",        "bio": "Curating and editing CALUNAH's publications, ensuring high-quality content that reflects the organization's mission and values.",          "photo": "images/team/editor.avif",               "email": "editor@calunah.org",          "initials": "LS" },
-    { "name": "Gueus Robert",               "role": "Newsletter Editor-in-Chief","icon": "fa-newspaper",   "bio": "Producing CALUNAH's quarterly newsletter, connecting alumni worldwide with news, events, and inspiring stories from the community.",      "photo": "images/team/newsletter-editor.avif",    "email": "newsletter@calunah.org",      "initials": "GR" },
-    { "name": "Judith Jean-Baptiste",       "role": "Chaplain",                "icon": "fa-hands-praying",  "bio": "Providing spiritual guidance and pastoral care to the CALUNAH community, grounding our work in faith and shared purpose.",               "photo": "images/team/chaplain.avif",             "email": "chaplain@calunah.org",        "initials": "JJ" },
-    { "name": "Becel Dubreuze Jr.",         "role": "Advisor",                 "icon": "fa-lightbulb",      "bio": "Contributing strategic counsel and institutional knowledge to support CALUNAH's leadership and long-term organizational growth.",          "photo": "images/team/advisor-becel.avif",        "email": "advisors@calunah.org",        "initials": "BD" },
-    { "name": "Huguette Perpignan-Michel",  "role": "Advisor",                 "icon": "fa-lightbulb",      "bio": "Offering experienced guidance and advocacy to advance CALUNAH's mission across the Haitian diaspora and beyond.",                         "photo": "images/team/advisor-huguette.avif",     "email": "advisors@calunah.org",        "initials": "HP" }
+    {
+      "name": "Dr. Roberne J. Saint Louis",
+      "role": "Chairman",
+      "icon": "fa-gavel",
+      "bio": "Providing leadership and governance oversight for CALUNAH, guiding the organization's strategic vision and institutional integrity.",
+      "photo": "images/team/chairman.avif",
+      "email": "chairman@calunah.org",
+      "initials": "RS"
+    },
+    {
+      "name": "Nadine Benoit",
+      "role": "Executive President",
+      "icon": "fa-crown",
+      "bio": "Leading CALUNAH's mission to unite and empower UNAH alumni worldwide through education, fellowship, and dedicated service.",
+      "photo": "images/team/president.avif",
+      "email": "president@calunah.org",
+      "initials": "NB"
+    },
+    {
+      "name": "Ethny Obas",
+      "role": "Executive Vice President",
+      "icon": "fa-shield-halved",
+      "bio": "Supporting organizational leadership, coordinating chapter development, and ensuring CALUNAH's vision is executed across all regions.",
+      "photo": "images/team/vp.avif",
+      "email": "vp@calunah.org",
+      "initials": "EO"
+    },
+    {
+      "name": "Yannick Nozil",
+      "role": "Executive Secretary",
+      "icon": "fa-file-pen",
+      "bio": "Managing official records, correspondence, and the organizational calendar to maintain operational excellence across all CALUNAH initiatives.",
+      "photo": "images/team/secretary.avif",
+      "email": "secretary@calunah.org",
+      "initials": "YN"
+    },
+    {
+      "name": "Valentine Bossous",
+      "role": "Assistant Secretary",
+      "icon": "fa-file-lines",
+      "bio": "Assisting in the management of organizational records, meeting minutes, and administrative communications.",
+      "photo": "images/team/asst-secretary.avif",
+      "email": "asst.secretary@calunah.org",
+      "initials": "VB"
+    },
+    {
+      "name": "Jacquelin Germian",
+      "role": "Executive Treasurer",
+      "icon": "fa-coins",
+      "bio": "Overseeing CALUNAH's financial stewardship, budgeting, and 501(c)(3) compliance to maximize impact for our mission.",
+      "photo": "images/team/treasurer.avif",
+      "email": "treasurer@calunah.org",
+      "initials": "JG"
+    },
+    {
+      "name": "Witly Paul",
+      "role": "Finance Controller",
+      "icon": "fa-chart-line",
+      "bio": "Monitoring financial operations, overseeing expenditures, and ensuring fiscal accountability across all CALUNAH programs.",
+      "photo": "images/team/finance-controller.avif",
+      "email": "finance@calunah.org",
+      "initials": "WP"
+    },
+    {
+      "name": "Moselle Bossous",
+      "role": "Communications Director",
+      "icon": "fa-bullhorn",
+      "bio": "Amplifying CALUNAH's voice through digital media, newsletters, and strategic communications campaigns across the diaspora.",
+      "photo": "images/team/communications-director.avif",
+      "email": "comms@calunah.org",
+      "initials": "MB"
+    },
+    {
+      "name": "Ivaline O. Charles",
+      "role": "Membership Director",
+      "icon": "fa-users",
+      "bio": "Growing and strengthening our member community through engagement, recruitment, and retention strategies across all chapters.",
+      "photo": "images/team/membership-director.avif",
+      "email": "membership@calunah.org",
+      "initials": "IC"
+    },
+    {
+      "name": "Rock E. Boisrond",
+      "role": "IT Director",
+      "icon": "fa-laptop-code",
+      "bio": "Leading CALUNAH's digital infrastructure, website development, and technology initiatives to advance the organization's online presence.",
+      "photo": "images/team/it-director.webp",
+      "email": "it@calunah.org",
+      "initials": "RB"
+    },
+    {
+      "name": "Lynouse D. Saint Louis",
+      "role": "Executive Editor",
+      "icon": "fa-pen-nib",
+      "bio": "Curating and editing CALUNAH's publications, ensuring high-quality content that reflects the organization's mission and values.",
+      "photo": "images/team/editor.avif",
+      "email": "editor@calunah.org",
+      "initials": "LS"
+    },
+    {
+      "name": "Gueus Robert",
+      "role": "Newsletter Editor-in-Chief",
+      "icon": "fa-newspaper",
+      "bio": "Producing CALUNAH's quarterly newsletter, connecting alumni worldwide with news, events, and inspiring stories from the community.",
+      "photo": "images/team/newsletter-editor.avif",
+      "email": "newsletter@calunah.org",
+      "initials": "GR"
+    },
+    {
+      "name": "Judith Jean-Baptiste",
+      "role": "Chaplain",
+      "icon": "fa-hands-praying",
+      "bio": "Providing spiritual guidance and pastoral care to the CALUNAH community, grounding our work in faith and shared purpose.",
+      "photo": "images/team/chaplain.avif",
+      "email": "chaplain@calunah.org",
+      "initials": "JJ"
+    },
+    {
+      "name": "Becel Dubreuze Jr.",
+      "role": "Advisor",
+      "icon": "fa-lightbulb",
+      "bio": "Contributing strategic counsel and institutional knowledge to support CALUNAH's leadership and long-term organizational growth.",
+      "photo": "images/team/advisor-becel.avif",
+      "email": "advisors@calunah.org",
+      "initials": "BD"
+    },
+    {
+      "name": "Huguette Perpignan-Michel",
+      "role": "Advisor",
+      "icon": "fa-lightbulb",
+      "bio": "Offering experienced guidance and advocacy to advance CALUNAH's mission across the Haitian diaspora and beyond.",
+      "photo": "images/team/advisor-huguette.avif",
+      "email": "advisors@calunah.org",
+      "initials": "HP"
+    }
   ]
 }
