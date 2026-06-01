@@ -1319,8 +1319,14 @@ async function runPublish() {
   setStep('s-deploy', deployOk ? 'done' : 'fail', deployOk ? 'Rebuilding (~30s) ✓' : 'Failed ✗');
 
   document.getElementById('publish-close-btn').style.display = 'flex';
-  if (allOk && deployOk) toast('Published! Website updates in ~30 seconds.', 'success');
-  else toast('Some steps failed. Check Settings → Setup Guide.', 'error');
+  if (allOk && deployOk) {
+    toast('Published! Website updates in ~30 seconds.', 'success');
+  } else if (data.githubError) {
+    /* Show the real reason GitHub rejected the write */
+    toast('⚠️ ' + data.githubError, 'error');
+  } else {
+    toast('Some steps failed. Check Settings → Setup Guide.', 'error');
+  }
 }
 function setStep(id, state, status) {
   const icon = document.getElementById(id+'-icon');

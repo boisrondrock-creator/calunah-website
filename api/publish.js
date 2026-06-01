@@ -65,7 +65,14 @@ async function pushFile(token, filePath, content) {
   const body = { message: `Admin: update ${filePath}`, content: b64, branch: BRANCH };
   if (sha) body.sha = sha;
   const r = await ghRequest('PUT', `/repos/${OWNER}/${REPO}/contents/${filePath}`, token, body);
-  return r.status === 200 || r.status === 201;
+  const ok = r.status === 200 || r.status === 201;
+  if (!ok) {
+    let detail = '';
+    try { detail = JSON.parse(r.body).message || ''; } catch {}
+    console.error(`pushFile ${filePath} → HTTP ${r.status}: ${detail}`);
+    return { ok: false, status: r.status, message: detail };
+  }
+  return { ok: true };
 }
 
 /* ── handler ── */
@@ -100,12 +107,30 @@ module.exports = async function handler(req, res) {
   }
 
   const results = {};
+  let firstError = null;
   for (const [filePath, content] of Object.entries(files)) {
     try {
-      results[filePath] = await pushFile(token, filePath, content);
+      const r = await pushFile(token, filePath, content);
+      results[filePath] = r.ok === true;
+      if (!r.ok && !firstError) {
+        firstError = { status: r.status, message: r.message || '' };
+      }
     } catch (e) {
       results[filePath] = false;
+      if (!firstError) firstError = { status: 0, message: String(e && e.message || e) };
     }
+  }
+
+  /* If everything failed, surface the real GitHub reason so the admin
+     panel can show a helpful message (e.g. expired/insufficient token). */
+  const anyOk = Object.values(results).some(v => v === true);
+  if (!anyOk && firstError) {
+    let hint = firstError.message || 'GitHub rejected the request';
+    if (firstError.status === 401) hint = 'GitHub token is invalid or expired (401). Regenerate it and update GITHUB_TOKEN in Vercel.';
+    else if (firstError.status === 403) hint = 'GitHub token lacks permission (403). It needs Contents: Read and write on this repo.';
+    else if (firstError.status === 404) hint = 'Repo or path not found (404). Check the token has access to calunah-website.';
+    res.status(200).json({ ok: true, results, githubError: hint, githubStatus: firstError.status });
+    return;
   }
 
   res.status(200).json({ ok: true, results });
