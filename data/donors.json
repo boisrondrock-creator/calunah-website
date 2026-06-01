@@ -1,25 +1,5 @@
 {
-  "platinum": [
-    "Adventist Health System",
-    "Haitian American Foundation for Education",
-    "Caribbean Adventist Fellowship",
-    "UAH Office of Advancement"
-  ],
-  "gold": [
-    "Dr. & Mrs. Pierre Ollivier",
-    "Boisrond Family Foundation",
-    "Miami Haitian Community Trust",
-    "Church of God Foundation",
-    "New England Adventist Conference"
-  ],
-  "silver": [
-    "First Haitian SDA Church, Miami",
-    "Haitian Physicians Abroad",
-    "Caribbean Development Initiative",
-    "Friends of UAH, New York Chapter",
-    "Dr. Mireille Desroches",
-    "Augustin & Associates Law Group",
-    "Toussaint Family Trust",
-    "Haitian Nurses Association of America"
-  ]
+  "platinum": [],
+  "gold": [],
+  "silver": []
 }
