@@ -460,6 +460,9 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .gallery-filters{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem}
 .gf-btn{padding:.5rem 1.4rem;border:1.5px solid var(--border);background:transparent;color:var(--text-mid);font-family:var(--font-body);font-size:.8rem;font-weight:600;letter-spacing:.06em;border-radius:50px;cursor:pointer;transition:var(--transition)}
 .gf-btn:hover,.gf-btn.active{background:var(--green);border-color:var(--green);color:var(--white);box-shadow:0 4px 16px rgba(26,107,47,.25)}
+/* Pulse when a filter is auto-applied from an event's "View Photos" button */
+@keyframes gfFlash{0%,100%{box-shadow:0 0 0 0 rgba(201,162,39,.6)}50%{box-shadow:0 0 0 8px rgba(201,162,39,0)}}
+.gf-btn.gf-flash{animation:gfFlash 1.2s ease-out;border-color:var(--gold)}
 .gallery-grid{columns:4;column-gap:14px}
 .gallery-grid.gallery-empty{columns:1}
 .gallery-item{break-inside:avoid;margin-bottom:14px;border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;background:var(--green-pale);will-change:transform}

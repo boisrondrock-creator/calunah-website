@@ -879,7 +879,7 @@ function buildEvents() {
             <i class="fas fa-info-circle"></i> <span>Learn More</span>
           </button>
           ${!ev.upcoming && ev.ctaLabel
-            ? `<span class="btn btn-outline btn-sm"><i class="fas fa-photo-video"></i> ${ev.ctaLabel}</span>`
+            ? `<button class="btn btn-outline btn-sm" onclick="viewEventPhotos('${ev.id}')"><i class="fas fa-photo-video"></i> ${ev.ctaLabel}</button>`
             : ''
           }
         </div>
@@ -899,6 +899,45 @@ function toggleEventInfo(id) {
   if (icon) icon.className = opening ? 'fas fa-chevron-up' : 'fas fa-info-circle';
 }
 window.toggleEventInfo = toggleEventInfo;
+
+/* Maps an event id to the gallery filter category that holds its photos.
+   Events not listed fall back to 'all' (shows the whole gallery). */
+const EVENT_PHOTO_MAP = {
+  gala2023:           'gala2023',
+  gala2024:           'gala2024',
+  georgia2025:        'community',
+  gachapter2025:      'community',
+  backpack2025:       'community',
+  saturdaygiving2024: 'events',
+  saturdaygiving2025: 'events',
+  prayer2025:         'events',
+  prayer2026:         'events',
+  sabbat2026:         'community'
+};
+
+/* "View Photos / View Recap" → jump to the Gallery, apply the matching
+   filter, and gently highlight it so the user sees the related photos. */
+function viewEventPhotos(eventId) {
+  const cat = EVENT_PHOTO_MAP[eventId] || 'all';
+  const gallery = qs('#gallery');
+  if (!gallery) return;
+
+  // Scroll to the gallery (offset for the fixed navbar)
+  const top = gallery.getBoundingClientRect().top + window.scrollY - 80;
+  window.scrollTo({ top, behavior: 'smooth' });
+
+  // Apply the filter after the scroll settles
+  setTimeout(() => {
+    const btn = qs(`.gf-btn[data-filter="${cat}"]`) || qs('.gf-btn[data-filter="all"]');
+    if (btn) {
+      btn.click();
+      // brief pulse so it's clear which filter was applied
+      btn.classList.add('gf-flash');
+      setTimeout(() => btn.classList.remove('gf-flash'), 1200);
+    }
+  }, 600);
+}
+window.viewEventPhotos = viewEventPhotos;
 
 /* Parse an event date string into { day, mon, year } for the date badge.
    Handles "June 21, 2026", "April 2–4, 2025", etc. Returns null if unparseable. */
