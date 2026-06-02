@@ -463,6 +463,9 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* Pulse when a filter is auto-applied from an event's "View Photos" button */
 @keyframes gfFlash{0%,100%{box-shadow:0 0 0 0 rgba(201,162,39,.6)}50%{box-shadow:0 0 0 8px rgba(201,162,39,0)}}
 .gf-btn.gf-flash{animation:gfFlash 1.2s ease-out;border-color:var(--gold)}
+/* Highlight a section the visitor was sent to via QR / hash link */
+@keyframes hashGlow{0%{box-shadow:0 0 0 0 rgba(201,162,39,.55)}100%{box-shadow:0 0 0 22px rgba(201,162,39,0)}}
+.hash-highlight{animation:hashGlow 2.2s ease-out;border-radius:16px}
 .gallery-grid{columns:4;column-gap:14px}
 .gallery-grid.gallery-empty{columns:1}
 .gallery-item{break-inside:avoid;margin-bottom:14px;border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;background:var(--green-pale);will-change:transform}
@@ -1138,6 +1141,9 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .donor-cta-box .btn-gold{align-self:center}
   .recurring-wrap{padding:2rem 1.5rem}
   .recurring-ctas{flex-direction:column}
+  /* Recurring payment buttons: full-width, wrap long text (e.g. Zelle email) */
+  .rec-btn-zelle,.rec-btn-paypal,.rec-btn-stripe{width:100%;justify-content:center;white-space:normal;text-align:center;padding:.8rem 1rem;flex-wrap:wrap}
+  .rec-phone{width:100%;text-align:center;margin-top:.15rem}
   .campus-strip{grid-template-columns:repeat(2,1fr)}
   .work-impact-bar{flex-direction:column;padding:1.5rem}
   .membership-benefits-bar{gap:.75rem}

@@ -837,6 +837,11 @@ function buildEvents() {
   const grid = qs('#events-grid');
   if (!grid) return;
 
+  // The first upcoming event that has tickets gets id="buy-tickets" so the
+  // "Buy Tickets" QR code / links can jump straight to its price options.
+  const firstTicketed = CALUNAH_CONFIG.events.find(e => e.upcoming && e.tickets && e.tickets.length);
+  const firstTicketedId = firstTicketed ? firstTicketed.id : null;
+
   // Uses CSS classes: .event-card, .event-flyer (container), .event-info, .event-title,
   //                   .event-meta, .event-desc, .event-tags, .event-tag,
   //                   .event-full-info, .event-actions, .event-category
@@ -872,7 +877,7 @@ function buildEvents() {
 
         <!-- Ticket tiers for upcoming events (auto-generated when tickets exist) -->
         ${ev.upcoming && ev.tickets && ev.tickets.length ? `
-        <div class="event-tickets">
+        <div class="event-tickets"${ev.id === firstTicketedId ? ' id="buy-tickets"' : ''}>
           <div class="et-heading"><i class="fas fa-ticket-alt"></i> Get Your Tickets</div>
           <div class="et-tiers">
             ${ev.tickets.map(t => {
@@ -1956,6 +1961,23 @@ function initSmoothScroll() {
     const top = target.getBoundingClientRect().top + window.scrollY - 80;
     window.scrollTo({ top, behavior: 'smooth' });
   });
+}
+
+/* When the page is opened with a #hash (e.g. from a QR code), scroll to that
+   target AFTER dynamic content is built, offset for the fixed navbar, and
+   briefly highlight it so the visitor sees exactly where to act. */
+function initHashLanding() {
+  const hash = window.location.hash;
+  if (!hash || hash.length < 2) return;
+  // Wait for dynamic sections (events/tickets) to render, then scroll
+  setTimeout(() => {
+    const target = qs(hash);
+    if (!target) return;
+    const top = target.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+    target.classList.add('hash-highlight');
+    setTimeout(() => target.classList.remove('hash-highlight'), 2200);
+  }, 900);
 }
 
 
@@ -3074,6 +3096,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* Language switcher */
   initLanguageSwitcher();
+
+  /* If arrived via a #hash (e.g. QR code), scroll to it after content builds */
+  initHashLanding();
 
   /* Done */
   console.log(
