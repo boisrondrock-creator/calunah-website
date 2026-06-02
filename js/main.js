@@ -2004,9 +2004,15 @@ function initFallingLogos() {
   const logoImg = new Image();
   logoImg.src = 'images/logo.png';
 
+  // Faded on phones (kept subtle so it never competes with content), full on desktop
+  const onOpacity = () => (window.innerWidth < 768 ? '0.12' : '1');
+
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
+    // Keep opacity in sync across rotation / breakpoint changes, but only
+    // once the canvas has been activated (don't pre-empt the fade-in).
+    if (canvas.style.opacity !== '0') canvas.style.opacity = onOpacity();
   }
   resize();
   window.addEventListener('resize', resize, { passive: true });
@@ -2017,7 +2023,7 @@ function initFallingLogos() {
   const splash = qs('#splash');
 
   function activateCanvas() {
-    canvas.style.opacity = '1';
+    canvas.style.opacity = onOpacity();
     initLogoParticles();
   }
 
