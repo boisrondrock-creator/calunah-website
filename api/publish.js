@@ -89,8 +89,13 @@ module.exports = async function handler(req, res) {
   try { body = await readBody(req); }
   catch { res.status(400).json({ error: 'Invalid JSON body' }); return; }
 
-  const expectedSecret = process.env.PUBLISH_SECRET || 'Q2FsdW5haEAyMDI0';
-  if (body.secret !== expectedSecret) {
+  // Require a real server-side secret (no weak fallback). If it's not set,
+  // refuse rather than accept a guessable default.
+  const expectedSecret = process.env.PUBLISH_SECRET;
+  if (!expectedSecret) {
+    res.status(500).json({ error: 'PUBLISH_SECRET not configured on the server.' }); return;
+  }
+  if (!body.secret || body.secret !== expectedSecret) {
     res.status(401).json({ error: 'Unauthorized' }); return;
   }
 
@@ -106,9 +111,24 @@ module.exports = async function handler(req, res) {
     res.status(400).json({ error: 'No files provided' }); return;
   }
 
+  // SECURITY: only allow writes to known-safe locations. This blocks path
+  // traversal (../) and overwriting source/code files even if the secret leaks.
+  function isAllowedPath(p) {
+    if (typeof p !== 'string') return false;
+    if (p.includes('..') || p.startsWith('/') || p.includes('\\')) return false;
+    return p === 'data/.deploy' ||
+           (p.startsWith('data/') && p.endsWith('.json')) ||
+           (p.startsWith('images/') && /\.(png|jpe?g|webp|avif|gif|pdf)$/i.test(p));
+  }
+
   const results = {};
   let firstError = null;
   for (const [filePath, content] of Object.entries(files)) {
+    if (!isAllowedPath(filePath)) {
+      results[filePath] = false;
+      if (!firstError) firstError = { status: 400, message: 'Path not allowed: ' + filePath };
+      continue;
+    }
     try {
       const r = await pushFile(token, filePath, content);
       results[filePath] = r.ok === true;

@@ -56,8 +56,11 @@ module.exports = async function handler(req, res) {
   try { body = await readBody(req); }
   catch { res.status(400).json({ error: 'Invalid JSON body' }); return; }
 
-  const expectedSecret = process.env.PUBLISH_SECRET || 'Q2FsdW5haEAyMDI0';
-  if (body.secret !== expectedSecret) {
+  const expectedSecret = process.env.PUBLISH_SECRET;
+  if (!expectedSecret) {
+    res.status(500).json({ error: 'PUBLISH_SECRET not configured on the server.' }); return;
+  }
+  if (!body.secret || body.secret !== expectedSecret) {
     res.status(401).json({ error: 'Unauthorized' }); return;
   }
 
@@ -69,6 +72,18 @@ module.exports = async function handler(req, res) {
   const { path, content } = body;
   if (!path || !content) {
     res.status(400).json({ error: 'Missing path or content' }); return;
+  }
+
+  // SECURITY: uploads may only go into images/ and only as real media types.
+  // Blocks path traversal and prevents writing code/HTML/JS files.
+  if (path.includes('..') || path.startsWith('/') || path.includes('\\') ||
+      !path.startsWith('images/') || !/\.(png|jpe?g|webp|avif|gif|pdf)$/i.test(path)) {
+    res.status(400).json({ error: 'Upload path not allowed. Images must be under images/ with a valid extension.' });
+    return;
+  }
+  // Cap upload size (~8MB base64) to prevent abuse
+  if (typeof content === 'string' && content.length > 11 * 1024 * 1024) {
+    res.status(413).json({ error: 'File too large (max ~8MB).' }); return;
   }
 
   try {

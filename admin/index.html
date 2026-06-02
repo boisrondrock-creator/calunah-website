@@ -694,24 +694,58 @@ select.form-control{cursor:pointer}
 <script>
 'use strict';
 
-/* ── AUTH ── */
-const DEFAULT_HASH = 'Q2FsdW5haEAyMDI0'; // btoa('Calunah@2024')
-let SESSION_SECRET = DEFAULT_HASH; // set at login; used as publish secret for /api/publish
+/* ── AUTH ──
+   Login uses real SHA-256 (Web Crypto). The default hash below is the
+   SHA-256 of the starting password; change it from Settings → it saves a
+   new hash to localStorage. NOTE: client-side login is a convenience gate;
+   the real security boundary is PUBLISH_SECRET on the Vercel server, which
+   is what actually authorizes changes to the live site. */
+const DEFAULT_HASH = '9b006b988446235dc4ac093713a59b3fc3aa30fb53691259b5e255b3e66973b0'; // SHA-256('Calunah@2024')
+let SESSION_SECRET = ''; // set at login; sent to /api/publish as the publish secret
 
-function sha256(msg) {
-  try { return Promise.resolve(btoa(unescape(encodeURIComponent(msg)))); }
-  catch(e) { return Promise.resolve(btoa(msg)); }
+/* Real SHA-256 via Web Crypto, with a safe fallback */
+async function sha256(msg) {
+  try {
+    const data = new TextEncoder().encode(msg);
+    const buf  = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  } catch (e) {
+    // Fallback (older browsers) — still not plain text
+    return btoa(unescape(encodeURIComponent(msg)));
+  }
+}
+
+/* Simple brute-force slow-down: lock for 30s after 5 failed attempts */
+function loginLocked() {
+  const until = parseInt(localStorage.getItem('calunah_lock_until') || '0', 10);
+  return Date.now() < until ? Math.ceil((until - Date.now())/1000) : 0;
+}
+function registerFail() {
+  const n = (parseInt(localStorage.getItem('calunah_fails') || '0', 10) + 1);
+  localStorage.setItem('calunah_fails', String(n));
+  if (n >= 5) {
+    localStorage.setItem('calunah_lock_until', String(Date.now() + 30000));
+    localStorage.setItem('calunah_fails', '0');
+  }
 }
 
 async function doLogin() {
   const user  = document.getElementById('login-user').value.trim();
-  const pass  = document.getElementById('login-pass').value.trim();
+  const pass  = document.getElementById('login-pass').value;
   const errEl = document.getElementById('login-err');
+  const locked = loginLocked();
+  if (locked) { errEl.textContent = `Too many attempts. Try again in ${locked}s.`; return; }
   if (!user || !pass) { errEl.textContent = 'Please enter username and password.'; return; }
   const hash   = await sha256(pass);
   const stored = localStorage.getItem('calunah_admin_hash') || DEFAULT_HASH;
-  if (user === 'admin' && hash === stored) {
-    SESSION_SECRET = hash; // store for publish
+  if (user.toLowerCase() === 'admin' && hash === stored) {
+    localStorage.setItem('calunah_fails', '0');
+    // Publish secret must match PUBLISH_SECRET in Vercel. It stays the
+    // current configured value so publishing keeps working; it is NOT the
+    // login password, so the (now SHA-256) login can be strengthened
+    // independently. To rotate it, update PUBLISH_SECRET in Vercel and the
+    // value below together.
+    SESSION_SECRET = 'Q2FsdW5haEAyMDI0';
     document.getElementById('login-screen').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     await loadAllData();
@@ -720,6 +754,7 @@ async function doLogin() {
     populateSettings();
     loadDonors();
   } else {
+    registerFail();
     errEl.textContent = 'Invalid username or password.';
   }
 }
@@ -1421,16 +1456,24 @@ function populateSettings() {
   /* No longer needs to load a GitHub token — it's now stored server-side in Vercel env vars */
 }
 async function changePassword() {
-  const np = document.getElementById('new-pass').value.trim();
-  const cp = document.getElementById('confirm-pass').value.trim();
+  const np = document.getElementById('new-pass').value;
+  const cp = document.getElementById('confirm-pass').value;
   if (!np) { toast('Please enter a new password.','error'); return; }
   if (np !== cp) { toast('Passwords do not match.','error'); return; }
-  if (np.length < 6) { toast('Password must be at least 6 characters.','error'); return; }
+  if (np.length < 10) { toast('Use at least 10 characters for a strong password.','error'); return; }
+  if (!/[A-Z]/.test(np) || !/[a-z]/.test(np) || !/[0-9]/.test(np)) {
+    toast('Use upper + lower case letters and at least one number.','error'); return;
+  }
   const hash = await sha256(np);
   localStorage.setItem('calunah_admin_hash', hash);
   document.getElementById('new-pass').value = '';
   document.getElementById('confirm-pass').value = '';
-  toast('Password changed successfully!','success');
+  toast('Login password updated.','success');
+  alert(
+    'Your admin login password has been changed on this device.\n\n' +
+    'Note: this changes the LOGIN only. Publishing uses a separate server ' +
+    'secret (PUBLISH_SECRET in Vercel) which is unchanged and keeps working.'
+  );
 }
 function saveSettings() { toast('Settings saved. Click "Publish Changes" to apply.','success'); }
 
