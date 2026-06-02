@@ -374,36 +374,38 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* ════════════════════════════════════════
    CHAPTER PRESIDENTS
 ════════════════════════════════════════ */
-.chapters-section{background:var(--white)}
-.chapters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem}
+.chapters-section{background:linear-gradient(180deg,#ffffff 0%,#eef9f1 55%,#e1f3e7 100%);position:relative;overflow:hidden}
+/* soft bright color glows for a lively backdrop */
+.chapters-section::before{content:'';position:absolute;top:-120px;right:-100px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.16),transparent 70%);pointer-events:none}
+.chapters-section::after{content:'';position:absolute;bottom:-140px;left:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(45,145,71,.16),transparent 70%);pointer-events:none}
+.chapters-section .container{position:relative;z-index:1}
+.chapters-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
 /* Chapter cards, CSS custom props --ch-c1/--ch-c2 set per-card from JS */
-.chapter-card{--ch-c1:var(--green);--ch-c2:var(--gold);background:var(--off-white);border-radius:var(--radius-lg);padding:0;border:1px solid var(--border);border-top:3.5px solid var(--ch-c1);transition:var(--transition);position:relative;overflow:hidden}
-.chapter-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.13);border-color:var(--ch-c1);border-top-color:var(--ch-c1)}
-/* Subtle color wash on hover */
-.chapter-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.035) 0%,transparent 65%);opacity:0;transition:opacity .35s ease;pointer-events:none;border-radius:inherit}
-.chapter-card:hover::before{opacity:1}
-.chapter-card-body{padding:1.25rem 1.35rem 1.35rem}
-/* Card header: icon badge left, flag+abbr right */
-.chapter-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.chapter-icon-badge{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--ch-c1),var(--ch-c2));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.05rem;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.18);transition:transform .25s ease,box-shadow .25s ease}
-.chapter-icon-badge.has-emoji{background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.85));border:2px solid var(--ch-c1);box-shadow:0 4px 14px rgba(0,0,0,.12)}
-.ch-badge-emoji{font-size:1.5rem;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.12))}
-.chapter-card:hover .chapter-icon-badge{transform:scale(1.1) rotate(4deg);box-shadow:0 6px 18px rgba(0,0,0,.22)}
-.chapter-flag-wrap{display:flex;flex-direction:column;align-items:center;gap:.18rem}
-.chapter-flag{font-size:1.7rem;line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.18))}
-.chapter-abbr{font-size:.58rem;font-weight:800;color:var(--ch-c1);letter-spacing:.1em;text-transform:uppercase;line-height:1}
-/* President photo circle on chapter card */
-.chapter-president-photo{width:80px;height:80px;border-radius:50%;margin:.1rem auto .9rem;overflow:hidden;border:3px solid var(--ch-c1);background:linear-gradient(135deg,var(--green),var(--green-light));display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.15);transition:border-color .3s ease,box-shadow .3s ease;flex-shrink:0}
-.chapter-card:hover .chapter-president-photo{border-color:var(--ch-c2);box-shadow:0 6px 20px rgba(0,0,0,.22)}
+.chapter-card{--ch-c1:var(--green);--ch-c2:var(--gold);background:#fff;border-radius:18px;border:1px solid rgba(13,51,24,.06);box-shadow:0 8px 28px rgba(13,51,24,.10);overflow:hidden;text-align:center;transition:transform .38s cubic-bezier(.4,0,.2,1),box-shadow .38s ease}
+.chapter-card:hover{transform:translateY(-9px);box-shadow:0 22px 50px rgba(13,51,24,.20)}
+/* Vivid gradient banner in each chapter's colors */
+.chapter-banner{position:relative;height:86px;background:linear-gradient(135deg,var(--ch-c1),var(--ch-c2));display:flex;align-items:flex-start;justify-content:space-between;padding:.75rem .9rem;overflow:hidden}
+.chapter-banner::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 78% 0%,rgba(255,255,255,.32),transparent 62%);pointer-events:none}
+.chapter-icon-badge{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;color:var(--ch-c1);font-size:1.05rem;flex-shrink:0;box-shadow:0 3px 12px rgba(0,0,0,.22);position:relative;z-index:1;transition:transform .25s ease}
+.chapter-icon-badge.has-emoji{background:rgba(255,255,255,.95);border:none}
+.ch-badge-emoji{font-size:1.35rem;line-height:1}
+.chapter-card:hover .chapter-icon-badge{transform:scale(1.12) rotate(5deg)}
+.chapter-flag-wrap{display:flex;flex-direction:column;align-items:center;gap:.15rem;position:relative;z-index:1}
+.chapter-flag{font-size:1.7rem;line-height:1;filter:drop-shadow(0 1px 4px rgba(0,0,0,.3))}
+.chapter-abbr{font-size:.58rem;font-weight:800;color:#fff;letter-spacing:.1em;text-transform:uppercase;line-height:1;text-shadow:0 1px 4px rgba(0,0,0,.35)}
+/* President photo overlapping the banner */
+.chapter-president-photo{width:90px;height:90px;border-radius:50%;margin:-46px auto .7rem;overflow:hidden;border:4px solid #fff;background:linear-gradient(135deg,var(--ch-c1),var(--ch-c2));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.2);position:relative;z-index:2;transition:transform .3s ease,box-shadow .3s ease}
+.chapter-card:hover .chapter-president-photo{transform:scale(1.06);box-shadow:0 10px 28px rgba(0,0,0,.28)}
 .chapter-president-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 .chapter-president-photo.ch-photo-fallback{background:linear-gradient(135deg,var(--ch-c1),var(--ch-c2))}
-.ch-photo-initials{font-family:var(--font-head);font-size:1.5rem;font-weight:900;color:#fff;letter-spacing:.03em;line-height:1;user-select:none}
-.chapter-city{font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.2rem;text-align:center}
-.chapter-country{font-size:.72rem;color:var(--text-light);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:.85rem;text-align:center}
-.chapter-president-label{font-size:.68rem;font-weight:700;color:var(--ch-c1);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.25rem;display:flex;align-items:center;gap:.35rem}
-.chapter-president-name{font-size:.9rem;font-weight:600;color:var(--text-mid);margin-bottom:.6rem}
-.chapter-contact a{font-size:.78rem;color:var(--green);display:flex;align-items:center;gap:.4rem;transition:color .25s}
-.chapter-contact a:hover{color:var(--gold)}
+.ch-photo-initials{font-family:var(--font-head);font-size:1.6rem;font-weight:900;color:#fff;letter-spacing:.03em;line-height:1;user-select:none}
+.chapter-card-body{padding:0 1.25rem 1.5rem}
+.chapter-city{font-family:var(--font-head);font-size:1.18rem;font-weight:800;color:var(--text);margin-bottom:.15rem}
+.chapter-country{font-size:.7rem;color:var(--text-light);text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:.95rem}
+.chapter-president-label{font-size:.66rem;font-weight:800;color:var(--ch-c1);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.28rem;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.chapter-president-name{font-size:.98rem;font-weight:700;color:var(--text);margin-bottom:.9rem}
+.chapter-contact a{font-size:.76rem;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--ch-c1),var(--ch-c2));display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.2rem;border-radius:50px;letter-spacing:.02em;box-shadow:0 5px 16px rgba(0,0,0,.14);transition:transform .25s ease,box-shadow .25s ease;text-decoration:none}
+.chapter-contact a:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.24)}
 
 /* ════════════════════════════════════════
    DONORS & PARTNERS

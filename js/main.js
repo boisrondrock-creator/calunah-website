@@ -808,19 +808,19 @@ function buildChapters() {
     return `
     <div class="chapter-card" data-aos="fade-up" data-aos-delay="${(i % 4) * 70}"
          style="--ch-c1:${ch.color1};--ch-c2:${ch.color2}">
+      <div class="chapter-banner">
+        <div class="chapter-icon-badge ${ch.iconEmoji ? 'has-emoji' : ''}">
+          ${badgeInner}
+        </div>
+        <div class="chapter-flag-wrap">
+          <span class="chapter-flag">${ch.flag}</span>
+          <span class="chapter-abbr">${ch.abbr}</span>
+        </div>
+      </div>
+      <div class="chapter-president-photo ${ch.photo ? '' : 'ch-photo-fallback'}">
+        ${photoHtml}
+      </div>
       <div class="chapter-card-body">
-        <div class="chapter-header">
-          <div class="chapter-icon-badge ${ch.iconEmoji ? 'has-emoji' : ''}">
-            ${badgeInner}
-          </div>
-          <div class="chapter-flag-wrap">
-            <span class="chapter-flag">${ch.flag}</span>
-            <span class="chapter-abbr">${ch.abbr}</span>
-          </div>
-        </div>
-        <div class="chapter-president-photo ${ch.photo ? '' : 'ch-photo-fallback'}">
-          ${photoHtml}
-        </div>
         <h3 class="chapter-city">${ch.city}</h3>
         <span class="chapter-country">${ch.country}</span>
         <div class="chapter-president-label"><i class="fas fa-user-tie"></i> Chapter President</div>
@@ -1111,7 +1111,7 @@ function initPastEventsShowcase(items) {
   const btnNext  = qs('#pe-next');
   const btnPlay  = qs('#pe-play');
 
-  const DUR = 6000;        // ms each past event is shown
+  const DUR = 8500;        // ms each past event is shown
   let cur = 0, timer = null, playing = false;
 
   if (dotsWrap) {
