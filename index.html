@@ -59,7 +59,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/style.css?v=20260602c">
+  <link rel="stylesheet" href="css/style.css?v=20260602d">
 </head>
 <body>
 
@@ -621,7 +621,8 @@
       <div class="divider"><span></span><i class="fas fa-images"></i><span></span></div>
       <p class="section-sub" data-i18n="gallery.sub">Celebrating togetherness, achievement, and our beautiful community</p>
     </div>
-    <div class="gallery-filters" data-aos="fade-up" data-aos-delay="50">
+    <!-- Filter chips replaced by the album-cover experience (built in JS). Kept hidden for reference. -->
+    <div class="gallery-filters" data-aos="fade-up" data-aos-delay="50" style="display:none">
       <button class="gf-btn active" data-filter="all">All Photos</button>
       <button class="gf-btn" data-filter="gala2024">✨ Gala 2024</button>
       <button class="gf-btn" data-filter="gala2023">🌸 Spring Gala 2023</button>
@@ -686,10 +687,13 @@
 
   <div class="lightbox" id="lightbox">
     <button class="lb-close" id="lb-close" aria-label="Close"><i class="fas fa-times"></i></button>
+    <button class="lb-play" id="lb-play" aria-label="Play or pause slideshow"><i class="fas fa-pause"></i></button>
     <button class="lb-prev"  id="lb-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
     <button class="lb-next"  id="lb-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    <span class="lb-counter" id="lb-counter"></span>
     <img src="" alt="" id="lb-img" class="lb-img">
     <p class="lb-caption" id="lb-caption"></p>
+    <div class="lb-progress" id="lb-progress"><span></span></div>
   </div>
 </section>
 
@@ -1456,8 +1460,8 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <!-- PDF.js — renders the magazine pages for the flipbook reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="js/flipbook.js?v=20260602c"></script>
-<script src="js/main.js?v=20260602c"></script>
+<script src="js/flipbook.js?v=20260602d"></script>
+<script src="js/main.js?v=20260602d"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 

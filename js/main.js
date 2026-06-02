@@ -1088,22 +1088,17 @@ const EVENT_PHOTO_MAP = {
 function viewEventPhotos(eventId) {
   const cat = EVENT_PHOTO_MAP[eventId] || 'all';
   const gallery = qs('#gallery');
-  if (!gallery) return;
 
-  // Scroll to the gallery (offset for the fixed navbar)
-  const top = gallery.getBoundingClientRect().top + window.scrollY - 80;
-  window.scrollTo({ top, behavior: 'smooth' });
+  // Scroll to the gallery so visitors land there when they close the slideshow
+  if (gallery) {
+    const top = gallery.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
 
-  // Apply the filter after the scroll settles
+  // Then open the matching album as a full-screen swipeable slideshow
   setTimeout(() => {
-    const btn = qs(`.gf-btn[data-filter="${cat}"]`) || qs('.gf-btn[data-filter="all"]');
-    if (btn) {
-      btn.click();
-      // brief pulse so it's clear which filter was applied
-      btn.classList.add('gf-flash');
-      setTimeout(() => btn.classList.remove('gf-flash'), 1200);
-    }
-  }, 600);
+    if (typeof window.openGalleryAlbum === 'function') window.openGalleryAlbum(cat);
+  }, 550);
 }
 window.viewEventPhotos = viewEventPhotos;
 
@@ -1264,50 +1259,81 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ============================================================
    11. GALLERY BUILDER + FILTER + LIGHTBOX
    ============================================================ */
+/* Album definitions — display order, titles, and icons. Photos are grouped by
+   their `cat` field; any album that ends up with no photos is skipped. */
+const GALLERY_ALBUM_DEFS = [
+  { id:'gala2024',  title:'Annual Gala 2024',     icon:'fa-champagne-glasses' },
+  { id:'gala2023',  title:'Spring Gala 2023',     icon:'fa-spa' },
+  { id:'community', title:'Community & Outreach',  icon:'fa-hands-holding-circle' },
+  { id:'campus',    title:'Campus Life',          icon:'fa-graduation-cap' },
+  { id:'events',    title:'Events & Gatherings',  icon:'fa-calendar-star' }
+];
+
+/* Group CALUNAH_CONFIG.gallery into albums.
+   Returns [{ id, title, icon, items:[{src,caption}], cover, isAll? }]. */
+function getGalleryAlbums() {
+  const all = (CALUNAH_CONFIG.gallery || []).filter(it =>
+    it && it.src &&
+    !it.src.startsWith('images/campus1') && !it.src.startsWith('images/campus2') &&
+    !it.src.startsWith('images/campus3') && !it.src.startsWith('images/campus4'));
+
+  const albums = GALLERY_ALBUM_DEFS.map(def => {
+    const items = all.filter(it => it.cat === def.id);
+    return { id:def.id, title:def.title, icon:def.icon, items, cover: items.length ? items[0].src : '' };
+  }).filter(a => a.items.length);
+
+  // Catch-all for any categories not named above
+  const known = new Set(GALLERY_ALBUM_DEFS.map(d => d.id));
+  const others = all.filter(it => !known.has(it.cat));
+  if (others.length) albums.push({ id:'more', title:'More Moments', icon:'fa-images', items:others, cover:others[0].src });
+
+  // Final "All Photos" album so visitors can still browse everything at once
+  if (all.length) {
+    const galaCover = all.find(it => it.cat === 'gala2024') || all[0];
+    albums.push({ id:'all', title:'All Photos', icon:'fa-photo-film', items: all, cover: galaCover.src, isAll:true });
+  }
+  return albums;
+}
+
 function buildGallery() {
   const grid = qs('#gallery-grid');
   if (!grid) return;
 
-  // Only exclude known non-existent placeholder paths
-  const existingItems = CALUNAH_CONFIG.gallery.filter(item => {
-    return !item.src.startsWith('images/campus1') &&
-           !item.src.startsWith('images/campus2') &&
-           !item.src.startsWith('images/campus3') &&
-           !item.src.startsWith('images/campus4');
-  });
+  const albums = getGalleryAlbums();
 
-  if (existingItems.length === 0) {
-    // Show coming-soon state, collapse columns so it fills the full width
+  if (!albums.length) {
     grid.classList.add('gallery-empty');
+    grid.classList.remove('gallery-albums');
     grid.innerHTML = `
       <div class="gallery-coming-soon">
         <div class="gcs-icon"><i class="fas fa-camera"></i></div>
         <h3>Gallery Coming Soon</h3>
         <p>We are curating our photo collection of events, campus life, and community moments. Check back soon, and share your own CALUNAH memories!</p>
         <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> Submit Your Photos</a>
-      </div>
-    `;
-    // Hide the filter buttons since there's nothing to filter
-    const filters = qs('.gallery-filters');
-    if (filters) filters.style.display = 'none';
+      </div>`;
     return;
   }
 
-  grid.innerHTML = existingItems.map((item, i) => `
-    <div class="gallery-item" data-cat="${item.cat}">
-      <div class="gallery-thumb" data-index="${i}">
-        <img src="${item.src}" alt="${item.caption}" loading="lazy" decoding="async"
-             onerror="this.closest('.gallery-item').style.display='none'">
-        <div class="gallery-overlay">
-          <span class="gallery-caption">${item.caption}</span>
-          <i class="fas fa-expand-alt gallery-expand"></i>
+  // Album-cover grid: a few elegant cards instead of a long photo wall.
+  grid.classList.remove('gallery-empty');
+  grid.classList.add('gallery-albums');
+  grid.innerHTML = albums.map((a, i) => `
+    <button class="album-card${a.isAll ? ' album-all' : ''}" type="button" data-album="${escAttr(a.id)}"
+            data-aos="fade-up" data-aos-delay="${(i % 3) * 80}"
+            aria-label="Open ${escAttr(a.title)} album, ${a.items.length} photos">
+      <div class="album-cover">
+        <img src="${escAttr(a.cover)}" alt="${escAttr(a.title)}" loading="lazy" decoding="async"
+             onerror="this.style.visibility='hidden'">
+        <span class="album-count"><i class="fas fa-camera"></i> ${a.items.length}</span>
+        <div class="album-shade"></div>
+        <div class="album-info">
+          <span class="album-icon"><i class="fas ${a.icon}"></i></span>
+          <h3 class="album-title">${escAttr(a.title)}</h3>
+          <span class="album-cta">View album <i class="fas fa-arrow-right"></i></span>
         </div>
       </div>
-    </div>
-  `).join('');
-
-  initGalleryFilter();
-  // Note: initLightbox() is called from the boot sequence, not here
+    </button>`).join('');
+  // Note: clicks are handled in initLightbox() (album → swipeable slideshow)
 }
 
 function initGalleryFilter() {
@@ -1338,13 +1364,21 @@ function initGalleryFilter() {
 }
 
 function initLightbox() {
-  const lb       = qs('#lightbox');
-  const lbImg    = qs('#lb-img');
-  const lbCap    = qs('#lb-caption');
-  const btnClose = qs('#lb-close');
-  const btnPrev  = qs('#lb-prev');
-  const btnNext  = qs('#lb-next');
+  const lb        = qs('#lightbox');
+  const lbImg     = qs('#lb-img');
+  const lbCap     = qs('#lb-caption');
+  const lbCounter = qs('#lb-counter');
+  const btnClose  = qs('#lb-close');
+  const btnPlay   = qs('#lb-play');
+  const btnPrev   = qs('#lb-prev');
+  const btnNext   = qs('#lb-next');
+  const lbProgress= qs('#lb-progress');
+  const lbProgBar = lbProgress ? lbProgress.firstElementChild : null;
   if (!lb || !lbImg) return;
+
+  const SLIDE_MS = 5000;          // time each photo is shown during auto-play
+  let autoTimer  = null;
+  let playing    = false;
 
   // ROOT FIX: move the lightbox to be a direct child of <body>. It currently
   // lives inside the gallery <section>, which has `contain:layout style`. That
@@ -1365,40 +1399,110 @@ function initLightbox() {
     catch (e) { return []; }
   }
 
+  // Show photo at index `i` with a cinematic crossfade + slow Ken-Burns zoom
+  function showImage(i) {
+    if (!activeItems.length) return;
+    cur = ((i % activeItems.length) + activeItems.length) % activeItems.length;
+    const item = activeItems[cur];
+    // Re-trigger the per-slide animation
+    lbImg.classList.remove('lb-anim');
+    void lbImg.offsetWidth;
+    lbImg.src = item.src || '';
+    lbImg.alt = item.caption || '';
+    lbImg.classList.add('lb-anim');
+    if (lbCap) lbCap.textContent = item.caption || '';
+    if (lbCounter) lbCounter.textContent = activeItems.length > 1 ? (cur + 1) + ' / ' + activeItems.length : '';
+  }
+
+  function setPlayIcon() {
+    if (btnPlay) btnPlay.innerHTML = playing ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+  }
+
+  // Restart the bottom progress bar for the current slide
+  function restartProgress() {
+    if (!lbProgBar) return;
+    lbProgBar.style.animation = 'none';
+    void lbProgBar.offsetWidth;
+    if (playing) lbProgBar.style.animation = 'lbProg ' + (SLIDE_MS / 1000) + 's linear forwards';
+  }
+
+  function scheduleNext() {
+    clearTimeout(autoTimer);
+    restartProgress();
+    autoTimer = setTimeout(() => {
+      if (!playing) return;
+      showImage(cur + 1);
+      scheduleNext();
+    }, SLIDE_MS);
+  }
+
+  function play() {
+    if (activeItems.length < 2) return;
+    playing = true;
+    setPlayIcon();
+    if (lbProgress) lbProgress.classList.add('on');
+    scheduleNext();
+  }
+
+  function pause() {
+    playing = false;
+    setPlayIcon();
+    clearTimeout(autoTimer);
+    autoTimer = null;
+    if (lbProgress) lbProgress.classList.remove('on');
+  }
+
   function openLightbox(items, i) {
     if (!items || !items.length) return;
     activeItems = items;
-    cur = ((i % items.length) + items.length) % items.length;
-    const item = activeItems[cur];
-
     if (logoCanvas) logoCanvas.style.display = 'none';
-    // Set the image source and caption, then show the lightbox.
-    // The image is always display:block via CSS — it simply appears as it loads.
-    lbImg.src = item.src || '';
-    lbImg.alt = item.caption || '';
-    if (lbCap) lbCap.textContent = item.caption || '';
+    showImage(i);
+    if (btnPlay) btnPlay.style.display = activeItems.length > 1 ? '' : 'none';
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
+    // Cinematic auto-display: play by default for multi-photo albums
+    if (activeItems.length > 1) play(); else pause();
   }
 
   function closeLightbox() {
+    pause();
     lb.classList.remove('open');
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     if (logoCanvas) logoCanvas.style.display = '';
     lbImg.src = '';
+    lbImg.classList.remove('lb-anim');
   }
 
-  function nav(delta) { openLightbox(activeItems, cur + delta); }
+  // Manual navigation: move a slide, and if auto-playing, reset the timer so
+  // the viewer gets the full duration on the slide they just chose.
+  function nav(delta) {
+    showImage(cur + delta);
+    if (playing) scheduleNext();
+  }
 
   // Safety valve: if body scroll gets stuck while lightbox is closed, free it
   window.addEventListener('wheel',     () => { if (!lb.classList.contains('open')) document.body.style.overflow = ''; }, { passive: true });
   window.addEventListener('touchmove', () => { if (!lb.classList.contains('open')) document.body.style.overflow = ''; }, { passive: true });
 
-  // Gallery grid clicks
+  // Open an album (by id) as a swipeable full-screen slideshow
+  function openAlbumById(albumId) {
+    const albums = getGalleryAlbums();
+    const album = albums.find(a => a.id === albumId) ||
+                  albums.find(a => a.id === 'all') || albums[0];
+    if (album && album.items.length) {
+      openLightbox(album.items.map(it => ({ src: it.src, caption: it.caption })), 0);
+    }
+  }
+  window.openGalleryAlbum = openAlbumById;
+
+  // Gallery grid clicks → open the chosen album. Falls back to legacy
+  // per-photo thumbnails if any are ever rendered.
   const galleryGrid = qs('#gallery-grid');
   if (galleryGrid) {
     galleryGrid.addEventListener('click', e => {
+      const card = e.target.closest('.album-card');
+      if (card) { openAlbumById(card.dataset.album); return; }
       const thumb = e.target.closest('.gallery-thumb');
       if (thumb) openLightbox(CALUNAH_CONFIG.gallery, +thumb.dataset.index);
     });
@@ -1415,6 +1519,7 @@ function initLightbox() {
   // Click the dark background to close; clicks on image/caption do not bubble here
   lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
   btnClose && btnClose.addEventListener('click', e => { e.stopPropagation(); closeLightbox(); });
+  btnPlay  && btnPlay.addEventListener('click',  e => { e.stopPropagation(); playing ? pause() : play(); });
   btnPrev  && btnPrev.addEventListener('click',  e => { e.stopPropagation(); nav(-1); });
   btnNext  && btnNext.addEventListener('click',  e => { e.stopPropagation(); nav(+1); });
 
@@ -1423,7 +1528,18 @@ function initLightbox() {
     if (e.key === 'ArrowLeft')  nav(-1);
     if (e.key === 'ArrowRight') nav(+1);
     if (e.key === 'Escape')     closeLightbox();
+    if (e.key === ' ' || e.code === 'Space') { e.preventDefault(); playing ? pause() : play(); }
   });
+
+  // Touch swipe (mobile): swipe left/right to move through the album
+  let touchX = null;
+  lb.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 45) nav(dx < 0 ? +1 : -1);
+    touchX = null;
+  }, { passive: true });
 }
 
 

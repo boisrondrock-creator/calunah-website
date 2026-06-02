@@ -489,6 +489,34 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .gallery-coming-soon h3{font-family:var(--font-head);font-size:1.6rem;color:var(--text);margin-bottom:.75rem}
 .gallery-coming-soon p{color:var(--text-light);max-width:480px;margin:0 auto 2rem;font-size:.95rem}
 
+/* ══ ALBUM-COVER GALLERY ════════════════════════════════ */
+.gallery-grid.gallery-albums{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(285px,100%),1fr));gap:1.5rem}
+.album-card{display:block;width:100%;text-align:left;border:none;padding:0;margin:0;background:none;font-family:inherit;cursor:pointer;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);transition:transform .45s cubic-bezier(.4,0,.2,1),box-shadow .45s ease}
+.album-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg)}
+.album-card:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.album-cover{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--green-dark)}
+.album-cover img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.album-card:hover .album-cover img{transform:scale(1.09)}
+.album-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,26,12,.92) 0%,rgba(7,26,12,.45) 46%,rgba(7,26,12,.06) 100%);transition:background .45s ease}
+.album-card:hover .album-shade{background:linear-gradient(to top,rgba(7,26,12,.95) 0%,rgba(13,51,24,.6) 50%,rgba(26,107,47,.2) 100%)}
+.album-count{position:absolute;top:.85rem;right:.85rem;z-index:2;display:inline-flex;align-items:center;gap:.4rem;background:rgba(7,26,12,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.03em;padding:.3rem .7rem;border-radius:50px;border:1px solid rgba(201,162,39,.45)}
+.album-count i{color:var(--gold);font-size:.7rem}
+.album-info{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:1.3rem 1.3rem 1.4rem;color:#fff}
+.album-icon{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:var(--green-dark);font-size:1.05rem;margin-bottom:.65rem;box-shadow:0 4px 16px rgba(201,162,39,.4);transition:transform .45s ease}
+.album-card:hover .album-icon{transform:scale(1.12) rotate(-5deg)}
+.album-title{font-family:var(--font-head);font-size:1.32rem;font-weight:800;line-height:1.18;margin:0;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.65)}
+.album-cta{display:inline-flex;align-items:center;gap:.5rem;margin-top:.55rem;font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gold-light);opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .35s ease}
+.album-card:hover .album-cta{opacity:1;transform:translateY(0)}
+.album-cta i{transition:transform .3s ease}
+.album-card:hover .album-cta i{transform:translateX(5px)}
+.album-all .album-cover{background:linear-gradient(135deg,var(--green-dark),var(--green))}
+.album-all .album-shade{background:linear-gradient(135deg,rgba(13,51,24,.82),rgba(7,26,12,.7))}
+@media(hover:none){.album-cta{opacity:1;transform:none}}
+
+/* Lightbox photo counter */
+.lb-counter{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:3;color:#fff;background:rgba(0,0,0,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:.8rem;font-weight:700;letter-spacing:.08em;padding:.34rem .95rem;border-radius:50px;border:1px solid rgba(255,255,255,.2);pointer-events:none}
+.lb-counter:empty{display:none}
+
 /* ══ GALA 2023 SPOTLIGHT BANNER ══════════════════════════ */
 .gala-spotlight{display:none;margin:0 0 2.8rem;border-radius:20px;background:linear-gradient(145deg,#120d00 0%,#2a1c00 45%,#0f0900 100%);border:1px solid rgba(212,175,55,.3);overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.35)}
 .gala-spotlight::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(212,175,55,.13) 0%,transparent 70%);pointer-events:none}
@@ -523,10 +551,24 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .lb-prev,.lb-next{position:fixed;top:50%;transform:translateY(-50%);width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;font-size:1.1rem;cursor:pointer;z-index:3}
 .lb-prev{left:14px} .lb-next{right:14px}
 .lb-prev:hover,.lb-next:hover{background:var(--gold);color:var(--green-dark)}
+/* Cinematic auto-display: play/pause control, Ken-Burns per slide, progress bar */
+.lb-play{position:fixed;top:14px;left:14px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3);color:#fff;border-radius:50%;font-size:1rem;cursor:pointer;z-index:3}
+.lb-play:hover{background:var(--gold);color:var(--green-dark)}
+.lb-img.lb-anim{animation:lbKen 6s ease-out both}
+@keyframes lbKen{0%{opacity:0;transform:scale(1)}7%{opacity:1}100%{opacity:1;transform:scale(1.06)}}
+.lb-progress{position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.12);z-index:3;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.lb-progress.on{opacity:1}
+.lb-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-light));box-shadow:0 0 8px rgba(201,162,39,.6)}
+@keyframes lbProg{from{width:0}to{width:100%}}
+@media(prefers-reduced-motion:reduce){
+  .lb-img.lb-anim{animation:lbFade .4s ease both}
+  @keyframes lbFade{from{opacity:0}to{opacity:1}}
+}
 @media(max-width:600px){
   .lb-img{max-width:94vw;max-height:80vh;max-height:80dvh}
   .lb-prev{left:6px} .lb-next{right:6px}
   .lb-close{top:8px;right:8px;width:38px;height:38px}
+  .lb-play{top:8px;left:8px;width:38px;height:38px}
   .lb-prev,.lb-next{width:38px;height:38px}
 }
 
