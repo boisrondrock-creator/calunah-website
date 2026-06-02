@@ -1129,7 +1129,8 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
   .form-row,.nl-row{grid-template-columns:1fr}
   .donate-grid{grid-template-columns:1fr}
   .donate-ways{grid-template-columns:1fr 1fr}
-  .donor-cta-box{flex-direction:column;text-align:center}
+  .donor-cta-box{flex-direction:column;text-align:center;align-items:center}
+  .donor-cta-box .btn-gold{align-self:center}
   .recurring-wrap{padding:2rem 1.5rem}
   .recurring-ctas{flex-direction:column}
   .campus-strip{grid-template-columns:repeat(2,1fr)}
