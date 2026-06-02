@@ -295,7 +295,7 @@ const CALUNAH_CONFIG = {
       id:          'hightea2026',
       title:       'Blooming Minds: Giving Back for Education',
       date:        'June 21, 2026',
-      time:        '5:30 PM – 9:30 PM',
+      time:        '5:30 PM to 9:30 PM',
       location:    'Holy Trinity Reception Center, Orlando, FL',
       flyer:       'images/events/hightea2026.jpg',
       tags:        ['High Tea', 'Fundraiser', 'Education'],
@@ -327,13 +327,13 @@ const CALUNAH_CONFIG = {
     {
       id:          'prayer2025',
       title:       '3-Day Prayer Session for Haiti',
-      date:        'April 2–4, 2025',
-      time:        '7:30 PM – 8:30 PM EDT',
+      date:        'April 2 to 4, 2025',
+      time:        '7:30 PM to 8:30 PM EDT',
       location:    'Virtual, Zoom',
       flyer:       'images/events/prayer2025.webp',
       tags:        ['Prayer', 'Spiritual', 'Virtual', 'Haiti'],
       description: 'CALUNAH lifted up heartfelt prayers for Haiti, for peace, healing, and strength in the midst of hardship. Three nights of intercession uniting all chapters in one voice before God.',
-      fullInfo:    'As uncertainty was being faced among Haitian immigrants, CALUNAH launched a three-day Prayer Session with the participation of all chapters, calling on God for Forgiveness & Reconciliation (Wednesday), Physical, Emotional & Spiritual Healing (Thursday), and Protection & Deliverance (Friday). 📍 Via Zoom · Meeting ID: 898 1400 5387 · Passcode: prayers · "The prayer of a righteous person is powerful and effective." – James 5:16. As a faithful God, HE CAME THROUGH!',
+      fullInfo:    'As uncertainty was being faced among Haitian immigrants, CALUNAH launched a three-day Prayer Session with the participation of all chapters, calling on God for Forgiveness & Reconciliation (Wednesday), Physical, Emotional & Spiritual Healing (Thursday), and Protection & Deliverance (Friday). 📍 Via Zoom · Meeting ID: 898 1400 5387 · Passcode: prayers · "The prayer of a righteous person is powerful and effective." James 5:16. As a faithful God, HE CAME THROUGH!',
       ticketUrl:   '',
       ctaLabel:    'View Recap',
       upcoming:    false
@@ -1558,7 +1558,7 @@ function initMembershipForm() {
     data._captcha   = 'false';
     data._replyto   = data.email || '';
     /* Auto-reply receipt sent back to applicant */
-    data._autoresponse = `Dear ${data.firstName || 'Valued Applicant'},\n\nThank you for applying to become a member of CALUNAH, Club des Alumni de l'Université Adventiste d'Haïti.\n\nYour application for "${data.membershipType || 'CALUNAH Membership'}" has been received and is currently under review. Our team will contact you within 3–5 business days.\n\n────────────────────────\nCALUNAH\n2990 Hester Avenue SE\nPalm Bay, FL 32909\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nThis is a confirmation of your submission. Please keep it for your records.\n\nWith gratitude,\nCALUNAH Membership Team`;
+    data._autoresponse = `Dear ${data.firstName || 'Valued Applicant'},\n\nThank you for applying to become a member of CALUNAH, Club des Alumni de l'Université Adventiste d'Haïti.\n\nYour application for "${data.membershipType || 'CALUNAH Membership'}" has been received and is currently under review. Our team will contact you within 3 to 5 business days.\n\n────────────────────────\nCALUNAH\n2990 Hester Avenue SE\nPalm Bay, FL 32909\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nThis is a confirmation of your submission. Please keep it for your records.\n\nWith gratitude,\nCALUNAH Membership Team`;
 
     try {
       const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
@@ -1571,7 +1571,7 @@ function initMembershipForm() {
           <div class="form-success">
             <i class="fas fa-check-circle"></i>
             <h3>Application Received!</h3>
-            <p>Thank you for applying to join CALUNAH. A confirmation has been sent to <strong>${data.email || 'your email'}</strong>. We will review your application and contact you within 3–5 business days.</p>
+            <p>Thank you for applying to join CALUNAH. A confirmation has been sent to <strong>${data.email || 'your email'}</strong>. We will review your application and contact you within 3 to 5 business days.</p>
           </div>
         `;
       } else throw new Error();
