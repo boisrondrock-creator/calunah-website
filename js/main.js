@@ -972,15 +972,21 @@ function buildEvents() {
   const grid = qs('#events-grid');
   if (!grid) return;
 
+  // Single out upcoming / ticketed events as full cards; past events go into
+  // the cinematic auto-playing showcase below.
+  const allEvents = CALUNAH_CONFIG.events || [];
+  const upcoming  = allEvents.filter(e => e.upcoming);
+  const past      = allEvents.filter(e => !e.upcoming);
+
   // The first upcoming event that has tickets gets id="buy-tickets" so the
   // "Buy Tickets" QR code / links can jump straight to its price options.
-  const firstTicketed = CALUNAH_CONFIG.events.find(e => e.upcoming && e.tickets && e.tickets.length);
+  const firstTicketed = upcoming.find(e => e.tickets && e.tickets.length);
   const firstTicketedId = firstTicketed ? firstTicketed.id : null;
 
   // Uses CSS classes: .event-card, .event-flyer (container), .event-info, .event-title,
   //                   .event-meta, .event-desc, .event-tags, .event-tag,
   //                   .event-full-info, .event-actions, .event-category
-  grid.innerHTML = CALUNAH_CONFIG.events.map((ev, i) => `
+  grid.innerHTML = upcoming.map((ev, i) => `
     <div class="event-card ${ev.upcoming ? 'upcoming' : 'past'}" id="event-${ev.id}"
          data-aos="fade-up" data-aos-delay="${(i % 3) * 100}">
 
@@ -1054,6 +1060,122 @@ function buildEvents() {
       </div>
     </div>
   `).join('');
+
+  // Build the cinematic past-events showcase
+  initPastEventsShowcase(past);
+}
+
+/* HTML for a single past-event slide in the showcase */
+function peSlideHTML(ev) {
+  const badge = (typeof eventBadgeHTML === 'function') ? eventBadgeHTML(ev) : '';
+  return `
+    <div class="pe-slide">
+      <div class="pe-flyer">
+        ${ev.flyer
+          ? `<img src="${escAttr(ev.flyer)}" alt="${escAttr(ev.title)} flyer" onerror="this.style.display='none'">`
+          : `<div class="pe-flyer-fallback"><i class="fas fa-calendar-star"></i></div>`}
+        ${badge ? `<span class="pe-badge">${badge}</span>` : ''}
+      </div>
+      <div class="pe-details">
+        <span class="pe-cat"><i class="fas fa-check-circle"></i> Past Event</span>
+        <h4 class="pe-title">${escAttr(ev.title)}</h4>
+        <div class="pe-meta">
+          ${ev.date ? `<span><i class="fas fa-calendar-alt"></i> ${escAttr(ev.date)}</span>` : ''}
+          ${ev.time ? `<span><i class="fas fa-clock"></i> ${escAttr(ev.time)}</span>` : ''}
+          ${ev.location ? `<span><i class="fas fa-map-marker-alt"></i> ${escAttr(ev.location)}</span>` : ''}
+        </div>
+        ${ev.tags && ev.tags.length ? `<div class="pe-tags">${ev.tags.map(t => `<span class="event-tag">${escAttr(t)}</span>`).join('')}</div>` : ''}
+        <p class="pe-desc">${escAttr(ev.description || '')}</p>
+        ${ev.ctaLabel
+          ? `<div class="pe-actions"><button class="btn btn-gold btn-sm" onclick="viewEventPhotos('${escAttr(ev.id)}')"><i class="fas fa-photo-video"></i> ${escAttr(ev.ctaLabel)}</button></div>`
+          : ''}
+      </div>
+    </div>`;
+}
+
+/* Cinematic auto-playing showcase for past events.
+   Auto-advances with a crossfade + Ken-Burns; play/pause, prev/next, dots,
+   progress bar, touch-swipe, and pause-on-hover so visitors can read. */
+function initPastEventsShowcase(items) {
+  const wrap     = qs('#past-events');
+  const stage    = qs('#pe-stage');
+  const showcase = qs('#pe-showcase');
+  if (!wrap || !stage || !showcase) return;
+  if (!items || !items.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = '';
+
+  const dotsWrap = qs('#pe-dots');
+  const prog     = qs('#pe-progress');
+  const progBar  = prog ? prog.firstElementChild : null;
+  const btnPrev  = qs('#pe-prev');
+  const btnNext  = qs('#pe-next');
+  const btnPlay  = qs('#pe-play');
+
+  const DUR = 6000;        // ms each past event is shown
+  let cur = 0, timer = null, playing = false;
+
+  if (dotsWrap) {
+    dotsWrap.innerHTML = items.map((_, i) =>
+      `<button class="pe-dot${i === 0 ? ' active' : ''}" data-i="${i}" aria-label="Event ${i + 1}"></button>`).join('');
+  }
+  const dots = dotsWrap ? qsa('.pe-dot', dotsWrap) : [];
+
+  function show(i) {
+    cur = ((i % items.length) + items.length) % items.length;
+    stage.innerHTML = peSlideHTML(items[cur]);
+    const slide = stage.firstElementChild;
+    if (slide) { slide.classList.remove('pe-in'); void slide.offsetWidth; slide.classList.add('pe-in'); }
+    dots.forEach((d, j) => d.classList.toggle('active', j === cur));
+    restartProgress();
+  }
+  function restartProgress() {
+    if (!progBar) return;
+    progBar.style.animation = 'none';
+    void progBar.offsetWidth;
+    if (playing) progBar.style.animation = 'peProg ' + (DUR / 1000) + 's linear forwards';
+  }
+  function schedule() {
+    clearTimeout(timer);
+    restartProgress();
+    timer = setTimeout(() => { if (playing) { show(cur + 1); schedule(); } }, DUR);
+  }
+  function play() {
+    if (items.length < 2) { if (btnPlay) btnPlay.style.display = 'none'; return; }
+    playing = true;
+    if (btnPlay) btnPlay.innerHTML = '<i class="fas fa-pause"></i>';
+    if (prog) prog.classList.add('on');
+    schedule();
+  }
+  function pause() {
+    playing = false;
+    if (btnPlay) btnPlay.innerHTML = '<i class="fas fa-play"></i>';
+    clearTimeout(timer);
+    timer = null;
+    if (prog) prog.classList.remove('on');
+  }
+  function go(d) { show(cur + d); if (playing) schedule(); }
+
+  btnPrev && btnPrev.addEventListener('click', () => go(-1));
+  btnNext && btnNext.addEventListener('click', () => go(1));
+  btnPlay && btnPlay.addEventListener('click', () => { playing ? pause() : play(); });
+  dots.forEach(d => d.addEventListener('click', () => { show(+d.dataset.i); if (playing) schedule(); }));
+
+  // Pause on hover/focus so visitors can read the details, resume on leave
+  showcase.addEventListener('mouseenter', () => { if (playing) { clearTimeout(timer); if (progBar) progBar.style.animationPlayState = 'paused'; } });
+  showcase.addEventListener('mouseleave', () => { if (playing) schedule(); });
+
+  // Touch swipe on mobile
+  let tx = null;
+  showcase.addEventListener('touchstart', e => { tx = e.changedTouches[0].clientX; }, { passive: true });
+  showcase.addEventListener('touchend', e => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
+    tx = null;
+  }, { passive: true });
+
+  show(0);
+  play();
 }
 
 function toggleEventInfo(id) {
