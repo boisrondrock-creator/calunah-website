@@ -814,7 +814,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .donate-card p{font-size:.84rem;color:var(--text-mid);line-height:1.65;margin-bottom:1.5rem}
 .donate-methods{background:var(--off-white);border-radius:var(--radius-lg);padding:3rem;border:1px solid var(--border)}
 .donate-methods-title{font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:2rem;text-align:center}
-.donate-ways{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:2rem}
+.donate-ways{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;margin-bottom:2rem}
 /* Shared donate-way card */
 .donate-way{background:var(--white);border-radius:var(--radius-lg);border:1.5px solid var(--border);padding:2rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5rem;transition:var(--transition)}
 .donate-way:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
@@ -849,7 +849,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* Shared text helpers */
 .donate-way h4{font-size:.95rem;font-weight:800;color:var(--text);margin:0;font-family:var(--font-head)}
 .dw-detail{font-size:.8rem;color:var(--text-light);line-height:1.5;margin:0}
-.dw-highlight{font-size:1.15rem;font-weight:800;color:var(--green-dark);letter-spacing:.03em;margin:.1rem 0}
+.dw-highlight{font-size:1.15rem;font-weight:800;color:var(--green-dark);letter-spacing:.03em;margin:.1rem 0;max-width:100%;overflow-wrap:anywhere;word-break:break-word}
 /* Donate-way buttons */
 .dw-btn{padding:.6rem 1.2rem;border-radius:50px;font-size:.78rem;font-weight:700;display:inline-flex;align-items:center;gap:.45rem;margin-top:.5rem;text-decoration:none;transition:var(--transition)}
 .dw-btn-zelle{background:linear-gradient(135deg,#6600cc,#9900ee);color:#fff}
@@ -1093,8 +1093,8 @@ a.partner-card:hover .partner-name{color:var(--green)}
   .committee-grid,.chapters-grid{grid-template-columns:repeat(3,1fr)}
   .membership-grid{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
-  .donate-grid{grid-template-columns:repeat(2,1fr)}
-  .donate-ways{grid-template-columns:repeat(2,1fr)}
+  .donate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .donate-ways{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 /* ── Nav: switch to hamburger at ≤1340px so all 9 items + Donate + 3
    languages always fit on one line (French/Kreyòl words are longer and
@@ -1189,6 +1189,16 @@ a.partner-card:hover .partner-name{color:var(--green)}
   .spotlight-details strong{font-size:.85rem;white-space:normal}
   .spotlight-meta{display:none}
   .spotlight-right{width:100%;justify-content:space-between}
+  /* Navbar: compact so the hamburger always fits on phones */
+  .nav-inner{padding:0 1rem;gap:.4rem}
+  .nav-brand{padding-right:0;min-width:0}
+  .nav-brand::after{display:none}
+  .nav-logo,.navbar.scrolled .nav-logo{width:40px;height:40px}
+  .nav-name{font-size:1.05rem;letter-spacing:.05em}
+  .nav-tagline{font-size:.5rem;letter-spacing:.06em;white-space:nowrap}
+  .lang-switcher{margin-right:.35rem;padding:2px;gap:1px}
+  .lang-btn{min-width:25px;padding:4px 5px;font-size:.56rem}
+  .nav-hamburger{flex-shrink:0;padding:.4rem .45rem}
   /* PDF reader on mobile: hide iframe, show fallback button */
   .nl-iframe{display:none}
   .nl-mobile-fallback{display:flex}
@@ -1203,7 +1213,8 @@ a.partner-card:hover .partner-name{color:var(--green)}
   .footer-grid{grid-template-columns:1fr;gap:2rem}
   .form-row,.nl-row{grid-template-columns:1fr}
   .donate-grid{grid-template-columns:1fr}
-  .donate-ways{grid-template-columns:1fr 1fr}
+  .donate-ways{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}
+  .donate-methods{padding:1.6rem 1.1rem}
   .donor-cta-box{flex-direction:column;text-align:center;align-items:center}
   .donor-cta-box .btn-gold{align-self:center}
   .recurring-wrap{padding:2rem 1.5rem}
@@ -1220,6 +1231,12 @@ a.partner-card:hover .partner-name{color:var(--green)}
   .gallery-grid{columns:1}
   .splash-logo{width:170px;height:170px}
   .donate-ways{grid-template-columns:1fr}
+  /* Tiny phones: drop the tagline and tighten further so nothing clips */
+  .nav-tagline{display:none}
+  .nav-name{font-size:1rem}
+  .nav-logo,.navbar.scrolled .nav-logo{width:36px;height:36px}
+  .lang-btn{min-width:23px;padding:4px 4px;font-size:.54rem}
+  .nav-inner{padding:0 .75rem}
 }
 
 /* ============================================================
