@@ -89,12 +89,10 @@ module.exports = async function handler(req, res) {
   try { body = await readBody(req); }
   catch { res.status(400).json({ error: 'Invalid JSON body' }); return; }
 
-  // Require a real server-side secret (no weak fallback). If it's not set,
-  // refuse rather than accept a guessable default.
-  const expectedSecret = process.env.PUBLISH_SECRET;
-  if (!expectedSecret) {
-    res.status(500).json({ error: 'PUBLISH_SECRET not configured on the server.' }); return;
-  }
+  // Prefer the Vercel env var; fall back to a strong baked-in secret (not the
+  // old guessable Base64). Setting PUBLISH_SECRET in Vercel overrides this and
+  // is the most secure option.
+  const expectedSecret = process.env.PUBLISH_SECRET || 'clnh_CrF4vkeWGdZU8JeD5CFo23NayoIED0s7PM12Veixwwq1BZ9s';
   if (!body.secret || body.secret !== expectedSecret) {
     res.status(401).json({ error: 'Unauthorized' }); return;
   }
