@@ -2899,9 +2899,33 @@ async function loadCMSContent() {
         }
         CALUNAH_CONFIG.contentOverrides = json.content;
       }
+      if (key === 'content'     && json.fundraiser) CALUNAH_CONFIG.fundraiser = json.fundraiser;
       if (key === 'sections'    && Array.isArray(json.sections)) CALUNAH_CONFIG.customSections = json.sections;
     } catch (e) { /* silently fall back to config defaults */ }
   }));
+}
+
+/* Fundraising tracker — fills the progress bar from CALUNAH_CONFIG.fundraiser
+   { raised, goal } (editable in admin). Falls back to goal 150000 / raised 0. */
+function buildFundraiser() {
+  const fill   = qs('#ft-fill');
+  if (!fill) return;
+  const f      = CALUNAH_CONFIG.fundraiser || {};
+  const goal   = Number(f.goal)   > 0 ? Number(f.goal)   : 150000;
+  const raised = Number(f.raised) >= 0 ? Number(f.raised) : 0;
+  const pct    = Math.max(0, Math.min(100, Math.round((raised / goal) * 100)));
+  const money  = n => '$' + Math.round(n).toLocaleString('en-US');
+
+  const raisedEl = qs('#ft-raised');
+  const goalEl   = qs('#ft-goal-amt');
+  const pctEl    = qs('#ft-pct');
+  const goalSpan = qs('.ft-goal');
+  if (raisedEl) raisedEl.textContent = money(raised);
+  if (goalEl)   goalEl.textContent   = money(goal);
+  if (pctEl)    pctEl.textContent    = pct + '%';
+  if (goalSpan) goalSpan.textContent = money(goal);
+  // animate fill after a tick
+  requestAnimationFrame(() => { fill.style.width = pct + '%'; });
 }
 
 /* Render admin-created custom sections into #custom-sections.
@@ -3017,6 +3041,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   buildNewsletterIssues();
   buildMembership();
   buildCustomSections();
+  buildFundraiser();
 
   /* Re-scan AOS after all dynamic content is injected */
   if (window.AOS) AOS.refresh();

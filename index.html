@@ -59,7 +59,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/style.css?v=20260601q">
+  <link rel="stylesheet" href="css/style.css?v=20260601r">
 </head>
 <body>
 
@@ -1137,9 +1137,13 @@
           <div class="ft-milestone ft-final"><span class="ft-qtr">Q4</span><span class="ft-target">$150,000</span><span class="ft-period">by December</span></div>
         </div>
         <div class="ft-bar-wrap">
-          <div class="ft-bar-label"><span>$0</span><span>Goal: $150,000</span></div>
+          <div class="ft-raised-line">
+            <span class="ft-raised" id="ft-raised">$0</span>
+            <span class="ft-raised-of">raised of <strong id="ft-goal-amt">$150,000</strong> goal</span>
+            <span class="ft-pct" id="ft-pct">0%</span>
+          </div>
           <div class="ft-bar-track">
-            <div class="ft-bar-fill" id="ft-fill"></div>
+            <div class="ft-bar-fill" id="ft-fill" style="width:0%"></div>
             <div class="ft-bar-markers">
               <span style="left:20%">$30K</span>
               <span style="left:40%">$60K</span>
@@ -1391,6 +1395,7 @@
       <p class="footer-note">
         <a href="https://www.calunah.org" target="_blank">www.calunah.org</a> &nbsp;·&nbsp;
         501(c)(3) Nonprofit &nbsp;·&nbsp;
+        <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
         Designed with <i class="fas fa-heart" style="color:var(--gold)"></i> for our UNAH family
       </p>
     </div>
@@ -1402,10 +1407,32 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <!-- PDF.js — renders the magazine pages for the flipbook reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="js/flipbook.js?v=20260601q"></script>
-<script src="js/main.js?v=20260601q"></script>
+<script src="js/flipbook.js?v=20260601r"></script>
+<script src="js/main.js?v=20260601r"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
+
+<!-- ══ ANALYTICS ══════════════════════════════════════════ -->
+<!-- Vercel Web Analytics (privacy-friendly, no cookies). Enable it once in
+     Vercel → Project → Analytics → Enable. The script is harmless until then. -->
+<script defer src="/_vercel/insights/script.js"></script>
+
+<!-- Google Analytics 4 (optional). To activate: replace G-XXXXXXXXXX below
+     with your Measurement ID from analytics.google.com, then it starts
+     tracking automatically. Left inert until a real ID is set. -->
+<script>
+  (function(){
+    var GA_ID = 'G-XXXXXXXXXX'; // ← paste your GA4 Measurement ID here
+    if (GA_ID && GA_ID.indexOf('G-X') !== 0) {
+      var s=document.createElement('script'); s.async=true;
+      s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer=window.dataLayer||[];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag=gtag; gtag('js',new Date()); gtag('config',GA_ID,{anonymize_ip:true});
+    }
+  })();
+</script>
 
 <!-- ══ TICKET RESERVATION MODAL ═══════════════════════════ -->
 <div class="ticket-modal" id="ticket-modal" role="dialog" aria-modal="true" aria-label="Reserve your ticket">

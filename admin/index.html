@@ -412,6 +412,15 @@ select.form-control{cursor:pointer}
     <!-- PAGE TEXT (content editor) -->
     <div class="page" id="page-content">
       <div class="section-header"><div><h2>Page Text</h2><p>Edit the wording of the main sections. Changes apply to the English site and feed the FR/KR translations.</p></div></div>
+      <div class="settings-card" style="margin-bottom:1.5rem">
+        <h3 style="font-size:1rem;color:var(--gold,#c9a227);margin-bottom:.8rem"><i class="fas fa-chart-line"></i> Fundraising Tracker</h3>
+        <p class="form-hint" style="margin-bottom:1rem">Update the progress bar shown in the Donate section. The percentage fills automatically.</p>
+        <div class="form-grid">
+          <div class="form-group"><label>Amount Raised ($)</label><input class="form-control" type="number" id="fr-raised" min="0" placeholder="0" oninput="updateFundraiser('raised',this.value)"></div>
+          <div class="form-group"><label>Goal ($)</label><input class="form-control" type="number" id="fr-goal" min="1" placeholder="150000" oninput="updateFundraiser('goal',this.value)"></div>
+        </div>
+        <p class="form-hint" id="fr-preview" style="margin-top:.6rem"></p>
+      </div>
       <div class="settings-card">
         <p class="form-hint" style="margin-bottom:1rem"><i class="fas fa-info-circle"></i> Leave a field blank to keep the original wording. You can use simple HTML like &lt;strong&gt; or &lt;em&gt;. Remember to <strong>Publish</strong> when done.</p>
         <div id="content-fields"></div>
@@ -1347,10 +1356,26 @@ async function loadContentDefaults() {
     }));
   } catch(e) {}
 }
+function updateFundraiser(field, val) {
+  if (!DATA.content) DATA.content = { content:{} };
+  if (!DATA.content.fundraiser) DATA.content.fundraiser = { raised:0, goal:150000 };
+  DATA.content.fundraiser[field] = Math.max(0, parseInt(val,10) || 0);
+  const f = DATA.content.fundraiser;
+  const pct = f.goal>0 ? Math.round((f.raised/f.goal)*100) : 0;
+  const prev = document.getElementById('fr-preview');
+  if (prev) prev.innerHTML = '<i class="fas fa-eye"></i> Preview: <strong>$'+(f.raised||0).toLocaleString()+'</strong> of <strong>$'+(f.goal||0).toLocaleString()+'</strong> = <strong>'+pct+'%</strong> filled';
+}
+
 function renderContentEditor() {
   const wrap = document.getElementById('content-fields');
   if (!wrap) return;
-  if (!DATA.content || !DATA.content.content) DATA.content = { content:{} };
+  if (!DATA.content || !DATA.content.content) DATA.content = Object.assign({content:{}}, DATA.content);
+  // Populate fundraiser fields
+  const f = DATA.content.fundraiser || { raised:0, goal:150000 };
+  const rEl = document.getElementById('fr-raised'), gEl = document.getElementById('fr-goal');
+  if (rEl) rEl.value = f.raised || 0;
+  if (gEl) gEl.value = f.goal || 150000;
+  updateFundraiser('raised', f.raised || 0);
   const cur = DATA.content.content;
   wrap.innerHTML = CONTENT_FIELDS.map(g => `
     <div style="margin-bottom:1.6rem">
