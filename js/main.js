@@ -561,7 +561,7 @@ function initHeroSlider() {
 
   function startAuto() {
     clearInterval(timer);
-    timer = setInterval(() => goTo(cur + 1), 5000);
+    timer = setInterval(() => goTo(cur + 1), 6500);
   }
 
   // HTML already has .active on slide[0], ensure dots match
@@ -703,25 +703,42 @@ function initStats() {
   }
 
   // Animate all stat counters (whether hardcoded or just built above)
+  const prefersReduced = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const easeOut = t => 1 - Math.pow(1 - t, 3); // smooth deceleration
+
+  const countUp = el => {
+    const target = +el.dataset.target;
+    if (isNaN(target)) return;
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    if (prefersReduced) {
+      el.textContent = prefix + target.toLocaleString() + suffix;
+      return;
+    }
+    const duration = 1800;
+    const start    = performance.now();
+    const step = now => {
+      const p   = Math.min((now - start) / duration, 1);
+      const val = Math.floor(easeOut(p) * target);
+      el.textContent = prefix + val.toLocaleString() + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + target.toLocaleString() + suffix;
+    };
+    requestAnimationFrame(step);
+  };
+
   const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      const el     = entry.target;
-      const target = +el.dataset.target;
-      const suffix = el.dataset.suffix || '';
-      let current  = 0;
-      const inc    = target / (2000 / 16);
-      const timer  = setInterval(() => {
-        current += inc;
-        if (current >= target) { current = target; clearInterval(timer); }
-        el.textContent = Math.floor(current).toLocaleString() + suffix;
-      }, 16);
-      obs.unobserve(el);
+      countUp(entry.target);
+      obs.unobserve(entry.target);
     });
   }, { threshold: 0.5 });
 
-  // Target both hardcoded (.stat-num) and dynamically-built (.stat-num) counters
-  qsa('.stat-num[data-target]').forEach(el => obs.observe(el));
+  // Target ribbon counters (.stat-num) and the Our Work impact bar (.impact-num)
+  qsa('.stat-num[data-target], .impact-num[data-target]').forEach(el => obs.observe(el));
 }
 
 
@@ -1808,6 +1825,34 @@ function initBackToTop() {
     btn.classList.toggle('visible', window.scrollY > 400);
   }, { passive: true });
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+
+/* ============================================================
+   20b. READING PROGRESS BAR
+   Slim gradient bar at the very top that fills as you scroll.
+   ============================================================ */
+function initReadProgress() {
+  let bar = qs('.read-progress');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.className = 'read-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+  }
+  let ticking = false;
+  const update = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const ratio = max > 0 ? Math.min(h.scrollTop / max, 1) : 0;
+    bar.style.transform = 'scaleX(' + ratio + ')';
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
 }
 
 
@@ -3089,6 +3134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateSocialLinks();
   updateYear();
   initBackToTop();
+  initReadProgress();
 
   /* Performance & UX extras */
   initLazyIframes();

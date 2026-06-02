@@ -215,9 +215,12 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 ════════════════════════════════════════ */
 .hero{position:relative;height:100vh;min-height:650px;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .hero-slides{position:absolute;inset:0}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--green-dark);opacity:0;transition:opacity 1.2s ease;transform:scale(1.06);animation-duration:8s;animation-timing-function:ease;animation-fill-mode:forwards}
-.hero-slide.active{opacity:1;animation-name:kenBurns}
-@keyframes kenBurns{from{transform:scale(1.06)}to{transform:scale(1)}}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--green-dark);opacity:0;transition:opacity 1.6s cubic-bezier(.4,0,.2,1);transform:scale(1.04);will-change:opacity,transform}
+.hero-slide.active{opacity:1;z-index:1;animation:kenBurns 9s ease-out forwards}
+.hero-slide.active:nth-child(even){animation-name:kenBurnsAlt}
+@keyframes kenBurns{from{transform:scale(1.04) translate(0,0)}to{transform:scale(1.15) translate(-1.6%,-1.1%)}}
+@keyframes kenBurnsAlt{from{transform:scale(1.15) translate(1.6%,1.1%)}to{transform:scale(1.04) translate(0,0)}}
+@media (prefers-reduced-motion:reduce){.hero-slide,.hero-slide.active{animation:none;transform:scale(1.02);transition:opacity 1s ease}}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(7,26,12,.55) 0%,rgba(13,51,24,.45) 40%,rgba(7,26,12,.88) 100%);z-index:1}
 .hero-content{position:relative;z-index:2;text-align:center;padding:0 1.5rem;max-width:960px}
 .hero-badge{display:inline-flex;align-items:center;gap:.6rem;padding:.4rem 1.4rem;border:1px solid rgba(201,162,39,.5);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border-radius:50px;margin-bottom:1.2rem;backdrop-filter:blur(6px);background:rgba(201,162,39,.08);animation:fadeDown .9s ease .3s both,badgeGlow 3s ease-in-out 1.5s infinite}
@@ -1010,6 +1013,12 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .back-to-top{position:fixed;bottom:2rem;right:2rem;z-index:900;width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--green-dark);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 6px 20px rgba(0,0,0,.3);transform:translateY(80px);opacity:0;transition:var(--transition)}
 .back-to-top.visible{transform:translateY(0);opacity:1}
 .back-to-top:hover{background:var(--gold-light);transform:translateY(-4px)}
+
+/* ════════════════════════════════════════
+   READING PROGRESS BAR
+════════════════════════════════════════ */
+.read-progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:1001;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--green-light),var(--gold),var(--gold-light));box-shadow:0 0 10px rgba(201,162,39,.5);will-change:transform;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.read-progress{transition:none}}
 
 /* ════════════════════════════════════════
    KEYFRAMES
