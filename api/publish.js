@@ -6,7 +6,8 @@
    Required Vercel Environment Variables:
      GITHUB_TOKEN  — Personal Access Token with repo Contents write access
    Optional:
-     PUBLISH_SECRET — shared secret checked against admin; defaults to btoa('Calunah@2024')
+     PUBLISH_SECRET — shared secret checked against the admin. If set in
+     Vercel it overrides the strong baked-in fallback (most secure).
    ============================================================ */
 
 const https = require('https');
@@ -92,7 +93,7 @@ module.exports = async function handler(req, res) {
   // Prefer the Vercel env var; fall back to a strong baked-in secret (not the
   // old guessable Base64). Setting PUBLISH_SECRET in Vercel overrides this and
   // is the most secure option.
-  const expectedSecret = process.env.PUBLISH_SECRET || 'clnh_CrF4vkeWGdZU8JeD5CFo23NayoIED0s7PM12Veixwwq1BZ9s';
+  const expectedSecret = process.env.PUBLISH_SECRET || 'OsPPszE_rqA-aDzf35EtpEJ3Am4q-d4JIydECACb-zSA8lvwVTIRbw';
   if (!body.secret || body.secret !== expectedSecret) {
     res.status(401).json({ error: 'Unauthorized' }); return;
   }

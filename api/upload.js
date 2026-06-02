@@ -56,7 +56,7 @@ module.exports = async function handler(req, res) {
   try { body = await readBody(req); }
   catch { res.status(400).json({ error: 'Invalid JSON body' }); return; }
 
-  const expectedSecret = process.env.PUBLISH_SECRET || 'clnh_CrF4vkeWGdZU8JeD5CFo23NayoIED0s7PM12Veixwwq1BZ9s';
+  const expectedSecret = process.env.PUBLISH_SECRET || 'OsPPszE_rqA-aDzf35EtpEJ3Am4q-d4JIydECACb-zSA8lvwVTIRbw';
   if (!body.secret || body.secret !== expectedSecret) {
     res.status(401).json({ error: 'Unauthorized' }); return;
   }
