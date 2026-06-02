@@ -289,6 +289,9 @@ select.form-control{cursor:pointer}
       <a class="sb-link" onclick="showPage('committee')"><i class="fas fa-users-cog"></i> Executive Committee<span class="sb-badge" id="badge-committee">0</span></a>
       <a class="sb-link" onclick="showPage('chapters')"><i class="fas fa-globe"></i> Chapters<span class="sb-badge" id="badge-chapters">0</span></a>
       <a class="sb-link" onclick="showPage('donors')"><i class="fas fa-hand-holding-heart"></i> Donors &amp; Partners</a>
+      <a class="sb-link" onclick="showPage('scholars')"><i class="fas fa-user-graduate"></i> Scholar Stories<span class="sb-badge" id="badge-scholars">0</span></a>
+      <a class="sb-link" onclick="showPage('testimonials')"><i class="fas fa-quote-right"></i> Testimonials<span class="sb-badge" id="badge-testimonials">0</span></a>
+      <a class="sb-link" onclick="showPage('partners')"><i class="fas fa-handshake"></i> Partners<span class="sb-badge" id="badge-partners">0</span></a>
 
       <div class="sb-section">Site</div>
       <a class="sb-link" onclick="showPage('menu')"><i class="fas fa-bars"></i> Navigation Menu</a>
@@ -398,6 +401,24 @@ select.form-control{cursor:pointer}
     <div class="page" id="page-donors">
       <div class="section-header"><div><h2>Donors &amp; Partners</h2><p>Manage your donor recognition tiers</p></div></div>
       <div class="donors-grid" id="donors-grid"></div>
+    </div>
+
+    <!-- SCHOLAR STORIES -->
+    <div class="page" id="page-scholars">
+      <div class="section-header"><div><h2>Scholar Stories</h2><p>Share the journeys of students your supporters help. The section stays hidden on the site until you add at least one story.</p></div><button class="btn-add" onclick="openScholarModal()"><i class="fas fa-plus"></i> Add Scholar</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Photo</th><th>Name</th><th>Program</th><th>Story</th><th>Actions</th></tr></thead><tbody id="scholars-tbody"></tbody></table></div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="page" id="page-testimonials">
+      <div class="section-header"><div><h2>Testimonials</h2><p>Quotes from alumni, students, and supporters. The section stays hidden on the site until you add at least one quote.</p></div><button class="btn-add" onclick="openTestimonialModal()"><i class="fas fa-plus"></i> Add Testimonial</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Photo</th><th>Name</th><th>Role</th><th>Quote</th><th>Actions</th></tr></thead><tbody id="testimonials-tbody"></tbody></table></div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="page" id="page-partners">
+      <div class="section-header"><div><h2>Partners</h2><p>Logos of partner organizations. No logo? The name shows as text. The section stays hidden until you add at least one partner.</p></div><button class="btn-add" onclick="openPartnerModal()"><i class="fas fa-plus"></i> Add Partner</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Logo</th><th>Name</th><th>Website</th><th>Actions</th></tr></thead><tbody id="partners-tbody"></tbody></table></div>
     </div>
 
     <!-- NAVIGATION MENU -->
@@ -639,6 +660,72 @@ select.form-control{cursor:pointer}
   </div>
 </div>
 
+<!-- SCHOLAR MODAL -->
+<div class="modal-overlay" id="scholar-modal">
+  <div class="modal modal-sm">
+    <div class="modal-header"><h3 id="scholar-modal-title">Add Scholar</h3><button class="modal-close" onclick="closeModal('scholar-modal')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column:1/-1"><label>Full Name <span>*</span></label><input class="form-control" id="sc-name" placeholder="e.g. Marie Joseph"></div>
+        <div class="form-group"><label>Program / Field</label><input class="form-control" id="sc-program" placeholder="e.g. Nursing"></div>
+        <div class="form-group"><label>Class Year</label><input class="form-control" id="sc-year" placeholder="e.g. Class of 2025"></div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label>Photo</label>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div class="img-preview-wrap" style="width:110px;flex-shrink:0" id="sc-img-preview" onclick="document.getElementById('sc-img-file').click()"><span><i class="fas fa-camera"></i><br>Upload</span></div>
+            <div style="flex:1"><input class="form-control" id="sc-photo" placeholder="Or paste image URL"><input type="file" id="sc-img-file" accept="image/*" style="display:none" onchange="previewImg(event,'sc-img-preview','sc-photo','images/scholars/')"></div>
+          </div>
+        </div>
+        <div class="form-group" style="grid-column:1/-1"><label>Their Story <span>*</span></label><textarea class="form-control" id="sc-story" rows="4" placeholder="A short story or quote in the student's own words about how the scholarship has impacted them..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('scholar-modal')">Cancel</button><button class="btn btn-primary" onclick="saveScholar()"><i class="fas fa-save"></i> Save Scholar</button></div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL MODAL -->
+<div class="modal-overlay" id="testimonial-modal">
+  <div class="modal modal-sm">
+    <div class="modal-header"><h3 id="testimonial-modal-title">Add Testimonial</h3><button class="modal-close" onclick="closeModal('testimonial-modal')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column:1/-1"><label>Quote <span>*</span></label><textarea class="form-control" id="ts-quote" rows="4" placeholder="What they said about CALUNAH..."></textarea></div>
+        <div class="form-group"><label>Name <span>*</span></label><input class="form-control" id="ts-name" placeholder="e.g. Jean Baptiste"></div>
+        <div class="form-group"><label>Role / Title</label><input class="form-control" id="ts-role" placeholder="e.g. Alumnus, Class of 2010"></div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label>Photo</label>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div class="img-preview-wrap" style="width:90px;flex-shrink:0;border-radius:50%" id="ts-img-preview" onclick="document.getElementById('ts-img-file').click()"><span><i class="fas fa-camera"></i><br>Upload</span></div>
+            <div style="flex:1"><input class="form-control" id="ts-photo" placeholder="Or paste image URL"><input type="file" id="ts-img-file" accept="image/*" style="display:none" onchange="previewImg(event,'ts-img-preview','ts-photo','images/testimonials/')"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('testimonial-modal')">Cancel</button><button class="btn btn-primary" onclick="saveTestimonial()"><i class="fas fa-save"></i> Save Testimonial</button></div>
+  </div>
+</div>
+
+<!-- PARTNER MODAL -->
+<div class="modal-overlay" id="partner-modal">
+  <div class="modal modal-sm">
+    <div class="modal-header"><h3 id="partner-modal-title">Add Partner</h3><button class="modal-close" onclick="closeModal('partner-modal')"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column:1/-1"><label>Organization Name <span>*</span></label><input class="form-control" id="pt-name" placeholder="e.g. Adventist Health System"></div>
+        <div class="form-group" style="grid-column:1/-1"><label>Website URL</label><input class="form-control" id="pt-url" placeholder="https://example.org"></div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label>Logo <span class="form-hint" style="font-weight:400">(optional — name shows as text if none)</span></label>
+          <div style="display:flex;gap:.8rem;align-items:flex-start">
+            <div class="img-preview-wrap" style="width:130px;flex-shrink:0" id="pt-img-preview" onclick="document.getElementById('pt-img-file').click()"><span><i class="fas fa-camera"></i><br>Upload</span></div>
+            <div style="flex:1"><input class="form-control" id="pt-logo" placeholder="Or paste logo URL"><input type="file" id="pt-img-file" accept="image/*" style="display:none" onchange="previewImg(event,'pt-img-preview','pt-logo','images/partners/')"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('partner-modal')">Cancel</button><button class="btn btn-primary" onclick="savePartner()"><i class="fas fa-save"></i> Save Partner</button></div>
+  </div>
+</div>
+
 <!-- CHAPTER MODAL -->
 <div class="modal-overlay" id="chapter-modal">
   <div class="modal modal-sm">
@@ -777,7 +864,7 @@ function doLogout() {
 }
 
 /* ── PAGE NAV ── */
-const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', videos:'Videos', menu:'Navigation Menu', content:'Page Text', sections:'Custom Sections', templates:'Flyer Templates', settings:'Settings' };
+const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', scholars:'Scholar Stories', testimonials:'Testimonials', partners:'Partners', videos:'Videos', menu:'Navigation Menu', content:'Page Text', sections:'Custom Sections', templates:'Flyer Templates', settings:'Settings' };
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
@@ -796,10 +883,10 @@ function showPage(id) {
 }
 
 /* ── DATA ── */
-let DATA = { events:{events:[]}, blog:{posts:[]}, gallery:{items:[]}, chapters:{chapters:[]}, committee:{committee:[]}, newsletters:{newsletters:[]}, donors:{platinum:[],gold:[],silver:[]}, menu:{menu:[]}, content:{content:{}}, sections:{sections:[]} };
+let DATA = { events:{events:[]}, blog:{posts:[]}, gallery:{items:[]}, chapters:{chapters:[]}, committee:{committee:[]}, newsletters:{newsletters:[]}, donors:{platinum:[],gold:[],silver:[]}, menu:{menu:[]}, content:{content:{}}, sections:{sections:[]}, scholars:{scholars:[]}, testimonials:{testimonials:[]}, partners:{partners:[]} };
 
 async function loadAllData() {
-  const files = ['events','blog','gallery','chapters','committee','newsletters','donors','menu','content','sections'];
+  const files = ['events','blog','gallery','chapters','committee','newsletters','donors','menu','content','sections','scholars','testimonials','partners'];
   await Promise.all(files.map(async f => {
     try {
       const r = await fetch('../data/'+f+'.json?t='+Date.now());
@@ -808,7 +895,7 @@ async function loadAllData() {
   }));
   renderAll();
 }
-function renderAll() { renderEvents(); renderBlog(); renderGallery(); renderChapters(); renderCommittee(); renderNewsletter(); renderMenu(); updateStats(); }
+function renderAll() { renderEvents(); renderBlog(); renderGallery(); renderChapters(); renderCommittee(); renderNewsletter(); renderMenu(); renderScholars(); renderTestimonials(); renderPartners(); updateStats(); }
 
 /* ── STATS ── */
 function updateStats() {
@@ -818,6 +905,9 @@ function updateStats() {
   document.getElementById('badge-chapters').textContent  = DATA.chapters.chapters?.length || 0;
   document.getElementById('badge-committee').textContent = DATA.committee.committee?.length || 0;
   document.getElementById('badge-nl').textContent        = DATA.newsletters.newsletters?.length || 0;
+  document.getElementById('badge-scholars').textContent     = DATA.scholars?.scholars?.length || 0;
+  document.getElementById('badge-testimonials').textContent = DATA.testimonials?.testimonials?.length || 0;
+  document.getElementById('badge-partners').textContent     = DATA.partners?.partners?.length || 0;
   document.getElementById('stats-grid').innerHTML = `
     <div class="stat-card"><i class="fas fa-calendar-alt"></i><div class="num">${DATA.events.events?.length||0}</div><div class="label">Events</div></div>
     <div class="stat-card"><i class="fas fa-pen-nib"></i><div class="num">${DATA.blog.posts?.length||0}</div><div class="label">Blog Posts</div></div>
@@ -1163,6 +1253,147 @@ async function saveCommitteeMember() {
   toast('Member saved! Click "Publish Changes" to go live.','success');
 }
 function deleteCommitteeMember(i) { if (!confirm('Remove this member?')) return; DATA.committee.committee.splice(i,1); renderCommittee(); updateStats(); toast('Member removed.','info'); }
+
+/* ── SCHOLAR STORIES ── */
+let scEditIdx = -1;
+function renderScholars() {
+  const tbody = document.getElementById('scholars-tbody');
+  if (!tbody) return;
+  const list = DATA.scholars?.scholars || [];
+  if (!list.length) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:#9ca3af">No scholar stories yet. This section is hidden on the site until you add one.</td></tr>'; return; }
+  tbody.innerHTML = list.map((s,i) => `<tr>
+    <td>${s.photo?`<img class="td-img" src="../${s.photo}" onerror="this.style.display='none'" alt="">`:`<div style="width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#0a1f0e">${(s.name||'?').charAt(0).toUpperCase()}</div>`}</td>
+    <td><div class="td-title">${s.name||'—'}</div></td>
+    <td>${[s.program,s.year].filter(Boolean).join(' · ')||'—'}</td>
+    <td><div class="td-sub">${s.story?s.story.substring(0,60)+'...':''}</div></td>
+    <td><div class="row-actions"><button class="btn-icon btn-edit" onclick="openScholarModal(${i})"><i class="fas fa-pen"></i></button><button class="btn-icon btn-del" onclick="deleteScholar(${i})"><i class="fas fa-trash"></i></button></div></td>
+  </tr>`).join('');
+}
+function openScholarModal(idx) {
+  scEditIdx = idx !== undefined ? idx : -1;
+  const s = scEditIdx >= 0 ? DATA.scholars.scholars[scEditIdx] : {};
+  document.getElementById('scholar-modal-title').textContent = scEditIdx >= 0 ? 'Edit Scholar' : 'Add Scholar';
+  document.getElementById('sc-name').value    = s.name || '';
+  document.getElementById('sc-program').value = s.program || '';
+  document.getElementById('sc-year').value    = s.year || '';
+  document.getElementById('sc-photo').value   = s.photo || '';
+  document.getElementById('sc-story').value   = s.story || '';
+  const prev = document.getElementById('sc-img-preview');
+  prev.innerHTML = s.photo ? `<img src="../${s.photo}" style="width:100%;height:100%;object-fit:cover">` : '<span><i class="fas fa-camera"></i><br>Upload</span>';
+  pendingFiles['sc-img-preview'] = null;
+  document.getElementById('scholar-modal').classList.add('open');
+}
+async function saveScholar() {
+  const name  = document.getElementById('sc-name').value.trim();
+  const story = document.getElementById('sc-story').value.trim();
+  if (!name)  { toast('Please enter a name.','error'); return; }
+  if (!story) { toast('Please enter their story.','error'); return; }
+  if (pendingFiles['sc-img-preview']) {
+    const pf = pendingFiles['sc-img-preview'];
+    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!ok) { toast('Photo upload failed.','error'); return; }
+    pendingFiles['sc-img-preview'] = null;
+  }
+  const s = { name, program:document.getElementById('sc-program').value.trim(), year:document.getElementById('sc-year').value.trim(), photo:document.getElementById('sc-photo').value.trim(), story };
+  if (!DATA.scholars) DATA.scholars = { scholars:[] };
+  if (!DATA.scholars.scholars) DATA.scholars.scholars = [];
+  if (scEditIdx >= 0) DATA.scholars.scholars[scEditIdx] = s; else DATA.scholars.scholars.push(s);
+  closeModal('scholar-modal'); renderScholars(); updateStats();
+  toast('Scholar saved! Click "Publish Changes" to go live.','success');
+}
+function deleteScholar(i) { if (!confirm('Remove this scholar story?')) return; DATA.scholars.scholars.splice(i,1); renderScholars(); updateStats(); toast('Scholar removed.','info'); }
+
+/* ── TESTIMONIALS ── */
+let tsEditIdx = -1;
+function renderTestimonials() {
+  const tbody = document.getElementById('testimonials-tbody');
+  if (!tbody) return;
+  const list = DATA.testimonials?.testimonials || [];
+  if (!list.length) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:2rem;color:#9ca3af">No testimonials yet. This section is hidden on the site until you add one.</td></tr>'; return; }
+  tbody.innerHTML = list.map((t,i) => `<tr>
+    <td>${t.photo?`<img class="td-img" src="../${t.photo}" onerror="this.style.display='none'" alt="" style="border-radius:50%">`:`<div style="width:38px;height:38px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#0a1f0e">${(t.name||'?').charAt(0).toUpperCase()}</div>`}</td>
+    <td><div class="td-title">${t.name||'—'}</div></td>
+    <td>${t.role||'—'}</td>
+    <td><div class="td-sub">${t.quote?t.quote.substring(0,60)+'...':''}</div></td>
+    <td><div class="row-actions"><button class="btn-icon btn-edit" onclick="openTestimonialModal(${i})"><i class="fas fa-pen"></i></button><button class="btn-icon btn-del" onclick="deleteTestimonial(${i})"><i class="fas fa-trash"></i></button></div></td>
+  </tr>`).join('');
+}
+function openTestimonialModal(idx) {
+  tsEditIdx = idx !== undefined ? idx : -1;
+  const t = tsEditIdx >= 0 ? DATA.testimonials.testimonials[tsEditIdx] : {};
+  document.getElementById('testimonial-modal-title').textContent = tsEditIdx >= 0 ? 'Edit Testimonial' : 'Add Testimonial';
+  document.getElementById('ts-quote').value = t.quote || '';
+  document.getElementById('ts-name').value  = t.name || '';
+  document.getElementById('ts-role').value  = t.role || '';
+  document.getElementById('ts-photo').value = t.photo || '';
+  const prev = document.getElementById('ts-img-preview');
+  prev.innerHTML = t.photo ? `<img src="../${t.photo}" style="width:100%;height:100%;object-fit:cover">` : '<span><i class="fas fa-camera"></i><br>Upload</span>';
+  pendingFiles['ts-img-preview'] = null;
+  document.getElementById('testimonial-modal').classList.add('open');
+}
+async function saveTestimonial() {
+  const quote = document.getElementById('ts-quote').value.trim();
+  const name  = document.getElementById('ts-name').value.trim();
+  if (!quote) { toast('Please enter a quote.','error'); return; }
+  if (!name)  { toast('Please enter a name.','error'); return; }
+  if (pendingFiles['ts-img-preview']) {
+    const pf = pendingFiles['ts-img-preview'];
+    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!ok) { toast('Photo upload failed.','error'); return; }
+    pendingFiles['ts-img-preview'] = null;
+  }
+  const t = { quote, name, role:document.getElementById('ts-role').value.trim(), photo:document.getElementById('ts-photo').value.trim() };
+  if (!DATA.testimonials) DATA.testimonials = { testimonials:[] };
+  if (!DATA.testimonials.testimonials) DATA.testimonials.testimonials = [];
+  if (tsEditIdx >= 0) DATA.testimonials.testimonials[tsEditIdx] = t; else DATA.testimonials.testimonials.push(t);
+  closeModal('testimonial-modal'); renderTestimonials(); updateStats();
+  toast('Testimonial saved! Click "Publish Changes" to go live.','success');
+}
+function deleteTestimonial(i) { if (!confirm('Remove this testimonial?')) return; DATA.testimonials.testimonials.splice(i,1); renderTestimonials(); updateStats(); toast('Testimonial removed.','info'); }
+
+/* ── PARTNERS ── */
+let ptEditIdx = -1;
+function renderPartners() {
+  const tbody = document.getElementById('partners-tbody');
+  if (!tbody) return;
+  const list = DATA.partners?.partners || [];
+  if (!list.length) { tbody.innerHTML='<tr><td colspan="4" style="text-align:center;padding:2rem;color:#9ca3af">No partners yet. This section is hidden on the site until you add one.</td></tr>'; return; }
+  tbody.innerHTML = list.map((p,i) => `<tr>
+    <td>${p.logo?`<img class="td-img" src="../${p.logo}" onerror="this.style.display='none'" alt="" style="object-fit:contain;background:#f3f4f6">`:`<div style="width:38px;height:38px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff">${(p.name||'?').charAt(0).toUpperCase()}</div>`}</td>
+    <td><div class="td-title">${p.name||'—'}</div></td>
+    <td>${p.url?`<a href="${p.url}" target="_blank" rel="noopener" style="color:var(--gold);font-size:.8rem">${p.url.replace(/^https?:\/\//,'').substring(0,30)}</a>`:'—'}</td>
+    <td><div class="row-actions"><button class="btn-icon btn-edit" onclick="openPartnerModal(${i})"><i class="fas fa-pen"></i></button><button class="btn-icon btn-del" onclick="deletePartner(${i})"><i class="fas fa-trash"></i></button></div></td>
+  </tr>`).join('');
+}
+function openPartnerModal(idx) {
+  ptEditIdx = idx !== undefined ? idx : -1;
+  const p = ptEditIdx >= 0 ? DATA.partners.partners[ptEditIdx] : {};
+  document.getElementById('partner-modal-title').textContent = ptEditIdx >= 0 ? 'Edit Partner' : 'Add Partner';
+  document.getElementById('pt-name').value = p.name || '';
+  document.getElementById('pt-url').value  = p.url || '';
+  document.getElementById('pt-logo').value = p.logo || '';
+  const prev = document.getElementById('pt-img-preview');
+  prev.innerHTML = p.logo ? `<img src="../${p.logo}" style="width:100%;height:100%;object-fit:contain">` : '<span><i class="fas fa-camera"></i><br>Upload</span>';
+  pendingFiles['pt-img-preview'] = null;
+  document.getElementById('partner-modal').classList.add('open');
+}
+async function savePartner() {
+  const name = document.getElementById('pt-name').value.trim();
+  if (!name) { toast('Please enter the organization name.','error'); return; }
+  if (pendingFiles['pt-img-preview']) {
+    const pf = pendingFiles['pt-img-preview'];
+    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!ok) { toast('Logo upload failed.','error'); return; }
+    pendingFiles['pt-img-preview'] = null;
+  }
+  const p = { name, url:document.getElementById('pt-url').value.trim(), logo:document.getElementById('pt-logo').value.trim() };
+  if (!DATA.partners) DATA.partners = { partners:[] };
+  if (!DATA.partners.partners) DATA.partners.partners = [];
+  if (ptEditIdx >= 0) DATA.partners.partners[ptEditIdx] = p; else DATA.partners.partners.push(p);
+  closeModal('partner-modal'); renderPartners(); updateStats();
+  toast('Partner saved! Click "Publish Changes" to go live.','success');
+}
+function deletePartner(i) { if (!confirm('Remove this partner?')) return; DATA.partners.partners.splice(i,1); renderPartners(); updateStats(); toast('Partner removed.','info'); }
 
 /* ── CHAPTERS ── */
 let chEditIdx = -1;
@@ -1531,6 +1762,9 @@ function openPublish() {
     { id:'s-committee',   label:'Saving Executive Committee' },
     { id:'s-newsletters', label:'Saving Newsletters' },
     { id:'s-donors',      label:'Saving Donors & Partners' },
+    { id:'s-scholars',    label:'Saving Scholar Stories' },
+    { id:'s-testimonials',label:'Saving Testimonials' },
+    { id:'s-partners',    label:'Saving Partners' },
     { id:'s-menu',        label:'Saving Navigation Menu' },
     { id:'s-content',     label:'Saving Page Text' },
     { id:'s-sections',    label:'Saving Custom Sections' },
@@ -1556,6 +1790,9 @@ async function runPublish() {
     'data/committee.json':   DATA.committee,
     'data/newsletters.json': DATA.newsletters,
     'data/donors.json':      DATA.donors,
+    'data/scholars.json':     DATA.scholars,
+    'data/testimonials.json': DATA.testimonials,
+    'data/partners.json':     DATA.partners,
     'data/menu.json':        DATA.menu,
     'data/content.json':     DATA.content,
     'data/sections.json':    DATA.sections,
@@ -1569,6 +1806,9 @@ async function runPublish() {
     'data/committee.json':   's-committee',
     'data/newsletters.json': 's-newsletters',
     'data/donors.json':      's-donors',
+    'data/scholars.json':     's-scholars',
+    'data/testimonials.json': 's-testimonials',
+    'data/partners.json':     's-partners',
     'data/menu.json':        's-menu',
     'data/content.json':     's-content',
     'data/sections.json':    's-sections',

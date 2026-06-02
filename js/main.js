@@ -205,6 +205,13 @@ const CALUNAH_CONFIG = {
     ]
   },
 
+  // Scholar stories, testimonials, and partner logos are admin-managed and
+  // load from data/*.json. Empty by default so each section stays hidden
+  // until real content is added (no placeholder people on a live site).
+  scholars:     [],
+  testimonials: [],
+  partners:     [],
+
   /* ---------- Membership Tiers ---------- */
   membership: [
     {
@@ -844,6 +851,117 @@ function buildDonors() {
   renderTier('platinum', CALUNAH_CONFIG.donors.platinum);
   renderTier('gold',     CALUNAH_CONFIG.donors.gold);
   renderTier('silver',   CALUNAH_CONFIG.donors.silver);
+}
+
+
+/* ============================================================
+   9b. SCHOLAR STORIES BUILDER
+   Renders data/scholars.json. Section hides itself when empty,
+   so no placeholder people ever appear on the live site.
+   Each scholar: { name, program, year, photo, story }
+   ============================================================ */
+function buildScholars() {
+  const grid    = qs('#scholars-grid');
+  const section = qs('#scholars');
+  if (!grid || !section) return;
+  const list = Array.isArray(CALUNAH_CONFIG.scholars) ? CALUNAH_CONFIG.scholars : [];
+  if (!list.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  grid.innerHTML = list.map((s, i) => {
+    const name    = escAttr(s.name || 'Scholarship Recipient');
+    const program = escAttr(s.program || '');
+    const year    = escAttr(s.year || '');
+    const story   = escAttr(s.story || '');
+    const meta    = [program, year].filter(Boolean).join(' · ');
+    const initials = (s.name || 'S').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const avatar  = s.photo
+      ? `<img src="${escAttr(s.photo)}" alt="${name}" loading="lazy"
+              onerror="this.parentElement.classList.add('photo-fallback');this.remove();">`
+      : `<span class="scholar-initials">${escAttr(initials)}</span>`;
+    return `
+      <article class="scholar-card" data-aos="fade-up" data-aos-delay="${(i % 3) * 90}">
+        <div class="scholar-photo">${avatar}</div>
+        <div class="scholar-body">
+          <i class="fas fa-quote-left scholar-quote-mark"></i>
+          <p class="scholar-story">${story}</p>
+          <div class="scholar-meta">
+            <h3 class="scholar-name">${name}</h3>
+            ${meta ? `<span class="scholar-program">${meta}</span>` : ''}
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+
+/* ============================================================
+   9c. TESTIMONIALS BUILDER
+   Renders data/testimonials.json. Hides when empty.
+   Each testimonial: { quote, name, role, photo }
+   ============================================================ */
+function buildTestimonials() {
+  const grid    = qs('#testimonials-grid');
+  const section = qs('#testimonials');
+  if (!grid || !section) return;
+  const list = Array.isArray(CALUNAH_CONFIG.testimonials) ? CALUNAH_CONFIG.testimonials : [];
+  if (!list.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  grid.innerHTML = list.map((t, i) => {
+    const quote = escAttr(t.quote || '');
+    const name  = escAttr(t.name || '');
+    const role  = escAttr(t.role || '');
+    const initials = (t.name || '•').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const avatar = t.photo
+      ? `<img src="${escAttr(t.photo)}" alt="${name}" loading="lazy"
+              onerror="this.parentElement.classList.add('photo-fallback');this.remove();">`
+      : `<span class="testimonial-initials">${escAttr(initials)}</span>`;
+    return `
+      <figure class="testimonial-card" data-aos="fade-up" data-aos-delay="${(i % 3) * 90}">
+        <i class="fas fa-quote-right testimonial-mark"></i>
+        <blockquote class="testimonial-quote">${quote}</blockquote>
+        <figcaption class="testimonial-author">
+          <div class="testimonial-avatar">${avatar}</div>
+          <div class="testimonial-id">
+            <span class="testimonial-name">${name}</span>
+            ${role ? `<span class="testimonial-role">${role}</span>` : ''}
+          </div>
+        </figcaption>
+      </figure>`;
+  }).join('');
+}
+
+
+/* ============================================================
+   9d. PARTNERS BUILDER
+   Renders data/partners.json. Hides when empty. Logo optional,
+   falls back to the partner name as styled text.
+   Each partner: { name, logo, url }
+   ============================================================ */
+function buildPartners() {
+  const grid    = qs('#partners-grid');
+  const section = qs('#partners');
+  if (!grid || !section) return;
+  const list = Array.isArray(CALUNAH_CONFIG.partners) ? CALUNAH_CONFIG.partners : [];
+  if (!list.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  grid.innerHTML = list.map((p, i) => {
+    const name = escAttr(p.name || 'Partner');
+    // Logo image with a hidden text fallback that appears if the image fails
+    // to load (or when no logo is supplied at all).
+    const inner = p.logo
+      ? `<img src="${escAttr(p.logo)}" alt="${name}" loading="lazy"
+              onerror="this.closest('.partner-logo').classList.add('logo-fallback');this.remove();">
+         <span class="partner-name fallback">${name}</span>`
+      : `<span class="partner-name">${name}</span>`;
+    const inside = `<div class="partner-logo">${inner}</div>`;
+    const delay  = (i % 4) * 70;
+    return p.url
+      ? `<a class="partner-card" href="${escAttr(p.url)}" target="_blank" rel="noopener" title="${name}" data-aos="zoom-in" data-aos-delay="${delay}">${inside}</a>`
+      : `<div class="partner-card" title="${name}" data-aos="zoom-in" data-aos-delay="${delay}">${inside}</div>`;
+  }).join('');
 }
 
 
@@ -2218,6 +2336,19 @@ const CALUNAH_LANG = {
     'donors.silver':        'Silver Partners',
     'donors.become':        'Become a Partner',
     'donors.cta.btn':       'Partner With Us',
+    /*, Scholar Stories, */
+    'scholars.badge':       'Lives You Change',
+    'scholars.title':       'Scholar Stories',
+    'scholars.sub':         'Meet the students whose journeys are made possible by your generosity',
+    'scholars.cta':         'Sponsor a Scholar',
+    /*, Testimonials, */
+    'testimonials.badge':   'In Their Words',
+    'testimonials.title':   'Voices of Our Community',
+    'testimonials.sub':     'Alumni, students, and supporters share what CALUNAH means to them',
+    /*, Partners, */
+    'partners.badge':       'Stronger Together',
+    'partners.title':       'Our Partners',
+    'partners.sub':         'Organizations and institutions that walk alongside us in our mission',
     /*, Events, */
     'events.badge':         'Stay Connected',
     'events.title':         'Upcoming Events',
@@ -2443,6 +2574,19 @@ const CALUNAH_LANG = {
     'donors.silver':        'Partenaires Argent',
     'donors.become':        'Devenir partenaire',
     'donors.cta.btn':       'Nous rejoindre',
+    /*, Scholar Stories, */
+    'scholars.badge':       'Des vies transformées',
+    'scholars.title':       'Histoires de boursiers',
+    'scholars.sub':         'Rencontrez les étudiants dont le parcours est rendu possible par votre générosité',
+    'scholars.cta':         'Parrainer un boursier',
+    /*, Testimonials, */
+    'testimonials.badge':   'En leurs mots',
+    'testimonials.title':   'Les voix de notre communauté',
+    'testimonials.sub':     'Anciens élèves, étudiants et soutiens partagent ce que CALUNAH représente pour eux',
+    /*, Partners, */
+    'partners.badge':       'Plus forts ensemble',
+    'partners.title':       'Nos partenaires',
+    'partners.sub':         'Les organisations et institutions qui nous accompagnent dans notre mission',
     /*, Events, */
     'events.badge':         'Restez connecté',
     'events.title':         'Événements à venir',
@@ -2668,6 +2812,19 @@ const CALUNAH_LANG = {
     'donors.silver':        'Patnè Ajan',
     'donors.become':        'Vin yon patnè',
     'donors.cta.btn':       'Rantre ak nou',
+    /*, Scholar Stories, */
+    'scholars.badge':       'Lavi ou chanje',
+    'scholars.title':       'Istwa Boursye yo',
+    'scholars.sub':         'Rankontre etidyan ki ka reyalize rèv yo gras ak jenewozite ou',
+    'scholars.cta':         'Sipòte yon boursye',
+    /*, Testimonials, */
+    'testimonials.badge':   'Nan pwòp mo yo',
+    'testimonials.title':   'Vwa Kominote Nou an',
+    'testimonials.sub':     'Alumni, etidyan ak sipòtè pataje sa CALUNAH vle di pou yo',
+    /*, Partners, */
+    'partners.badge':       'Pi fò ansanm',
+    'partners.title':       'Patnè Nou yo',
+    'partners.sub':         'Òganizasyon ak enstitisyon k ap mache bò kote nou nan misyon nou an',
     /*, Events, */
     'events.badge':         'Rete konekte',
     'events.title':         'Evènman k ap vini',
@@ -2943,7 +3100,10 @@ async function loadCMSContent() {
     donors:      'data/donors.json',
     menu:        'data/menu.json',
     content:     'data/content.json',
-    sections:    'data/sections.json'
+    sections:    'data/sections.json',
+    scholars:     'data/scholars.json',
+    testimonials: 'data/testimonials.json',
+    partners:     'data/partners.json'
   };
   await Promise.all(Object.entries(files).map(async ([key, path]) => {
     try {
@@ -2968,6 +3128,9 @@ async function loadCMSContent() {
       }
       if (key === 'content'     && json.fundraiser) CALUNAH_CONFIG.fundraiser = json.fundraiser;
       if (key === 'sections'    && Array.isArray(json.sections)) CALUNAH_CONFIG.customSections = json.sections;
+      if (key === 'scholars'    && Array.isArray(json.scholars))     CALUNAH_CONFIG.scholars     = json.scholars;
+      if (key === 'testimonials'&& Array.isArray(json.testimonials)) CALUNAH_CONFIG.testimonials = json.testimonials;
+      if (key === 'partners'    && Array.isArray(json.partners))     CALUNAH_CONFIG.partners     = json.partners;
     } catch (e) { /* silently fall back to config defaults */ }
   }));
 }
@@ -3101,6 +3264,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   buildCommittee();
   buildChapters();
   buildDonors();
+  buildScholars();
+  buildTestimonials();
+  buildPartners();
   buildEvents();
   buildGallery();
   buildVideos();
