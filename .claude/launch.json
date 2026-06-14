@@ -4,7 +4,7 @@
     {
       "name": "CALUNAH Website",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "5500", "--directory", "/Users/rockboisrond/calunah-website"],
+      "runtimeArgs": ["-m", "http.server", "5500", "--directory", "/Users/rockboisrond/Projects/calunah-website"],
       "port": 5500
     }
   ]
