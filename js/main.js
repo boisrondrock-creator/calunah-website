@@ -2366,22 +2366,22 @@ function initSmoothScroll() {
     if (!target) return;
     e.preventDefault();
     const top = target.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: 'smooth' });
+    window.scrollTo(0, top);
   });
 }
 
-/* When the page is opened with a #hash (e.g. from a QR code), scroll to that
-   target AFTER dynamic content is built, offset for the fixed navbar, and
+/* When the page is opened with a #hash (e.g. from a QR code), jump straight to
+   that target AFTER dynamic content is built, offset for the fixed navbar, and
    briefly highlight it so the visitor sees exactly where to act. */
 function initHashLanding() {
   const hash = window.location.hash;
   if (!hash || hash.length < 2) return;
-  // Wait for dynamic sections (events/tickets) to render, then scroll
+  // Wait for dynamic sections (events/tickets) to render, then jump
   setTimeout(() => {
     const target = qs(hash);
     if (!target) return;
     const top = target.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: 'smooth' });
+    window.scrollTo(0, top);
     target.classList.add('hash-highlight');
     setTimeout(() => target.classList.remove('hash-highlight'), 2200);
   }, 900);
