@@ -968,6 +968,20 @@ function buildPartners() {
 /* ============================================================
    10. EVENTS BUILDER
    ============================================================ */
+
+/* Returns the last moment an event is still relevant, as a JS Date.
+   Handles a single date ("June 21, 2026") or a range
+   ("January 18 to 23, 2026", "April 2 to 4, 2025") by using the end day.
+   Returns null if the string can't be parsed. */
+function parseEventEndDate(str) {
+  if (!str) return null;
+  const range = String(str).match(/^([A-Za-z]+)\s+\d{1,2}\s+to\s+(\d{1,2}),\s*(\d{4})$/);
+  const end = range ? new Date(`${range[1]} ${range[2]}, ${range[3]}`) : new Date(str);
+  if (isNaN(end)) return null;
+  end.setHours(23, 59, 59, 999);
+  return end;
+}
+
 function buildEvents() {
   const grid = qs('#events-grid');
   if (!grid) return;
@@ -975,6 +989,16 @@ function buildEvents() {
   // Single out upcoming / ticketed events as full cards; past events go into
   // the cinematic auto-playing showcase below.
   const allEvents = CALUNAH_CONFIG.events || [];
+
+  // Auto-move events to "past" once their date (or, for ranges, the last day
+  // of the range) has gone by, so the site stays accurate without hand-
+  // editing the "upcoming" flag in events.json.
+  const now = Date.now();
+  allEvents.forEach(ev => {
+    const end = parseEventEndDate(ev.date);
+    if (end && end.getTime() < now) ev.upcoming = false;
+  });
+
   const upcoming  = allEvents.filter(e => e.upcoming);
   const past      = allEvents.filter(e => !e.upcoming);
 
