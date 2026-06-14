@@ -1213,8 +1213,7 @@ function viewEventPhotos(eventId) {
 
   // Scroll to the gallery so visitors land there when they close the slideshow
   if (gallery) {
-    const top = gallery.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: 'smooth' });
+    jumpToTarget(() => gallery.getBoundingClientRect().top + window.scrollY - 80);
   }
 
   // Then open the matching album as a full-screen swipeable slideshow
@@ -2180,7 +2179,7 @@ function initBackToTop() {
   window.addEventListener('scroll', () => {
     btn.classList.toggle('visible', window.scrollY > 400);
   }, { passive: true });
-  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  btn.addEventListener('click', () => jumpToTarget(() => 0));
 }
 
 
@@ -2358,6 +2357,24 @@ function initFallingLogos() {
 /* ============================================================
    22. SMOOTH SCROLL for anchor links
    ============================================================ */
+/* Quick eased jump to an absolute Y position - always lands in ~280ms
+   no matter how far away the target is, so long pages never feel like
+   they're scrolling past everything to get there. Re-checks the target's
+   position every frame so late layout shifts (menu closing, images
+   loading) don't throw off the landing spot. */
+function jumpToTarget(getTop) {
+  const startY = window.scrollY;
+  const startTime = performance.now();
+  const duration = 280;
+  (function step(now) {
+    const t = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const top = Math.max(0, getTop());
+    window.scrollTo(0, startY + (top - startY) * eased);
+    if (t < 1) requestAnimationFrame(step);
+  })(startTime);
+}
+
 function initSmoothScroll() {
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href^="#"]');
@@ -2365,8 +2382,7 @@ function initSmoothScroll() {
     const target = qs(a.getAttribute('href'));
     if (!target) return;
     e.preventDefault();
-    const top = target.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo(0, top);
+    jumpToTarget(() => target.getBoundingClientRect().top + window.scrollY - 80);
   });
 }
 
@@ -2380,8 +2396,7 @@ function initHashLanding() {
   setTimeout(() => {
     const target = qs(hash);
     if (!target) return;
-    const top = target.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo(0, top);
+    jumpToTarget(() => target.getBoundingClientRect().top + window.scrollY - 80);
     target.classList.add('hash-highlight');
     setTimeout(() => target.classList.remove('hash-highlight'), 2200);
   }, 900);
