@@ -1413,12 +1413,14 @@ document.addEventListener('DOMContentLoaded', () => {
 /* Album definitions — display order, titles, and icons. Photos are grouped by
    their `cat` field; any album that ends up with no photos is skipped. */
 const GALLERY_ALBUM_DEFS = [
-  { id:'gala2024',  title:'Annual Gala 2024',          icon:'fa-champagne-glasses' },
-  { id:'gala2023',  title:'Spring Gala 2023',          icon:'fa-spa' },
-  { id:'build',     title:'Dormitory Construction',    icon:'fa-hard-hat' },
-  { id:'community', title:'Community & Outreach',      icon:'fa-hands-holding-circle' },
-  { id:'campus',    title:'Campus Life',               icon:'fa-graduation-cap' },
-  { id:'events',    title:'Events & Gatherings',       icon:'fa-calendar-star' }
+  { id:'gala2024',    title:'Annual Gala 2024',          icon:'fa-champagne-glasses' },
+  { id:'gala2023',    title:'Spring Gala 2023',          icon:'fa-spa' },
+  { id:'build',       title:'Dormitory Construction',    icon:'fa-hard-hat' },
+  { id:'auditorium',  title:'New Auditorium Chairs',     icon:'fa-chair' },
+  { id:'water',       title:'Dlo UNAH Water Project',    icon:'fa-droplet' },
+  { id:'community',   title:'Community & Outreach',      icon:'fa-hands-holding-circle' },
+  { id:'campus',      title:'Campus Life',               icon:'fa-graduation-cap' },
+  { id:'events',      title:'Events & Gatherings',       icon:'fa-calendar-star' }
 ];
 
 /* Group CALUNAH_CONFIG.gallery into albums.
