@@ -1,5 +1,11 @@
 {
   "items": [
+    { "src": "images/campus/build/12.jpg", "caption": "Boys Dormitory building under construction, UNAH campus",       "cat": "build" },
+    { "src": "images/campus/build/7.jpg",  "caption": "Marble sinks installed in new UNAH dormitory bathroom",         "cat": "build" },
+    { "src": "images/campus/build/8.jpg",  "caption": "Marble shower stalls being built in UNAH dormitory",            "cat": "build" },
+    { "src": "images/campus/build/9.jpg",  "caption": "Dormitory shower facility progress, UNAH campus",               "cat": "build" },
+    { "src": "images/campus/build/11.jpg", "caption": "Marble shower with plumbing installed, UNAH dormitory",         "cat": "build" },
+    { "src": "images/campus/build/10.jpg", "caption": "Furnished student room ready in new UNAH dormitory",            "cat": "build" },
     {
       "src": "images/events/hightea2026/hightea2026-001.jpg",
       "caption": "Guests arrive for the Blooming Minds High Tea Fundraiser, June 21 2026, Orlando FL",

@@ -391,6 +391,12 @@ const CALUNAH_CONFIG = {
 
   /* ---------- Gallery ---------- */
   gallery: [
+    { src: 'images/campus/build/12.jpg', caption: 'Boys Dormitory building under construction, UNAH',        cat: 'build' },
+    { src: 'images/campus/build/7.jpg',  caption: 'Marble sinks installed in new UNAH dormitory bathroom',   cat: 'build' },
+    { src: 'images/campus/build/8.jpg',  caption: 'Marble shower stalls being built in UNAH dormitory',      cat: 'build' },
+    { src: 'images/campus/build/9.jpg',  caption: 'Dormitory shower facility progress, UNAH campus',         cat: 'build' },
+    { src: 'images/campus/build/11.jpg', caption: 'Marble shower with plumbing installed, UNAH dormitory',   cat: 'build' },
+    { src: 'images/campus/build/10.jpg', caption: 'Furnished student room ready in new UNAH dormitory',      cat: 'build' },
     { src: 'images/campus/main-building.jpg',    caption: 'Auditorium Michel Toussaint, UNAH',  cat: 'campus'    },
     { src: 'images/campus/aerial-2.jpg',         caption: 'UNAH Campus, Aerial Skyview',        cat: 'campus'    },
     { src: 'images/campus/aerial-1.jpg',         caption: 'UNAH Campus, Aerial View',           cat: 'campus'    },
@@ -1407,11 +1413,12 @@ document.addEventListener('DOMContentLoaded', () => {
 /* Album definitions — display order, titles, and icons. Photos are grouped by
    their `cat` field; any album that ends up with no photos is skipped. */
 const GALLERY_ALBUM_DEFS = [
-  { id:'gala2024',  title:'Annual Gala 2024',     icon:'fa-champagne-glasses' },
-  { id:'gala2023',  title:'Spring Gala 2023',     icon:'fa-spa' },
-  { id:'community', title:'Community & Outreach',  icon:'fa-hands-holding-circle' },
-  { id:'campus',    title:'Campus Life',          icon:'fa-graduation-cap' },
-  { id:'events',    title:'Events & Gatherings',  icon:'fa-calendar-star' }
+  { id:'gala2024',  title:'Annual Gala 2024',          icon:'fa-champagne-glasses' },
+  { id:'gala2023',  title:'Spring Gala 2023',          icon:'fa-spa' },
+  { id:'build',     title:'Dormitory Construction',    icon:'fa-hard-hat' },
+  { id:'community', title:'Community & Outreach',      icon:'fa-hands-holding-circle' },
+  { id:'campus',    title:'Campus Life',               icon:'fa-graduation-cap' },
+  { id:'events',    title:'Events & Gatherings',       icon:'fa-calendar-star' }
 ];
 
 /* Group CALUNAH_CONFIG.gallery into albums.
