@@ -3472,9 +3472,11 @@ function initLanguageSwitcher() {
 
 /* ============================================================
    CMS, Load dynamic content from /data/*.json
-   Published by the admin panel and served by Vercel.
-   Falls back gracefully to CALUNAH_CONFIG defaults.
+   Fetches from GitHub (reflects admin saves instantly, no redeploy
+   needed) and falls back to the local Vercel static copy.
    ============================================================ */
+const GITHUB_RAW = 'https://raw.githubusercontent.com/boisrondrock-creator/calunah-website/main/';
+
 async function loadCMSContent() {
   const files = {
     events:      'data/events.json',
@@ -3493,7 +3495,14 @@ async function loadCMSContent() {
   };
   await Promise.all(Object.entries(files).map(async ([key, path]) => {
     try {
-      const r = await fetch(path + '?t=' + Date.now());
+      /* Try GitHub raw first — admin saves appear without redeploy */
+      let r;
+      try {
+        r = await fetch(GITHUB_RAW + path, { cache: 'no-cache' });
+        if (!r.ok) throw new Error('gh');
+      } catch {
+        r = await fetch(path + '?t=' + Date.now());
+      }
       if (!r.ok) return;
       const json = await r.json();
       if (key === 'events'      && json.events)      CALUNAH_CONFIG.events      = json.events;
