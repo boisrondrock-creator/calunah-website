@@ -1042,6 +1042,8 @@ function buildEvents() {
   const grid = qs('#events-grid');
   if (!grid) return;
 
+  const t = CALUNAH_LANG[CURRENT_LANG] || CALUNAH_LANG.en;
+
   // Single out upcoming / ticketed events as full cards; past events go into
   // the cinematic auto-playing showcase below.
   const allEvents = CALUNAH_CONFIG.events || [];
@@ -1075,14 +1077,14 @@ function buildEvents() {
         ${ev.flyer
           ? `<img src="${ev.flyer}" alt="${ev.title} flyer"
                   onerror="this.remove()">`
-          : `<i class="fas fa-calendar-star"></i><span>Event Flyer</span>`
+          : `<i class="fas fa-calendar-star"></i><span>${t['events.flyer']||'Event Flyer'}</span>`
         }
         <!-- Date badge — shows the real event date (no emoji) -->
         <div class="event-date-badge ${ev.upcoming ? 'upcoming' : 'past'}">${eventBadgeHTML(ev)}</div>
       </div>
 
       <div class="event-info">
-        <div class="event-category">${ev.upcoming ? 'Upcoming Event' : 'Past Event'}</div>
+        <div class="event-category">${ev.upcoming ? (t['events.category.upcoming']||'Upcoming Event') : (t['events.category.past']||'Past Event')}</div>
         <h3 class="event-title">${ev.title}</h3>
         <div class="event-meta">
           <span><i class="fas fa-calendar-alt"></i> ${ev.date}</span>
@@ -1099,7 +1101,7 @@ function buildEvents() {
         <!-- Ticket tiers for upcoming events (auto-generated when tickets exist) -->
         ${ev.upcoming && ev.tickets && ev.tickets.length ? `
         <div class="event-tickets"${ev.id === firstTicketedId ? ' id="buy-tickets"' : ''}>
-          <div class="et-heading"><i class="fas fa-ticket-alt"></i> Get Your Tickets</div>
+          <div class="et-heading"><i class="fas fa-ticket-alt"></i> ${t['events.tickets.heading']||'Get Your Tickets'}</div>
           <div class="et-tiers">
             ${ev.tickets.map(t => {
               const atDoor = (t.label || '').toLowerCase().includes('door');
@@ -1111,26 +1113,26 @@ function buildEvents() {
                 </div>
                 <span class="et-tier-note">${t.note || ''}</span>
                 ${atDoor
-                  ? `<span class="et-at-door"><i class="fas fa-map-marker-alt"></i> Available at venue</span>`
+                  ? `<span class="et-at-door"><i class="fas fa-map-marker-alt"></i> ${t['events.tickets.atvenue']||'Available at venue'}</span>`
                   : `<button class="btn et-buy-btn"
                        data-ev="${escAttr(ev.title)}"
                        data-evid="${escAttr(ev.id)}"
                        data-label="${escAttr(t.label)}"
                        data-price="${t.price}"
-                       onclick="buyTicket(this)">Buy Tickets</button>`
+                       onclick="buyTicket(this)">${t['events.tickets.buy']||'Buy Tickets'}</button>`
                 }
               </div>`; }).join('')}
           </div>
-          <p class="et-secure-note"><i class="fas fa-lock"></i> Secure checkout by Stripe · Card &amp; Apple/Google Pay · Emailed receipt</p>
+          <p class="et-secure-note"><i class="fas fa-lock"></i> ${t['events.tickets.secure']||'Secure checkout by Stripe · Card & Apple/Google Pay · Emailed receipt'}</p>
           <button class="et-reserve-all-btn"
             onclick="openTicketReservation('${escAttr(ev.title)}','${escAttr(ev.date)}, ${escAttr(ev.time)}','General','')">
-            <i class="fas fa-envelope"></i> Prefer Zelle / PayPal? Reserve here
+            <i class="fas fa-envelope"></i> ${t['events.tickets.reserve']||'Prefer Zelle / PayPal? Reserve here'}
           </button>
         </div>` : ''}
 
         <div class="event-actions">
           <button class="btn-event-more" onclick="toggleEventInfo('${ev.id}')">
-            <i class="fas fa-info-circle"></i> <span>Learn More</span>
+            <i class="fas fa-info-circle"></i> <span>${t['events.more']||'Learn More'}</span>
           </button>
           ${!ev.upcoming && ev.ctaLabel
             ? `<button class="btn btn-outline btn-sm" onclick="viewEventPhotos('${ev.id}')"><i class="fas fa-photo-video"></i> ${ev.ctaLabel}</button>`
@@ -1157,7 +1159,7 @@ function peSlideHTML(ev) {
         ${badge ? `<span class="pe-badge">${badge}</span>` : ''}
       </div>
       <div class="pe-details">
-        <span class="pe-cat"><i class="fas fa-check-circle"></i> Past Event</span>
+        <span class="pe-cat"><i class="fas fa-check-circle"></i> ${(CALUNAH_LANG[CURRENT_LANG]||CALUNAH_LANG.en)['events.category.past']||'Past Event'}</span>
         <h4 class="pe-title">${escAttr(ev.title)}</h4>
         <div class="pe-meta">
           ${ev.date ? `<span><i class="fas fa-calendar-alt"></i> ${escAttr(ev.date)}</span>` : ''}
@@ -1265,7 +1267,8 @@ function toggleEventInfo(id) {
   if (!info) return;
   const opening = info.hidden;
   info.hidden = !opening;
-  if (btn) btn.textContent = opening ? 'Show Less' : 'Learn More';
+  const tl = CALUNAH_LANG[CURRENT_LANG] || CALUNAH_LANG.en;
+  if (btn) btn.textContent = opening ? (tl['events.less']||'Show Less') : (tl['events.more']||'Learn More');
   if (icon) icon.className = opening ? 'fas fa-chevron-up' : 'fas fa-info-circle';
 }
 window.toggleEventInfo = toggleEventInfo;
@@ -2859,6 +2862,47 @@ const CALUNAH_LANG = {
     'footer.about':         'About CALUNAH',
     'footer.involved':      'Get Involved',
     'footer.updated':       'Stay Updated',
+    /*, Past Events, */
+    'events.past.eyebrow':        'Past Events',
+    'events.past.heading':        'Moments We Have Shared',
+    'events.submit.cta':          'Submit Your Event',
+    'events.category.upcoming':   'Upcoming Event',
+    'events.category.past':       'Past Event',
+    'events.tickets.heading':     'Get Your Tickets',
+    'events.tickets.buy':         'Buy Tickets',
+    'events.tickets.reserve':     'Prefer Zelle / PayPal? Reserve here',
+    'events.tickets.secure':      'Secure checkout by Stripe · Card & Apple/Google Pay · Emailed receipt',
+    'events.tickets.atvenue':     'Available at venue',
+    'events.more':                'Learn More',
+    'events.less':                'Show Less',
+    'events.flyer':               'Event Flyer',
+    /*, Blog, */
+    'blog.badge':                 'From Our Community',
+    'blog.title':                 'Latest News & Stories',
+    /*, Social, */
+    'social.badge':               'Be Part of the Community',
+    'social.title':               'Follow & Connect',
+    /*, Footer column links, */
+    'footer.about.mission':       'Mission & Values',
+    'footer.about.history':       'Our History',
+    'footer.about.committee':     'Executive Committee',
+    'footer.about.chapters':      'Chapter Presidents',
+    'footer.about.donors':        'Donors & Partners',
+    'footer.about.work':          'Our Work',
+    'footer.involved.member':     'Become a Member',
+    'footer.involved.donate':     'Donate',
+    'footer.involved.scholarships':'Scholarships',
+    'footer.involved.volunteer':  'Volunteer',
+    'footer.involved.mentor':     'Mentor a Student',
+    'footer.involved.chapter':    'Start a Chapter',
+    'footer.involved.event':      'Submit an Event',
+    'footer.transparency':        'Transparency',
+    'footer.transparency.funders':'For Funders & Grantors',
+    'footer.transparency.annual': 'Annual Report',
+    'footer.transparency.privacy':'Privacy Policy',
+    'footer.links.funders':       'For Funders',
+    'footer.links.annual':        'Annual Report',
+    'footer.links.privacy':       'Privacy Policy',
   },
 
   fr: {
@@ -3109,6 +3153,47 @@ const CALUNAH_LANG = {
     'footer.about':         'À propos de CALUNAH',
     'footer.involved':      'S\'impliquer',
     'footer.updated':       'Restez à jour',
+    /*, Past Events FR, */
+    'events.past.eyebrow':        'Événements passés',
+    'events.past.heading':        'Moments que nous avons partagés',
+    'events.submit.cta':          'Soumettre votre événement',
+    'events.category.upcoming':   'Événement à venir',
+    'events.category.past':       'Événement passé',
+    'events.tickets.heading':     'Achetez vos billets',
+    'events.tickets.buy':         'Acheter des billets',
+    'events.tickets.reserve':     'Préférez Zelle / PayPal ? Réservez ici',
+    'events.tickets.secure':      'Paiement sécurisé par Stripe · Carte & Apple/Google Pay · Reçu par e-mail',
+    'events.tickets.atvenue':     'Disponible sur place',
+    'events.more':                'En savoir plus',
+    'events.less':                'Réduire',
+    'events.flyer':               'Affiche de l\'événement',
+    /*, Blog FR, */
+    'blog.badge':                 'De notre communauté',
+    'blog.title':                 'Dernières nouvelles et histoires',
+    /*, Social FR, */
+    'social.badge':               'Faites partie de la communauté',
+    'social.title':               'Suivez-nous et connectez-vous',
+    /*, Footer column links FR, */
+    'footer.about.mission':       'Mission et valeurs',
+    'footer.about.history':       'Notre histoire',
+    'footer.about.committee':     'Comité exécutif',
+    'footer.about.chapters':      'Présidents de chapitre',
+    'footer.about.donors':        'Donateurs et partenaires',
+    'footer.about.work':          'Notre action',
+    'footer.involved.member':     'Devenir membre',
+    'footer.involved.donate':     'Faire un don',
+    'footer.involved.scholarships':'Bourses d\'études',
+    'footer.involved.volunteer':  'Bénévole',
+    'footer.involved.mentor':     'Mentor un étudiant',
+    'footer.involved.chapter':    'Démarrer un chapitre',
+    'footer.involved.event':      'Soumettre un événement',
+    'footer.transparency':        'Transparence',
+    'footer.transparency.funders':'Pour les bailleurs et donateurs',
+    'footer.transparency.annual': 'Rapport annuel',
+    'footer.transparency.privacy':'Politique de confidentialité',
+    'footer.links.funders':       'Pour les bailleurs',
+    'footer.links.annual':        'Rapport annuel',
+    'footer.links.privacy':       'Politique de confidentialité',
   },
 
   kr: {
@@ -3359,6 +3444,47 @@ const CALUNAH_LANG = {
     'footer.about':         'Sou CALUNAH',
     'footer.involved':      'Enplike w',
     'footer.updated':       'Rete ajou',
+    /*, Past Events KR, */
+    'events.past.eyebrow':        'Evènman pase',
+    'events.past.heading':        'Moman nou te pataje ansanm',
+    'events.submit.cta':          'Soumèt evènman ou',
+    'events.category.upcoming':   'Evènman k ap vini',
+    'events.category.past':       'Evènman pase',
+    'events.tickets.heading':     'Achte tikè ou yo',
+    'events.tickets.buy':         'Achte tikè',
+    'events.tickets.reserve':     'Prefere Zelle / PayPal? Rezève isit la',
+    'events.tickets.secure':      'Pèman sekirize pa Stripe · Kat & Apple/Google Pay · Resi pa imèl',
+    'events.tickets.atvenue':     'Disponib nan kote a',
+    'events.more':                'Aprann plis',
+    'events.less':                'Montre mwens',
+    'events.flyer':               'Flyer evènman',
+    /*, Blog KR, */
+    'blog.badge':                 'Nan kominote nou an',
+    'blog.title':                 'Dènye nouvèl ak istwa',
+    /*, Social KR, */
+    'social.badge':               'Fè pati kominote a',
+    'social.title':               'Swiv nou epi konekte',
+    /*, Footer column links KR, */
+    'footer.about.mission':       'Misyon ak valè',
+    'footer.about.history':       'Istwa nou',
+    'footer.about.committee':     'Komite egzekitif',
+    'footer.about.chapters':      'Prezidan chapit',
+    'footer.about.donors':        'Donè ak patnè',
+    'footer.about.work':          'Travay nou',
+    'footer.involved.member':     'Vin yon manm',
+    'footer.involved.donate':     'Fè yon don',
+    'footer.involved.scholarships':'Bous etid',
+    'footer.involved.volunteer':  'Volontè',
+    'footer.involved.mentor':     'Mentore yon etidyan',
+    'footer.involved.chapter':    'Kòmanse yon chapit',
+    'footer.involved.event':      'Soumèt yon evènman',
+    'footer.transparency':        'Transparan',
+    'footer.transparency.funders':'Pou bayi fon ak donè',
+    'footer.transparency.annual': 'Rapò anyèl',
+    'footer.transparency.privacy':'Politik konfidansyalite',
+    'footer.links.funders':       'Pou bayi fon',
+    'footer.links.annual':        'Rapò anyèl',
+    'footer.links.privacy':       'Politik konfidansyalite',
   }
 
 };
@@ -3432,6 +3558,9 @@ function applyTranslation(lang) {
 
   // Re-render gallery so album titles update in the new language
   if (typeof buildGallery === 'function' && qs('#gallery-grid')) buildGallery();
+
+  // Re-render events so category labels and ticket text update in the new language
+  if (typeof buildEvents === 'function' && qs('#events-grid')) buildEvents();
 
   // Update lang switcher button active state
   qsa('.lang-btn').forEach(btn => {
