@@ -1,6 +1,25 @@
 {
   "events": [
     {
+      "id": "backpack2026",
+      "title": "Backpack Drive, Blooming Minds: Giving Back For Education",
+      "date": "August 2, 2026",
+      "time": "10:00 AM to 2:00 PM",
+      "location": "Multiple CALUNAH Chapters, Nationwide",
+      "flyer": "images/events/backpack2026.png",
+      "tags": [
+        "Community Service",
+        "Education",
+        "Backpack Drive",
+        "Chapters"
+      ],
+      "description": "CALUNAH Executive presents the Backpack Drive: Blooming Minds, Giving Back For Education. Together, let's equip students for a brighter tomorrow! Taking place simultaneously across all chapters on Sunday, August 2, 2026.",
+      "fullInfo": "CALUNAH Executive presents the Backpack Drive with the theme: Blooming Minds, Giving Back For Education.\n\nTogether, let's equip students for a brighter tomorrow! Every Donation Makes a Difference.\n\nSunday, August 2nd, 2026 | 10:00 AM to 2:00 PM\n\nChapter Locations:\n• Central Florida Chapter: 1201 Tilden Ave, Apopka, FL 32703\n• Georgia Chapter\n• DMV Chapter: 4805 Church Rd, Bowie, MD 20720\n• New England Chapter\n• New York Chapter: 520 Kingston Ave, Brooklyn, NY 11225\n\nFor information contact:\nNadine Benoit: 516-316-3562\nYannick Nozil: 407-310-0956\n\nDonate at calunah.org",
+      "ticketUrl": "",
+      "ctaLabel": "Learn More",
+      "upcoming": true
+    },
+    {
       "id": "hightea2026",
       "title": "Blooming Minds: Giving Back for Education",
       "date": "June 21, 2026",
