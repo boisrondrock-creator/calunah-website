@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Funders &amp; Grantors | CALUNAH</title>
+<meta name="description" content="CALUNAH grant information: EIN, 501(c)(3) status, programs, financials, board governance, and contact for grant inquiries.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.calunah.org/transparency.html">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b3e;--navy2:#1a2547;--gold:#c9a84c;--gold2:#e8c96a;--white:#fff;--off:#f8f9fc;--text:#1a1a2e;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.08);--radius:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--off);line-height:1.7}
+a{color:var(--navy);text-decoration:none}
+a:hover{color:var(--gold)}
+.container{max-width:1000px;margin:0 auto;padding:0 1.5rem}
+
+/* ── TOP BAR ── */
+.top-bar{background:var(--navy);padding:.8rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.top-bar a{color:rgba(255,255,255,.7);font-size:.82rem;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+.top-bar a:hover{color:var(--gold)}
+.top-bar a:first-child{margin-right:auto}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 60%,#1e3a5f 100%);color:#fff;padding:3.5rem 1.5rem 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-logo{width:80px;height:80px;object-fit:contain;margin-bottom:1.2rem;filter:drop-shadow(0 4px 16px rgba(0,0,0,.4))}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.4);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.35rem .9rem;border-radius:50px;margin-bottom:1rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:.6rem;line-height:1.2}
+.hero p{color:rgba(255,255,255,.75);font-size:1rem;max-width:600px;margin:0 auto 1.5rem}
+.hero-ein{display:inline-flex;align-items:center;gap:.6rem;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.35);border-radius:10px;padding:.7rem 1.4rem;font-size:.9rem;color:var(--gold)}
+.hero-ein strong{color:#fff}
+
+/* ── TRUST BADGES ── */
+.trust-row{background:#fff;border-bottom:1px solid var(--border);padding:1.2rem 1.5rem}
+.trust-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1.5rem 2.5rem}
+.trust-item{display:flex;align-items:center;gap:.55rem;font-size:.82rem;font-weight:600;color:var(--muted)}
+.trust-item i{color:var(--gold);font-size:1rem}
+
+/* ── SECTIONS ── */
+.section{padding:2.5rem 0}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.3rem}
+.section-sub{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;box-shadow:var(--shadow)}
+.card + .card{margin-top:1.2rem}
+
+/* ── ORG INFO TABLE ── */
+.org-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.org-table tr{border-bottom:1px solid var(--border)}
+.org-table tr:last-child{border-bottom:none}
+.org-table td{padding:.75rem .5rem;vertical-align:top}
+.org-table td:first-child{font-weight:600;color:var(--navy);width:38%;white-space:nowrap}
+.org-table td:last-child{color:var(--text)}
+.ein-highlight{font-family:'Courier New',monospace;font-size:1.05rem;font-weight:700;color:var(--navy);background:#f1f5f9;padding:.2rem .6rem;border-radius:6px;letter-spacing:.05em}
+
+/* ── PROGRAMS GRID ── */
+.programs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem}
+.prog-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;display:flex;gap:1rem;align-items:flex-start}
+.prog-icon{width:44px;height:44px;border-radius:10px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.prog-info h4{font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:.3rem}
+.prog-info p{font-size:.8rem;color:var(--muted);line-height:1.5}
+
+/* ── IMPACT ROW ── */
+.impact-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-top:1rem}
+.impact-box{background:var(--navy);color:#fff;border-radius:var(--radius);padding:1.4rem 1rem;text-align:center}
+.impact-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--gold);display:block;line-height:1}
+.impact-lbl{font-size:.75rem;color:rgba(255,255,255,.65);margin-top:.4rem;line-height:1.3}
+
+/* ── GOVERNANCE ── */
+.gov-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.gov-item{background:var(--off);border-radius:10px;padding:1rem 1.2rem}
+.gov-item h4{font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem}
+.gov-item p{font-size:.8rem;color:var(--muted);line-height:1.5}
+
+/* ── 990 / FINANCIALS ── */
+.fin-row{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem}
+.fin-link{flex:1;min-width:200px;display:flex;align-items:center;gap:.75rem;padding:1rem 1.2rem;background:var(--off);border:1px solid var(--border);border-radius:10px;color:var(--navy);font-weight:600;font-size:.85rem;transition:border-color .2s,box-shadow .2s}
+.fin-link:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(201,168,76,.15);color:var(--navy)}
+.fin-link i{color:var(--gold);font-size:1.2rem;flex-shrink:0}
+
+/* ── CONTACT ── */
+.contact-grant{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:var(--radius);padding:2rem;text-align:center;margin-top:1.5rem}
+.contact-grant h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:.5rem}
+.contact-grant p{color:rgba(255,255,255,.7);font-size:.88rem;margin-bottom:1.2rem}
+.btn-gold{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:#000;font-weight:700;font-size:.88rem;padding:.7rem 1.6rem;border-radius:50px;transition:background .2s}
+.btn-gold:hover{background:var(--gold2);color:#000}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:#fff;font-weight:600;font-size:.88rem;padding:.7rem 1.6rem;border-radius:50px;border:1px solid rgba(255,255,255,.3);margin-left:.75rem;transition:border-color .2s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── FOOTER ── */
+.page-footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:1.5rem;font-size:.8rem;margin-top:3rem}
+.page-footer a{color:var(--gold)}
+
+@media(max-width:640px){
+  .gov-grid{grid-template-columns:1fr}
+  .btn-ghost{margin-left:0;margin-top:.6rem}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a href="index.html"><i class="fas fa-arrow-left"></i> Back to calunah.org</a>
+  <a href="annual-report.html"><i class="fas fa-chart-bar"></i> Annual Report</a>
+  <a href="mailto:info@calunah.org"><i class="fas fa-envelope"></i> info@calunah.org</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <img src="images/logo.png" alt="CALUNAH Logo" class="hero-logo">
+    <div class="hero-badge"><i class="fas fa-certificate"></i> Grant &amp; Funder Information</div>
+    <h1>For Funders &amp; Grantors</h1>
+    <p>Everything you need to verify CALUNAH's legitimacy, review our programs, and make a confident grant decision.</p>
+    <div class="hero-ein">
+      <i class="fas fa-id-card"></i>
+      IRS 501(c)(3) Nonprofit &nbsp;|&nbsp; <strong>EIN: 71-1006724</strong>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BADGES -->
+<div class="trust-row">
+  <div class="trust-inner container">
+    <div class="trust-item"><i class="fas fa-certificate"></i> IRS 501(c)(3) Verified</div>
+    <div class="trust-item"><i class="fas fa-calendar-alt"></i> Established 1993 — 32+ Years</div>
+    <div class="trust-item"><i class="fas fa-globe-americas"></i> 6 Chapters Worldwide</div>
+    <div class="trust-item"><i class="fas fa-user-graduate"></i> 5,000+ Alumni Served</div>
+    <div class="trust-item"><i class="fas fa-hand-holding-usd"></i> $250,000+ in Scholarships</div>
+    <div class="trust-item"><i class="fas fa-lock"></i> Donations Tax-Deductible</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <!-- ── ORGANIZATION PROFILE ── -->
+  <div class="section">
+    <div class="section-title">Organization Profile</div>
+    <div class="section-sub">Legal and contact information for verification purposes</div>
+    <div class="card">
+      <table class="org-table">
+        <tr><td>Legal Name</td><td>Club des Alumni de l'Université Adventiste d'Haïti (CALUNAH)</td></tr>
+        <tr><td>EIN / Tax ID</td><td><span class="ein-highlight">71-1006724</span></td></tr>
+        <tr><td>Tax Status</td><td>IRS 501(c)(3) Tax-Exempt Nonprofit Organization</td></tr>
+        <tr><td>Incorporated</td><td>1993</td></tr>
+        <tr><td>Fiscal Year</td><td>January 1 – December 31</td></tr>
+        <tr><td>Mailing Address</td><td>P.O. Box 110373, Palm Bay, FL 32908</td></tr>
+        <tr><td>Primary Website</td><td><a href="https://www.calunah.org" target="_blank">www.calunah.org</a></td></tr>
+        <tr><td>Grant Inquiries</td><td><a href="mailto:info@calunah.org">info@calunah.org</a></td></tr>
+        <tr><td>Mission</td><td>To unite graduates of l'Université Adventiste d'Haïti (UNAH) worldwide through faith, fellowship, scholarships, and service — empowering Haiti's development and honoring the Adventist legacy of education.</td></tr>
+        <tr><td>Primary Beneficiaries</td><td>UNAH students in Haiti, Haitian diaspora communities, and alumni across 20+ countries</td></tr>
+        <tr><td>Geographic Reach</td><td>United States, Haiti, and international diaspora communities</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── IMPACT AT A GLANCE ── -->
+  <div class="section" style="padding-top:0">
+    <div class="section-title">Impact at a Glance</div>
+    <div class="section-sub">Measurable outcomes across 32 years of service</div>
+    <div class="impact-row">
+      <div class="impact-box"><span class="impact-num">32+</span><div class="impact-lbl">Years of Continuous Service</div></div>
+      <div class="impact-box"><span class="impact-num">5,000+</span><div class="impact-lbl">Alumni Members Worldwide</div></div>
+      <div class="impact-box"><span class="impact-num">20+</span><div class="impact-lbl">Countries Represented</div></div>
+      <div class="impact-box"><span class="impact-num">$250K+</span><div class="impact-lbl">Scholarships Awarded</div></div>
+      <div class="impact-box"><span class="impact-num">500+</span><div class="impact-lbl">Students Mentored</div></div>
+      <div class="impact-box"><span class="impact-num">6</span><div class="impact-lbl">Active Chapters</div></div>
+    </div>
+  </div>
+
+  <!-- ── PROGRAMS ── -->
+  <div class="section" style="padding-top:0">
+    <div class="section-title">Programs &amp; Activities</div>
+    <div class="section-sub">Six core pillars through which CALUNAH delivers its mission</div>
+    <div class="programs-grid">
+      <div class="prog-card">
+        <div class="prog-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div class="prog-info">
+          <h4>Scholarship Program</h4>
+          <p>Annual scholarships to outstanding UNAH students demonstrating academic excellence and financial need. Over $250,000 awarded to date.</p>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <div class="prog-info">
+          <h4>Mentorship Program</h4>
+          <p>Connects experienced professionals with UNAH students and recent graduates for career guidance, networking, and professional development.</p>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><i class="fas fa-university"></i></div>
+        <div class="prog-info">
+          <h4>Campus Development</h4>
+          <p>Funds library resources, laboratory equipment, and infrastructure projects that enhance the learning environment at UNAH's Diquini campus.</p>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><i class="fas fa-seedling"></i></div>
+        <div class="prog-info">
+          <h4>Community Service</h4>
+          <p>Annual community outreach in Haiti and diaspora cities including health fairs, food drives, disaster relief, and back-to-school programs.</p>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><i class="fas fa-briefcase"></i></div>
+        <div class="prog-info">
+          <h4>Professional Network</h4>
+          <p>A global alumni network facilitating job connections, career referrals, and professional networking events for UNAH graduates worldwide.</p>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-icon"><i class="fas fa-music"></i></div>
+        <div class="prog-info">
+          <h4>Cultural Preservation</h4>
+          <p>Events, publications, and arts programs celebrating Haitian culture and Adventist heritage, connecting the diaspora community to its roots.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOARD GOVERNANCE ── -->
+  <div class="section" style="padding-top:0">
+    <div class="section-title">Board Governance</div>
+    <div class="section-sub">Organizational structure and oversight policies</div>
+    <div class="card">
+      <div class="gov-grid">
+        <div class="gov-item">
+          <h4><i class="fas fa-users" style="color:var(--gold)"></i> Executive Committee</h4>
+          <p>CALUNAH is governed by a volunteer Executive Committee of 15 elected members representing diverse professional backgrounds and geographic chapters.</p>
+        </div>
+        <div class="gov-item">
+          <h4><i class="fas fa-map-marker-alt" style="color:var(--gold)"></i> Chapter Network</h4>
+          <p>Six active chapters operate under the national organization's bylaws, each led by an elected chapter president accountable to the Executive Committee.</p>
+        </div>
+        <div class="gov-item">
+          <h4><i class="fas fa-file-contract" style="color:var(--gold)"></i> Financial Oversight</h4>
+          <p>The organization maintains formal financial controls, with the Executive Committee reviewing and approving all major expenditures and annual budgets.</p>
+        </div>
+        <div class="gov-item">
+          <h4><i class="fas fa-balance-scale" style="color:var(--gold)"></i> Conflict of Interest</h4>
+          <p>Executive Committee members operate under a conflict of interest policy requiring disclosure and recusal on any matters in which they hold a personal interest.</p>
+        </div>
+        <div class="gov-item">
+          <h4><i class="fas fa-vote-yea" style="color:var(--gold)"></i> Democratic Elections</h4>
+          <p>Leadership is elected by the membership on a regular cycle, ensuring broad community accountability and representation across the diaspora.</p>
+        </div>
+        <div class="gov-item">
+          <h4><i class="fas fa-shield-alt" style="color:var(--gold)"></i> Nondiscrimination Policy</h4>
+          <p>CALUNAH does not discriminate on the basis of race, gender, nationality, or socioeconomic status in awarding scholarships or providing services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FINANCIAL TRANSPARENCY ── -->
+  <div class="section" style="padding-top:0">
+    <div class="section-title">Financial Transparency</div>
+    <div class="section-sub">Public records and third-party verification resources</div>
+    <div class="card">
+      <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.2rem">As a 501(c)(3) nonprofit, CALUNAH's IRS Form 990 is a public document. You can verify our tax-exempt status and review our filings through the following resources:</p>
+      <div class="fin-row">
+        <a class="fin-link" href="https://www.guidestar.org" target="_blank" rel="noopener">
+          <i class="fas fa-search"></i>
+          <div>
+            <div style="font-weight:700">Candid / GuideStar</div>
+            <div style="font-size:.76rem;color:var(--muted);font-weight:400">Search EIN 71-1006724</div>
+          </div>
+        </a>
+        <a class="fin-link" href="https://projects.propublica.org/nonprofits" target="_blank" rel="noopener">
+          <i class="fas fa-database"></i>
+          <div>
+            <div style="font-weight:700">ProPublica Nonprofit Explorer</div>
+            <div style="font-size:.76rem;color:var(--muted);font-weight:400">Search EIN 71-1006724</div>
+          </div>
+        </a>
+        <a class="fin-link" href="https://apps.irs.gov/app/eos/" target="_blank" rel="noopener">
+          <i class="fas fa-landmark"></i>
+          <div>
+            <div style="font-weight:700">IRS Tax Exempt Organization Search</div>
+            <div style="font-size:.76rem;color:var(--muted);font-weight:400">Official IRS verification</div>
+          </div>
+        </a>
+        <a class="fin-link" href="annual-report.html">
+          <i class="fas fa-chart-bar"></i>
+          <div>
+            <div style="font-weight:700">CALUNAH Annual Report</div>
+            <div style="font-size:.76rem;color:var(--muted);font-weight:400">Impact &amp; program highlights</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GRANT CONTACT ── -->
+  <div class="contact-grant">
+    <h3>Ready to Support CALUNAH?</h3>
+    <p>For grant applications, funding proposals, site visits, or additional documentation, please contact us directly. We respond to all funder inquiries within 48 hours.</p>
+    <div>
+      <a href="mailto:info@calunah.org?subject=Grant%20Inquiry" class="btn-gold"><i class="fas fa-envelope"></i> Email Grant Inquiry</a>
+      <a href="index.html#contact" class="btn-ghost"><i class="fas fa-file-alt"></i> Contact Form</a>
+    </div>
+    <p style="margin-top:1.2rem;font-size:.78rem;color:rgba(255,255,255,.45)">P.O. Box 110373 · Palm Bay, FL 32908 · EIN: 71-1006724</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <p>CALUNAH &nbsp;·&nbsp; Club des Alumni de l'Université Adventiste d'Haïti &nbsp;·&nbsp; EIN: 71-1006724</p>
+  <p style="margin-top:.4rem"><a href="index.html">Home</a> &nbsp;·&nbsp; <a href="annual-report.html">Annual Report</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:info@calunah.org">info@calunah.org</a></p>
+</div>
+
+</body>
+</html>

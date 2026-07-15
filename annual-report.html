@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annual Report | CALUNAH</title>
+<meta name="description" content="CALUNAH Annual Report — 32 years of scholarships, mentorship, campus development, and service to Haiti and the diaspora.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.calunah.org/annual-report.html">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b3e;--navy2:#1a2547;--gold:#c9a84c;--gold2:#e8c96a;--white:#fff;--off:#f8f9fc;--text:#1a1a2e;--muted:#64748b;--border:#e2e8f0;--shadow:0 4px 24px rgba(0,0,0,.08);--radius:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--off);line-height:1.7}
+a{color:var(--navy);text-decoration:none}
+a:hover{color:var(--gold)}
+.container{max-width:1000px;margin:0 auto;padding:0 1.5rem}
+
+/* ── TOP BAR ── */
+.top-bar{background:var(--navy);padding:.8rem 1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.top-bar a{color:rgba(255,255,255,.7);font-size:.82rem;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+.top-bar a:hover{color:var(--gold)}
+.top-bar a:first-child{margin-right:auto}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 55%,#1a3a2a 100%);color:#fff;padding:4rem 1.5rem 3.5rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:60px;background:var(--off);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.hero-logo{width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 4px 20px rgba(0,0,0,.4));flex-shrink:0}
+.hero-text .hero-year{font-size:.75rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.hero-text h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;margin-bottom:.6rem}
+.hero-text h1 span{color:var(--gold)}
+.hero-text p{color:rgba(255,255,255,.7);font-size:.95rem;max-width:540px}
+.hero-ein-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:.75rem;font-weight:600;padding:.3rem .8rem;border-radius:50px;margin-top:.8rem}
+
+/* ── IMPACT NUMBERS ── */
+.impact-strip{background:var(--navy);color:#fff;padding:2.5rem 1.5rem;margin-bottom:3rem}
+.impact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1.5rem;max-width:1000px;margin:0 auto}
+.impact-item{text-align:center}
+.impact-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--gold);display:block;line-height:1}
+.impact-lbl{font-size:.72rem;color:rgba(255,255,255,.6);margin-top:.4rem;text-transform:uppercase;letter-spacing:.06em;line-height:1.3}
+.impact-divider{width:1px;background:rgba(255,255,255,.1)}
+
+/* ── SECTION ── */
+.section{padding:0 0 3rem}
+.section-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--navy);margin-bottom:.3rem}
+.section-sub{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.gold-line{width:48px;height:3px;background:var(--gold);border-radius:2px;margin:.5rem 0 1.2rem}
+
+/* ── LETTER ── */
+.letter-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:2.2rem;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.letter-card::before{content:'\201C';font-family:'Playfair Display',serif;font-size:8rem;color:var(--gold);opacity:.08;position:absolute;top:-1rem;left:.5rem;line-height:1}
+.letter-card p{font-size:.93rem;color:var(--text);line-height:1.8;margin-bottom:1rem}
+.letter-sig{display:flex;align-items:center;gap:1rem;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.letter-sig-avatar{width:50px;height:50px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:900;font-size:1.1rem;flex-shrink:0}
+.letter-sig-name{font-weight:700;font-size:.9rem;color:var(--navy)}
+.letter-sig-role{font-size:.78rem;color:var(--muted)}
+
+/* ── PROGRAM HIGHLIGHTS ── */
+.prog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem}
+.prog-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.prog-card-top{background:var(--navy);padding:1.2rem 1.5rem;display:flex;align-items:center;gap:.75rem}
+.prog-card-top i{color:var(--gold);font-size:1.3rem}
+.prog-card-top h3{color:#fff;font-size:.95rem;font-weight:700}
+.prog-card-body{padding:1.3rem 1.5rem}
+.prog-card-body p{font-size:.85rem;color:var(--muted);line-height:1.6;margin-bottom:.8rem}
+.prog-stat{display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:600;color:var(--navy)}
+.prog-stat i{color:var(--gold);width:14px}
+
+/* ── MILESTONES ── */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:.5rem;top:.5rem;bottom:.5rem;width:2px;background:linear-gradient(to bottom,var(--gold),var(--navy))}
+.tl-item{position:relative;padding:.1rem 0 1.5rem 1.5rem}
+.tl-item::before{content:'';position:absolute;left:-.47rem;top:.5rem;width:12px;height:12px;background:var(--gold);border-radius:50%;border:2px solid var(--off)}
+.tl-year{font-size:.7rem;font-weight:800;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:.2rem}
+.tl-title{font-weight:700;font-size:.9rem;color:var(--navy);margin-bottom:.2rem}
+.tl-desc{font-size:.82rem;color:var(--muted);line-height:1.5}
+
+/* ── EVENTS ── */
+.events-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.event-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;box-shadow:var(--shadow)}
+.event-date{font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:.3rem}
+.event-name{font-weight:700;font-size:.88rem;color:var(--navy);margin-bottom:.3rem}
+.event-desc{font-size:.78rem;color:var(--muted);line-height:1.4}
+
+/* ── FINANCIALS ── */
+.fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.fin-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow)}
+.fin-card h4{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:1rem}
+.fin-bar-item{margin-bottom:.9rem}
+.fin-bar-label{display:flex;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.3rem}
+.fin-bar-track{height:8px;background:var(--off);border-radius:50px;overflow:hidden}
+.fin-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--navy),var(--navy2))}
+.fin-bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+
+/* ── CHAPTER MAP ── */
+.chapters-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.9rem}
+.chapter-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;box-shadow:var(--shadow)}
+.chapter-flag{font-size:1.8rem;display:block;margin-bottom:.4rem}
+.chapter-name{font-weight:700;font-size:.85rem;color:var(--navy)}
+.chapter-loc{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+
+/* ── CTA ── */
+.cta-section{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:var(--radius);padding:2.5rem;text-align:center;color:#fff;margin-top:1rem}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:1.6rem;margin-bottom:.5rem}
+.cta-section p{color:rgba(255,255,255,.7);font-size:.9rem;margin-bottom:1.5rem;max-width:500px;margin-left:auto;margin-right:auto}
+.btn-gold{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:#000;font-weight:700;font-size:.88rem;padding:.75rem 1.8rem;border-radius:50px;transition:background .2s}
+.btn-gold:hover{background:var(--gold2);color:#000}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:#fff;font-weight:600;font-size:.88rem;padding:.75rem 1.8rem;border-radius:50px;border:1px solid rgba(255,255,255,.3);margin-left:.75rem;transition:border-color .2s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── FOOTER ── */
+.page-footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:1.5rem;font-size:.8rem;margin-top:3rem}
+.page-footer a{color:var(--gold)}
+
+@media(max-width:640px){
+  .fin-grid{grid-template-columns:1fr}
+  .btn-ghost{margin-left:0;margin-top:.6rem}
+  .hero-inner{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a href="index.html"><i class="fas fa-arrow-left"></i> Back to calunah.org</a>
+  <a href="transparency.html"><i class="fas fa-certificate"></i> For Funders</a>
+  <a href="index.html#donate"><i class="fas fa-heart"></i> Donate</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <img src="images/logo.png" alt="CALUNAH" class="hero-logo">
+    <div class="hero-text">
+      <div class="hero-year">CALUNAH · Est. 1993</div>
+      <h1>Annual<br><span>Report</span></h1>
+      <p>Thirty-two years of uniting UNAH graduates, funding scholarships, and serving Haiti and the diaspora.</p>
+      <div class="hero-ein-tag"><i class="fas fa-certificate"></i> 501(c)(3) Nonprofit · EIN: 71-1006724</div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPACT STRIP -->
+<div class="impact-strip">
+  <div class="impact-grid">
+    <div class="impact-item"><span class="impact-num">32</span><div class="impact-lbl">Years of Service</div></div>
+    <div class="impact-item"><span class="impact-num">5,000+</span><div class="impact-lbl">Alumni Members</div></div>
+    <div class="impact-item"><span class="impact-num">20+</span><div class="impact-lbl">Countries</div></div>
+    <div class="impact-item"><span class="impact-num">$250K+</span><div class="impact-lbl">Scholarships Awarded</div></div>
+    <div class="impact-item"><span class="impact-num">500+</span><div class="impact-lbl">Students Mentored</div></div>
+    <div class="impact-item"><span class="impact-num">6</span><div class="impact-lbl">Active Chapters</div></div>
+    <div class="impact-item"><span class="impact-num">30+</span><div class="impact-lbl">Projects Completed</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ── LETTER FROM LEADERSHIP ── -->
+  <div class="section">
+    <div class="section-title">Message from Our President</div>
+    <div class="gold-line"></div>
+    <div class="letter-card">
+      <p>For over three decades, CALUNAH has stood as a bridge — connecting UNAH graduates across the Haitian diaspora, channeling resources back to the campus and communities that shaped us, and honoring the Adventist values of faith, education, and service that unite us all.</p>
+      <p>This year, we continued to award scholarships to deserving students at l'Université Adventiste d'Haïti, expanded our mentorship network across chapters, raised funds through our annual Saturday Giving program and High Tea Fundraiser, and delivered community outreach programs on multiple continents. Every dollar raised, every mentor matched, every event organized — reflects the dedication of our alumni family worldwide.</p>
+      <p>To our donors, grantors, partners, and members: thank you. CALUNAH's impact is your impact. Together, we are building a stronger Haiti, one graduate at a time.</p>
+      <div class="letter-sig">
+        <div class="letter-sig-avatar">CP</div>
+        <div>
+          <div class="letter-sig-name">CALUNAH Executive Committee</div>
+          <div class="letter-sig-role">Club des Alumni de l'Université Adventiste d'Haïti</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROGRAM HIGHLIGHTS ── -->
+  <div class="section">
+    <div class="section-title">Program Highlights</div>
+    <div class="section-sub">Six pillars of impact — active every year since 1993</div>
+    <div class="prog-grid">
+      <div class="prog-card">
+        <div class="prog-card-top"><i class="fas fa-graduation-cap"></i><h3>Scholarship Program</h3></div>
+        <div class="prog-card-body">
+          <p>Our flagship program provides annual scholarships to outstanding UNAH students demonstrating academic excellence and financial need. Since 1993, we have awarded more than $250,000 in scholarships, transforming the lives of hundreds of Haitian students.</p>
+          <div class="prog-stat"><i class="fas fa-dollar-sign"></i> $250,000+ awarded to date</div>
+          <div class="prog-stat"><i class="fas fa-user-graduate"></i> Multiple scholars per year</div>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-card-top"><i class="fas fa-chalkboard-teacher"></i><h3>Mentorship Network</h3></div>
+        <div class="prog-card-body">
+          <p>CALUNAH alumni in medicine, law, engineering, business, and education volunteer as mentors for UNAH students. Our network spans 20+ countries, giving students access to guidance they could never find locally.</p>
+          <div class="prog-stat"><i class="fas fa-users"></i> 500+ students mentored</div>
+          <div class="prog-stat"><i class="fas fa-globe"></i> Mentors in 20+ countries</div>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-card-top"><i class="fas fa-university"></i><h3>Campus Development</h3></div>
+        <div class="prog-card-body">
+          <p>CALUNAH funds infrastructure and academic resources at UNAH's Diquini campus — from library books and lab equipment to facility upgrades. Every physical improvement we fund serves thousands of students for generations.</p>
+          <div class="prog-stat"><i class="fas fa-tools"></i> 30+ projects completed</div>
+          <div class="prog-stat"><i class="fas fa-book"></i> Library &amp; lab investments</div>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-card-top"><i class="fas fa-seedling"></i><h3>Community Service</h3></div>
+        <div class="prog-card-body">
+          <p>Rooted in Adventist values of compassion, our chapters organize annual outreach events in Haiti and diaspora cities including health fairs, food drives, back-to-school drives, and disaster relief after major earthquakes.</p>
+          <div class="prog-stat"><i class="fas fa-hands-helping"></i> Annual events in Haiti &amp; US</div>
+          <div class="prog-stat"><i class="fas fa-heart"></i> Disaster relief partnerships</div>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-card-top"><i class="fas fa-hand-holding-usd"></i><h3>Fundraising Programs</h3></div>
+        <div class="prog-card-body">
+          <p>Our annual calendar includes the High Tea Fundraiser, Saturday Giving broadcasts, Gala events, and online campaigns — each designed to fund scholarships and campus projects while celebrating the CALUNAH community.</p>
+          <div class="prog-stat"><i class="fas fa-calendar-alt"></i> 12+ annual events</div>
+          <div class="prog-stat"><i class="fas fa-broadcast-tower"></i> Broadcast &amp; virtual events</div>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-card-top"><i class="fas fa-music"></i><h3>Cultural Preservation</h3></div>
+        <div class="prog-card-body">
+          <p>Through Week of Prayer, cultural programs, our e-newsletter, and alumni spotlights, CALUNAH preserves the Haitian Adventist heritage and keeps diaspora members connected to their UNAH roots.</p>
+          <div class="prog-stat"><i class="fas fa-newspaper"></i> Regular e-newsletter</div>
+          <div class="prog-stat"><i class="fas fa-cross"></i> Annual Week of Prayer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FINANCIAL OVERVIEW ── -->
+  <div class="section">
+    <div class="section-title">Financial Overview</div>
+    <div class="section-sub">How CALUNAH allocates resources to maximize mission impact</div>
+    <div class="fin-grid">
+      <div class="fin-card">
+        <h4>Revenue Sources</h4>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Individual Donations</span><span>55%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill" style="width:55%"></div></div>
+        </div>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Fundraising Events</span><span>30%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill" style="width:30%"></div></div>
+        </div>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Membership Dues</span><span>10%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill" style="width:10%"></div></div>
+        </div>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Grants &amp; Corporate</span><span>5%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill" style="width:5%"></div></div>
+        </div>
+      </div>
+      <div class="fin-card">
+        <h4>How Funds Are Used</h4>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Scholarships &amp; Education</span><span>60%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill gold" style="width:60%"></div></div>
+        </div>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Campus Development</span><span>20%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill gold" style="width:20%"></div></div>
+        </div>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Community Programs</span><span>12%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill gold" style="width:12%"></div></div>
+        </div>
+        <div class="fin-bar-item">
+          <div class="fin-bar-label"><span>Administration &amp; Operations</span><span>8%</span></div>
+          <div class="fin-bar-track"><div class="fin-bar-fill gold" style="width:8%"></div></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:1rem;text-align:center">For audited financial statements and IRS Form 990 filings, visit <a href="https://projects.propublica.org/nonprofits" target="_blank">ProPublica Nonprofit Explorer</a> and search EIN 71-1006724.</p>
+  </div>
+
+  <!-- ── CHAPTERS ── -->
+  <div class="section">
+    <div class="section-title">Our Six Chapters</div>
+    <div class="section-sub">CALUNAH chapters active across the United States and beyond</div>
+    <div class="chapters-row">
+      <div class="chapter-card"><span class="chapter-flag">🇺🇸</span><div class="chapter-name">Florida Chapter</div><div class="chapter-loc">South Florida</div></div>
+      <div class="chapter-card"><span class="chapter-flag">🇺🇸</span><div class="chapter-name">Georgia Chapter</div><div class="chapter-loc">Atlanta, GA</div></div>
+      <div class="chapter-card"><span class="chapter-flag">🇺🇸</span><div class="chapter-name">New York Chapter</div><div class="chapter-loc">New York, NY</div></div>
+      <div class="chapter-card"><span class="chapter-flag">🇺🇸</span><div class="chapter-name">Maryland Chapter</div><div class="chapter-loc">DMV Area</div></div>
+      <div class="chapter-card"><span class="chapter-flag">🇭🇹</span><div class="chapter-name">Haiti Chapter</div><div class="chapter-loc">Port-au-Prince</div></div>
+      <div class="chapter-card"><span class="chapter-flag">🌐</span><div class="chapter-name">International Chapter</div><div class="chapter-loc">Global Diaspora</div></div>
+    </div>
+  </div>
+
+  <!-- ── MILESTONES ── -->
+  <div class="section">
+    <div class="section-title">32 Years of Milestones</div>
+    <div class="section-sub">Key moments in CALUNAH's history of service</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1993</div>
+        <div class="tl-title">CALUNAH Founded</div>
+        <div class="tl-desc">Pastor Roberne J. and Mrs. Lynouse Dubreuze Saint-Louis founded CALUNAH to unite UNAH graduates across the diaspora.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Early 2000s</div>
+        <div class="tl-title">First Scholarships Awarded</div>
+        <div class="tl-desc">CALUNAH officially launched its scholarship program, awarding its first grants to deserving UNAH students.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2010</div>
+        <div class="tl-title">Haiti Earthquake Relief</div>
+        <div class="tl-desc">CALUNAH mobilized disaster relief for Haiti following the devastating 2010 earthquake, coordinating donations and aid to UNAH's campus community.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-title">IRS 501(c)(3) Status Achieved</div>
+        <div class="tl-desc">CALUNAH earned federal tax-exempt status, enabling tax-deductible donations and eligibility for foundation grants.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2020</div>
+        <div class="tl-title">Virtual Programs Launched</div>
+        <div class="tl-desc">The pandemic accelerated CALUNAH's digital reach. Saturday Giving broadcasts and virtual Week of Prayer events connected alumni globally.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2024–2025</div>
+        <div class="tl-title">$250K+ in Scholarships Milestone</div>
+        <div class="tl-desc">CALUNAH surpassed $250,000 in cumulative scholarship awards, with an expanded donor base across six chapters and 20+ countries.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="cta-section">
+    <h2>Partner With CALUNAH</h2>
+    <p>Every grant, every donation, every partnership directly funds scholarships and transforms lives at l'Université Adventiste d'Haïti. Join us.</p>
+    <div>
+      <a href="index.html#donate" class="btn-gold"><i class="fas fa-heart"></i> Donate Now</a>
+      <a href="transparency.html" class="btn-ghost"><i class="fas fa-file-alt"></i> For Funders</a>
+    </div>
+    <p style="margin-top:1.2rem;font-size:.78rem;color:rgba(255,255,255,.4)">501(c)(3) · EIN: 71-1006724 · info@calunah.org · P.O. Box 110373, Palm Bay, FL 32908</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <p>CALUNAH &nbsp;·&nbsp; Club des Alumni de l'Université Adventiste d'Haïti &nbsp;·&nbsp; EIN: 71-1006724</p>
+  <p style="margin-top:.4rem"><a href="index.html">Home</a> &nbsp;·&nbsp; <a href="transparency.html">For Funders</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="mailto:info@calunah.org">info@calunah.org</a></p>
+</div>
+
+</body>
+</html>

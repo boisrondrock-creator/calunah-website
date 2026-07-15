@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -247,6 +249,90 @@ select.form-control{cursor:pointer}
 .empty-state i{font-size:2.8rem;color:#d1d5db;margin-bottom:.9rem}
 .empty-state h3{font-size:1.05rem;font-weight:700;margin-bottom:.35rem}
 .empty-state p{font-size:.82rem;color:var(--muted)}
+/* ── Design Studio ── */
+.design-tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:.5rem}
+.design-tool-card{display:flex;flex-direction:column;align-items:center;gap:.75rem;padding:1.5rem 1rem;border:1px solid var(--border);border-radius:var(--radius);background:#fff;text-decoration:none;color:var(--text);transition:box-shadow .2s,transform .15s;cursor:pointer;text-align:center}
+.design-tool-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.12);transform:translateY(-2px)}
+.dtc-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;color:#fff;flex-shrink:0}
+.dtc-name{font-weight:700;font-size:.95rem}
+.dtc-desc{font-size:.78rem;color:var(--muted);line-height:1.4}
+.dtc-btn{margin-top:auto;padding:.45rem 1.1rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;transition:opacity .2s}
+.dtc-btn:hover{opacity:.85}
+/* AI generator */
+.ai-gen-wrap{display:flex;flex-direction:column;gap:.85rem}
+.ai-row{display:flex;gap:.75rem;flex-wrap:wrap}
+.ai-select,.ai-prompt{width:100%;font-family:inherit;font-size:.9rem;padding:.75rem 1rem;border:1px solid var(--border);border-radius:8px;outline:none;transition:border-color .2s;color:var(--text);background:#fff}
+.ai-select:focus,.ai-prompt:focus{border-color:var(--green)}
+.ai-prompt{resize:vertical;min-height:90px}
+.ai-btn{padding:.75rem 1.6rem;background:linear-gradient(135deg,#4285f4,#6366f1);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem;transition:opacity .2s}
+.ai-btn:hover{opacity:.88}
+.ai-btn:disabled{opacity:.5;cursor:not-allowed}
+.ai-output-box{background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:.88rem;line-height:1.7;white-space:pre-wrap;min-height:60px;position:relative}
+.ai-copy-btn{position:absolute;top:.6rem;right:.6rem;background:var(--green);color:#fff;border:none;border-radius:6px;padding:.3rem .7rem;font-size:.75rem;cursor:pointer;opacity:.8}
+.ai-copy-btn:hover{opacity:1}
+/* Cloudinary upload */
+.cld-upload-area{border:2px dashed var(--border);border-radius:var(--radius);padding:2.5rem 1rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+.cld-upload-area:hover{border-color:var(--green);background:#f0fdf4}
+.cld-upload-area i{font-size:2.5rem;color:var(--muted);display:block;margin-bottom:.75rem}
+.cld-upload-area p{color:var(--muted);font-size:.88rem}
+.cld-upload-btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;padding:.7rem 1.5rem;background:var(--green);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem;transition:opacity .2s}
+.cld-upload-btn:hover{opacity:.88}
+.cld-video-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1.25rem}
+.cld-video-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:#f9fafb;border:1px solid var(--border);border-radius:8px}
+.cld-video-item video{width:120px;height:68px;object-fit:cover;border-radius:6px;background:#000;flex-shrink:0}
+.cld-video-info{flex:1;min-width:0}
+.cld-video-info span{display:block;font-size:.78rem;color:var(--muted);word-break:break-all;margin-bottom:.4rem}
+.cld-copy{padding:.35rem .85rem;background:var(--green);color:#fff;border:none;border-radius:6px;font-size:.78rem;cursor:pointer;white-space:nowrap}
+.cld-del{padding:.35rem .6rem;background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;font-size:.78rem;cursor:pointer;margin-left:.4rem}
+.cld-note{font-size:.78rem;color:var(--muted);margin-top:.75rem;line-height:1.5}
+.cld-setup-notice{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:.85rem 1rem;font-size:.83rem;color:#92400e;margin-bottom:1rem}
+/* ── TEMPLATE CARDS ── */
+.templates-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1.2rem;margin-top:1rem}
+.tpl-cat-head{grid-column:1/-1;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-top:.4rem;padding-bottom:.35rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.4rem}
+.tpl-card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .16s,box-shadow .16s}
+.tpl-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.1)}
+.tpl-preview{aspect-ratio:3/4;position:relative;overflow:hidden;flex-shrink:0}
+.tpl-badge{position:absolute;top:.5rem;right:.5rem;font-size:.58rem;font-weight:700;padding:.18rem .52rem;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;z-index:2}
+.tpl-info{padding:.75rem 1rem;flex:1;display:flex;flex-direction:column;gap:.3rem}
+.tpl-info strong{font-size:.88rem}
+.tpl-info span{font-size:.76rem;color:var(--muted);flex:1;line-height:1.4}
+.tpl-btns{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:0 1rem 1rem}
+.btn-tpl-edit{background:var(--gold);color:#000;border:none;border-radius:8px;padding:.44rem .5rem;font-size:.78rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.35rem;transition:opacity .15s}
+.btn-tpl-edit:hover{opacity:.82}
+.btn-tpl-dl{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:.44rem .5rem;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.35rem;transition:background .15s}
+.btn-tpl-dl:hover{background:var(--offwhite)}
+/* ── FLYER EDITOR MODAL ── */
+#fed-modal{position:fixed;inset:0;z-index:99999;background:#12122a;display:none;flex-direction:column;font-family:'Inter',sans-serif}
+#fed-modal.open{display:flex}
+.fed-topbar{background:#0b0b20;height:52px;display:flex;align-items:center;padding:0 .8rem;gap:.5rem;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;overflow-x:auto}
+.fed-title{color:#fff;font-weight:700;font-size:.88rem;flex:1;min-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fed-body{flex:1;display:flex;overflow:hidden;min-height:0}
+.fed-sidebar{width:180px;background:#0a0a1e;flex-shrink:0;overflow-y:auto;padding:.6rem;border-right:1px solid rgba(255,255,255,.07)}
+.fed-sidebar-hd{font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);padding:.3rem 0 .2rem;margin-top:.3rem}
+.fed-tpl-mini{border-radius:6px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color .14s;margin-bottom:.45rem}
+.fed-tpl-mini:hover,.fed-tpl-mini.active{border-color:#c9a84c}
+.fed-mini-prev{aspect-ratio:3/4;width:100%}
+.fed-mini-label{font-size:.58rem;color:rgba(255,255,255,.55);padding:.22rem .4rem;background:#12122a;line-height:1.3}
+.fed-center{flex:1;overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:1.2rem;gap:.75rem;background:repeating-conic-gradient(#1a1a3e 0% 25%,#14143a 0% 50%) 0 0/22px 22px}
+.fed-canvas-wrap{box-shadow:0 8px 48px rgba(0,0,0,.75);flex-shrink:0}
+.fed-props{width:215px;background:#0b0b20;flex-shrink:0;overflow-y:auto;padding:.85rem;border-left:1px solid rgba(255,255,255,.07)}
+.fed-props-hd{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin:.8rem 0 .3rem}
+.fed-props-hd:first-child{margin-top:0}
+.fed-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:.4rem .65rem;color:#fff;font-size:.8rem;margin-bottom:.42rem;font-family:'Inter',sans-serif}
+.fed-input:focus{outline:none;border-color:#c9a84c}
+.fed-input[type=color]{height:36px;padding:3px 4px;cursor:pointer}
+.fed-input[type=range]{height:auto;padding:.25rem 0;accent-color:#c9a84c}
+.fed-flex{display:flex;gap:.35rem;margin-bottom:.42rem}
+.fed-ibtn{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.11);border-radius:7px;padding:.38rem;color:rgba(255,255,255,.8);font-size:.78rem;cursor:pointer;text-align:center;transition:background .14s}
+.fed-ibtn:hover,.fed-ibtn.on{background:rgba(201,168,76,.25);border-color:#c9a84c;color:#c9a84c}
+.fed-tb-btn{display:flex;align-items:center;gap:.38rem;padding:.36rem .72rem;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);border-radius:8px;color:#fff;font-size:.76rem;font-weight:600;cursor:pointer;transition:background .14s;white-space:nowrap;flex-shrink:0}
+.fed-tb-btn:hover{background:rgba(255,255,255,.16)}
+.fed-tb-btn.gold{background:#c9a84c;color:#000;border-color:#c9a84c}
+.fed-tb-btn.gold:hover{background:#b8962f}
+.fed-tb-btn.danger{background:#dc2626;border-color:#dc2626}
+.fed-tb-btn.danger:hover{background:#b91c1c}
+.fed-no-sel{color:rgba(255,255,255,.28);font-size:.78rem;text-align:center;padding:1.5rem 0;line-height:1.6}
+.fed-hint{color:rgba(255,255,255,.22);font-size:.68rem;text-align:center;line-height:1.4}
 </style>
 </head>
 <body>
@@ -254,7 +340,7 @@ select.form-control{cursor:pointer}
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <img src="../images/calunah-logo.png" class="login-logo" alt="CALUNAH" onerror="this.style.display='none'">
+    <img src="../images/logo.png" class="login-logo" alt="CALUNAH" onerror="this.style.display='none'">
     <h1>CALUNAH Admin</h1>
     <p>Content Management System</p>
     <div class="login-field"><i class="fas fa-user"></i><input type="text" id="login-user" placeholder="Username" autocomplete="username"></div>
@@ -268,7 +354,7 @@ select.form-control{cursor:pointer}
 <div id="app" class="hidden">
   <aside class="sidebar" id="sidebar">
     <div class="sb-brand">
-      <img src="../images/calunah-logo.png" alt="CALUNAH" onerror="this.style.display='none'">
+      <img src="../images/logo.png" alt="CALUNAH" onerror="this.style.display='none'">
       <div class="sb-brand-text"><h2>CALUNAH</h2><span>Admin Portal</span></div>
     </div>
     <nav class="sb-nav">
@@ -284,6 +370,7 @@ select.form-control{cursor:pointer}
       <a class="sb-link" onclick="showPage('gallery')"><i class="fas fa-images"></i> Gallery<span class="sb-badge" id="badge-gallery">0</span></a>
       <a class="sb-link" onclick="showPage('media')"><i class="fas fa-folder-open"></i> Media Library</a>
       <a class="sb-link" onclick="showPage('videos')"><i class="fab fa-youtube"></i> Videos</a>
+      <a class="sb-link" onclick="showPage('design')"><i class="fas fa-palette"></i> Design Studio</a>
 
       <div class="sb-section">Organization</div>
       <a class="sb-link" onclick="showPage('committee')"><i class="fas fa-users-cog"></i> Executive Committee<span class="sb-badge" id="badge-committee">0</span></a>
@@ -459,7 +546,13 @@ select.form-control{cursor:pointer}
 
     <!-- FLYER TEMPLATES -->
     <div class="page" id="page-templates">
-      <div class="section-header"><div><h2>Flyer Templates</h2><p>Download a branded starting template, then customize it in Canva, Word, or any editor</p></div></div>
+      <div class="section-header">
+        <div>
+          <h2>Flyer Templates</h2>
+          <p>12 professional templates — click <strong>Edit</strong> to open the built-in designer where you can change text, backgrounds, add images, and download your flyer</p>
+        </div>
+        <button class="btn btn-primary" onclick="openFlyerEditor('announcement')" style="flex-shrink:0"><i class="fas fa-plus"></i> Blank Canvas</button>
+      </div>
       <div class="templates-grid" id="templates-grid"></div>
     </div>
 
@@ -480,6 +573,20 @@ select.form-control{cursor:pointer}
         <button class="btn-add" style="margin-top:1rem" onclick="addVideoRow()"><i class="fas fa-plus"></i> Add Video</button>
       </div>
       <div class="settings-card">
+        <h3><i class="fas fa-cloud-upload-alt"></i> Upload Video from Computer or Phone</h3>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem">Upload a video file directly from your device. Videos are stored on Cloudinary's free CDN and load fast for visitors.</p>
+        <div id="cld-setup-notice" class="cld-setup-notice" style="display:none"><i class="fas fa-exclamation-triangle"></i> Cloudinary is not configured yet. Go to <strong>Settings → Video Upload (Cloudinary)</strong> to set it up — it takes 2 minutes and is free.</div>
+        <div class="cld-upload-area" onclick="openCldUpload()">
+          <i class="fas fa-photo-video"></i>
+          <p>Drag a video here or click to browse</p>
+          <p style="font-size:.75rem;margin-top:.25rem">MP4, MOV, AVI · from your computer or phone camera roll</p>
+          <button class="cld-upload-btn" type="button"><i class="fas fa-upload"></i> Choose Video File</button>
+        </div>
+        <div class="cld-video-list" id="cld-video-list"></div>
+        <p class="cld-note"><i class="fas fa-info-circle"></i> After uploading, copy the video URL and paste it into the Featured Video or Past Recordings fields above (or share it anywhere).</p>
+      </div>
+
+      <div class="settings-card">
         <h3><i class="fas fa-broadcast-tower"></i> Next Live Stream</h3>
         <div class="form-grid">
           <div class="form-group"><label>Stream Date</label><input class="form-control" id="ls-date" placeholder="e.g. July 4, 2026"></div>
@@ -488,6 +595,94 @@ select.form-control{cursor:pointer}
         </div>
       </div>
       <button class="btn btn-primary" onclick="saveVideos()"><i class="fas fa-save"></i> Save Video Settings</button>
+    </div>
+
+    <!-- DESIGN STUDIO -->
+    <div class="page" id="page-design">
+      <div class="section-header"><div><h2>Design Studio</h2><p>Launch design tools and generate content with AI</p></div></div>
+
+      <div class="settings-card">
+        <h3><i class="fas fa-rocket"></i> Design Tools</h3>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem">Open your favorite design app in a new tab. Create flyers, banners, social graphics, and more — then download and upload them to your gallery.</p>
+        <div class="design-tool-grid">
+          <a href="https://www.canva.com/create/" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7)"><i class="fas fa-wand-magic-sparkles"></i></div>
+            <div class="dtc-name">Canva</div>
+            <div class="dtc-desc">Drag-and-drop flyers, banners, social posts, and event graphics</div>
+            <div class="dtc-btn">Open Canva →</div>
+          </a>
+          <a href="https://new.express.adobe.com/" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#e53935,#ff7043)"><i class="fas fa-fire"></i></div>
+            <div class="dtc-name">Adobe Express</div>
+            <div class="dtc-desc">Professional templates for newsletters, flyers, and social media</div>
+            <div class="dtc-btn">Open Adobe →</div>
+          </a>
+          <a href="https://gemini.google.com/" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#4285f4,#34a853)"><i class="fas fa-robot"></i></div>
+            <div class="dtc-name">Google Gemini</div>
+            <div class="dtc-desc">Generate images, write descriptions, and brainstorm ideas with AI</div>
+            <div class="dtc-btn">Open Gemini →</div>
+          </a>
+          <a href="https://www.microsoft.com/en-us/microsoft-365/free-office-online-for-the-web" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#0078d4,#50e6ff)"><i class="fas fa-file-powerpoint"></i></div>
+            <div class="dtc-name">Microsoft Designer</div>
+            <div class="dtc-desc">AI-powered image and graphic creation from Microsoft</div>
+            <div class="dtc-btn">Open Microsoft →</div>
+          </a>
+          <a href="https://slides.google.com/create" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#fbbc04,#ea4335)"><i class="fas fa-file-image"></i></div>
+            <div class="dtc-name">Google Slides</div>
+            <div class="dtc-desc">Create presentations and visual slideshows for events</div>
+            <div class="dtc-btn">Open Slides →</div>
+          </a>
+          <a href="https://www.remove.bg/" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)"><i class="fas fa-eraser"></i></div>
+            <div class="dtc-name">Remove.bg</div>
+            <div class="dtc-desc">Remove photo backgrounds instantly for clean profile and event images</div>
+            <div class="dtc-btn">Open Tool →</div>
+          </a>
+          <a href="https://www.kapwing.com/" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444)"><i class="fas fa-video"></i></div>
+            <div class="dtc-name">Kapwing</div>
+            <div class="dtc-desc">Edit videos, add captions and music online — no software needed</div>
+            <div class="dtc-btn">Open Kapwing →</div>
+          </a>
+          <a href="https://www.veed.io/" target="_blank" rel="noopener" class="design-tool-card">
+            <div class="dtc-icon" style="background:linear-gradient(135deg,#10b981,#059669)"><i class="fas fa-film"></i></div>
+            <div class="dtc-name">VEED.io</div>
+            <div class="dtc-desc">Compress, trim, subtitle, and share videos easily from any device</div>
+            <div class="dtc-btn">Open VEED →</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h3><i class="fas fa-robot" style="color:#4285f4"></i> AI Content Generator <span style="font-size:.72rem;background:#e0e7ff;color:#3730a3;padding:2px 8px;border-radius:20px;margin-left:.4rem;vertical-align:middle">Powered by Gemini</span></h3>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:1.25rem">Describe what you need and let AI write it for you — event descriptions, social posts, newsletters, and more. Requires a free Gemini API key (set in <strong>Settings → AI Assistant</strong>).</p>
+        <div class="ai-gen-wrap">
+          <div class="ai-row">
+            <select class="ai-select" id="ai-type" style="max-width:240px">
+              <option value="event">Event Description</option>
+              <option value="newsletter">Newsletter Intro</option>
+              <option value="social">Social Media Post</option>
+              <option value="caption">Photo Caption</option>
+              <option value="fundraiser">Fundraising Appeal</option>
+              <option value="bio">Member Bio</option>
+              <option value="press">Press Release Excerpt</option>
+            </select>
+          </div>
+          <textarea class="ai-prompt" id="ai-prompt" placeholder="e.g. Annual CALUNAH Gala 2026 on October 10 at the Marriott Atlanta — fundraiser for student scholarships, formal attire, live music..."></textarea>
+          <div>
+            <button class="ai-btn" id="ai-gen-btn" onclick="generateAI()"><i class="fas fa-robot"></i> Generate with Gemini AI</button>
+          </div>
+          <div id="ai-output-wrap" style="display:none">
+            <div class="ai-output-box" id="ai-output">
+              <button class="ai-copy-btn" onclick="copyAIOutput()"><i class="fas fa-copy"></i> Copy</button>
+              <span id="ai-output-text"></span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- SETTINGS -->
@@ -543,6 +738,35 @@ select.form-control{cursor:pointer}
         <button class="btn btn-primary" style="margin-top:1rem" onclick="saveSettings()"><i class="fas fa-save"></i> Save Social Links</button>
       </div>
       <div class="settings-card">
+        <h3><i class="fas fa-cloud-upload-alt"></i> Video Upload (Cloudinary)</h3>
+        <p style="color:var(--muted);font-size:.83rem;margin-bottom:1rem">Cloudinary is a free service that hosts your videos on a fast CDN. Once configured, you can upload videos from the <strong>Videos → Upload</strong> section directly from your computer or phone.</p>
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:.85rem 1rem;font-size:.8rem;color:#065f46;margin-bottom:1rem">
+          <strong>Free setup (2 minutes):</strong><br>
+          1. Create a free account at <a href="https://cloudinary.com/users/register_free" target="_blank" style="color:#059669">cloudinary.com</a><br>
+          2. In Cloudinary dashboard: Settings → Upload → <strong>Upload presets</strong> → Add preset → set to <strong>Unsigned</strong> → Save<br>
+          3. Copy your <strong>Cloud Name</strong> (top of dashboard) and the preset name below
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label>Cloudinary Cloud Name</label><input class="form-control" id="cld-cloud-name" placeholder="e.g. my-calunah-cloud"></div>
+          <div class="form-group"><label>Upload Preset Name</label><input class="form-control" id="cld-preset" placeholder="e.g. calunah_unsigned"></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:1rem" onclick="saveCldConfig()"><i class="fas fa-save"></i> Save Cloudinary Config</button>
+      </div>
+
+      <div class="settings-card">
+        <h3><i class="fas fa-robot" style="color:#4285f4"></i> AI Assistant (Gemini)</h3>
+        <p style="color:var(--muted);font-size:.83rem;margin-bottom:1rem">Get a free Gemini API key to enable the AI Content Generator in Design Studio.</p>
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:.85rem 1rem;font-size:.8rem;color:#1e40af;margin-bottom:1rem">
+          <strong>Free setup (1 minute):</strong><br>
+          1. Go to <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#2563eb">aistudio.google.com/apikey</a><br>
+          2. Sign in with your Google account → click <strong>Create API Key</strong><br>
+          3. Copy the key and paste it below (free tier: 1,500 requests/day)
+        </div>
+        <div class="form-group"><label>Gemini API Key</label><input class="form-control" type="password" id="gemini-api-key" placeholder="AIza..."></div>
+        <button class="btn btn-primary" style="margin-top:1rem" onclick="saveGeminiKey()"><i class="fas fa-save"></i> Save API Key</button>
+      </div>
+
+      <div class="settings-card">
         <h3><i class="fas fa-key"></i> Change Admin Password</h3>
         <div class="form-grid">
           <div class="form-group"><label>New Password</label><input class="form-control" type="password" id="new-pass" placeholder="Enter new password"></div>
@@ -556,6 +780,82 @@ select.form-control{cursor:pointer}
 </div>
 
 <div class="toast-wrap" id="toast-wrap"></div>
+
+<!-- FLYER EDITOR MODAL -->
+<div id="fed-modal">
+  <div class="fed-topbar">
+    <span class="fed-title" id="fed-tpl-name">Flyer Editor</span>
+    <button class="fed-tb-btn" onclick="fedAddText()"><i class="fas fa-font"></i> Add Text</button>
+    <button class="fed-tb-btn" onclick="fedAddImage()"><i class="fas fa-image"></i> Add Image</button>
+    <button class="fed-tb-btn" onclick="fedUploadBg()"><i class="fas fa-fill-drip"></i> Upload BG</button>
+    <button class="fed-tb-btn" onclick="fedDeleteSelected()"><i class="fas fa-trash-alt"></i> Delete</button>
+    <button class="fed-tb-btn gold" onclick="fedExportPNG()"><i class="fas fa-download"></i> PNG</button>
+    <button class="fed-tb-btn gold" onclick="fedExportJPG()"><i class="fas fa-download"></i> JPG</button>
+    <button class="fed-tb-btn danger" onclick="closeFlyerEditor()" style="margin-left:.4rem"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="fed-body">
+    <!-- Template picker sidebar -->
+    <div class="fed-sidebar" id="fed-tpl-list"></div>
+
+    <!-- Canvas area -->
+    <div class="fed-center">
+      <div class="fed-canvas-wrap">
+        <canvas id="fed-canvas"></canvas>
+      </div>
+      <p class="fed-hint">Click to select &nbsp;·&nbsp; Double-click text to edit &nbsp;·&nbsp; Drag to move &nbsp;·&nbsp; Corner handles to resize</p>
+    </div>
+
+    <!-- Properties panel -->
+    <div class="fed-props">
+      <div class="fed-no-sel" id="fed-no-sel">
+        <i class="fas fa-mouse-pointer" style="font-size:1.6rem;display:block;margin-bottom:.6rem;opacity:.4"></i>
+        Click an object to edit its properties
+      </div>
+      <div id="fed-sel-wrap" style="display:none">
+        <div class="fed-props-hd">Object</div>
+        <div class="fed-flex">
+          <button class="fed-ibtn" onclick="fedBringForward()" title="Bring Forward"><i class="fas fa-arrow-up"></i></button>
+          <button class="fed-ibtn" onclick="fedSendBackward()" title="Send Backward"><i class="fas fa-arrow-down"></i></button>
+          <button class="fed-ibtn" onclick="fedDuplicate()" title="Duplicate"><i class="fas fa-copy"></i></button>
+          <button class="fed-ibtn" onclick="fedDeleteSelected()" title="Delete" style="color:#f87171"><i class="fas fa-trash"></i></button>
+        </div>
+        <div class="fed-props-hd">Opacity</div>
+        <input type="range" id="fed-opacity" class="fed-input" min="0" max="100" value="100" oninput="fedSetOpacity(this.value)">
+
+        <div id="fed-text-wrap" style="display:none">
+          <div class="fed-props-hd">Text Color</div>
+          <input type="color" id="fed-txt-color" class="fed-input" value="#ffffff" oninput="fedSetTextColor(this.value)">
+          <div class="fed-props-hd">Font Size</div>
+          <input type="number" id="fed-font-size" class="fed-input" min="8" max="160" value="22" placeholder="Size" oninput="fedSetFontSize(this.value)">
+          <div class="fed-props-hd">Style</div>
+          <div class="fed-flex">
+            <button class="fed-ibtn" id="fed-bold-btn" onclick="fedToggleBold()" style="font-weight:900">B</button>
+            <button class="fed-ibtn" id="fed-italic-btn" onclick="fedToggleItalic()" style="font-style:italic">I</button>
+            <button class="fed-ibtn" id="fed-underline-btn" onclick="fedToggleUnderline()" style="text-decoration:underline">U</button>
+          </div>
+          <div class="fed-props-hd">Align</div>
+          <div class="fed-flex">
+            <button class="fed-ibtn" onclick="fedSetAlign('left')"><i class="fas fa-align-left"></i></button>
+            <button class="fed-ibtn" onclick="fedSetAlign('center')"><i class="fas fa-align-center"></i></button>
+            <button class="fed-ibtn" onclick="fedSetAlign('right')"><i class="fas fa-align-right"></i></button>
+          </div>
+        </div>
+
+        <div id="fed-fill-wrap" style="display:none">
+          <div class="fed-props-hd">Fill Color</div>
+          <input type="color" id="fed-fill-color" class="fed-input" value="#c9a84c" oninput="fedSetFill(this.value)">
+        </div>
+      </div>
+
+      <div class="fed-props-hd" style="margin-top:1.2rem">Canvas Background</div>
+      <input type="color" id="fed-bg-color" class="fed-input" value="#0d1b3e" oninput="fedSetBg(this.value)">
+      <button class="fed-tb-btn" onclick="fedUploadBg()" style="width:100%;justify-content:center;margin-top:.3rem;font-size:.76rem">
+        <i class="fas fa-image"></i> Use photo as background
+      </button>
+      <p style="color:rgba(255,255,255,.22);font-size:.66rem;margin-top:.5rem;line-height:1.5">Upload any photo (past event flyer, portrait, banner) to use as the canvas background, then layer text on top.</p>
+    </div>
+  </div>
+</div>
 
 <!-- EVENT MODAL -->
 <div class="modal-overlay" id="event-modal">
@@ -796,7 +1096,7 @@ select.form-control{cursor:pointer}
    new hash to localStorage. NOTE: client-side login is a convenience gate;
    the real security boundary is PUBLISH_SECRET on the Vercel server, which
    is what actually authorizes changes to the live site. */
-const DEFAULT_HASH = '9b006b988446235dc4ac093713a59b3fc3aa30fb53691259b5e255b3e66973b0'; // SHA-256('Calunah@2024')
+const DEFAULT_HASH = 'dac91f05c27c4540cb13b7e10b54094fe3ae76f504e6f522854d6f2e3fa4a3bf'; // SHA-256('Calunah@2026')
 let SESSION_SECRET = ''; // set at login; sent to /api/publish as the publish secret
 
 /* Real SHA-256 via Web Crypto, with a safe fallback */
@@ -834,7 +1134,7 @@ async function doLogin() {
   if (!user || !pass) { errEl.textContent = 'Please enter username and password.'; return; }
   const hash   = await sha256(pass);
   const stored = localStorage.getItem('calunah_admin_hash') || DEFAULT_HASH;
-  if (user.toLowerCase() === 'admin' && hash === stored) {
+  if (user.toLowerCase() === 'info@calunah.org' && hash === stored) {
     localStorage.setItem('calunah_fails', '0');
     // Publish secret must match PUBLISH_SECRET in Vercel. It stays the
     // current configured value so publishing keeps working; it is NOT the
@@ -849,6 +1149,8 @@ async function doLogin() {
     initQuill();
     populateSettings();
     loadDonors();
+    loadCldSettings();
+    loadGeminiSettings();
   } else {
     registerFail();
     errEl.textContent = 'Invalid username or password.';
@@ -864,7 +1166,7 @@ function doLogout() {
 }
 
 /* ── PAGE NAV ── */
-const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', scholars:'Scholar Stories', testimonials:'Testimonials', partners:'Partners', videos:'Videos', menu:'Navigation Menu', content:'Page Text', sections:'Custom Sections', templates:'Flyer Templates', settings:'Settings' };
+const PAGE_TITLES = { dashboard:'Dashboard', events:'Events', blog:'Blog Posts', newsletter:'e-Newsletter', gallery:'Photo Gallery', media:'Media Library', committee:'Executive Committee', chapters:'Chapters', donors:'Donors & Partners', scholars:'Scholar Stories', testimonials:'Testimonials', partners:'Partners', videos:'Videos', design:'Design Studio', menu:'Navigation Menu', content:'Page Text', sections:'Custom Sections', templates:'Flyer Templates', settings:'Settings' };
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
@@ -927,16 +1229,27 @@ function initQuill() {
 
 /* ── IMAGE HELPER ── */
 let pendingFiles = {};
+
+/* Sanitize a filename so it is safe for GitHub paths and web URLs:
+   lowercase, spaces/special chars → hyphens, collapse runs, trim edges. */
+function sanitizeFilename(name) {
+  const dotIdx = name.lastIndexOf('.');
+  const ext  = dotIdx >= 0 ? name.slice(dotIdx + 1).toLowerCase() : '';
+  const base = dotIdx >= 0 ? name.slice(0, dotIdx) : name;
+  const clean = base.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'file';
+  return ext ? clean + '.' + ext : clean;
+}
+
 function previewImg(event, previewId, inputId, folder) {
   const file = event.target.files[0];
   if (!file) return;
   const key = previewId;
-  pendingFiles[key] = { file, folder };
+  pendingFiles[key] = { file, folder, safeName: sanitizeFilename(file.name) };
   const reader = new FileReader();
   reader.onload = e => {
     const prev = document.getElementById(previewId);
     prev.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
-    document.getElementById(inputId).value = folder + file.name;
+    document.getElementById(inputId).value = folder + pendingFiles[key].safeName;
   };
   reader.readAsDataURL(file);
 }
@@ -983,8 +1296,8 @@ async function saveEvent() {
   if (pendingFiles['ev-img-preview']) {
     toast('Uploading image...','info');
     const pf = pendingFiles['ev-img-preview'];
-    const ok = await uploadFileToGitHub(pf.file, pf.folder + pf.file.name);
-    if (!ok) { toast('Image upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(pf.file, pf.folder + (pf.safeName || sanitizeFilename(pf.file.name)));
+    if (!res.ok) { toast(res.error || 'Image upload failed.','error'); return; }
     pendingFiles['ev-img-preview'] = null;
   }
   const ev = {
@@ -1041,8 +1354,8 @@ async function saveBlogPost() {
   if (!title) { toast('Please enter a post title.','error'); return; }
   if (pendingFiles['bl-img-preview']) {
     const pf = pendingFiles['bl-img-preview'];
-    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
-    if (!ok) { toast('Image upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!res.ok) { toast(res.error || 'Image upload failed.','error'); return; }
     pendingFiles['bl-img-preview'] = null;
   }
   const post = { id:title.toLowerCase().replace(/\W+/g,'-'), title, author:document.getElementById('bl-author').value.trim(),
@@ -1106,8 +1419,8 @@ async function saveNL() {
   if (!title) { toast('Please enter a newsletter title.','error'); return; }
   if (nlPendingPdf) {
     toast('Uploading PDF...','info');
-    const ok = await uploadFileToGitHub(nlPendingPdf, 'data/pdfs/'+nlPendingPdf.name);
-    if (!ok) { toast('PDF upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(nlPendingPdf, 'data/pdfs/'+nlPendingPdf.name);
+    if (!res.ok) { toast(res.error || 'PDF upload failed.','error'); return; }
     nlPendingPdf = null;
   }
   const nl = { title, date:document.getElementById('nl-date').value.trim(), pdf:document.getElementById('nl-pdf-path').value.trim(), preview:document.getElementById('nl-preview').value.trim(), featured:document.getElementById('nl-featured').checked };
@@ -1134,15 +1447,16 @@ function renderGallery() {
 }
 function handleFileUpload(event) {
   [...event.target.files].forEach(async file => {
+    const safeName = sanitizeFilename(file.name);
     toast('Uploading '+file.name+'...','info');
-    const path = 'images/uploads/'+file.name;
-    const ok = await uploadFileToGitHub(file, path);
-    if (ok) {
+    const path = 'images/uploads/'+safeName;
+    const res = await uploadFileToGitHub(file, path);
+    if (res.ok) {
       if (!DATA.gallery.items) DATA.gallery.items = [];
-      DATA.gallery.items.unshift({ src:path, caption:file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' '), description:'', cat:'events' });
+      DATA.gallery.items.unshift({ src:path, caption:safeName.replace(/\.[^.]+$/,'').replace(/[-_]/g,' '), description:'', cat:'events' });
       renderGallery(); updateStats();
       toast(file.name+' uploaded!','success');
-    } else toast('Failed to upload '+file.name,'error');
+    } else toast((res.error || 'Failed to upload '+file.name),'error');
   });
   event.target.value = '';
 }
@@ -1150,10 +1464,11 @@ function handleMediaUpload(event) {
   [...event.target.files].forEach(async file => {
     const ext = file.name.split('.').pop().toLowerCase();
     const folder = ['pdf'].includes(ext) ? 'data/pdfs/' : 'images/uploads/';
+    const safeName = sanitizeFilename(file.name);
     toast('Uploading '+file.name+'...','info');
-    const ok = await uploadFileToGitHub(file, folder+file.name);
-    if (ok) { toast(file.name+' uploaded to Media Library!','success'); renderMediaLibrary(); }
-    else toast('Failed to upload '+file.name,'error');
+    const res = await uploadFileToGitHub(file, folder+safeName);
+    if (res.ok) { toast(file.name+' uploaded to Media Library!','success'); renderMediaLibrary(); }
+    else toast((res.error || 'Failed to upload '+file.name),'error');
   });
   event.target.value = '';
 }
@@ -1242,8 +1557,8 @@ async function saveCommitteeMember() {
   if (!name) { toast('Please enter a name.','error'); return; }
   if (pendingFiles['cm-img-preview']) {
     const pf = pendingFiles['cm-img-preview'];
-    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
-    if (!ok) { toast('Photo upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!res.ok) { toast(res.error || 'Photo upload failed.','error'); return; }
     pendingFiles['cm-img-preview'] = null;
   }
   const m = { name, role:document.getElementById('cm-role').value.trim(), initials:document.getElementById('cm-initials').value.trim(), email:document.getElementById('cm-email').value.trim(), icon:document.getElementById('cm-icon').value.trim(), photo:document.getElementById('cm-photo').value.trim(), bio:document.getElementById('cm-bio').value.trim() };
@@ -1290,8 +1605,8 @@ async function saveScholar() {
   if (!story) { toast('Please enter their story.','error'); return; }
   if (pendingFiles['sc-img-preview']) {
     const pf = pendingFiles['sc-img-preview'];
-    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
-    if (!ok) { toast('Photo upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!res.ok) { toast(res.error || 'Photo upload failed.','error'); return; }
     pendingFiles['sc-img-preview'] = null;
   }
   const s = { name, program:document.getElementById('sc-program').value.trim(), year:document.getElementById('sc-year').value.trim(), photo:document.getElementById('sc-photo').value.trim(), story };
@@ -1338,8 +1653,8 @@ async function saveTestimonial() {
   if (!name)  { toast('Please enter a name.','error'); return; }
   if (pendingFiles['ts-img-preview']) {
     const pf = pendingFiles['ts-img-preview'];
-    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
-    if (!ok) { toast('Photo upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!res.ok) { toast(res.error || 'Photo upload failed.','error'); return; }
     pendingFiles['ts-img-preview'] = null;
   }
   const t = { quote, name, role:document.getElementById('ts-role').value.trim(), photo:document.getElementById('ts-photo').value.trim() };
@@ -1382,8 +1697,8 @@ async function savePartner() {
   if (!name) { toast('Please enter the organization name.','error'); return; }
   if (pendingFiles['pt-img-preview']) {
     const pf = pendingFiles['pt-img-preview'];
-    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
-    if (!ok) { toast('Logo upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!res.ok) { toast(res.error || 'Logo upload failed.','error'); return; }
     pendingFiles['pt-img-preview'] = null;
   }
   const p = { name, url:document.getElementById('pt-url').value.trim(), logo:document.getElementById('pt-logo').value.trim() };
@@ -1432,8 +1747,8 @@ async function saveChapter() {
   if (!city) { toast('Please enter a city name.','error'); return; }
   if (pendingFiles['ch-img-preview']) {
     const pf = pendingFiles['ch-img-preview'];
-    const ok = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
-    if (!ok) { toast('Image upload failed.','error'); return; }
+    const res = await uploadFileToGitHub(pf.file, pf.folder+pf.file.name);
+    if (!res.ok) { toast(res.error || 'Image upload failed.','error'); return; }
     pendingFiles['ch-img-preview'] = null;
   }
   const ch = { city, country:document.getElementById('ch-country').value.trim(), abbr:document.getElementById('ch-abbr').value.trim(), flag:document.getElementById('ch-flag').value.trim()||'🇺🇸', color1:'#003087', color2:'#D4212D', iconEmoji:document.getElementById('ch-emoji').value.trim(), president:document.getElementById('ch-president').value.trim(), photo:document.getElementById('ch-photo').value.trim(), contact:document.getElementById('ch-contact').value.trim() };
@@ -1627,29 +1942,6 @@ function updateContent(key, val) {
   else delete DATA.content.content[key];   // blank = revert to original
 }
 
-/* ══ FLYER TEMPLATES ═════════════════════════════════════ */
-const FLYER_TEMPLATES = [
-  { name:'Event / High Tea',  file:'images/templates/template-event.png',   desc:'Elegant event flyer — title, date, speakers, tickets' },
-  { name:'Gala / Fundraiser', file:'images/templates/template-gala.png',    desc:'Formal gala flyer — theme, performers, venue' },
-  { name:'Week of Prayer',    file:'images/templates/template-prayer.png',  desc:'Spiritual program — nights, speakers, Zoom info' },
-  { name:'Sabbath / Worship', file:'images/templates/template-sabbath.png', desc:'Sabbath service — guest speaker, location, livestream' }
-];
-function renderTemplates() {
-  const g = document.getElementById('templates-grid');
-  if (!g) return;
-  g.innerHTML = FLYER_TEMPLATES.map(t => `
-    <div class="template-card" style="background:#fff;border:1px solid var(--line,#e2e8f0);border-radius:14px;overflow:hidden;display:flex;flex-direction:column">
-      <div style="aspect-ratio:3/4;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden">
-        <img src="../${t.file}" alt="${t.name}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<div style=\\'color:#94a3b8;text-align:center;padding:1rem\\'><i class=\\'fas fa-file-image\\' style=\\'font-size:2.5rem\\'></i><br>Coming soon</div>'">
-      </div>
-      <div style="padding:1rem;flex:1;display:flex;flex-direction:column;gap:.5rem">
-        <strong>${t.name}</strong>
-        <span style="font-size:.82rem;color:var(--muted,#64748b);flex:1">${t.desc}</span>
-        <a href="../${t.file}" download class="btn-add" style="text-align:center;justify-content:center"><i class="fas fa-download"></i> Download</a>
-      </div>
-    </div>`).join('');
-}
-
 function renderDonors() {
   const g = document.getElementById('donors-grid');
   if (!g) return;
@@ -1733,22 +2025,60 @@ async function changePassword() {
 }
 function saveSettings() { toast('Settings saved. Click "Publish Changes" to apply.','success'); }
 
-/* ── GITHUB IMAGE UPLOAD via /api/upload ── */
+/* ── CLIENT-SIDE IMAGE COMPRESSION ──
+   Resizes images > 1.5 MB before upload so they stay under Vercel's 4.5 MB
+   request-body limit (base64 overhead adds ~33%). PDFs are passed through as-is. */
+async function compressIfNeeded(file) {
+  const MAX_RAW = 1.5 * 1024 * 1024; // 1.5 MB raw → ~2 MB base64, well within Vercel limit
+  if (file.size <= MAX_RAW || !file.type.startsWith('image/')) return file;
+  return new Promise(resolve => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+      // Scale down proportionally until estimated output is under MAX_RAW
+      const scale = Math.sqrt(MAX_RAW / file.size);
+      width  = Math.round(width  * scale);
+      height = Math.round(height * scale);
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      canvas.toBlob(blob => resolve(blob ? new File([blob], file.name, { type: 'image/jpeg' }) : file),
+        'image/jpeg', 0.82);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
+
+/* ── GITHUB FILE UPLOAD via /api/upload ──
+   Returns { ok: true } on success or { ok: false, error: '...' } on failure. */
 async function uploadFileToGitHub(file, path) {
+  const fileToSend = await compressIfNeeded(file);
   return new Promise(resolve => {
     const reader = new FileReader();
     reader.onload = async e => {
-      const b64 = e.target.result.split(',')[1]; // strip data:...;base64, prefix
+      const b64 = e.target.result.split(',')[1];
       try {
-        const r = await fetch('/api/upload', {
+        const r   = await fetch('/api/upload', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({ secret: SESSION_SECRET, path, content: b64 })
         });
-        resolve(r.ok);
-      } catch(err) { resolve(false); }
+        if (r.ok) { resolve({ ok: true }); return; }
+        // Surface the real reason so admins know what to fix
+        let errMsg = `Upload failed (HTTP ${r.status})`;
+        try { const d = await r.json(); errMsg = d.error || errMsg; } catch {}
+        if (r.status === 401) errMsg = 'Auth failed — check that PUBLISH_SECRET in Vercel matches the admin password.';
+        if (r.status === 413) errMsg = 'File too large. Please use a smaller image (under 3 MB).';
+        if (r.status === 500 && errMsg.includes('GITHUB_TOKEN')) errMsg = 'GITHUB_TOKEN is not set in Vercel. Go to Settings → Setup Guide.';
+        resolve({ ok: false, error: errMsg });
+      } catch(err) {
+        resolve({ ok: false, error: 'Network error — check your internet connection.' });
+      }
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(fileToSend);
   });
 }
 
@@ -1894,6 +2224,487 @@ const uz = document.getElementById('upload-zone');
 uz.addEventListener('dragover', e => { e.preventDefault(); uz.classList.add('drag'); });
 uz.addEventListener('dragleave', () => uz.classList.remove('drag'));
 uz.addEventListener('drop', e => { e.preventDefault(); uz.classList.remove('drag'); if (e.dataTransfer.files.length) handleFileUpload({ target:{ files:e.dataTransfer.files, value:'' } }); });
+
+/* ── CLOUDINARY VIDEO UPLOAD ── */
+let _cldWidget = null;
+
+function getCldConfig() {
+  return {
+    cloudName: localStorage.getItem('calunah_cld_cloud') || '',
+    preset:    localStorage.getItem('calunah_cld_preset') || ''
+  };
+}
+
+function openCldUpload() {
+  const { cloudName, preset } = getCldConfig();
+  if (!cloudName || !preset) {
+    const notice = document.getElementById('cld-setup-notice');
+    if (notice) notice.style.display = 'block';
+    toast('Please configure Cloudinary in Settings first.', 'error');
+    return;
+  }
+  if (!window.cloudinary) { toast('Cloudinary widget failed to load. Check your internet connection.', 'error'); return; }
+  if (_cldWidget) { _cldWidget.open(); return; }
+  _cldWidget = cloudinary.createUploadWidget({
+    cloudName,
+    uploadPreset: preset,
+    resourceType: 'video',
+    sources: ['local', 'camera', 'url'],
+    multiple: false,
+    clientAllowedFormats: ['mp4','mov','avi','mkv','webm','m4v'],
+    maxFileSize: 2000000000,
+    showAdvancedOptions: false,
+    showCompletedButton: true,
+    styles: { palette: { window:'#0a1f0e', tabIcon:'#c9a84c', menuIcons:'#c9a84c', textDark:'#ffffff', textLight:'#c9a84c', link:'#c9a84c', action:'#c9a84c', inactiveTabIcon:'#ffffff', error:'#ef4444', inProgress:'#c9a84c', complete:'#22c55e', sourceBg:'#122b17' } }
+  }, (err, result) => {
+    if (!err && result && result.event === 'success') {
+      const url  = result.info.secure_url;
+      const name = result.info.original_filename || 'video';
+      saveCldVideo(url, name);
+      toast('Video uploaded successfully!', 'success');
+    }
+  });
+  _cldWidget.open();
+}
+
+function saveCldVideo(url, name) {
+  const list = JSON.parse(localStorage.getItem('calunah_cld_videos') || '[]');
+  list.unshift({ url, name, ts: Date.now() });
+  localStorage.setItem('calunah_cld_videos', JSON.stringify(list));
+  renderCldVideos();
+}
+
+function deleteCldVideo(idx) {
+  const list = JSON.parse(localStorage.getItem('calunah_cld_videos') || '[]');
+  list.splice(idx, 1);
+  localStorage.setItem('calunah_cld_videos', JSON.stringify(list));
+  renderCldVideos();
+}
+
+function renderCldVideos() {
+  const el = document.getElementById('cld-video-list');
+  if (!el) return;
+  const list = JSON.parse(localStorage.getItem('calunah_cld_videos') || '[]');
+  if (!list.length) { el.innerHTML = ''; return; }
+  el.innerHTML = list.map((v, i) => `
+    <div class="cld-video-item">
+      <video src="${v.url}" controls preload="none"></video>
+      <div class="cld-video-info">
+        <strong style="font-size:.85rem">${v.name}</strong>
+        <span>${v.url}</span>
+        <div>
+          <button class="cld-copy" onclick="navigator.clipboard.writeText('${v.url}');toast('URL copied!','success')"><i class="fas fa-copy"></i> Copy URL</button>
+          <button class="cld-del" onclick="deleteCldVideo(${i})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function saveCldConfig() {
+  const cn = document.getElementById('cld-cloud-name').value.trim();
+  const pr = document.getElementById('cld-preset').value.trim();
+  if (!cn || !pr) { toast('Enter both Cloud Name and Upload Preset.', 'error'); return; }
+  localStorage.setItem('calunah_cld_cloud', cn);
+  localStorage.setItem('calunah_cld_preset', pr);
+  _cldWidget = null; // reset widget so it picks up new config
+  toast('Cloudinary config saved! Video uploads are now enabled.', 'success');
+  const notice = document.getElementById('cld-setup-notice');
+  if (notice) notice.style.display = 'none';
+}
+
+function loadCldSettings() {
+  const cn = localStorage.getItem('calunah_cld_cloud') || '';
+  const pr = localStorage.getItem('calunah_cld_preset') || '';
+  const cnEl = document.getElementById('cld-cloud-name');
+  const prEl = document.getElementById('cld-preset');
+  if (cnEl) cnEl.value = cn;
+  if (prEl) prEl.value = pr;
+  if (!cn || !pr) {
+    const notice = document.getElementById('cld-setup-notice');
+    if (notice) notice.style.display = 'block';
+  }
+  renderCldVideos();
+}
+
+/* ── GEMINI AI CONTENT GENERATOR ── */
+function saveGeminiKey() {
+  const key = document.getElementById('gemini-api-key').value.trim();
+  if (!key) { toast('Enter your Gemini API key.', 'error'); return; }
+  localStorage.setItem('calunah_gemini_key', key);
+  toast('Gemini API key saved!', 'success');
+}
+
+function loadGeminiSettings() {
+  const key = localStorage.getItem('calunah_gemini_key') || '';
+  const el = document.getElementById('gemini-api-key');
+  if (el && key) el.value = key;
+}
+
+async function generateAI() {
+  const key = localStorage.getItem('calunah_gemini_key');
+  if (!key) { toast('Add your Gemini API key in Settings → AI Assistant first.', 'error'); showPage('settings'); return; }
+  const type   = document.getElementById('ai-type').value;
+  const topic  = document.getElementById('ai-prompt').value.trim();
+  if (!topic) { toast('Describe what you want to generate.', 'error'); return; }
+  const prompts = {
+    event:       `Write a compelling 3-4 sentence event description for a CALUNAH nonprofit alumni event. Details: ${topic}. Keep it warm, professional, and end with a call to action.`,
+    newsletter:  `Write an engaging 2-3 paragraph newsletter introduction for CALUNAH (Club des Alumni de l'Université Adventiste d'Haïti), a 501(c)(3) nonprofit. Topic: ${topic}. Tone: warm, inspiring, community-focused.`,
+    social:      `Write 3 social media post options for CALUNAH nonprofit about: ${topic}. Keep each under 200 characters, include relevant emojis, and end with a hashtag like #CALUNAH or #UNAH.`,
+    caption:     `Write 2 short, warm photo captions (1-2 sentences each) for a CALUNAH alumni nonprofit photo showing: ${topic}.`,
+    fundraiser:  `Write a heartfelt 3-sentence fundraising appeal for CALUNAH's scholarship fund. Context: ${topic}. Focus on student impact and end with a donation call to action.`,
+    bio:         `Write a professional 2-3 sentence bio for a CALUNAH member/leader. Details: ${topic}.`,
+    press:       `Write a 2-paragraph press release excerpt about CALUNAH (a 501(c)(3) Haiti-focused nonprofit founded in 1993). News: ${topic}. Keep it formal and newsworthy.`
+  };
+  const btn = document.getElementById('ai-gen-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+  try {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompts[type] }] }] })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '(no response)';
+    document.getElementById('ai-output-text').textContent = text;
+    document.getElementById('ai-output-wrap').style.display = 'block';
+    toast('Content generated!', 'success');
+  } catch (e) {
+    toast('Gemini error: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-robot"></i> Generate with Gemini AI';
+  }
+}
+
+function copyAIOutput() {
+  const text = document.getElementById('ai-output-text').textContent;
+  navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard!', 'success'));
+}
+
+/* ══ FLYER TEMPLATES ═════════════════════════════════════ */
+const FLYER_TEMPLATES = [
+  // FUNDRAISING
+  {id:'high-tea',    name:'High Tea Fundraiser',    cat:'Fundraising', desc:'Elegant tea party fundraiser with date, venue, ticket info',  bg:'#FFF8F0',accent:'#c9a84c',txtCol:'#1a2547',layout:'grand'},
+  {id:'gala',        name:'Annual Gala Night',       cat:'Fundraising', desc:'Formal black-tie gala — performers, sponsors, dinner & program', bg:'#0d0d0d',accent:'#c9a84c',txtCol:'#ffffff',layout:'dark'},
+  {id:'sat-giving',  name:'Saturday Giving',         cat:'Fundraising', desc:'Sabbath special offering — program, speaker, mission giving goal',bg:'#2d1b69',accent:'#e8c96a',txtCol:'#ffffff',layout:'bold'},
+  {id:'donation',    name:'Donation Drive',          cat:'Fundraising', desc:'Community giving campaign — goal, deadline, ways to donate',     bg:'#083d22',accent:'#4ade80',txtCol:'#ffffff',layout:'grand'},
+  // SPIRITUAL
+  {id:'prayer-week', name:'Week of Prayer',          cat:'Spiritual',   desc:'Revival week — nightly schedule, speakers, Zoom or venue info',  bg:'#0d1b3e',accent:'#c9a84c',txtCol:'#ffffff',layout:'grand'},
+  {id:'sabbath',     name:'Sabbath Worship',         cat:'Spiritual',   desc:'Sabbath service — guest speaker, livestream link, location',      bg:'#1e0b3e',accent:'#a78bfa',txtCol:'#ffffff',layout:'bold'},
+  {id:'revival',     name:'Revival Service',         cat:'Spiritual',   desc:'Church revival nights — speaker series, program, venue details',  bg:'#6b0f0f',accent:'#fbbf24',txtCol:'#ffffff',layout:'dark'},
+  // EVENTS
+  {id:'anniversary', name:'Anniversary Celebration', cat:'Events',      desc:'Milestone anniversary — year, program highlights, honored guests', bg:'#3b0a2a',accent:'#c9a84c',txtCol:'#ffffff',layout:'grand'},
+  {id:'graduation',  name:'Graduation Banquet',      cat:'Events',      desc:'Scholar recognition night — honorees, ceremony details, RSVP',    bg:'#0f2442',accent:'#60a5fa',txtCol:'#ffffff',layout:'bold'},
+  {id:'community',   name:'Community Gathering',     cat:'Events',      desc:'Family fellowship event — activities, food, program details',      bg:'#f0fdf4',accent:'#16a34a',txtCol:'#14532d',layout:'light'},
+  // AWARENESS
+  {id:'volunteer',   name:'Volunteer Call',          cat:'Awareness',   desc:'Recruit volunteers — roles, time commitment, how to sign up',     bg:'#fff7ed',accent:'#ea580c',txtCol:'#431407',layout:'light'},
+  {id:'announcement',name:'General Announcement',   cat:'Awareness',   desc:'Versatile all-purpose flyer for any CALUNAH message or event',   bg:'#f8fafc',accent:'#1a2547',txtCol:'#1a2547',layout:'light'},
+];
+const CAT_ICON = {Fundraising:'fa-hand-holding-heart',Spiritual:'fa-cross',Events:'fa-calendar-star',Awareness:'fa-bullhorn'};
+const CAT_CLR  = {Fundraising:'#dc2626',Spiritual:'#7c3aed',Events:'#0369a1',Awareness:'#b45309'};
+const CAT_BG2  = {Fundraising:'#fee2e2',Spiritual:'#ede9fe',Events:'#dbeafe',Awareness:'#fef3c7'};
+
+function tplThumbHTML(tpl) {
+  const {bg,accent,txtCol} = tpl;
+  const s = (a,r)=>`height:${r};background:${a};border-radius:2px;margin-bottom:5px`;
+  return `<div style="width:100%;height:100%;background:${bg};display:flex;flex-direction:column;position:relative">
+    <div style="background:${accent};flex:0 0 26%;display:flex;align-items:center;justify-content:center;padding:4px">
+      <span style="color:${bg};font-size:.48rem;font-weight:900;letter-spacing:.1em;text-align:center;line-height:1.25">${tpl.name.toUpperCase()}</span>
+    </div>
+    <div style="flex:1;padding:6px 10px;display:flex;flex-direction:column;justify-content:center;gap:4px">
+      <div style="${s(accent+'55','4px')};width:65%;margin:0 auto"></div>
+      <div style="${s(txtCol+'22','3px')}"></div>
+      <div style="${s(txtCol+'1a','3px')};width:88%"></div>
+      <div style="${s(txtCol+'15','3px')};width:75%"></div>
+      <div style="${s(accent+'44','4px')};width:45%;margin:3px auto"></div>
+      <div style="${s(txtCol+'12','3px')}"></div>
+      <div style="${s(txtCol+'0f','3px')};width:80%"></div>
+    </div>
+    <div style="background:${accent};flex:0 0 11%;display:flex;align-items:center;justify-content:center">
+      <span style="color:${bg};font-size:.36rem;font-weight:700;letter-spacing:.14em">calunah.org</span>
+    </div>
+  </div>`;
+}
+
+function renderTemplates() {
+  const g = document.getElementById('templates-grid');
+  if (!g) return;
+  const cats = {};
+  FLYER_TEMPLATES.forEach(t => { if (!cats[t.cat]) cats[t.cat] = []; cats[t.cat].push(t); });
+  let html = '';
+  Object.entries(cats).forEach(([cat, list]) => {
+    html += `<div class="tpl-cat-head"><i class="fas ${CAT_ICON[cat]||'fa-file-image'}" style="color:${CAT_CLR[cat]}"></i>${cat}</div>`;
+    list.forEach(t => {
+      html += `<div class="tpl-card">
+        <div class="tpl-preview" style="background:${t.bg}">${tplThumbHTML(t)}
+          <span class="tpl-badge" style="background:${CAT_BG2[t.cat]};color:${CAT_CLR[t.cat]}">${t.cat}</span>
+        </div>
+        <div class="tpl-info"><strong>${t.name}</strong><span>${t.desc}</span></div>
+        <div class="tpl-btns">
+          <button class="btn-tpl-edit" onclick="openFlyerEditor('${t.id}')"><i class="fas fa-pencil"></i> Edit</button>
+          <button class="btn-tpl-dl" onclick="quickDownload('${t.id}')"><i class="fas fa-download"></i> Save</button>
+        </div>
+      </div>`;
+    });
+  });
+  g.innerHTML = html;
+}
+
+/* ── FLYER EDITOR ─────────────────────────────────────────────── */
+let flyerCanvas = null;
+const FED_W = 540, FED_H = 720;
+
+function openFlyerEditor(templateId) {
+  document.getElementById('fed-modal').classList.add('open');
+  if (!flyerCanvas) {
+    flyerCanvas = new fabric.Canvas('fed-canvas', {width:FED_W, height:FED_H, preserveObjectStacking:true});
+    flyerCanvas.on('selection:created', fedOnSelect);
+    flyerCanvas.on('selection:updated', fedOnSelect);
+    flyerCanvas.on('selection:cleared',  fedOnDeselect);
+    flyerCanvas.on('object:modified', () => {
+      const obj = flyerCanvas.getActiveObject();
+      if (obj) fedOnSelect();
+    });
+  }
+  const tpl = FLYER_TEMPLATES.find(t => t.id === templateId);
+  if (tpl) {
+    document.getElementById('fed-tpl-name').textContent = 'Editing: ' + tpl.name;
+    document.getElementById('fed-bg-color').value = tpl.bg.length === 7 ? tpl.bg : '#0d1b3e';
+  }
+  applyFlyerTemplate(templateId);
+  renderEditorSidebar(templateId);
+}
+
+function closeFlyerEditor() {
+  document.getElementById('fed-modal').classList.remove('open');
+}
+
+function renderEditorSidebar(activeId) {
+  const el = document.getElementById('fed-tpl-list');
+  if (!el) return;
+  const cats = {};
+  FLYER_TEMPLATES.forEach(t => { if (!cats[t.cat]) cats[t.cat] = []; cats[t.cat].push(t); });
+  let html = '';
+  Object.entries(cats).forEach(([cat, list]) => {
+    html += `<div class="fed-sidebar-hd">${cat}</div>`;
+    list.forEach(t => {
+      const esc = t.name.replace(/'/g,"\\'").replace(/\\/g,'\\\\');
+      html += `<div class="fed-tpl-mini${t.id===activeId?' active':''}" data-id="${t.id}"
+        onclick="applyFlyerTemplate('${t.id}');document.querySelectorAll('.fed-tpl-mini').forEach(x=>x.classList.remove('active'));this.classList.add('active');document.getElementById('fed-tpl-name').textContent='Editing: ${esc}';document.getElementById('fed-bg-color').value='${t.bg.length===7?t.bg:'#000000'}';">
+        <div class="fed-mini-prev">${tplThumbHTML(t)}</div>
+        <div class="fed-mini-label">${t.name}</div>
+      </div>`;
+    });
+  });
+  el.innerHTML = html;
+}
+
+function applyFlyerTemplate(id) {
+  if (!flyerCanvas) return;
+  const tpl = FLYER_TEMPLATES.find(t => t.id === id);
+  if (!tpl) return;
+  flyerCanvas.clear();
+  flyerCanvas.setBackgroundColor(tpl.bg, flyerCanvas.renderAll.bind(flyerCanvas));
+  fedOnDeselect();
+  const {accent, txtCol, bg} = tpl;
+  const W = FED_W, H = FED_H;
+  const add = o => flyerCanvas.add(o);
+
+  function bar(top, h, fill) { return new fabric.Rect({left:0,top,width:W,height:h,fill,selectable:false,evented:false}); }
+  function line(x1,y1,x2,y2,color,w=1) { return new fabric.Line([x1,y1,x2,y2],{stroke:color,strokeWidth:w,selectable:false,evented:false}); }
+  function txt(str,x,y,opts) { return new fabric.IText(str,Object.assign({left:x,top:y,fontFamily:'Georgia, serif'},opts)); }
+  function ftxt(str,x,y,opts) { return new fabric.Text(str,Object.assign({left:x,top:y,fontFamily:'Georgia, serif',selectable:false,evented:false},opts)); }
+
+  if (tpl.layout === 'grand') {
+    add(bar(0,Math.round(H*.082),accent));
+    add(ftxt('CALUNAH',18,14,{fontSize:13,fill:bg,fontWeight:'bold'}));
+    add(txt(tpl.name.toUpperCase(),W/2,H*.13,{fontSize:26,fill:txtCol,fontWeight:'bold',charSpacing:80,textAlign:'center',originX:'center'}));
+    add(new fabric.Rect({left:W/2-45,top:H*.26,width:90,height:3,fill:accent,originX:'center',selectable:false,evented:false}));
+    add(txt('Date: Click to edit', W/2,H*.30,{fontSize:15,fill:txtCol,opacity:.7,textAlign:'center',originX:'center'}));
+    add(txt('Time: Click to edit', W/2,H*.355,{fontSize:14,fill:txtCol,opacity:.65,textAlign:'center',originX:'center'}));
+    add(txt('Venue: Click to edit',W/2,H*.405,{fontSize:14,fill:txtCol,opacity:.65,textAlign:'center',originX:'center'}));
+    add(txt('Add your event description here.\nDouble-click to edit. Drag to move.',W/2,H*.50,{fontSize:13,fill:txtCol,opacity:.75,textAlign:'center',originX:'center',lineHeight:1.65}));
+    add(txt('RSVP: info@calunah.org',W/2,H*.69,{fontSize:13,fill:accent,textAlign:'center',originX:'center',fontStyle:'italic'}));
+    add(bar(Math.round(H*.875),Math.round(H*.125),accent));
+    add(ftxt("CLUB DES ALUMNI DE L'UAH  |  www.calunah.org",W/2,H*.934,{fontSize:10,fill:bg,textAlign:'center',originX:'center',charSpacing:35}));
+  }
+
+  else if (tpl.layout === 'dark') {
+    add(new fabric.Rect({left:10,top:10,width:W-20,height:H-20,fill:'transparent',stroke:accent,strokeWidth:3,rx:2,ry:2,selectable:false,evented:false}));
+    add(new fabric.Rect({left:20,top:20,width:W-40,height:H-40,fill:'transparent',stroke:accent+'44',strokeWidth:1,selectable:false,evented:false}));
+    add(ftxt('❖  CALUNAH  ❖',W/2,46,{fontSize:11,fill:accent,textAlign:'center',originX:'center',charSpacing:110}));
+    add(txt(tpl.name.toUpperCase(),W/2,H*.15,{fontSize:27,fill:accent,fontWeight:'bold',charSpacing:90,textAlign:'center',originX:'center',lineHeight:1.3}));
+    add(line(W/2-65,H*.295,W/2+65,H*.295,accent,2));
+    add(ftxt('A CALUNAH SPECIAL EVENT',W/2,H*.315,{fontSize:10,fill:accent,opacity:.6,textAlign:'center',originX:'center',charSpacing:190}));
+    add(line(W/2-65,H*.355,W/2+65,H*.355,accent+'44',1));
+    add(txt('Date  ·  Time  ·  Location',W/2,H*.42,{fontSize:16,fill:txtCol,textAlign:'center',originX:'center'}));
+    add(txt('Add event details here.\nDouble-click to edit.',W/2,H*.53,{fontSize:13,fill:txtCol,opacity:.8,textAlign:'center',originX:'center',lineHeight:1.65}));
+    add(line(W/2-65,H*.685,W/2+65,H*.685,accent,1));
+    add(ftxt('www.calunah.org',W/2,H*.715,{fontSize:11,fill:accent,textAlign:'center',originX:'center',fontStyle:'italic'}));
+  }
+
+  else if (tpl.layout === 'bold') {
+    add(new fabric.Circle({left:W/2,top:H*.165,radius:64,fill:accent+'22',stroke:accent,strokeWidth:2.5,originX:'center',originY:'center',selectable:false,evented:false}));
+    add(ftxt('✟',W/2,H*.13,{fontSize:42,fill:accent,textAlign:'center',originX:'center'}));
+    add(txt(tpl.name.toUpperCase(),W/2,H*.295,{fontSize:23,fill:txtCol,fontWeight:'bold',charSpacing:55,textAlign:'center',originX:'center',lineHeight:1.3}));
+    add(new fabric.Rect({left:W/2-52,top:H*.408,width:104,height:3,fill:accent,originX:'center',selectable:false,evented:false}));
+    add(txt('Date: Click to edit\nTime: Click to edit\nVenue: Click to edit',W/2,H*.455,{fontSize:15,fill:txtCol,textAlign:'center',originX:'center',lineHeight:1.75}));
+    add(txt('Add details or description here.\nDouble-click to edit.',W/2,H*.635,{fontSize:13,fill:txtCol,opacity:.75,textAlign:'center',originX:'center',lineHeight:1.65}));
+    add(bar(Math.round(H*.875),Math.round(H*.125),accent));
+    add(ftxt('CALUNAH  |  www.calunah.org',W/2,H*.934,{fontSize:11,fill:bg,textAlign:'center',originX:'center',charSpacing:55}));
+  }
+
+  else { // light
+    add(bar(0,Math.round(H*.065),accent));
+    add(new fabric.Rect({left:0,top:H*.065,width:6,height:Math.round(H*.826),fill:accent,selectable:false,evented:false}));
+    add(txt(tpl.name.toUpperCase(),24,H*.105,{fontSize:23,fill:txtCol,fontWeight:'bold',charSpacing:45,lineHeight:1.3}));
+    add(ftxt("Club des Alumni de l'Université Adventiste d'Haïti",24,H*.215,{fontSize:10,fill:txtCol,opacity:.5,charSpacing:14}));
+    add(line(24,H*.265,W-24,H*.265,accent,2));
+    add(txt('Date: Click to edit', 24,H*.31,{fontSize:14,fill:txtCol}));
+    add(txt('Time: Click to edit', 24,H*.37,{fontSize:14,fill:txtCol}));
+    add(txt('Venue: Click to edit',24,H*.43,{fontSize:14,fill:txtCol}));
+    add(txt('Add your event description here.\nDouble-click any text to edit it.\nDrag to reposition freely.',24,H*.525,{fontSize:13,fill:txtCol,opacity:.75,lineHeight:1.65}));
+    add(line(24,H*.817,W-24,H*.817,accent+'44',1));
+    add(ftxt('info@calunah.org  |  www.calunah.org',24,H*.84,{fontSize:11,fill:accent,fontStyle:'italic'}));
+    add(bar(Math.round(H*.895),Math.round(H*.105),accent));
+    add(ftxt('CALUNAH',W/2,H*.945,{fontSize:13,fill:bg,textAlign:'center',originX:'center',fontWeight:'bold',charSpacing:130}));
+  }
+
+  flyerCanvas.renderAll();
+}
+
+/* ── EDITOR UI ACTIONS ─────────────────────────────────────── */
+function fedOnSelect() {
+  const obj = flyerCanvas?.getActiveObject();
+  if (!obj) return fedOnDeselect();
+  document.getElementById('fed-no-sel').style.display = 'none';
+  document.getElementById('fed-sel-wrap').style.display = 'block';
+  const isTxt = obj.type === 'i-text' || obj.type === 'text';
+  document.getElementById('fed-text-wrap').style.display = isTxt ? 'block' : 'none';
+  document.getElementById('fed-fill-wrap').style.display = isTxt ? 'none' : 'block';
+  document.getElementById('fed-opacity').value = Math.round((obj.opacity ?? 1) * 100);
+  if (isTxt) {
+    try { document.getElementById('fed-txt-color').value = obj.fill || '#ffffff'; } catch(e){}
+    document.getElementById('fed-font-size').value = Math.round(obj.fontSize || 20);
+    document.getElementById('fed-bold-btn').classList.toggle('on', obj.fontWeight === 'bold');
+    document.getElementById('fed-italic-btn').classList.toggle('on', obj.fontStyle === 'italic');
+    document.getElementById('fed-underline-btn').classList.toggle('on', !!obj.underline);
+  } else {
+    try { if (typeof obj.fill === 'string') document.getElementById('fed-fill-color').value = obj.fill; } catch(e){}
+  }
+}
+function fedOnDeselect() {
+  document.getElementById('fed-no-sel').style.display = 'block';
+  document.getElementById('fed-sel-wrap').style.display = 'none';
+}
+
+function fedAddText() {
+  if (!flyerCanvas) return;
+  const t = new fabric.IText('Double-click to edit', {
+    left:FED_W/2, top:FED_H/2, originX:'center', originY:'center',
+    fontFamily:'Georgia, serif', fontSize:22, fill:'#c9a84c', textAlign:'center'
+  });
+  flyerCanvas.add(t); flyerCanvas.setActiveObject(t); flyerCanvas.renderAll();
+  t.enterEditing(); t.selectAll();
+}
+
+function fedAddImage() {
+  const inp = document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      fabric.Image.fromURL(ev.target.result, img => {
+        const sc = Math.min((FED_W*.7)/img.width, (FED_H*.5)/img.height, 1);
+        img.scale(sc).set({left:FED_W/2, top:FED_H/2, originX:'center', originY:'center'});
+        flyerCanvas.add(img); flyerCanvas.setActiveObject(img); flyerCanvas.renderAll();
+      });
+    };
+    reader.readAsDataURL(f);
+  };
+  inp.click();
+}
+
+function fedUploadBg() {
+  const inp = document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      fabric.Image.fromURL(ev.target.result, img => {
+        const sc = Math.max(FED_W/img.width, FED_H/img.height);
+        img.scale(sc).set({left:FED_W/2, top:FED_H/2, originX:'center', originY:'center', selectable:false, evented:false, excludeFromExport:false});
+        flyerCanvas.getObjects().filter(o=>o._isBg).forEach(o=>flyerCanvas.remove(o));
+        img._isBg = true;
+        flyerCanvas.insertAt(img, 0);
+        flyerCanvas.setBackgroundColor('transparent', ()=>{});
+        flyerCanvas.renderAll();
+        toast('Background image applied. Use the color picker to tint.','success');
+      });
+    };
+    reader.readAsDataURL(f);
+  };
+  inp.click();
+}
+
+function fedSetBg(color) { if (!flyerCanvas) return; flyerCanvas.setBackgroundColor(color, flyerCanvas.renderAll.bind(flyerCanvas)); }
+function fedSetOpacity(v) { const o=flyerCanvas?.getActiveObject(); if(o){o.set('opacity',v/100);flyerCanvas.renderAll();} }
+function fedSetTextColor(v) { const o=flyerCanvas?.getActiveObject(); if(o){o.set('fill',v);flyerCanvas.renderAll();} }
+function fedSetFontSize(v) { const o=flyerCanvas?.getActiveObject(); if(o){o.set('fontSize',parseInt(v)||20);flyerCanvas.renderAll();} }
+function fedSetFill(v) { const o=flyerCanvas?.getActiveObject(); if(o){o.set('fill',v);flyerCanvas.renderAll();} }
+function fedSetAlign(a) { const o=flyerCanvas?.getActiveObject(); if(o){o.set('textAlign',a);flyerCanvas.renderAll();} }
+function fedToggleBold() {
+  const o=flyerCanvas?.getActiveObject(); if(!o) return;
+  const v=o.fontWeight==='bold'?'normal':'bold';
+  o.set('fontWeight',v); flyerCanvas.renderAll();
+  document.getElementById('fed-bold-btn').classList.toggle('on',v==='bold');
+}
+function fedToggleItalic() {
+  const o=flyerCanvas?.getActiveObject(); if(!o) return;
+  const v=o.fontStyle==='italic'?'normal':'italic';
+  o.set('fontStyle',v); flyerCanvas.renderAll();
+  document.getElementById('fed-italic-btn').classList.toggle('on',v==='italic');
+}
+function fedToggleUnderline() {
+  const o=flyerCanvas?.getActiveObject(); if(!o) return;
+  const v=!o.underline; o.set('underline',v); flyerCanvas.renderAll();
+  document.getElementById('fed-underline-btn').classList.toggle('on',v);
+}
+function fedBringForward()  { flyerCanvas?.getActiveObject()?.bringForward();  flyerCanvas?.renderAll(); }
+function fedSendBackward()  { flyerCanvas?.getActiveObject()?.sendBackwards(); flyerCanvas?.renderAll(); }
+function fedDuplicate() {
+  const o=flyerCanvas?.getActiveObject(); if(!o) return;
+  o.clone(c => { c.set({left:(o.left||0)+24,top:(o.top||0)+24}); flyerCanvas.add(c); flyerCanvas.setActiveObject(c); flyerCanvas.renderAll(); });
+}
+function fedDeleteSelected() {
+  const o=flyerCanvas?.getActiveObject(); if(!o) return;
+  if(o.type==='activeSelection') o.forEachObject(x=>flyerCanvas.remove(x)); else flyerCanvas.remove(o);
+  flyerCanvas.discardActiveObject(); flyerCanvas.renderAll();
+}
+function fedExportPNG() {
+  if(!flyerCanvas) return;
+  flyerCanvas.discardActiveObject(); flyerCanvas.renderAll();
+  const url = flyerCanvas.toDataURL({format:'png',quality:1,multiplier:2});
+  const a = document.createElement('a');
+  a.download='calunah-flyer.png'; a.href=url; a.click();
+  toast('Flyer saved as high-res PNG!','success');
+}
+function fedExportJPG() {
+  if(!flyerCanvas) return;
+  flyerCanvas.discardActiveObject(); flyerCanvas.renderAll();
+  const url = flyerCanvas.toDataURL({format:'jpeg',quality:.95,multiplier:2});
+  const a = document.createElement('a');
+  a.download='calunah-flyer.jpg'; a.href=url; a.click();
+  toast('Flyer saved as JPG!','success');
+}
+function quickDownload(id) {
+  openFlyerEditor(id);
+  setTimeout(() => { fedExportPNG(); }, 600);
+}
 
 /* ── TOAST ── */
 function toast(msg, type='info') {

@@ -456,30 +456,80 @@ const qsa = (sel, ctx) => [...(ctx || document).querySelectorAll(sel)];
    1. SPLASH SCREEN
    ============================================================ */
 function initSplash() {
-  const splash    = qs('#splash');
-  const splashBtn = qs('#splash-btn');
+  const splash  = qs('#splash');
   if (!splash) return;
 
-  const MIN_MS = 2800;
-  const start  = Date.now();
+  document.body.style.overflow = 'hidden';
 
-  function hideSplash() {
-    splash.classList.add('hidden');
-    document.body.style.overflow = '';
-    splash.addEventListener('transitionend', () => splash.remove(), { once: true });
+  const video   = qs('#intro-video');
+  const barTop  = qs('.intro-bar-top');
+  const barBot  = qs('.intro-bar-bot');
+  const flash   = qs('#intro-flash');
+  const title   = qs('#intro-title');
+  const skipBtn = qs('#intro-skip');
+  const sndBtn  = qs('#intro-sound');
+  let   exited  = false;
+
+  function exitSplash() {
+    if (exited) return;
+    exited = true;
+    if (video) video.pause();
+    if (barTop) { barTop.classList.remove('in'); barTop.classList.add('out'); }
+    if (barBot) { barBot.classList.remove('in'); barBot.classList.add('out'); }
+    setTimeout(() => {
+      if (flash) flash.classList.add('on');
+      setTimeout(() => {
+        splash.classList.add('hidden');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          if (splash.parentNode) splash.remove();
+          const nl = document.querySelector('.nav-logo');
+          if (nl) nl.classList.add('nav-logo-spin');
+        }, 1700);
+      }, 280);
+    }, 420);
   }
 
-  // "Enter Website" button lets users skip the wait
-  splashBtn && splashBtn.addEventListener('click', hideSplash);
+  // T+200ms — bars glide in from edges
+  setTimeout(() => {
+    if (barTop) barTop.classList.add('in');
+    if (barBot) barBot.classList.add('in');
 
-  window.addEventListener('load', () => {
-    const elapsed = Date.now() - start;
-    if (elapsed >= MIN_MS) hideSplash();
-    else setTimeout(hideSplash, MIN_MS - elapsed);
-  });
+    // T+900ms — video fades up and plays
+    setTimeout(() => {
+      if (video) {
+        video.classList.add('on');
+        const p = video.play();
+        if (p) p.catch(() => setTimeout(exitSplash, 1500));
+      }
+      // Sound toggle appears after 1s
+      setTimeout(() => { if (sndBtn) sndBtn.classList.add('on'); }, 1000);
+      // Skip button after 2.5s
+      setTimeout(() => { if (skipBtn) skipBtn.classList.add('on'); }, 2500);
+      // Title rises from below at 7s (logo nearly assembled)
+      setTimeout(() => { if (title) title.classList.add('on'); }, 7000);
+      // Cinematic push-in on video at 8s
+      setTimeout(() => { if (video) video.classList.add('zoom'); }, 8000);
+    }, 700);
+  }, 200);
 
-  setTimeout(hideSplash, 6000); // absolute fallback
-  document.body.style.overflow = 'hidden';
+  if (video) {
+    video.addEventListener('ended', () => setTimeout(exitSplash, 1200));
+    video.addEventListener('error', () => setTimeout(exitSplash, 400));
+  }
+
+  if (sndBtn) {
+    sndBtn.addEventListener('click', () => {
+      if (!video) return;
+      video.muted = !video.muted;
+      sndBtn.querySelector('i').className = video.muted
+        ? 'fas fa-volume-mute' : 'fas fa-volume-high';
+    });
+  }
+
+  if (skipBtn) skipBtn.addEventListener('click', exitSplash);
+
+  setTimeout(exitSplash, 18000); // hard fallback
 }
 
 
@@ -1413,14 +1463,15 @@ document.addEventListener('DOMContentLoaded', () => {
 /* Album definitions — display order, titles, and icons. Photos are grouped by
    their `cat` field; any album that ends up with no photos is skipped. */
 const GALLERY_ALBUM_DEFS = [
-  { id:'gala2024',    title:'Annual Gala 2024',          icon:'fa-champagne-glasses' },
-  { id:'gala2023',    title:'Spring Gala 2023',          icon:'fa-spa' },
-  { id:'build',       title:'Dormitory Construction',    icon:'fa-hard-hat' },
-  { id:'auditorium',  title:'New Auditorium Chairs',     icon:'fa-chair' },
-  { id:'water',       title:'Dlo UNAH Water Project',    icon:'fa-droplet' },
-  { id:'community',   title:'Community & Outreach',      icon:'fa-hands-holding-circle' },
-  { id:'campus',      title:'Campus Life',               icon:'fa-graduation-cap' },
-  { id:'events',      title:'Events & Gatherings',       icon:'fa-calendar-star' }
+  { id:'gala2024',    key:'gallery.album.gala2024',    icon:'fa-champagne-glasses' },
+  { id:'gala2023',    key:'gallery.album.gala2023',    icon:'fa-spa' },
+  { id:'build',       key:'gallery.album.build',       icon:'fa-hard-hat' },
+  { id:'auditorium',  key:'gallery.album.auditorium',  icon:'fa-chair' },
+  { id:'water',       key:'gallery.album.water',       icon:'fa-droplet' },
+  { id:'community',   key:'gallery.album.community',   icon:'fa-hands-holding-circle' },
+  { id:'campus',      key:'gallery.album.campus',      icon:'fa-graduation-cap' },
+  { id:'hightea2026', key:'gallery.album.hightea2026', icon:'fa-mug-hot' },
+  { id:'events',      key:'gallery.album.events',      icon:'fa-calendar-star' }
 ];
 
 /* Group CALUNAH_CONFIG.gallery into albums.
@@ -1431,20 +1482,22 @@ function getGalleryAlbums() {
     !it.src.startsWith('images/campus1') && !it.src.startsWith('images/campus2') &&
     !it.src.startsWith('images/campus3') && !it.src.startsWith('images/campus4'));
 
+  const t = CALUNAH_LANG[CURRENT_LANG] || CALUNAH_LANG['en'];
   const albums = GALLERY_ALBUM_DEFS.map(def => {
     const items = all.filter(it => it.cat === def.id);
-    return { id:def.id, title:def.title, icon:def.icon, items, cover: items.length ? items[0].src : '' };
+    const title = t[def.key] || def.key;
+    return { id:def.id, title, icon:def.icon, items, cover: items.length ? items[0].src : '' };
   }).filter(a => a.items.length);
 
   // Catch-all for any categories not named above
   const known = new Set(GALLERY_ALBUM_DEFS.map(d => d.id));
   const others = all.filter(it => !known.has(it.cat));
-  if (others.length) albums.push({ id:'more', title:'More Moments', icon:'fa-images', items:others, cover:others[0].src });
+  if (others.length) albums.push({ id:'more', title: t['gallery.album.more'] || 'More Moments', icon:'fa-images', items:others, cover:others[0].src });
 
   // Final "All Photos" album so visitors can still browse everything at once
   if (all.length) {
     const galaCover = all.find(it => it.cat === 'gala2024') || all[0];
-    albums.push({ id:'all', title:'All Photos', icon:'fa-photo-film', items: all, cover: galaCover.src, isAll:true });
+    albums.push({ id:'all', title: t['gallery.album.all'] || 'All Photos', icon:'fa-photo-film', items: all, cover: galaCover.src, isAll:true });
   }
   return albums;
 }
@@ -1471,6 +1524,8 @@ function buildGallery() {
   // Album-cover grid: a few elegant cards instead of a long photo wall.
   grid.classList.remove('gallery-empty');
   grid.classList.add('gallery-albums');
+  const tg = CALUNAH_LANG[CURRENT_LANG] || CALUNAH_LANG['en'];
+  const viewAlbumTxt = tg['gallery.viewalbum'] || 'View album';
   grid.innerHTML = albums.map((a, i) => `
     <button class="album-card${a.isAll ? ' album-all' : ''}" type="button" data-album="${escAttr(a.id)}"
             data-aos="fade-up" data-aos-delay="${(i % 3) * 80}"
@@ -1483,7 +1538,7 @@ function buildGallery() {
         <div class="album-info">
           <span class="album-icon"><i class="fas ${a.icon}"></i></span>
           <h3 class="album-title">${escAttr(a.title)}</h3>
-          <span class="album-cta">View album <i class="fas fa-arrow-right"></i></span>
+          <span class="album-cta">${viewAlbumTxt} <i class="fas fa-arrow-right"></i></span>
         </div>
       </div>
     </button>`).join('');
@@ -2649,6 +2704,18 @@ const CALUNAH_LANG = {
     'gallery.badge':        'Moments We Cherish',
     'gallery.title':        'Photo Gallery',
     'gallery.sub':          'Celebrating togetherness, achievement, and our beautiful community',
+    'gallery.viewalbum':    'View album',
+    'gallery.album.gala2024':   'Annual Gala 2024',
+    'gallery.album.gala2023':   'Spring Gala 2023',
+    'gallery.album.build':      'Dormitory Construction',
+    'gallery.album.auditorium': 'New Auditorium Chairs',
+    'gallery.album.water':      'Dlo UNAH Water Project',
+    'gallery.album.community':  'Community & Outreach',
+    'gallery.album.campus':     'Campus Life',
+    'gallery.album.hightea2026': 'Blooming Minds High Tea 2026',
+    'gallery.album.events':     'Events & Gatherings',
+    'gallery.album.more':       'More Moments',
+    'gallery.album.all':        'All Photos',
     /*, Videos, */
     'videos.badge':         'Watch & Relive',
     'videos.title':         'Videos & Live Stream',
@@ -2887,6 +2954,18 @@ const CALUNAH_LANG = {
     'gallery.badge':        'Moments précieux',
     'gallery.title':        'Galerie photos',
     'gallery.sub':          'Célébrant la fraternité, les réalisations et notre belle communauté',
+    'gallery.viewalbum':    'Voir l\'album',
+    'gallery.album.gala2024':   'Gala annuel 2024',
+    'gallery.album.gala2023':   'Gala de printemps 2023',
+    'gallery.album.build':      'Construction du Dortoir',
+    'gallery.album.auditorium': 'Nouveaux sièges Auditorium',
+    'gallery.album.water':      'Projet Dlo UNAH',
+    'gallery.album.community':  'Communauté et Service',
+    'gallery.album.campus':     'Vie sur le Campus',
+    'gallery.album.hightea2026': 'High Tea Floraison 2026',
+    'gallery.album.events':     'Événements et Rassemblements',
+    'gallery.album.more':       'Plus de moments',
+    'gallery.album.all':        'Toutes les photos',
     /*, Videos, */
     'videos.badge':         'Regardez et revivez',
     'videos.title':         'Vidéos et direct',
@@ -3125,6 +3204,18 @@ const CALUNAH_LANG = {
     'gallery.badge':        'Moman nou choye',
     'gallery.title':        'Galeri foto',
     'gallery.sub':          'Selebre kominote nou an, reyalizasyon ak bèl moman nou yo',
+    'gallery.viewalbum':    'Wè album nan',
+    'gallery.album.gala2024':   'Gala Anyèl 2024',
+    'gallery.album.gala2023':   'Gala Prentan 2023',
+    'gallery.album.build':      'Konstriksyon Dòtwa',
+    'gallery.album.auditorium': 'Nouvo Chèz Oditoriyòm',
+    'gallery.album.water':      'Pwojè Dlo UNAH',
+    'gallery.album.community':  'Kominote ak Sèvis',
+    'gallery.album.campus':     'Lavi sou Kampis',
+    'gallery.album.hightea2026': 'High Tea Florisans 2026',
+    'gallery.album.events':     'Evènman ak Rasanbleman',
+    'gallery.album.more':       'Plis Moman',
+    'gallery.album.all':        'Tout Foto',
     /*, Videos, */
     'videos.badge':         'Gade ak reviv',
     'videos.title':         'Videyo ak emisyon an dirèk',
@@ -3338,6 +3429,9 @@ function applyTranslation(lang) {
       el.appendChild(document.createTextNode(' ' + t['committee.contact']));
     });
   }
+
+  // Re-render gallery so album titles update in the new language
+  if (typeof buildGallery === 'function' && qs('#gallery-grid')) buildGallery();
 
   // Update lang switcher button active state
   qsa('.lang-btn').forEach(btn => {

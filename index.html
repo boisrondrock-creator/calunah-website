@@ -59,28 +59,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/style.css?v=20260602f">
+  <link rel="stylesheet" href="css/style.css?v=20260715a">
 </head>
 <body>
 
-<!-- ══ SPLASH ══════════════════════════════════════════ -->
+<!-- ══ CINEMATIC INTRO ══════════════════════════════════ -->
 <div id="splash" class="splash-screen">
-  <canvas id="particles-canvas"></canvas>
-  <div class="splash-content">
-    <div class="splash-logo-ring">
-      <img src="images/logo.png" alt="CALUNAH Logo" class="splash-logo" id="splash-logo">
-    </div>
-    <div class="splash-text">
-      <h1 class="splash-title">CALUNAH</h1>
-      <p class="splash-sub">Club des Alumni de l'Université Adventiste d'Haïti</p>
-      <p class="splash-tagline">Founded 1993 &nbsp;·&nbsp; Excellence &nbsp;·&nbsp; Unity &nbsp;·&nbsp; Legacy</p>
-      <p class="splash-501c3"><i class="fas fa-certificate"></i> 501(c)(3) Nonprofit Organization</p>
-    </div>
-    <div class="splash-loader">
-      <div class="splash-progress-track"><div class="splash-progress-fill" id="splash-progress"></div></div>
-    </div>
-    <button class="splash-btn" id="splash-btn"><span>Enter Website</span><i class="fas fa-arrow-right"></i></button>
+  <div class="intro-grain"></div>
+  <div class="intro-bar intro-bar-top"></div>
+  <div class="intro-bar intro-bar-bot"></div>
+  <video id="intro-video" class="intro-video" muted playsinline preload="auto">
+    <source src="images/calunah-intro.mp4" type="video/mp4">
+  </video>
+  <div class="intro-vignette"></div>
+  <div class="intro-title" id="intro-title">
+    <div class="intro-name">CALUNAH</div>
+    <div class="intro-sub">Club des Alumni de l'Université Adventiste d'Haïti</div>
+    <div class="intro-founded">Founded 1993 &nbsp;·&nbsp; 501(c)(3) Nonprofit</div>
   </div>
+  <div class="intro-flash" id="intro-flash"></div>
+  <button class="intro-sound" id="intro-sound" title="Toggle Sound"><i class="fas fa-volume-mute"></i></button>
+  <button class="intro-skip" id="intro-skip">Skip &nbsp;<i class="fas fa-forward-step"></i></button>
 </div>
 
 <!-- ══ NAVIGATION ══════════════════════════════════════ -->
@@ -1007,7 +1006,7 @@
       <span class="section-badge" data-i18n="donate.badge">Make an Impact</span>
       <h2 class="section-title" data-i18n="donate.title">Support Our Mission</h2>
       <div class="divider"><span></span><i class="fas fa-heart"></i><span></span></div>
-      <p class="section-sub" data-i18n="donate.sub">CALUNAH is a registered <strong>501(c)(3) nonprofit</strong>. Your donation is fully tax-deductible and directly funds scholarships, community programs, and campus development.</p>
+      <p class="section-sub" data-i18n="donate.sub">CALUNAH is a registered <strong>501(c)(3) nonprofit</strong> (EIN: 71-1006724). Your donation is fully tax-deductible and directly funds scholarships, community programs, and campus development.</p>
     </div>
 
     <!-- ══ WHY GIVE / WHO WE ARE ══════════════════════════ -->
@@ -1369,7 +1368,7 @@
           <div class="ci"><div class="ci-icon"><i class="fas fa-globe"></i></div><div><h4>Website</h4><a href="https://www.calunah.org" target="_blank">www.calunah.org</a></div></div>
           <div class="ci"><div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>Mailing Address</h4><address>P.O. Box 110373<br>Palm Bay, FL 32908</address></div></div>
           <div class="ci"><div class="ci-icon"><i class="fas fa-university"></i></div><div><h4>Campus</h4><p>Université Adventiste d'Haïti<br>Carrefour, Haïti</p></div></div>
-          <div class="ci"><div class="ci-icon"><i class="fas fa-certificate"></i></div><div><h4>501(c)(3) Status</h4><p>IRS 501(c)(3) Tax-Exempt<br>Donations are tax-deductible</p></div></div>
+          <div class="ci"><div class="ci-icon"><i class="fas fa-certificate"></i></div><div><h4>501(c)(3) Nonprofit</h4><p>EIN: 71-1006724<br>IRS Tax-Exempt &nbsp;·&nbsp; Donations are tax-deductible</p></div></div>
         </div>
         <div class="contact-socials">
           <a href="https://www.facebook.com/CALUNAH"  target="_blank" class="cs-btn facebook"><i class="fab fa-facebook-f"></i></a>
@@ -1417,7 +1416,7 @@
             <i class="fas fa-certificate"></i>
             <div>
               <strong>501(c)(3) Nonprofit Organization</strong>
-              <small>IRS 501(c)(3) Tax-Exempt · Donations are tax-deductible</small>
+              <small>EIN: 71-1006724 &nbsp;·&nbsp; IRS Tax-Exempt &nbsp;·&nbsp; Donations are tax-deductible</small>
             </div>
           </div>
           <div class="footer-socials">
@@ -1451,6 +1450,12 @@
             <li><a href="#contact">Start a Chapter</a></li>
             <li><a href="#contact">Submit an Event</a></li>
           </ul>
+          <h4 style="margin-top:1.2rem">Transparency</h4>
+          <ul>
+            <li><a href="transparency.html"><i class="fas fa-file-alt" style="font-size:.7rem;margin-right:.3rem"></i>For Funders &amp; Grantors</a></li>
+            <li><a href="annual-report.html"><i class="fas fa-chart-bar" style="font-size:.7rem;margin-right:.3rem"></i>Annual Report</a></li>
+            <li><a href="privacy.html"><i class="fas fa-lock" style="font-size:.7rem;margin-right:.3rem"></i>Privacy Policy</a></li>
+          </ul>
         </div>
 
         <div class="footer-col footer-newsletter">
@@ -1473,7 +1478,9 @@
       <p>&copy; <span class="current-year">2025</span> CALUNAH, Club des Alumni de l'Université Adventiste d'Haïti. All rights reserved.</p>
       <p class="footer-note">
         <a href="https://www.calunah.org" target="_blank">www.calunah.org</a> &nbsp;·&nbsp;
-        501(c)(3) Nonprofit &nbsp;·&nbsp;
+        501(c)(3) Nonprofit &nbsp;·&nbsp; EIN: 71-1006724 &nbsp;·&nbsp;
+        <a href="transparency.html">For Funders</a> &nbsp;·&nbsp;
+        <a href="annual-report.html">Annual Report</a> &nbsp;·&nbsp;
         <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
         Designed with <i class="fas fa-heart" style="color:var(--gold)"></i> for our UNAH family
       </p>
@@ -1487,7 +1494,7 @@
 <!-- PDF.js — renders the magazine pages for the flipbook reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="js/flipbook.js?v=20260602f"></script>
-<script src="js/main.js?v=20260707a"></script>
+<script src="js/main.js?v=20260715a"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 
