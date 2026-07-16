@@ -1441,7 +1441,10 @@ function renderGallery() {
       <img src="../${item.src}" loading="lazy" alt="${item.caption||''}">
       <div class="gallery-thumb-overlay">
         <p>${item.caption||''}</p>
-        <button class="btn btn-secondary" style="font-size:.72rem;padding:.28rem .7rem" onclick="openGalleryModal(${i})"><i class="fas fa-pen"></i> Edit</button>
+        <div style="display:flex;gap:.35rem">
+          <button class="btn btn-secondary" style="font-size:.72rem;padding:.28rem .7rem" onclick="openGalleryModal(${i})"><i class="fas fa-pen"></i> Edit</button>
+          <button class="btn btn-danger" style="font-size:.72rem;padding:.28rem .7rem;background:#dc2626;border-color:#dc2626;color:#fff" onclick="deleteGalleryDirect(${i})"><i class="fas fa-trash"></i></button>
+        </div>
       </div>
     </div>`).join('');
 }
@@ -1494,6 +1497,12 @@ function deleteGalleryItem() {
   const i = parseInt(document.getElementById('gallery-edit-idx').value);
   DATA.gallery.items.splice(i,1);
   closeModal('gallery-modal'); renderGallery(); updateStats();
+  toast('Photo removed.','info');
+}
+function deleteGalleryDirect(i) {
+  if (!confirm('Remove this photo from the gallery?')) return;
+  DATA.gallery.items.splice(i,1);
+  renderGallery(); updateStats();
   toast('Photo removed.','info');
 }
 
