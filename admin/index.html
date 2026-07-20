@@ -1312,7 +1312,7 @@ async function saveEvent() {
   if (!DATA.events.events) DATA.events.events = [];
   if (evEditIdx >= 0) DATA.events.events[evEditIdx] = ev; else DATA.events.events.unshift(ev);
   closeModal('event-modal'); renderEvents(); updateStats();
-  toast('Event saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Event saved! Publishing to website...','success');
 }
 function deleteEvent(i) { if (!confirm('Delete this event?')) return; DATA.events.events.splice(i,1); renderEvents(); updateStats(); toast('Event deleted.','info'); }
 
@@ -1365,7 +1365,7 @@ async function saveBlogPost() {
   if (!DATA.blog.posts) DATA.blog.posts = [];
   if (blEditIdx >= 0) DATA.blog.posts[blEditIdx] = post; else DATA.blog.posts.unshift(post);
   closeModal('blog-modal'); renderBlog(); updateStats();
-  toast('Post saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Post saved! Publishing to website...','success');
 }
 function deleteBlogPost(i) { if (!confirm('Delete this post?')) return; DATA.blog.posts.splice(i,1); renderBlog(); updateStats(); toast('Post deleted.','info'); }
 
@@ -1427,7 +1427,7 @@ async function saveNL() {
   if (!DATA.newsletters.newsletters) DATA.newsletters.newsletters = [];
   if (nlEditIdx >= 0) DATA.newsletters.newsletters[nlEditIdx] = nl; else DATA.newsletters.newsletters.unshift(nl);
   closeModal('nl-modal'); renderNewsletter(); updateStats();
-  toast('Newsletter saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Newsletter saved! Publishing to website...','success');
 }
 function deleteNL(i) { if (!confirm('Delete this newsletter issue?')) return; DATA.newsletters.newsletters.splice(i,1); renderNewsletter(); updateStats(); toast('Newsletter deleted.','info'); }
 
@@ -1490,20 +1490,20 @@ function saveGalleryItem() {
   DATA.gallery.items[i].description = document.getElementById('gallery-desc').value.trim();
   DATA.gallery.items[i].cat         = document.getElementById('gallery-cat').value;
   closeModal('gallery-modal'); renderGallery();
-  toast('Photo updated.','success');
+  scheduleAutoPublish(); toast('Photo updated! Publishing to website...','success');
 }
 function deleteGalleryItem() {
   if (!confirm('Remove this photo from the gallery?')) return;
   const i = parseInt(document.getElementById('gallery-edit-idx').value);
   DATA.gallery.items.splice(i,1);
   closeModal('gallery-modal'); renderGallery(); updateStats();
-  toast('Photo removed.','info');
+  scheduleAutoPublish(); toast('Photo removed! Publishing to website...','info');
 }
 function deleteGalleryDirect(i) {
   if (!confirm('Remove this photo from the gallery?')) return;
   DATA.gallery.items.splice(i,1);
   renderGallery(); updateStats();
-  toast('Photo removed.','info');
+  scheduleAutoPublish(); toast('Photo removed! Publishing to website...','info');
 }
 
 /* ── MEDIA LIBRARY ── */
@@ -1574,7 +1574,7 @@ async function saveCommitteeMember() {
   if (!DATA.committee.committee) DATA.committee.committee = [];
   if (cmEditIdx >= 0) DATA.committee.committee[cmEditIdx] = m; else DATA.committee.committee.push(m);
   closeModal('committee-modal'); renderCommittee(); updateStats();
-  toast('Member saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Member saved! Publishing to website...','success');
 }
 function deleteCommitteeMember(i) { if (!confirm('Remove this member?')) return; DATA.committee.committee.splice(i,1); renderCommittee(); updateStats(); toast('Member removed.','info'); }
 
@@ -1623,7 +1623,7 @@ async function saveScholar() {
   if (!DATA.scholars.scholars) DATA.scholars.scholars = [];
   if (scEditIdx >= 0) DATA.scholars.scholars[scEditIdx] = s; else DATA.scholars.scholars.push(s);
   closeModal('scholar-modal'); renderScholars(); updateStats();
-  toast('Scholar saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Scholar saved! Publishing to website...','success');
 }
 function deleteScholar(i) { if (!confirm('Remove this scholar story?')) return; DATA.scholars.scholars.splice(i,1); renderScholars(); updateStats(); toast('Scholar removed.','info'); }
 
@@ -1671,7 +1671,7 @@ async function saveTestimonial() {
   if (!DATA.testimonials.testimonials) DATA.testimonials.testimonials = [];
   if (tsEditIdx >= 0) DATA.testimonials.testimonials[tsEditIdx] = t; else DATA.testimonials.testimonials.push(t);
   closeModal('testimonial-modal'); renderTestimonials(); updateStats();
-  toast('Testimonial saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Testimonial saved! Publishing to website...','success');
 }
 function deleteTestimonial(i) { if (!confirm('Remove this testimonial?')) return; DATA.testimonials.testimonials.splice(i,1); renderTestimonials(); updateStats(); toast('Testimonial removed.','info'); }
 
@@ -1715,7 +1715,7 @@ async function savePartner() {
   if (!DATA.partners.partners) DATA.partners.partners = [];
   if (ptEditIdx >= 0) DATA.partners.partners[ptEditIdx] = p; else DATA.partners.partners.push(p);
   closeModal('partner-modal'); renderPartners(); updateStats();
-  toast('Partner saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Partner saved! Publishing to website...','success');
 }
 function deletePartner(i) { if (!confirm('Remove this partner?')) return; DATA.partners.partners.splice(i,1); renderPartners(); updateStats(); toast('Partner removed.','info'); }
 
@@ -1764,7 +1764,7 @@ async function saveChapter() {
   if (!DATA.chapters.chapters) DATA.chapters.chapters = [];
   if (chEditIdx >= 0) DATA.chapters.chapters[chEditIdx] = ch; else DATA.chapters.chapters.push(ch);
   closeModal('chapter-modal'); renderChapters(); updateStats();
-  toast('Chapter saved! Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Chapter saved! Publishing to website...','success');
 }
 function deleteChapter(i) { if (!confirm('Delete this chapter?')) return; DATA.chapters.chapters.splice(i,1); renderChapters(); updateStats(); toast('Chapter deleted.','info'); }
 
@@ -1795,7 +1795,7 @@ function addMenuItem() {
   if (!DATA.menu || !DATA.menu.menu) DATA.menu = { menu: [] };
   DATA.menu.menu.push({ label:'New Item', href:'#hero', icon:'fas fa-circle' });
   renderMenu();
-  toast('Menu item added. Edit it, then Publish.', 'success');
+  scheduleAutoPublish(); toast('Menu item added! Publishing to website...', 'success');
 }
 function deleteMenuItem(i) {
   if (!confirm('Remove this menu item?')) return;
@@ -1846,7 +1846,7 @@ function addCustomSection() {
   if (!DATA.sections || !DATA.sections.sections) DATA.sections = { sections: [] };
   DATA.sections.sections.push({ title:'New Section', subtitle:'', body:'', visible:true });
   renderSectionsEditor();
-  toast('Section added. Fill it in, then Publish.', 'success');
+  scheduleAutoPublish(); toast('Section added! Publishing to website...', 'success');
 }
 function deleteSection(i) {
   if (!confirm('Remove this section?')) return;
@@ -1980,7 +1980,7 @@ function addDonor(tier) {
   DATA.donors[tier].push(name);
   input.value = '';
   renderDonors();
-  toast('Donor added. Click "Publish Changes" to go live.','success');
+  scheduleAutoPublish(); toast('Donor added! Publishing to website...','success');
 }
 function removeDonor(tier, i) { DATA.donors[tier].splice(i,1); renderDonors(); toast('Donor removed.','info'); }
 
@@ -2006,7 +2006,7 @@ function renderVideosList() {
     </div>`).join('');
 }
 function addVideoRow() { extraVideos.push({youtubeId:'',title:'',description:''}); renderVideosList(); }
-function saveVideos() { toast('Video settings saved. Click "Publish Changes" to go live.','success'); }
+function saveVideos() { scheduleAutoPublish(); toast('Video settings saved! Publishing to website...','success'); }
 
 /* ── SETTINGS ── */
 function populateSettings() {
@@ -2032,7 +2032,7 @@ async function changePassword() {
     'secret (PUBLISH_SECRET in Vercel) which is unchanged and keeps working.'
   );
 }
-function saveSettings() { toast('Settings saved. Click "Publish Changes" to apply.','success'); }
+function saveSettings() { scheduleAutoPublish(); toast('Settings saved! Publishing to website...','success'); }
 
 /* ── CLIENT-SIDE IMAGE COMPRESSION ──
    Resizes images > 1.5 MB before upload so they stay under Vercel's 4.5 MB
@@ -2089,6 +2089,53 @@ async function uploadFileToGitHub(file, path) {
     };
     reader.readAsDataURL(fileToSend);
   });
+}
+
+/* ── AUTO-PUBLISH: silently push all DATA to GitHub after each save ── */
+let _autoPublishTimer = null;
+let _autoPublishing   = false;
+function scheduleAutoPublish() {
+  clearTimeout(_autoPublishTimer);
+  _autoPublishTimer = setTimeout(autoPublish, 1800);
+}
+async function autoPublish() {
+  if (_autoPublishing) { scheduleAutoPublish(); return; }
+  _autoPublishing = true;
+  const btn = document.getElementById('btn-publish');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publishing...'; }
+  const fileMap = {
+    'data/events.json':       DATA.events,
+    'data/blog.json':         DATA.blog,
+    'data/gallery.json':      DATA.gallery,
+    'data/chapters.json':     DATA.chapters,
+    'data/committee.json':    DATA.committee,
+    'data/newsletters.json':  DATA.newsletters,
+    'data/donors.json':       DATA.donors,
+    'data/scholars.json':     DATA.scholars,
+    'data/testimonials.json': DATA.testimonials,
+    'data/partners.json':     DATA.partners,
+    'data/menu.json':         DATA.menu,
+    'data/content.json':      DATA.content,
+    'data/sections.json':     DATA.sections,
+    'data/.deploy':           { ts: Date.now(), by: 'admin-auto' }
+  };
+  try {
+    const r = await fetch('/api/publish', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: SESSION_SECRET, files: fileMap })
+    });
+    const d = await r.json();
+    if (r.ok && d.ok) {
+      toast('Changes saved and published to website.', 'success');
+    } else {
+      toast('Save succeeded but publish failed. Click "Publish Changes" manually.', 'error');
+    }
+  } catch(e) {
+    toast('Publish failed (network error). Click "Publish Changes" manually.', 'error');
+  } finally {
+    _autoPublishing = false;
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-rocket"></i> Publish Changes'; }
+  }
 }
 
 /* ── PUBLISH via /api/publish (serverless — no browser token needed) ── */
