@@ -1609,6 +1609,8 @@ a.partner-card:hover .partner-name{color:var(--green)}
 .tt-success i{color:#7CFC9A}
 .tt-cancel{background:#fff;color:var(--text);border:1px solid var(--border)}
 .tt-cancel i{color:var(--gold)}
+.tt-error{background:linear-gradient(135deg,#7a1c1c,#5a1010);color:#fff}
+.tt-error i{color:#ffb3b3}
 .et-reserve-btn{background:transparent;border:1.5px solid var(--green);color:var(--green);font-size:.75rem;padding:.42rem .9rem;border-radius:50px;cursor:pointer;margin-top:.3rem;font-weight:700;width:100%;transition:var(--transition)}
 .et-reserve-btn:hover{background:var(--green);color:#fff}
 .et-at-door{font-size:.72rem;color:var(--text-light);margin-top:.3rem;display:flex;align-items:center;gap:.3rem;justify-content:center}

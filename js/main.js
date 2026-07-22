@@ -1340,6 +1340,23 @@ function escAttr(s) {
 }
 window.escAttr = escAttr;
 
+/* ── PUBLIC TOAST NOTIFICATION ──────────────────────────────
+   type: 'error' | 'info'  (reuses ticket-toast CSS classes)  */
+function showPublicToast(msg, type = 'error') {
+  const existing = document.querySelector('.ticket-toast.pub-toast');
+  if (existing) existing.remove();
+  const icon = type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+  const cls  = type === 'error' ? 'tt-error' : 'tt-cancel';
+  const el   = document.createElement('div');
+  el.className = `ticket-toast pub-toast ${cls}`;
+  el.innerHTML = `<i class="fas ${icon}"></i><div>${msg}</div><button class="tt-close" aria-label="Close">&times;</button>`;
+  document.body.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show'));
+  function dismiss() { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }
+  el.querySelector('.tt-close').addEventListener('click', dismiss);
+  setTimeout(dismiss, 7000);
+}
+
 /* ── STRIPE TICKET CHECKOUT ─────────────────────────────────
    Reads the event/ticket data from the clicked button, asks
    /api/checkout to create a Stripe Checkout Session, then sends
@@ -1367,9 +1384,9 @@ async function buyTicket(btn) {
       window.location.href = data.url;          // go to Stripe checkout
       return;
     }
-    alert(data.error || 'Sorry, checkout is unavailable right now. Please try Zelle/PayPal or contact us.');
+    showPublicToast(data.error || 'Checkout is unavailable right now. Please try Zelle/PayPal or contact us.');
   } catch (e) {
-    alert('Network error starting checkout. Please try again, or use Zelle/PayPal.');
+    showPublicToast('A network error occurred. Please try again, or use Zelle/PayPal.');
   }
   btn.disabled = false;
   btn.innerHTML = original;
@@ -2149,9 +2166,9 @@ function initRecurringMembership() {
         });
         const data = await r.json();
         if (r.ok && data.url) { window.location.href = data.url; return; }
-        alert(data.error || 'Card checkout is unavailable right now. Please use Zelle or PayPal.');
+        showPublicToast(data.error || 'Card checkout is unavailable right now. Please use Zelle or PayPal.');
       } catch (e) {
-        alert('Network error starting checkout. Please try again, or use Zelle/PayPal.');
+        showPublicToast('A network error occurred. Please try again, or use Zelle/PayPal.');
       }
       stripeBtnEl.disabled = false;
       stripeBtnEl.innerHTML = orig;
@@ -2546,7 +2563,7 @@ function initDonation() {
     donateBtn.addEventListener('click', () => {
       const amt = (customInput && customInput.value) ? customInput.value : selectedAmount;
       if (!amt || isNaN(parseFloat(amt)) || parseFloat(amt) <= 0) {
-        alert('Please select or enter a donation amount.');
+        showPublicToast('Please select or enter a donation amount.', 'info');
         return;
       }
       const url = `https://www.paypal.com/donate?business=donations@calunah.org&amount=${encodeURIComponent(amt)}&currency_code=USD&item_name=CALUNAH+Donation`;
@@ -2935,7 +2952,7 @@ const CALUNAH_LANG = {
     'nl.ln':             'Last Name',
     'nl.email':          'Your email address',
     'nl.chapter':        'Select your chapter / location (optional)',
-    'nl.subscribe':      'Subscribe Now. It\'s Free!',
+    'nl.subscribe':      'Subscribe Now, It\'s Free',
     'nl.signupSuccess':  'Welcome! You\'re now subscribed to the CALUNAH Newsletter.',
     'nl.privacy':        'We respect your privacy. Unsubscribe at any time.',
     /*, Campus Building Campaign, */
