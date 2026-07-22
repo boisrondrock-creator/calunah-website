@@ -238,7 +238,6 @@ const CALUNAH_CONFIG = {
       features: [
         'Everything in Student',
         'Membership certificate',
-        'Voting rights',
         'Chapter meeting access',
         'Mentorship opportunities'
       ],
@@ -1854,14 +1853,19 @@ function buildVideos() {
 /* ============================================================
    13. LIVESTREAM HANDLER
    ============================================================ */
-function initLivestream() {
-  const ls          = CALUNAH_CONFIG.livestream;
+async function initLivestream() {
   const box         = qs('#livestream-box');
   const embedEl     = qs('#live-embed');
   const placeholder = qs('#live-placeholder');
   const statusText  = qs('#live-status-text');
   const tabs        = qsa('.lp-tab');
   if (!box) return;
+
+  let ls = CALUNAH_CONFIG.livestream;
+  try {
+    const r = await fetch('data/livestream.json?t=' + Date.now());
+    if (r.ok) ls = await r.json();
+  } catch(e) {}
 
   let activePlatform = ls.platform || 'youtube';
 
@@ -1903,17 +1907,16 @@ function initLivestream() {
     if (statusText) statusText.textContent = 'OFFLINE';
     if (embedEl) { embedEl.style.display = 'none'; }
 
-    // Fill the #live-next-event div (already in HTML placeholder structure)
     const nextEventEl = qs('#live-next-event');
-    if (nextEventEl && ls.nextStream) {
+    if (nextEventEl && ls.nextStream && ls.nextStream.title) {
       const ns = ls.nextStream;
       nextEventEl.innerHTML = `
         <div class="next-stream-card">
           <div class="ns-title">${ns.title}</div>
           <div class="ns-meta">
-            <span><i class="fas fa-calendar-alt"></i> ${ns.date}</span>
-            <span><i class="fas fa-clock"></i> ${ns.time}</span>
-            <span><i class="fas fa-tv"></i> ${ns.platform}</span>
+            ${ns.date ? `<span><i class="fas fa-calendar-alt"></i> ${ns.date}</span>` : ''}
+            ${ns.time ? `<span><i class="fas fa-clock"></i> ${ns.time}</span>` : ''}
+            ${ns.platform ? `<span><i class="fas fa-tv"></i> ${ns.platform}</span>` : ''}
           </div>
         </div>
       `;
@@ -2778,7 +2781,6 @@ const CALUNAH_LANG = {
     'mb.career':            'Career Resources',
     'mb.newsletter':        'Newsletter Access',
     'mb.events':            'Event Discounts',
-    'mb.voting':            'Voting Rights',
     'mem.recurring.title':  'Become a Recurring Member',
     'mem.recurring.sub':    'Support CALUNAH automatically · Cancel anytime · 100% tax-deductible',
     'mem.monthly':          'Monthly',
@@ -2995,9 +2997,8 @@ const CALUNAH_LANG = {
     'mem.feat.student.3':  'UAH alumni email directory',
     'mem.feat.associate.0':'Everything in Student',
     'mem.feat.associate.1':'Membership certificate',
-    'mem.feat.associate.2':'Voting rights',
-    'mem.feat.associate.3':'Chapter meeting access',
-    'mem.feat.associate.4':'Mentorship opportunities',
+    'mem.feat.associate.2':'Chapter meeting access',
+    'mem.feat.associate.3':'Mentorship opportunities',
     'mem.feat.fullmember.0':'Everything in Associate',
     'mem.feat.fullmember.1':'Official CALUNAH ID card',
     'mem.feat.fullmember.2':'Eligibility for leadership roles',
@@ -3139,7 +3140,6 @@ const CALUNAH_LANG = {
     'mb.career':            'Ressources professionnelles',
     'mb.newsletter':        'Accès au bulletin',
     'mb.events':            'Réductions sur les événements',
-    'mb.voting':            'Droit de vote',
     'mem.recurring.title':  'Devenir membre récurrent',
     'mem.recurring.sub':    'Soutenez CALUNAH automatiquement · Annulez à tout moment · 100% déductible',
     'mem.monthly':          'Mensuel',
@@ -3355,9 +3355,8 @@ const CALUNAH_LANG = {
     'mem.feat.student.3':  'Annuaire e-mail alumni UAH',
     'mem.feat.associate.0':'Tout dans Étudiant',
     'mem.feat.associate.1':'Certificat d\'adhésion',
-    'mem.feat.associate.2':'Droit de vote',
-    'mem.feat.associate.3':'Accès aux réunions de chapitre',
-    'mem.feat.associate.4':'Opportunités de mentorat',
+    'mem.feat.associate.2':'Accès aux réunions de chapitre',
+    'mem.feat.associate.3':'Opportunités de mentorat',
     'mem.feat.fullmember.0':'Tout dans Associé',
     'mem.feat.fullmember.1':'Carte d\'identité CALUNAH officielle',
     'mem.feat.fullmember.2':'Éligibilité aux rôles de leadership',
@@ -3499,7 +3498,6 @@ const CALUNAH_LANG = {
     'mb.career':            'Resous karyè',
     'mb.newsletter':        'Aksè nan bilten',
     'mb.events':            'Rediksyon sou evènman',
-    'mb.voting':            'Dwa vote',
     'mem.recurring.title':  'Vin yon manm regilyè',
     'mem.recurring.sub':    'Sipòte CALUNAH otomatikman · Anile nenpòt kilè · 100% dediktibl',
     'mem.monthly':          'Chak mwa',
@@ -3715,9 +3713,8 @@ const CALUNAH_LANG = {
     'mem.feat.student.3':  'Anyè imèl alumni UAH',
     'mem.feat.associate.0':'Tout nan Etidyan',
     'mem.feat.associate.1':'Sètifika manmbèchip',
-    'mem.feat.associate.2':'Dwa vote',
-    'mem.feat.associate.3':'Aksè nan reyinyon chapit',
-    'mem.feat.associate.4':'Opòtinite mentora',
+    'mem.feat.associate.2':'Aksè nan reyinyon chapit',
+    'mem.feat.associate.3':'Opòtinite mentora',
     'mem.feat.fullmember.0':'Tout nan Asosye',
     'mem.feat.fullmember.1':'Kat idantite ofisyèl CALUNAH',
     'mem.feat.fullmember.2':'Kalifikasyon pou wòl lidèchip',
