@@ -56,10 +56,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://donorbox.org">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/style.css?v=20260715a">
+  <link rel="stylesheet" href="css/style.css?v=20260722a">
 </head>
 <body>
 
@@ -239,7 +242,7 @@
         <p data-i18n="about.p3">From UNAH's lush campus in Carrefour to alumni chapters spanning multiple continents, CALUNAH bridges our shared past with a brighter future for Haiti, for UNAH, and for every graduate who carries the flame of excellence.</p>
         <div class="values-grid">
           <div class="value-card"><div class="value-icon"><i class="fas fa-cross"></i></div><h4 data-i18n="about.val.faith">Faith</h4><p data-i18n="about.val.faith.desc">Grounded in Seventh-day Adventist Christian values and principles</p></div>
-          <div class="value-card"><div class="value-icon"><i class="fas fa-handshake"></i></div><h4 data-i18n="about.val.unity">Unity</h4><p data-i18n="about.val.unity.desc">Connecting alumni across generations, professions, and continents</p></div>
+          <div class="value-card"><div class="value-icon"><i class="fas fa-handshake"></i></div><h4 data-i18n="about.val.unity">Unity</h4><p data-i18n="about.val.unity.desc">Bringing together alumni from every background, country, and career path</p></div>
           <div class="value-card"><div class="value-icon"><i class="fas fa-award"></i></div><h4 data-i18n="about.val.excellence">Excellence</h4><p data-i18n="about.val.excellence.desc">Upholding UNAH's legacy of academic and professional achievement</p></div>
           <div class="value-card"><div class="value-icon"><i class="fas fa-heart"></i></div><h4 data-i18n="about.val.service">Service</h4><p data-i18n="about.val.service.desc">Giving back to Haiti and empowering the next generation of students</p></div>
         </div>
@@ -737,7 +740,7 @@
       <span class="section-badge gold" data-i18n="videos.badge">Watch &amp; Relive</span>
       <h2 class="section-title white" data-i18n="videos.title">Videos &amp; Live Stream</h2>
       <div class="divider light"><span></span><i class="fab fa-youtube"></i><span></span></div>
-      <p class="section-sub white" data-i18n="videos.sub">Relive our events and catch us LIVE on your favorite platform</p>
+      <p class="section-sub white" data-i18n="videos.sub">Watch on demand and catch us LIVE on your favorite platform</p>
     </div>
 
     <!-- ── LIVESTREAM BOX ── -->
@@ -853,15 +856,15 @@
       <div class="newsletter-signup-box" data-aos="fade-right" data-aos-delay="100">
         <div class="nl-icon-wrap"><i class="fas fa-envelope-open-text"></i></div>
         <h3 data-i18n="nl.signupTitle">Subscribe to Our Newsletter</h3>
-        <p>Join thousands of CALUNAH alumni receiving our quarterly newsletter packed with community news, scholarship announcements, and inspiring alumni stories.</p>
+        <p data-i18n="nl.join">Join thousands of CALUNAH alumni receiving our quarterly newsletter packed with community news, scholarship announcements, and inspiring alumni stories.</p>
         <form class="nl-form" id="nl-signup-form">
           <div class="nl-row">
-            <input type="text"  name="firstName" placeholder="First Name" required>
-            <input type="text"  name="lastName"  placeholder="Last Name"  required>
+            <input type="text"  name="firstName" placeholder="First Name" data-i18n-placeholder="nl.fn" required>
+            <input type="text"  name="lastName"  placeholder="Last Name"  data-i18n-placeholder="nl.ln" required>
           </div>
-          <input type="email" name="email" placeholder="Your email address" required>
+          <input type="email" name="email" placeholder="Your email address" data-i18n-placeholder="nl.email" required>
           <select name="chapter">
-            <option value="">Select your chapter / location (optional)</option>
+            <option value="" data-i18n="nl.chapter">Select your chapter / location (optional)</option>
             <option>New York Chapter</option>
             <option>New England Chapter (CT · MA · RI)</option>
             <option>DMV Chapter (DC · MD · VA)</option>
@@ -872,13 +875,13 @@
             <option>Other / International</option>
           </select>
           <button type="submit" class="btn btn-primary btn-full">
-            <i class="fas fa-paper-plane"></i> Subscribe Now. It's Free!
+            <i class="fas fa-paper-plane"></i> <span data-i18n="nl.subscribe">Subscribe Now. It's Free!</span>
           </button>
           <div class="nl-success-msg" id="nl-signup-success">
-            <i class="fas fa-check-circle"></i> Welcome! You're now subscribed to the CALUNAH Newsletter.
+            <i class="fas fa-check-circle"></i> <span data-i18n="nl.signupSuccess">Welcome! You're now subscribed to the CALUNAH Newsletter.</span>
           </div>
         </form>
-        <p class="nl-privacy"><i class="fas fa-lock"></i> We respect your privacy. Unsubscribe at any time.</p>
+        <p class="nl-privacy"><i class="fas fa-lock"></i> <span data-i18n="nl.privacy">We respect your privacy. Unsubscribe at any time.</span></p>
       </div>
       <!-- Past Issues -->
       <div class="newsletter-issues" data-aos="fade-left" data-aos-delay="100">
@@ -1016,7 +1019,7 @@
       <div class="cs-why-header">
         <img src="images/campus/build/2.jpg" alt="UNAH Campus" class="cs-why-img">
         <div class="cs-why-overlay">
-          <span class="cs-why-badge"><i class="fas fa-university"></i>&nbsp; About CALUNAH</span>
+          <span class="cs-why-badge"><i class="fas fa-university"></i>&nbsp; CALUNAH's Impact</span>
           <h3 class="cs-why-title" data-i18n="donate.why.title">Why Give to CALUNAH?</h3>
           <p class="cs-why-sub" data-i18n="donate.why.sub">Your donation transforms lives at l'Université Adventiste d'Haïti and empowers communities across Haiti and the diaspora.</p>
         </div>
@@ -1056,7 +1059,7 @@
             <div class="cs-vmc-icon"><i class="fas fa-users"></i></div>
             <h4 class="cs-vmc-title" data-i18n="donate.community.title">Our Community</h4>
             <p data-i18n="donate.community.desc">CALUNAH remains a progressive network of strength, togetherness, and service to its large constituency of faithful alumni, students, friends, and supporters.</p>
-            <p data-i18n="donate.community.desc2">Our mission is to provide continuous support to communities through scholarships, construction projects, and financial assistance.</p>
+            <p data-i18n="donate.community.desc2">We deliver continuous support through scholarships, construction projects, and direct financial assistance to those who need it most.</p>
           </div>
         </div>
 
@@ -1073,10 +1076,10 @@
           <h4 class="cs-edu-title" data-i18n="donate.edu.title">Emphasizing Educational Advancement</h4>
           <p class="cs-edu-intro" data-i18n="donate.edu.intro">Our main focus is education. Some of our goals are:</p>
           <ul class="cs-edu-list">
-            <li><i class="fas fa-check-circle"></i> Intensify the recruitment process and keep a more up-to-date database.</li>
-            <li><i class="fas fa-check-circle"></i> Restructure CALUNAH at its administrative level for a better service to all our constituency world.</li>
-            <li><i class="fas fa-check-circle"></i> Organize two major events each year, one strictly socio-cultural, the other humanitarian.</li>
-            <li><i class="fas fa-check-circle"></i> Organize a CALUNAH mission trip to Haïti in the context of the great <em>'corvée'</em> to rebuild the country.</li>
+            <li><i class="fas fa-check-circle"></i> <span data-i18n="donate.edu.goal1">Intensify the recruitment process and keep a more up-to-date database.</span></li>
+            <li><i class="fas fa-check-circle"></i> <span data-i18n="donate.edu.goal2">Restructure CALUNAH at its administrative level for a better service to all our constituency world.</span></li>
+            <li><i class="fas fa-check-circle"></i> <span data-i18n="donate.edu.goal3">Organize two major events each year, one strictly socio-cultural, the other humanitarian.</span></li>
+            <li><i class="fas fa-check-circle"></i> <span data-i18n="donate.edu.goal4">Organize a CALUNAH mission trip to Haïti in the context of the great <em>'corvée'</em> to rebuild the country.</span></li>
           </ul>
         </div>
       </div>
@@ -1151,41 +1154,41 @@
 
         <!-- Content -->
         <div class="ucp-content">
-          <span class="ucp-badge"><i class="fas fa-hard-hat"></i>&nbsp; Campus Building Campaign</span>
-          <h3 class="ucp-title">Help Us Complete UNAH's Future</h3>
+          <span class="ucp-badge"><i class="fas fa-hard-hat"></i>&nbsp; <span data-i18n="campus.badge">Campus Building Campaign</span></span>
+          <h3 class="ucp-title" data-i18n="campus.title">Help Us Complete UNAH's Future</h3>
           <p class="ucp-quote">
             <i class="fas fa-quote-left ucp-ql"></i>
-            Please join us in supporting the Adventist University of Haiti.
+            <span data-i18n="campus.quote">Please join us in supporting the Adventist University of Haiti.</span>
             <i class="fas fa-quote-right ucp-qr"></i>
           </p>
-          <p class="ucp-text">
+          <p class="ucp-text" data-i18n="campus.p1">
             The photos you see tell a story of faith in progress. New buildings are rising across the UNAH campus: classrooms, dormitories, and facilities being built brick by brick to expand the university's capacity and serve a new generation of Haitian students.
           </p>
-          <p class="ucp-text">
+          <p class="ucp-text" data-i18n="campus.p2">
             From the marble-finished interiors to the reinforced walls reaching toward the sky, every dollar you give becomes a part of something permanent. Your generosity today is the classroom of tomorrow.
           </p>
           <div class="ucp-stats">
             <div class="ucp-stat">
               <span class="ucp-stat-n">3+</span>
-              <span class="ucp-stat-l">Buildings<br>Under Construction</span>
+              <span class="ucp-stat-l" data-i18n="campus.stat1">Buildings<br>Under Construction</span>
             </div>
             <div class="ucp-stat-div"></div>
             <div class="ucp-stat">
               <span class="ucp-stat-n">100%</span>
-              <span class="ucp-stat-l">Donations<br>Go to UNAH</span>
+              <span class="ucp-stat-l" data-i18n="campus.stat2">Donations<br>Go to UNAH</span>
             </div>
             <div class="ucp-stat-div"></div>
             <div class="ucp-stat">
               <span class="ucp-stat-n">501c3</span>
-              <span class="ucp-stat-l">Fully<br>Tax-Deductible</span>
+              <span class="ucp-stat-l" data-i18n="campus.stat3">Fully<br>Tax-Deductible</span>
             </div>
           </div>
           <a class="ucp-donate-btn dbox-donation-button"
              href="https://donorbox.org/help-us-build-unah-s-boys-dorm"
              target="_blank" rel="noopener">
-            <i class="fas fa-heart"></i>&nbsp; Donate to the Building Fund
+            <i class="fas fa-heart"></i>&nbsp; <span data-i18n="campus.donate">Donate to the Building Fund</span>
           </a>
-          <p class="ucp-secure"><i class="fas fa-lock"></i> Secure &nbsp;·&nbsp; One-time or Monthly &nbsp;·&nbsp; Card &amp; Google Pay</p>
+          <p class="ucp-secure"><i class="fas fa-lock"></i> <span data-i18n="campus.secure">Secure &nbsp;·&nbsp; One-time or Monthly &nbsp;·&nbsp; Card &amp; Google Pay</span></p>
         </div>
 
       </div>
@@ -1203,21 +1206,21 @@
     <!-- ══ FUNDRAISING TRACKER 2026 ═══════════════════════ -->
     <div class="fundraise-tracker" data-aos="fade-up">
       <div class="ft-header">
-        <div class="ft-badge"><i class="fas fa-chart-line"></i> Fundraising Tracker 2026</div>
-        <h3 class="ft-title">Help Us Reach <span class="ft-goal">$150,000</span></h3>
-        <p class="ft-tagline">"Together for Education, Together for Change.&rdquo; Support us by December 31, 2026</p>
+        <div class="ft-badge"><i class="fas fa-chart-line"></i> <span data-i18n="tracker.badge">Fundraising Tracker 2026</span></div>
+        <h3 class="ft-title"><span data-i18n="tracker.title">Help Us Reach</span> <span class="ft-goal">$150,000</span></h3>
+        <p class="ft-tagline" data-i18n="tracker.tagline">"Together for Education, Together for Change.&rdquo; Support us by December 31, 2026</p>
       </div>
       <div class="ft-body">
         <div class="ft-milestones">
-          <div class="ft-milestone"><span class="ft-qtr">Q1</span><span class="ft-target">$30,000</span><span class="ft-period">by March</span></div>
-          <div class="ft-milestone"><span class="ft-qtr">Q2</span><span class="ft-target">$60,000</span><span class="ft-period">by June</span></div>
-          <div class="ft-milestone"><span class="ft-qtr">Q3</span><span class="ft-target">$90,000</span><span class="ft-period">by September</span></div>
-          <div class="ft-milestone ft-final"><span class="ft-qtr">Q4</span><span class="ft-target">$150,000</span><span class="ft-period">by December</span></div>
+          <div class="ft-milestone"><span class="ft-qtr">Q1</span><span class="ft-target">$30,000</span><span class="ft-period" data-i18n="tracker.q1">by March</span></div>
+          <div class="ft-milestone"><span class="ft-qtr">Q2</span><span class="ft-target">$60,000</span><span class="ft-period" data-i18n="tracker.q2">by June</span></div>
+          <div class="ft-milestone"><span class="ft-qtr">Q3</span><span class="ft-target">$90,000</span><span class="ft-period" data-i18n="tracker.q3">by September</span></div>
+          <div class="ft-milestone ft-final"><span class="ft-qtr">Q4</span><span class="ft-target">$150,000</span><span class="ft-period" data-i18n="tracker.q4">by December</span></div>
         </div>
         <div class="ft-bar-wrap">
           <div class="ft-raised-line">
             <span class="ft-raised" id="ft-raised">$0</span>
-            <span class="ft-raised-of">raised of <strong id="ft-goal-amt">$150,000</strong> goal</span>
+            <span class="ft-raised-of"><span data-i18n="tracker.of">raised of</span> <strong id="ft-goal-amt">$150,000</strong> <span data-i18n="tracker.goal">goal</span></span>
             <span class="ft-pct" id="ft-pct">0%</span>
           </div>
           <div class="ft-bar-track">
@@ -1229,10 +1232,10 @@
               <span style="left:100%">$150K</span>
             </div>
           </div>
-          <p class="ft-note"><i class="fas fa-info-circle"></i> Every gift moves us forward. Goal: December 31, 2026.</p>
+          <p class="ft-note"><i class="fas fa-info-circle"></i> <span data-i18n="tracker.note">Every gift moves us forward. Goal: December 31, 2026.</span></p>
         </div>
         <a href="#ways-to-donate" class="ft-cta-btn">
-          <i class="fas fa-heart"></i> Donate Now &amp; Be Part of the Change
+          <i class="fas fa-heart"></i> <span data-i18n="tracker.cta">Donate Now &amp; Be Part of the Change</span>
         </a>
       </div>
     </div>
@@ -1477,8 +1480,6 @@
     <div class="container">
       <p>&copy; <span class="current-year">2025</span> CALUNAH, Club des Alumni de l'Université Adventiste d'Haïti. All rights reserved.</p>
       <p class="footer-note">
-        <a href="https://www.calunah.org" target="_blank">www.calunah.org</a> &nbsp;·&nbsp;
-        501(c)(3) Nonprofit &nbsp;·&nbsp; EIN: 71-1006724 &nbsp;·&nbsp;
         <a href="transparency.html" data-i18n="footer.links.funders">For Funders</a> &nbsp;·&nbsp;
         <a href="annual-report.html" data-i18n="footer.links.annual">Annual Report</a> &nbsp;·&nbsp;
         <a href="privacy.html" data-i18n="footer.links.privacy">Privacy Policy</a> &nbsp;·&nbsp;
@@ -1494,7 +1495,7 @@
 <!-- PDF.js — renders the magazine pages for the flipbook reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="js/flipbook.js?v=20260602f"></script>
-<script src="js/main.js?v=20260715c"></script>
+<script src="js/main.js?v=20260722a"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 

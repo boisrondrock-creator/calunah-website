@@ -814,7 +814,8 @@ function buildCommittee() {
 
   grid.innerHTML = CALUNAH_CONFIG.committee.map((m, i) => `
     <div class="committee-card" data-aos="fade-up" data-aos-delay="${(i % 4) * 80}">
-      <div class="committee-photo-wrap">
+      <div class="committee-photo-wrap${m.photo ? ' person-lb-trigger' : ''}"
+           ${m.photo ? `data-lb-src="${m.photo}" data-lb-cap="${m.name} · ${m.role}" title="Click to enlarge photo"` : ''}>
         <div class="committee-photo">
           ${m.photo
             ? `<img src="${m.photo}" alt="${m.name}" loading="lazy"
@@ -825,6 +826,7 @@ function buildCommittee() {
         <div class="committee-role-badge" title="${m.role}">
           <i class="fas ${m.icon || 'fa-user'}"></i>
         </div>
+        ${m.photo ? `<div class="person-zoom-hint"><i class="fas fa-search-plus"></i></div>` : ''}
       </div>
       <div class="committee-role">${m.role}</div>
       <h3 class="committee-name">${m.name}</h3>
@@ -873,8 +875,10 @@ function buildChapters() {
           <span class="chapter-abbr">${ch.abbr}</span>
         </div>
       </div>
-      <div class="chapter-president-photo ${ch.photo ? '' : 'ch-photo-fallback'}">
+      <div class="chapter-president-photo ${ch.photo ? 'person-lb-trigger' : 'ch-photo-fallback'}"
+           ${ch.photo ? `data-lb-src="${ch.photo}" data-lb-cap="${ch.president} · ${ch.city} Chapter President" title="Click to enlarge photo"` : ''}>
         ${photoHtml}
+        ${ch.photo ? `<div class="person-zoom-hint ch-zoom-hint"><i class="fas fa-search-plus"></i></div>` : ''}
       </div>
       <div class="chapter-card-body">
         <h3 class="chapter-city">${ch.city}</h3>
@@ -1728,6 +1732,15 @@ function initLightbox() {
     if (items.length) openLightbox(items, +(trigger.dataset.lbIndex || 0));
   });
 
+  // Committee & chapter president photo zoom triggers
+  document.addEventListener('click', e => {
+    const trigger = e.target.closest('.person-lb-trigger');
+    if (!trigger) return;
+    const src = trigger.dataset.lbSrc;
+    const cap = trigger.dataset.lbCap || '';
+    if (src) openLightbox([{ src, caption: cap }], 0);
+  });
+
   // Click the dark background to close; clicks on image/caption do not bubble here
   lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
   btnClose && btnClose.addEventListener('click', e => { e.stopPropagation(); closeLightbox(); });
@@ -1977,27 +1990,35 @@ function buildNewsletterIssues() {
 function buildMembership() {
   const grid = qs('#membership-grid');
   if (!grid) return;
+  const t = CALUNAH_LANG[CURRENT_LANG] || CALUNAH_LANG.en;
 
-  grid.innerHTML = CALUNAH_CONFIG.membership.map((tier, i) => `
+  grid.innerHTML = CALUNAH_CONFIG.membership.map((tier, i) => {
+    const tk = tier.tier.toLowerCase().replace(/\s+/g, '');
+    const tierName = t[`mem.tier.${tk}`] || tier.tier;
+    const period   = t['mem.period'] || tier.period;
+    const cta      = t[`mem.cta.${tk}`] || tier.cta;
+    const popular  = t['mem.popular'] || 'Most Popular';
+    const features = tier.features.map((f, j) => t[`mem.feat.${tk}.${j}`] || f);
+    return `
     <div class="membership-card ${tier.featured ? 'featured' : ''}"
          data-aos="fade-up" data-aos-delay="${i * 100}">
-      ${tier.featured ? '<div class="membership-popular">Most Popular</div>' : ''}
+      ${tier.featured ? `<div class="membership-popular">${popular}</div>` : ''}
       <div class="membership-icon" style="color:${tier.color}">
         <i class="${tier.icon}"></i>
       </div>
-      <h3 class="membership-tier">${tier.tier}</h3>
+      <h3 class="membership-tier">${tierName}</h3>
       <div class="membership-price">
         <span class="price-amount">${tier.price}</span>
-        <span class="price-period">${tier.period}</span>
+        <span class="price-period">${period}</span>
       </div>
       <ul class="membership-features">
-        ${tier.features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
+        ${features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('')}
       </ul>
       <a href="#membership-form" class="btn-membership" style="background:${tier.color}">
-        ${tier.cta}
+        ${cta}
       </a>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 
@@ -2649,7 +2670,7 @@ const CALUNAH_LANG = {
     'about.val.faith':      'Faith',
     'about.val.faith.desc': 'Grounded in Seventh-day Adventist Christian values and principles',
     'about.val.unity':      'Unity',
-    'about.val.unity.desc': 'Connecting alumni across generations, professions, and continents',
+    'about.val.unity.desc': 'Bringing together alumni from every background, country, and career path',
     'about.val.excellence': 'Excellence',
     'about.val.excellence.desc': 'Upholding UNAH\'s legacy of academic and professional achievement',
     'about.val.service':    'Service',
@@ -2722,7 +2743,7 @@ const CALUNAH_LANG = {
     /*, Videos, */
     'videos.badge':         'Watch & Relive',
     'videos.title':         'Videos & Live Stream',
-    'videos.sub':           'Relive our events and catch us LIVE on your favorite platform',
+    'videos.sub':           'Watch on demand and catch us LIVE on your favorite platform',
     /*, Newsletter, */
     'nl.badge':             'Stay Informed',
     'nl.title':             'e-Newsletter',
@@ -2811,7 +2832,7 @@ const CALUNAH_LANG = {
     'donate.mission.desc':   'CALUNAH is dedicated to provide scholarships and financial assistance toward maintaining student learning and school infrastructure.',
     'donate.mission.desc2':  'Our humanitarian mission is <em>\'sans frontières\'</em> (without borders), which means that we endeavor to support students from all walks of life.',
     'donate.community.desc':  'CALUNAH remains a progressive network of strength, togetherness, and service to its large constituency of faithful alumni, students, friends, and supporters.',
-    'donate.community.desc2': 'Our mission is to provide continuous support to communities through scholarships, construction projects, and financial assistance.',
+    'donate.community.desc2': 'We deliver continuous support through scholarships, construction projects, and direct financial assistance to those who need it most.',
     'donate.tier1':          'Provides school supplies for one UNAH student for a semester',
     'donate.tier2':          'Covers one month of textbooks and academic materials for a student',
     'donate.tier3':          'Funds a full semester scholarship for one deserving UNAH student',
@@ -2903,6 +2924,75 @@ const CALUNAH_LANG = {
     'footer.links.funders':       'For Funders',
     'footer.links.annual':        'Annual Report',
     'footer.links.privacy':       'Privacy Policy',
+    /*, Educational goals, */
+    'donate.edu.goal1':  'Intensify the recruitment process and keep a more up-to-date database.',
+    'donate.edu.goal2':  'Restructure CALUNAH at its administrative level for a better service to all our constituency world.',
+    'donate.edu.goal3':  'Organize two major events each year, one strictly socio-cultural, the other humanitarian.',
+    'donate.edu.goal4':  'Organize a CALUNAH mission trip to Haïti in the context of the great <em>\'corvée\'</em> to rebuild the country.',
+    /*, Newsletter form, */
+    'nl.join':           'Join thousands of CALUNAH alumni receiving our quarterly newsletter packed with community news, scholarship announcements, and inspiring alumni stories.',
+    'nl.fn':             'First Name',
+    'nl.ln':             'Last Name',
+    'nl.email':          'Your email address',
+    'nl.chapter':        'Select your chapter / location (optional)',
+    'nl.subscribe':      'Subscribe Now. It\'s Free!',
+    'nl.signupSuccess':  'Welcome! You\'re now subscribed to the CALUNAH Newsletter.',
+    'nl.privacy':        'We respect your privacy. Unsubscribe at any time.',
+    /*, Campus Building Campaign, */
+    'campus.badge':      'Campus Building Campaign',
+    'campus.title':      'Help Us Complete UNAH\'s Future',
+    'campus.quote':      'Please join us in supporting the Adventist University of Haiti.',
+    'campus.p1':         'The photos you see tell a story of faith in progress. New buildings are rising across the UNAH campus: classrooms, dormitories, and facilities being built brick by brick to expand the university\'s capacity and serve a new generation of Haitian students.',
+    'campus.p2':         'From the marble-finished interiors to the reinforced walls reaching toward the sky, every dollar you give becomes a part of something permanent. Your generosity today is the classroom of tomorrow.',
+    'campus.stat1':      'Buildings Under Construction',
+    'campus.stat2':      'Donations Go to UNAH',
+    'campus.stat3':      'Fully Tax-Deductible',
+    'campus.donate':     'Donate to the Building Fund',
+    'campus.secure':     'Secure · One-time or Monthly · Card & Google Pay',
+    /*, Fundraising Tracker, */
+    'tracker.badge':     'Fundraising Tracker 2026',
+    'tracker.title':     'Help Us Reach',
+    'tracker.tagline':   '"Together for Education, Together for Change." Support us by December 31, 2026',
+    'tracker.of':        'raised of',
+    'tracker.goal':      'goal',
+    'tracker.note':      'Every gift moves us forward. Goal: December 31, 2026.',
+    'tracker.cta':       'Donate Now & Be Part of the Change',
+    'tracker.q1':        'by March',
+    'tracker.q2':        'by June',
+    'tracker.q3':        'by September',
+    'tracker.q4':        'by December',
+    /*, Membership tiers, */
+    'mem.popular':       'Most Popular',
+    'mem.period':        'per year',
+    'mem.tier.student':  'Student',
+    'mem.tier.associate':'Associate',
+    'mem.tier.fullmember':'Full Member',
+    'mem.tier.sustaining':'Sustaining',
+    'mem.cta.student':   'Join Free',
+    'mem.cta.associate': 'Become a Member',
+    'mem.cta.fullmember':'Join Now',
+    'mem.cta.sustaining':'Sustain Our Mission',
+    'mem.feat.student.0':  'CALUNAH digital newsletter',
+    'mem.feat.student.1':  'Access to alumni network',
+    'mem.feat.student.2':  'Invitation to virtual events',
+    'mem.feat.student.3':  'UAH alumni email directory',
+    'mem.feat.associate.0':'Everything in Student',
+    'mem.feat.associate.1':'Membership certificate',
+    'mem.feat.associate.2':'Voting rights',
+    'mem.feat.associate.3':'Chapter meeting access',
+    'mem.feat.associate.4':'Mentorship opportunities',
+    'mem.feat.fullmember.0':'Everything in Associate',
+    'mem.feat.fullmember.1':'Official CALUNAH ID card',
+    'mem.feat.fullmember.2':'Eligibility for leadership roles',
+    'mem.feat.fullmember.3':'Scholarship nomination rights',
+    'mem.feat.fullmember.4':'Priority event registration',
+    'mem.feat.fullmember.5':'Annual gala invitation',
+    'mem.feat.sustaining.0':'Everything in Full Member',
+    'mem.feat.sustaining.1':'Recognition in annual report',
+    'mem.feat.sustaining.2':'Donor wall listing',
+    'mem.feat.sustaining.3':'Private leadership briefings',
+    'mem.feat.sustaining.4':'Dedicated liaison contact',
+    'mem.feat.sustaining.5':'Legacy plaque eligibility',
   },
 
   fr: {
@@ -2940,7 +3030,7 @@ const CALUNAH_LANG = {
     'about.val.faith':      'Foi',
     'about.val.faith.desc': 'Fondés sur les valeurs chrétiennes adventistes du septième jour',
     'about.val.unity':      'Unité',
-    'about.val.unity.desc': 'Connecter les anciens élèves à travers les générations, les professions et les continents',
+    'about.val.unity.desc': 'Rassembler les alumni de tous les horizons, pays et parcours professionnels',
     'about.val.excellence': 'Excellence',
     'about.val.excellence.desc': 'Perpétuer l\'héritage académique et professionnel de l\'UNAH',
     'about.val.service':    'Service',
@@ -3013,7 +3103,7 @@ const CALUNAH_LANG = {
     /*, Videos, */
     'videos.badge':         'Regardez et revivez',
     'videos.title':         'Vidéos et direct',
-    'videos.sub':           'Revivez nos événements et regardez-nous EN DIRECT sur votre plateforme préférée',
+    'videos.sub':           'Regardez à la demande et suivez-nous EN DIRECT sur votre plateforme préférée',
     /*, Newsletter, */
     'nl.badge':             'Restez informé',
     'nl.title':             'Bulletin d\'information',
@@ -3103,7 +3193,7 @@ const CALUNAH_LANG = {
     'donate.mission.desc':   'CALUNAH se consacre à fournir des bourses et une aide financière pour soutenir l\'apprentissage des étudiants et les infrastructures scolaires.',
     'donate.mission.desc2':  'Notre mission humanitaire est <em>\'sans frontières\'</em>, ce qui signifie que nous nous efforçons de soutenir les étudiants de tous horizons.',
     'donate.community.desc':  'CALUNAH demeure un réseau progressiste de force, de solidarité et de service envers sa large communauté d\'anciens, d\'étudiants, d\'amis et de soutiens fidèles.',
-    'donate.community.desc2': 'Notre mission est d\'apporter un soutien continu aux communautés par des bourses, des projets de construction et une aide financière.',
+    'donate.community.desc2': 'Nous apportons un soutien continu par des bourses, des projets de construction et une aide financière directe à ceux qui en ont besoin.',
     'donate.tier1':          'Fournit des fournitures scolaires à un étudiant de l\'UNAH pour un semestre',
     'donate.tier2':          'Couvre un mois de manuels et de matériel pédagogique pour un étudiant',
     'donate.tier3':          'Finance une bourse d\'un semestre complet pour un étudiant méritant de l\'UNAH',
@@ -3194,6 +3284,75 @@ const CALUNAH_LANG = {
     'footer.links.funders':       'Pour les bailleurs',
     'footer.links.annual':        'Rapport annuel',
     'footer.links.privacy':       'Politique de confidentialité',
+    /*, Educational goals, */
+    'donate.edu.goal1':  'Intensifier le processus de recrutement et maintenir une base de données plus à jour.',
+    'donate.edu.goal2':  'Restructurer CALUNAH au niveau administratif pour un meilleur service à tous nos membres dans le monde.',
+    'donate.edu.goal3':  'Organiser deux événements majeurs chaque année, l\'un strictement socio-culturel, l\'autre humanitaire.',
+    'donate.edu.goal4':  'Organiser un voyage de mission CALUNAH en Haïti dans le contexte de la grande <em>\'corvée\'</em> pour reconstruire le pays.',
+    /*, Newsletter form, */
+    'nl.join':           'Rejoignez des milliers d\'anciens de CALUNAH qui reçoivent notre bulletin trimestriel avec des nouvelles de la communauté, des annonces de bourses et des histoires inspirantes d\'anciens élèves.',
+    'nl.fn':             'Prénom',
+    'nl.ln':             'Nom',
+    'nl.email':          'Votre adresse e-mail',
+    'nl.chapter':        'Sélectionnez votre chapitre / emplacement (facultatif)',
+    'nl.subscribe':      'S\'abonner. C\'est gratuit !',
+    'nl.signupSuccess':  'Bienvenue ! Vous êtes maintenant abonné au bulletin CALUNAH.',
+    'nl.privacy':        'Nous respectons votre vie privée. Désabonnez-vous à tout moment.',
+    /*, Campus Building Campaign, */
+    'campus.badge':      'Campagne de construction du campus',
+    'campus.title':      'Aidez-nous à compléter l\'avenir de l\'UNAH',
+    'campus.quote':      'Rejoignez-nous pour soutenir l\'Université Adventiste d\'Haïti.',
+    'campus.p1':         'Les photos que vous voyez racontent une histoire de foi en marche. De nouveaux bâtiments s\'élèvent sur le campus de l\'UNAH : des salles de classe, des dortoirs et des installations construits brique par brique pour agrandir la capacité de l\'université et servir une nouvelle génération d\'étudiants haïtiens.',
+    'campus.p2':         'Des intérieurs en marbre aux murs renforcés s\'élevant vers le ciel, chaque dollar que vous donnez fait partie de quelque chose de permanent. Votre générosité aujourd\'hui est la salle de classe de demain.',
+    'campus.stat1':      'Bâtiments en construction',
+    'campus.stat2':      'Dons vont à l\'UNAH',
+    'campus.stat3':      'Entièrement déductible d\'impôts',
+    'campus.donate':     'Faire un don au Fonds de construction',
+    'campus.secure':     'Sécurisé · Ponctuel ou mensuel · Carte et Google Pay',
+    /*, Fundraising Tracker, */
+    'tracker.badge':     'Suivi des collectes 2026',
+    'tracker.title':     'Aidez-nous à atteindre',
+    'tracker.tagline':   '"Ensemble pour l\'éducation, ensemble pour le changement." Soutenez-nous d\'ici au 31 décembre 2026',
+    'tracker.of':        'collectés sur',
+    'tracker.goal':      'objectif',
+    'tracker.note':      'Chaque don nous fait avancer. Objectif : 31 décembre 2026.',
+    'tracker.cta':       'Faites un don et faites partie du changement',
+    'tracker.q1':        'd\'ici mars',
+    'tracker.q2':        'd\'ici juin',
+    'tracker.q3':        'd\'ici septembre',
+    'tracker.q4':        'd\'ici décembre',
+    /*, Membership tiers, */
+    'mem.popular':       'Le plus populaire',
+    'mem.period':        'par an',
+    'mem.tier.student':  'Étudiant',
+    'mem.tier.associate':'Associé',
+    'mem.tier.fullmember':'Membre complet',
+    'mem.tier.sustaining':'Soutien',
+    'mem.cta.student':   'Rejoindre gratuitement',
+    'mem.cta.associate': 'Devenir membre',
+    'mem.cta.fullmember':'Rejoindre maintenant',
+    'mem.cta.sustaining':'Soutenir notre mission',
+    'mem.feat.student.0':  'Bulletin numérique CALUNAH',
+    'mem.feat.student.1':  'Accès au réseau alumni',
+    'mem.feat.student.2':  'Invitation aux événements virtuels',
+    'mem.feat.student.3':  'Annuaire e-mail alumni UAH',
+    'mem.feat.associate.0':'Tout dans Étudiant',
+    'mem.feat.associate.1':'Certificat d\'adhésion',
+    'mem.feat.associate.2':'Droit de vote',
+    'mem.feat.associate.3':'Accès aux réunions de chapitre',
+    'mem.feat.associate.4':'Opportunités de mentorat',
+    'mem.feat.fullmember.0':'Tout dans Associé',
+    'mem.feat.fullmember.1':'Carte d\'identité CALUNAH officielle',
+    'mem.feat.fullmember.2':'Éligibilité aux rôles de leadership',
+    'mem.feat.fullmember.3':'Droits de nomination aux bourses',
+    'mem.feat.fullmember.4':'Inscription prioritaire aux événements',
+    'mem.feat.fullmember.5':'Invitation au gala annuel',
+    'mem.feat.sustaining.0':'Tout dans Membre complet',
+    'mem.feat.sustaining.1':'Reconnaissance dans le rapport annuel',
+    'mem.feat.sustaining.2':'Listing sur le mur des donateurs',
+    'mem.feat.sustaining.3':'Briefings de leadership privés',
+    'mem.feat.sustaining.4':'Contact de liaison dédié',
+    'mem.feat.sustaining.5':'Admissibilité à la plaque commémorative',
   },
 
   kr: {
@@ -3231,7 +3390,7 @@ const CALUNAH_LANG = {
     'about.val.faith':      'Lafwa',
     'about.val.faith.desc': 'Anchore nan valè kretyen adventis jou setyèm lan',
     'about.val.unity':      'Inite',
-    'about.val.unity.desc': 'Konekte alumni yo atravè jenerasyon, pwofesyon ak kontinan',
+    'about.val.unity.desc': 'Rasanble ansyen elèv yo ki soti nan tout orizon, peyi ak chemen pwofesyonèl',
     'about.val.excellence': 'Ekselans',
     'about.val.excellence.desc': 'Kenbe eritaj akademik ak pwofesyonèl UNAH lan',
     'about.val.service':    'Sèvis',
@@ -3304,7 +3463,7 @@ const CALUNAH_LANG = {
     /*, Videos, */
     'videos.badge':         'Gade ak reviv',
     'videos.title':         'Videyo ak emisyon an dirèk',
-    'videos.sub':           'Reviv evènman nou yo epi gade nou AN DIRÈK sou platfòm ou renmen an',
+    'videos.sub':           'Gade videyo sou demann epi suiv nou AN DIRÈK sou platfòm ou renmen an',
     /*, Newsletter, */
     'nl.badge':             'Rete enfòme',
     'nl.title':             'Bilten elektwonik',
@@ -3394,7 +3553,7 @@ const CALUNAH_LANG = {
     'donate.mission.desc':   'CALUNAH dedye pou bay bous ak èd finansye pou sipòte aprantisaj elèv yo ak enfrastrikti lekòl yo.',
     'donate.mission.desc2':  'Misyon imanitè nou se <em>\'sans frontières\'</em> (san fwontyè), ki vle di nou fè efò pou sipòte elèv ki soti nan tout kalite background.',
     'donate.community.desc':  'CALUNAH rete yon rezo pwogresis fòs, inite ak sèvis pou gwo kominote ansyen elèv, etidyan, zanmi ak sipòtè fidèl li yo.',
-    'donate.community.desc2': 'Misyon nou se bay sipò kontinyèl pou kominote yo atravè bous, pwojè konstriksyon ak èd finansye.',
+    'donate.community.desc2': 'Nou bay sipò kontinyèl atravè bous, pwojè konstriksyon ak èd finansye dirèk pou moun ki bezwen li pi plis.',
     'donate.tier1':          'Bay materyèl lekòl pou yon elèv UNAH pou yon semès',
     'donate.tier2':          'Kouvri yon mwa liv ak materyèl akademik pou yon elèv',
     'donate.tier3':          'Finanse yon bous yon semès konplè pou yon elèv UNAH ki merite',
@@ -3485,6 +3644,75 @@ const CALUNAH_LANG = {
     'footer.links.funders':       'Pou bayi fon',
     'footer.links.annual':        'Rapò anyèl',
     'footer.links.privacy':       'Politik konfidansyalite',
+    /*, Educational goals, */
+    'donate.edu.goal1':  'Entansifye pwosesis rekritman an epi kenbe yon baz done ki pi ajou.',
+    'donate.edu.goal2':  'Restriktire CALUNAH nan nivo administratif li pou yon pi bon sèvis pou tout manm nou yo nan mond lan.',
+    'donate.edu.goal3':  'Òganize de gwo evènman chak ane, youn sitou sosyo-kiltirèl, lòt a imanitè.',
+    'donate.edu.goal4':  'Òganize yon vwayaj misyon CALUNAH ann Ayiti nan kontèks gwo <em>\'korvée\'</em> pou rebati peyi a.',
+    /*, Newsletter form, */
+    'nl.join':           'Rantre nan milye alumni CALUNAH ki resevwa bilten trimestriyèl nou ki plen nouvèl kominote, anonsman bous ak istwa alumni enspiratè.',
+    'nl.fn':             'Prenon',
+    'nl.ln':             'Non',
+    'nl.email':          'Adrès imèl ou',
+    'nl.chapter':        'Chwazi chapit / kote ou (opsyonèl)',
+    'nl.subscribe':      'Abòne kounye a. Gratis!',
+    'nl.signupSuccess':  'Byenveni! Ou abòne nan Bilten CALUNAH la.',
+    'nl.privacy':        'Nou respekte vi prive ou. Dezabòne nenpòt kilè.',
+    /*, Campus Building Campaign, */
+    'campus.badge':      'Kanpay konstriksyon kampis',
+    'campus.title':      'Ede nou konplete avni UNAH la',
+    'campus.quote':      'Tanpri rantre ak nou pou sipòte Inivèsite Adventis d\'Ayiti.',
+    'campus.p1':         'Foto ou wè yo rakonte yon istwa lafwa k ap pwogrese. Nouvo bilding ap leve sou kampis UNAH la: sal klas, dòtwa ak fasilite k ap bati brik pa brik pou elaji kapasite inivèsite a epi sèvi yon nouvo jenerasyon etidyan ayisyen.',
+    'campus.p2':         'Depi enteryè mab jiska mi ranfòse k ap leve nan syèl la, chak dola ou bay vin fè pati yon bagay pèmanan. Jenerozite ou jodi a se sal klas demen an.',
+    'campus.stat1':      'Bilding Anba Konstriksyon',
+    'campus.stat2':      'Don Ale nan UNAH',
+    'campus.stat3':      'Entègreman Dediktib nan Taks',
+    'campus.donate':     'Bay don pou Fon Konstriksyon',
+    'campus.secure':     'Sekirize · Yon fwa oswa chak mwa · Kat ak Google Pay',
+    /*, Fundraising Tracker, */
+    'tracker.badge':     'Swivi kolèkt 2026',
+    'tracker.title':     'Ede nou rive a',
+    'tracker.tagline':   '"Ansanm pou edikasyon, ansanm pou chanjman." Sipòte nou avan 31 desanm 2026',
+    'tracker.of':        'kolekte sou',
+    'tracker.goal':      'objektif',
+    'tracker.note':      'Chak kado fè nou avanse. Objektif: 31 desanm 2026.',
+    'tracker.cta':       'Bay don kounye a epi fè pati chanjman an',
+    'tracker.q1':        'avan mas',
+    'tracker.q2':        'avan jen',
+    'tracker.q3':        'avan septanm',
+    'tracker.q4':        'avan desanm',
+    /*, Membership tiers, */
+    'mem.popular':       'Pi popilè',
+    'mem.period':        'pa ane',
+    'mem.tier.student':  'Etidyan',
+    'mem.tier.associate':'Asosye',
+    'mem.tier.fullmember':'Manm konplè',
+    'mem.tier.sustaining':'Sipòtè',
+    'mem.cta.student':   'Rantre gratis',
+    'mem.cta.associate': 'Vin yon manm',
+    'mem.cta.fullmember':'Rantre kounye a',
+    'mem.cta.sustaining':'Sipòte misyon nou',
+    'mem.feat.student.0':  'Bilten nimerik CALUNAH',
+    'mem.feat.student.1':  'Aksè nan rezo alumni',
+    'mem.feat.student.2':  'Envitasyon pou evènman vityèl',
+    'mem.feat.student.3':  'Anyè imèl alumni UAH',
+    'mem.feat.associate.0':'Tout nan Etidyan',
+    'mem.feat.associate.1':'Sètifika manmbèchip',
+    'mem.feat.associate.2':'Dwa vote',
+    'mem.feat.associate.3':'Aksè nan reyinyon chapit',
+    'mem.feat.associate.4':'Opòtinite mentora',
+    'mem.feat.fullmember.0':'Tout nan Asosye',
+    'mem.feat.fullmember.1':'Kat idantite ofisyèl CALUNAH',
+    'mem.feat.fullmember.2':'Kalifikasyon pou wòl lidèchip',
+    'mem.feat.fullmember.3':'Dwa nominasyon pou bous',
+    'mem.feat.fullmember.4':'Enskripsyon priyoritè pou evènman',
+    'mem.feat.fullmember.5':'Envitasyon pou gala anyèl',
+    'mem.feat.sustaining.0':'Tout nan Manm konplè',
+    'mem.feat.sustaining.1':'Rekonesans nan rapò anyèl',
+    'mem.feat.sustaining.2':'List sou mi donè',
+    'mem.feat.sustaining.3':'Refo lidèchip prive',
+    'mem.feat.sustaining.4':'Kontak lyezon dedye',
+    'mem.feat.sustaining.5':'Kalifikasyon plak komemorativ',
   }
 
 };
@@ -3530,6 +3758,13 @@ function applyTranslation(lang) {
     el.textContent = val;
   });
 
+  // Translate placeholder attributes [data-i18n-placeholder]
+  qsa('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    const val = t[key];
+    if (val != null) el.placeholder = val;
+  });
+
   // Translate dynamically-built chapter cards
   if (t['chapters.president']) {
     qsa('.chapter-president-label').forEach(el => {
@@ -3561,6 +3796,9 @@ function applyTranslation(lang) {
 
   // Re-render events so category labels and ticket text update in the new language
   if (typeof buildEvents === 'function' && qs('#events-grid')) buildEvents();
+
+  // Re-render membership cards so tier names, features, and CTAs update
+  if (typeof buildMembership === 'function' && qs('#membership-grid')) buildMembership();
 
   // Update lang switcher button active state
   qsa('.lang-btn').forEach(btn => {
