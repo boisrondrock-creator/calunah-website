@@ -38,7 +38,7 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .section:not(.hero):not(.events-section){content-visibility:auto;contain-intrinsic-size:auto 700px}
 
 /* ── BUTTONS ───────────────────────────────────────── */
-.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 2rem;font-family:var(--font-body);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:50px;border:2px solid transparent;cursor:pointer;transition:var(--transition);white-space:nowrap;position:relative;overflow:hidden}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.85rem 2rem;font-family:var(--font-body);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:50px;border:2px solid transparent;cursor:pointer;transition:var(--transition);white-space:nowrap;position:relative;overflow:hidden}
 .btn-primary{background:var(--green);color:var(--white);border-color:var(--green)}
 .btn-primary:hover{background:var(--green-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,107,47,.35)}
 .btn-gold{background:var(--gold);color:var(--green-dark);border-color:var(--gold);position:relative;overflow:hidden}
