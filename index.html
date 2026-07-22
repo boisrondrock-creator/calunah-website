@@ -62,7 +62,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/style.css?v=20260722d">
+  <link rel="stylesheet" href="css/style.css?v=20260722e">
 </head>
 <body>
 
@@ -948,6 +948,23 @@
 
       <p class="recurring-summary" id="recurring-summary">You'll be charged <strong>$50 / month</strong></p>
 
+      <div class="rec-chapter-row">
+        <i class="fas fa-map-marker-alt rec-chapter-icon"></i>
+        <select id="rec-chapter" class="rec-chapter-select">
+          <option value="">Chapter (optional)</option>
+          <option>New York Chapter</option>
+          <option>New England Chapter (CT · MA · RI)</option>
+          <option>DMV Chapter (DC · MD · VA)</option>
+          <option>South Florida Chapter</option>
+          <option>Central Florida Chapter</option>
+          <option>Georgia Chapter</option>
+          <option>Haiti (National)</option>
+          <option>Other / International</option>
+          <option value="none">None</option>
+          <option value="prefer-not">Prefer not to say</option>
+        </select>
+      </div>
+
       <!-- Payment CTAs -->
       <div class="recurring-ctas">
         <a class="btn rec-btn-zelle" id="rec-zelle-btn" href="https://www.zelle.com/get-started" target="_blank" rel="noopener">
@@ -991,6 +1008,21 @@
           </select>
         </div>
         <div class="form-group"><label>City &amp; Country of Residence</label><input type="text" name="location" placeholder="e.g. Miami, FL, USA"></div>
+        <div class="form-group"><label>CALUNAH Chapter</label>
+          <select name="chapter">
+            <option value="">Select your chapter (optional)</option>
+            <option>New York Chapter</option>
+            <option>New England Chapter (CT · MA · RI)</option>
+            <option>DMV Chapter (DC · MD · VA)</option>
+            <option>South Florida Chapter</option>
+            <option>Central Florida Chapter</option>
+            <option>Georgia Chapter</option>
+            <option>Haiti (National)</option>
+            <option>Other / International</option>
+            <option value="none">None</option>
+            <option value="prefer-not">Prefer not to say</option>
+          </select>
+        </div>
         <div class="form-group"><label>Why do you want to join CALUNAH?</label>
           <textarea name="motivation" rows="4" placeholder="Tell us about yourself and your connection to UNAH…"></textarea>
         </div>
@@ -1257,6 +1289,27 @@
 
     <div class="donate-methods" id="ways-to-donate" data-aos="fade-up">
       <h3 class="donate-methods-title" data-i18n="donate.ways.title">4 Ways to Donate</h3>
+
+      <div class="donate-chapter-row">
+        <label class="donate-chapter-label"><i class="fas fa-map-marker-alt"></i> Your Chapter</label>
+        <select id="donate-chapter" class="donate-chapter-select" onchange="updateDonateChapterNote(this.value)">
+          <option value="">Select your chapter (optional)</option>
+          <option>New York Chapter</option>
+          <option>New England Chapter (CT · MA · RI)</option>
+          <option>DMV Chapter (DC · MD · VA)</option>
+          <option>South Florida Chapter</option>
+          <option>Central Florida Chapter</option>
+          <option>Georgia Chapter</option>
+          <option>Haiti (National)</option>
+          <option>Other / International</option>
+          <option value="none">None</option>
+          <option value="prefer-not">Prefer not to say</option>
+        </select>
+        <p class="donate-chapter-note" id="donate-chapter-note" style="display:none">
+          <i class="fas fa-info-circle"></i> Please include your chapter in the memo or notes when donating via Zelle, PayPal, or check.
+        </p>
+      </div>
+
       <div class="donate-ways">
 
         <!-- Zelle -->
@@ -1494,7 +1547,7 @@
 <!-- PDF.js — renders the magazine pages for the flipbook reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="js/flipbook.js?v=20260602f"></script>
-<script src="js/main.js?v=20260722d"></script>
+<script src="js/main.js?v=20260722e"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 

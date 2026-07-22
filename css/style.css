@@ -912,6 +912,11 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* Note line */
 .recurring-note{font-size:.78rem;color:rgba(255,255,255,.4);display:flex;align-items:center;gap:.5rem;margin:0}
 .recurring-note i{color:var(--gold);opacity:.7}
+.rec-chapter-row{display:flex;align-items:center;gap:.6rem;margin-bottom:1.25rem}
+.rec-chapter-icon{color:var(--gold);opacity:.8;font-size:.85rem;flex-shrink:0}
+.rec-chapter-select{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;padding:.55rem .85rem;font-size:.85rem;font-family:var(--font-body);cursor:pointer;outline:none;transition:border-color .2s}
+.rec-chapter-select:focus{border-color:var(--gold)}
+.rec-chapter-select option{background:var(--green-dark);color:#fff}
 
 /* ════════════════════════════════════════
    DONATE SECTION
@@ -926,7 +931,14 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 .donate-tier{font-size:.72rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1rem}
 .donate-card p{font-size:.84rem;color:var(--text-mid);line-height:1.65;margin-bottom:1.5rem}
 .donate-methods{background:var(--off-white);border-radius:var(--radius-lg);padding:3rem;border:1px solid var(--border)}
-.donate-methods-title{font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:2rem;text-align:center}
+.donate-methods-title{font-family:var(--font-head);font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:1.25rem;text-align:center}
+.donate-chapter-row{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;background:rgba(201,162,39,.07);border:1px solid rgba(201,162,39,.2);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.75rem}
+.donate-chapter-label{font-weight:700;font-size:.85rem;color:var(--text);display:flex;align-items:center;gap:.45rem;flex-shrink:0}
+.donate-chapter-label i{color:var(--gold-dark)}
+.donate-chapter-select{flex:1;min-width:220px;border:1px solid var(--border);border-radius:8px;padding:.5rem .85rem;font-size:.85rem;font-family:var(--font-body);background:#fff;color:var(--text);cursor:pointer;outline:none;transition:border-color .2s}
+.donate-chapter-select:focus{border-color:var(--gold-dark)}
+.donate-chapter-note{width:100%;font-size:.8rem;color:var(--text-mid);margin:0;display:flex;align-items:flex-start;gap:.4rem;line-height:1.5}
+.donate-chapter-note i{color:var(--gold-dark);margin-top:.1rem;flex-shrink:0}
 .donate-ways{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;margin-bottom:2rem}
 /* Shared donate-way card */
 .donate-way{background:var(--white);border-radius:var(--radius-lg);border:1.5px solid var(--border);padding:2rem 1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5rem;transition:var(--transition)}

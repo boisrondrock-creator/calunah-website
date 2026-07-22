@@ -2104,9 +2104,13 @@ function initRecurringMembership() {
   const customEl   = qs('#rec-custom', wrap);
   const stripeBtnEl= qs('#rec-stripe-btn', wrap);
 
-  /* Build PayPal URL with pre-filled amount */
+  const chapterEl = qs('#rec-chapter', wrap);
+
+  /* Build PayPal URL with pre-filled amount and chapter */
   function paypalURL(amt) {
-    return `https://www.paypal.com/donate?business=donate%40calunah.org&amount=${amt}&currency_code=USD&item_name=CALUNAH+Recurring+Membership`;
+    const ch = chapterEl ? chapterEl.value : '';
+    const name = encodeURIComponent('CALUNAH Recurring Membership' + (ch && ch !== 'none' && ch !== 'prefer-not' ? ' - ' + ch : ''));
+    return `https://www.paypal.com/donate?business=donate%40calunah.org&amount=${amt}&currency_code=USD&item_name=${name}`;
   }
 
   /* Update summary line and PayPal link */
@@ -2117,6 +2121,8 @@ function initRecurringMembership() {
     summaryEl.innerHTML = `You'll be charged <strong>${label}</strong>`;
     ppBtnEl.href = paypalURL(amount);
   }
+
+  if (chapterEl) chapterEl.addEventListener('change', refresh);
 
   /* Period toggle */
   qsa('.rec-period-btn', wrap).forEach(btn => {
@@ -2156,6 +2162,7 @@ function initRecurringMembership() {
       stripeBtnEl.disabled = true;
       stripeBtnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading…';
       try {
+        const chapter = chapterEl ? chapterEl.value : '';
         const r = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -2164,7 +2171,8 @@ function initRecurringMembership() {
             eventId:     'membership',
             ticketLabel: `${period === 'yearly' ? 'Yearly' : 'Monthly'} Support`,
             price:       amount,
-            quantity:    1
+            quantity:    1,
+            chapter:     chapter || 'Not specified'
           })
         });
         const data = await r.json();
@@ -2228,6 +2236,21 @@ function initNLSignupForm() {
       }
     });
   });
+}
+
+
+/* ============================================================
+   17b. DONATE CHAPTER NOTE
+   ============================================================ */
+function updateDonateChapterNote(val) {
+  const note = qs('#donate-chapter-note');
+  if (!note) return;
+  if (!val || val === 'none' || val === 'prefer-not') {
+    note.style.display = 'none';
+    return;
+  }
+  note.innerHTML = `<i class="fas fa-info-circle"></i> Please write <strong>${val}</strong> in the memo or notes when donating via Zelle, PayPal, or check so we can credit your chapter.`;
+  note.style.display = '';
 }
 
 
