@@ -2555,9 +2555,7 @@ function initLogoCanvas() {
 
       for (let i = 0; i < N; i++) {
         if (!bg[i]) continue;
-        const p = i << 2;
-        const br = (d[p] + d[p+1] + d[p+2]) / 3;
-        d[p+3] = Math.min(255, Math.max(0, Math.round((255 - br) * 4)));
+        d[i << 2 | 3] = 0;
       }
 
       ctx.putImageData(imgData, 0, 0);
