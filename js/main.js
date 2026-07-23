@@ -2065,7 +2065,7 @@ function initMembershipForm() {
     data._autoresponse = `Dear ${data.firstName || 'Valued Applicant'},\n\nThank you for applying to become a member of CALUNAH, Club des Alumni de l'Université Adventiste d'Haïti.\n\nYour application for "${data.membershipType || 'CALUNAH Membership'}" has been received and is currently under review. Our team will contact you within 3 to 5 business days.\n\n────────────────────────\nCALUNAH\n2990 Hester Avenue SE\nPalm Bay, FL 32909\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nThis is a confirmation of your submission. Please keep it for your records.\n\nWith gratitude,\nCALUNAH Membership Team`;
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
+      const res = await fetch('https://formsubmit.co/ajax/info@calunah.org', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body:    JSON.stringify(data)
@@ -2210,7 +2210,7 @@ function initNLSignupForm() {
       data._autoresponse = `Welcome to the CALUNAH Newsletter!\n\nDear ${data.firstName || 'Friend'},\n\nYou have been successfully subscribed to the CALUNAH quarterly newsletter.\n\nYou will receive our next issue with alumni news, scholarship announcements, upcoming events, and community stories.\n\n────────────────────────\nCALUNAH, calunah.org\ninfo@calunah.org | 631-961-9945\n────────────────────────\n\nTo unsubscribe, simply reply to this email.\n\nWith gratitude,\nCALUNAH Communications Team`;
 
       try {
-        const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
+        const res = await fetch('https://formsubmit.co/ajax/info@calunah.org', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body:    JSON.stringify(data)
@@ -2468,19 +2468,20 @@ function initContactForm() {
     data._captcha  = 'false';
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/boisrondrock@gmail.com', {
+      const res = await fetch('https://formsubmit.co/ajax/info@calunah.org', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body:    JSON.stringify(data)
       });
       if (res.ok) {
-        form.innerHTML = `
-          <div class="form-success">
-            <i class="fas fa-check-circle"></i>
-            <h3>Message Sent!</h3>
-            <p>Thank you for reaching out. A member of our team will respond within 48 hours.</p>
-          </div>
-        `;
+        const successEl = qs('#form-success', form);
+        btn.innerHTML = orig;
+        btn.disabled  = false;
+        if (successEl) {
+          successEl.style.display = 'block';
+          form.reset();
+          setTimeout(() => { successEl.style.display = 'none'; }, 6000);
+        }
       } else throw new Error();
     } catch {
       btn.innerHTML = orig;
@@ -2500,6 +2501,72 @@ function showFormError(form, msg) {
   err.textContent = msg;
   err.style.display = 'block';
   setTimeout(() => { err.style.display = 'none'; }, 6000);
+}
+
+
+/* ============================================================
+   18b. NAVBAR LOGO CANVAS (white-bg chroma key)
+   Draws the spinning logo video onto a canvas each frame,
+   flood-filling the white background from all 4 edges and
+   setting those pixels transparent so the coin floats on
+   the navbar with no visible box.
+   ============================================================ */
+function initLogoCanvas() {
+  const canvas = qs('.nav-logo-canvas');
+  const video  = qs('.nav-logo-vid');
+  if (!canvas || !video) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const W = 200, H = 200;
+  canvas.width  = W;
+  canvas.height = H;
+
+  function drawFrame() {
+    if (video.readyState >= 2 && !video.paused) {
+      ctx.drawImage(video, 0, 0, W, H);
+      const imgData = ctx.getImageData(0, 0, W, H);
+      const d = imgData.data;
+      const N = W * H;
+      const bg = new Uint8Array(N);
+      const q = [];
+      const THRESH = 230;
+
+      function seed(i) {
+        if (bg[i]) return;
+        const p = i << 2;
+        if (d[p] >= THRESH && d[p+1] >= THRESH && d[p+2] >= THRESH) {
+          bg[i] = 1;
+          q.push(i);
+        }
+      }
+
+      for (let x = 0; x < W; x++) { seed(x); seed((H-1)*W+x); }
+      for (let y = 1; y < H-1; y++) { seed(y*W); seed(y*W+W-1); }
+
+      let h = 0;
+      while (h < q.length) {
+        const i = q[h++], x = i%W, y = i/W|0;
+        if (x > 0)     seed(i-1);
+        if (x < W-1)   seed(i+1);
+        if (y > 0)     seed(i-W);
+        if (y < H-1)   seed(i+W);
+      }
+
+      for (let i = 0; i < N; i++) {
+        if (!bg[i]) continue;
+        const p = i << 2;
+        const br = (d[p] + d[p+1] + d[p+2]) / 3;
+        d[p+3] = Math.min(255, Math.max(0, Math.round((255 - br) * 4)));
+      }
+
+      ctx.putImageData(imgData, 0, 0);
+    }
+    requestAnimationFrame(drawFrame);
+  }
+
+  video.addEventListener('loadeddata', drawFrame);
+  if (video.readyState >= 2) drawFrame();
 }
 
 
@@ -4275,6 +4342,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   /* Interactive widgets */
   initLightbox();
   initLivestream();
+  initLogoCanvas();
   initContactForm();
   initMembershipForm();
   initRecurringMembership();
