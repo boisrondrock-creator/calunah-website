@@ -2240,6 +2240,200 @@ function initNLSignupForm() {
 
 
 /* ============================================================
+   17c. AI WRITING ASSISTANT
+   ============================================================ */
+function initAIAssist() {
+  /* Target only free-text textareas (not ticket notes or short fields) */
+  const fields = [
+    qs('#membership-form textarea[name="motivation"]'),
+    qs('#contact-form textarea[name="message"]')
+  ].filter(Boolean);
+  if (!fields.length) return;
+
+  /* ── Build the floating panel (once) ── */
+  const panel = document.createElement('div');
+  panel.id        = 'ai-assist-panel';
+  panel.className = 'ai-assist-panel';
+  panel.innerHTML = `
+    <div class="aip-header">
+      <span class="aip-badge"><i class="fas fa-wand-magic-sparkles"></i> AI Writing Assistant</span>
+      <span class="aip-lang-badge" id="aip-lang">EN</span>
+      <button class="aip-close" id="aip-close" aria-label="Close">&#x2715;</button>
+    </div>
+    <div class="aip-loading" id="aip-loading"><i class="fas fa-spinner fa-spin"></i> Analyzing…</div>
+    <div class="aip-body" id="aip-body">
+      <div class="aip-correction" id="aip-correction">
+        <div class="aip-section-label"><i class="fas fa-spell-check"></i> Suggested correction</div>
+        <div class="aip-corr-text" id="aip-corr-text"></div>
+        <button class="aip-apply" id="aip-apply"><i class="fas fa-check"></i> Apply Fix</button>
+      </div>
+      <div class="aip-completions" id="aip-completions">
+        <div class="aip-section-label"><i class="fas fa-pen-nib"></i> Continue writing</div>
+        <div class="aip-chips" id="aip-chips"></div>
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+
+  let activeField  = null;
+  let debounce     = null;
+  let pending      = false;
+  let lastText     = '';
+  let pendingFix   = null;
+
+  const langBadge      = qs('#aip-lang',        panel);
+  const loadingEl      = qs('#aip-loading',      panel);
+  const bodyEl         = qs('#aip-body',         panel);
+  const correctionEl   = qs('#aip-correction',   panel);
+  const corrTextEl     = qs('#aip-corr-text',    panel);
+  const chipsEl        = qs('#aip-chips',        panel);
+  const completionsEl  = qs('#aip-completions',  panel);
+
+  function currentLang() { return localStorage.getItem('calunah-lang') || 'en'; }
+
+  function positionPanel(field) {
+    const rect    = field.getBoundingClientRect();
+    const scrollY = window.scrollY || window.pageYOffset;
+    const scrollX = window.scrollX || window.pageXOffset;
+    panel.style.top   = (rect.bottom + scrollY + 6) + 'px';
+    panel.style.left  = Math.max(8, rect.left + scrollX) + 'px';
+    panel.style.width = Math.min(rect.width, window.innerWidth - 16) + 'px';
+  }
+
+  function hidePanel() {
+    panel.classList.remove('aip-visible');
+    clearTimeout(debounce);
+  }
+
+  function showLoading(field) {
+    activeField = field;
+    const lang = currentLang().toUpperCase();
+    langBadge.textContent = lang === 'KR' ? 'KR' : lang;
+    positionPanel(field);
+    loadingEl.style.display = '';
+    bodyEl.style.display    = 'none';
+    panel.classList.add('aip-visible');
+  }
+
+  function showResults(field, data) {
+    const { hasError, correction, completions } = data;
+    let hasContent = false;
+
+    /* Grammar correction */
+    if (hasError && correction && correction.trim() !== lastText.trim()) {
+      corrTextEl.textContent = correction;
+      correctionEl.style.display = '';
+      pendingFix = correction;
+      hasContent = true;
+    } else {
+      correctionEl.style.display = 'none';
+      pendingFix = null;
+    }
+
+    /* Word completion chips */
+    if (completions && completions.length > 0) {
+      chipsEl.innerHTML = completions.map(c =>
+        `<button class="aip-chip" data-val="${c.replace(/"/g, '&quot;')}">${c}</button>`
+      ).join('');
+      chipsEl.querySelectorAll('.aip-chip').forEach(chip => {
+        chip.addEventListener('mousedown', e => {
+          e.preventDefault(); // keep focus on field
+          if (!activeField) return;
+          const val  = chip.dataset.val;
+          const cur  = activeField.value.trimEnd();
+          const sep  = cur && !cur.endsWith(' ') ? ' ' : '';
+          activeField.value = cur + sep + val + ' ';
+          activeField.dispatchEvent(new Event('input'));
+          activeField.focus();
+          hidePanel();
+        });
+      });
+      completionsEl.style.display = '';
+      hasContent = true;
+    } else {
+      completionsEl.style.display = 'none';
+    }
+
+    if (!hasContent) { hidePanel(); return; }
+
+    loadingEl.style.display = 'none';
+    bodyEl.style.display    = '';
+    positionPanel(field);
+  }
+
+  async function fetchSuggestions(field, text) {
+    if (pending) return;
+    pending = true;
+    showLoading(field);
+    try {
+      const r = await fetch('/api/ai-assist', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ text, language: currentLang() })
+      });
+      if (!r.ok || !field.isConnected) { hidePanel(); return; }
+      const data = await r.json();
+      if (data.unavailable) { hidePanel(); return; }
+      showResults(field, data);
+    } catch(e) {
+      hidePanel();
+    } finally {
+      pending = false;
+    }
+  }
+
+  /* Apply-fix button */
+  qs('#aip-apply', panel).addEventListener('click', () => {
+    if (activeField && pendingFix) {
+      activeField.value = pendingFix;
+      activeField.dispatchEvent(new Event('input'));
+      activeField.focus();
+    }
+    hidePanel();
+  });
+
+  /* Close button */
+  qs('#aip-close', panel).addEventListener('click', () => hidePanel());
+
+  /* Hide when clicking outside */
+  document.addEventListener('click', e => {
+    if (!panel.contains(e.target) && !fields.includes(e.target)) hidePanel();
+  });
+
+  /* Re-position on scroll/resize */
+  window.addEventListener('scroll', () => { if (activeField) positionPanel(activeField); }, { passive: true });
+  window.addEventListener('resize', () => { if (activeField) positionPanel(activeField); }, { passive: true });
+
+  /* Attach to each qualifying textarea */
+  fields.forEach(field => {
+    /* Show "AI" watermark badge on the field */
+    field.closest('.form-group')?.classList.add('ai-field');
+
+    field.addEventListener('input', () => {
+      clearTimeout(debounce);
+      activeField = field;
+      const text = field.value.trim();
+      if (text.length < 12 || text === lastText) { hidePanel(); return; }
+      debounce = setTimeout(() => {
+        lastText = text;
+        fetchSuggestions(field, text);
+      }, 950);
+    });
+
+    field.addEventListener('focus', () => { activeField = field; });
+
+    field.addEventListener('blur', e => {
+      /* Don't hide if user clicked inside the panel */
+      if (!panel.contains(e.relatedTarget)) {
+        setTimeout(() => {
+          if (!panel.matches(':hover')) hidePanel();
+        }, 150);
+      }
+    });
+  });
+}
+
+
+/* ============================================================
    17b. DONATE CHAPTER NOTE
    ============================================================ */
 function updateDonateChapterNote(val) {
@@ -4110,6 +4304,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* If arrived via a #hash (e.g. QR code), scroll to it after content builds */
   initHashLanding();
+
+  /* AI Writing Assistant */
+  setTimeout(initAIAssist, 400); // slight delay so all forms are rendered
 
   /* Done */
   console.log(

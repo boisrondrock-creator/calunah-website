@@ -1198,6 +1198,36 @@ a.partner-card:hover .partner-name{color:var(--green)}
 .back-to-top:hover{background:var(--gold-light);transform:translateY(-4px)}
 
 /* ════════════════════════════════════════
+   AI WRITING ASSISTANT PANEL
+════════════════════════════════════════ */
+.ai-assist-panel{position:absolute;z-index:9100;background:#0d2016;border:1px solid rgba(201,162,39,.35);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.45);padding:0;overflow:hidden;min-width:260px;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+.ai-assist-panel.aip-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.aip-header{display:flex;align-items:center;gap:.5rem;padding:.55rem .85rem;background:rgba(201,162,39,.1);border-bottom:1px solid rgba(201,162,39,.18)}
+.aip-badge{display:flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:700;color:var(--gold);letter-spacing:.02em;flex:1}
+.aip-badge i{font-size:.8rem}
+.aip-lang-badge{font-size:.62rem;font-weight:800;letter-spacing:.1em;background:rgba(201,162,39,.18);color:var(--gold);padding:.15rem .45rem;border-radius:4px}
+.aip-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:1rem;cursor:pointer;line-height:1;padding:.1rem .3rem;border-radius:4px;transition:color .15s}
+.aip-close:hover{color:#fff}
+.aip-loading{display:flex;align-items:center;gap:.55rem;padding:.85rem 1rem;font-size:.8rem;color:rgba(255,255,255,.5)}
+.aip-loading i{color:var(--gold);opacity:.8}
+.aip-body{padding:.55rem .85rem .75rem}
+.aip-section-label{font-size:.67rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.45rem;display:flex;align-items:center;gap:.35rem}
+.aip-section-label i{color:var(--gold);opacity:.7}
+.aip-correction{margin-bottom:.7rem;padding:.6rem .75rem;background:rgba(255,200,80,.07);border:1px solid rgba(255,200,80,.18);border-radius:8px}
+.aip-corr-text{font-size:.82rem;color:rgba(255,255,255,.88);line-height:1.5;margin-bottom:.5rem;font-style:italic}
+.aip-apply{display:inline-flex;align-items:center;gap:.35rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0a1f0e;border:none;border-radius:6px;padding:.38rem .85rem;font-size:.78rem;font-weight:800;cursor:pointer;transition:opacity .15s}
+.aip-apply:hover{opacity:.88}
+.aip-completions{}
+.aip-chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.aip-chip{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:20px;color:rgba(255,255,255,.82);font-size:.78rem;padding:.3rem .75rem;cursor:pointer;transition:background .15s,border-color .15s;white-space:nowrap;font-family:var(--font-body)}
+.aip-chip:hover{background:rgba(201,162,39,.18);border-color:rgba(201,162,39,.4);color:#fff}
+
+/* Watermark badge on AI-enhanced fields */
+.ai-field{position:relative}
+.ai-field::after{content:'\f005\a0AI';font-family:'Font Awesome 6 Free','Font Awesome 6 Brands',sans-serif;font-weight:900;position:absolute;top:.5rem;right:.6rem;font-size:.6rem;letter-spacing:.06em;color:var(--gold);opacity:.45;pointer-events:none}
+@media(max-width:600px){.ai-assist-panel{min-width:0;left:8px!important;right:8px!important;width:auto!important}}
+
+/* ════════════════════════════════════════
    READING PROGRESS BAR
 ════════════════════════════════════════ */
 .read-progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:1001;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--green-light),var(--gold),var(--gold-light));box-shadow:0 0 10px rgba(201,162,39,.5);will-change:transform;pointer-events:none}
