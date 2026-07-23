@@ -2515,7 +2515,7 @@ function initLogoCanvas() {
   const canvas = qs('.nav-logo-canvas');
   const video  = qs('.nav-logo-vid');
   if (!canvas || !video) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  video.play().catch(function(){});
 
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
   const W = 200, H = 200;
@@ -2523,7 +2523,7 @@ function initLogoCanvas() {
   canvas.height = H;
 
   function drawFrame() {
-    if (video.readyState >= 2 && !video.paused) {
+    if (video.readyState >= 2) {
       ctx.drawImage(video, 0, 0, W, H);
       const imgData = ctx.getImageData(0, 0, W, H);
       const d = imgData.data;
