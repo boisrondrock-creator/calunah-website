@@ -139,11 +139,10 @@ img{max-width:100%;display:block} a{text-decoration:none;color:inherit} ul{list-
 /* ── Brand ── */
 .nav-brand{display:flex;align-items:center;gap:.85rem;flex-shrink:0;position:relative;padding-right:1.4rem}
 .nav-brand::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:32px;background:linear-gradient(to bottom,transparent,rgba(201,162,39,.4),transparent)}
-.nav-logo-wrap{width:58px;height:58px;flex-shrink:0;overflow:hidden;border-radius:50%;transition:width .45s ease,height .45s ease;filter:drop-shadow(0 0 10px rgba(201,162,39,.55)) drop-shadow(0 2px 18px rgba(0,0,0,.6))}
-.nav-logo-vid{width:190%;height:190%;margin-left:-45%;margin-top:-45%;object-fit:cover;object-position:center;mix-blend-mode:screen;display:block;pointer-events:none}
+.nav-logo-wrap{width:58px;height:58px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;transition:width .45s ease,height .45s ease,filter .3s ease,transform .3s ease;filter:drop-shadow(0 0 10px rgba(201,162,39,.55)) drop-shadow(0 2px 18px rgba(0,0,0,.6))}
+.nav-logo-vid{height:100%;width:auto;mix-blend-mode:screen;display:block;pointer-events:none}
 .navbar.scrolled .nav-logo-wrap{width:48px;height:48px}
 .nav-brand:hover .nav-logo-wrap{filter:drop-shadow(0 0 18px rgba(201,162,39,.9)) drop-shadow(0 2px 18px rgba(0,0,0,.6));transform:scale(1.06)}
-.nav-logo-wrap,.nav-brand:hover .nav-logo-wrap{transition:width .45s ease,height .45s ease,filter .3s ease,transform .3s ease}
 .nav-name{display:block;font-family:var(--font-head);font-size:1.25rem;font-weight:900;color:var(--gold);letter-spacing:.09em;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,.7)}
 .nav-tagline{display:block;font-size:.58rem;color:rgba(255,255,255,.75);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;text-shadow:0 1px 6px rgba(0,0,0,.8)}
 
