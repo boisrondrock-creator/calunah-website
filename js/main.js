@@ -2518,51 +2518,66 @@ function initLogoCanvas() {
   video.play().catch(function(){});
 
   const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  const W = 200, H = 200;
+  const W = 256, H = 256;
   canvas.width  = W;
   canvas.height = H;
 
+  const N    = W * H;
+  const bg   = new Uint8Array(N);
+  const bq   = new Int32Array(N);
+  const THRESH = 228;
+  let   frameData, qTail;
+
+  // Zoom into the center of the video (10 % crop per side) so the coin
+  // fills the circle instead of floating in padded empty space.
+  let sx = 0, sy = 0, sw = 2880, sh = 2880;
+  function initCrop() {
+    const vw = video.videoWidth  || 2880;
+    const vh = video.videoHeight || 2880;
+    const c  = 0.10;
+    sx = (vw * c)           | 0;
+    sy = (vh * c)           | 0;
+    sw = (vw * (1 - c * 2)) | 0;
+    sh = (vh * (1 - c * 2)) | 0;
+  }
+
+  function seed(i) {
+    if (bg[i]) return;
+    const p = i * 4;
+    if (frameData[p] >= THRESH && frameData[p+1] >= THRESH && frameData[p+2] >= THRESH) {
+      bg[i] = 1;
+      bq[qTail++] = i;
+    }
+  }
+
+  let lastT = -1;
   function drawFrame() {
-    if (video.readyState >= 2) {
-      ctx.drawImage(video, 0, 0, W, H);
-      const imgData = ctx.getImageData(0, 0, W, H);
-      const d = imgData.data;
-      const N = W * H;
-      const bg = new Uint8Array(N);
-      const q = [];
-      const THRESH = 230;
-
-      function seed(i) {
-        if (bg[i]) return;
-        const p = i << 2;
-        if (d[p] >= THRESH && d[p+1] >= THRESH && d[p+2] >= THRESH) {
-          bg[i] = 1;
-          q.push(i);
-        }
-      }
-
+    if (video.readyState >= 2 && video.currentTime !== lastT) {
+      lastT = video.currentTime;
+      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, W, H);
+      const img = ctx.getImageData(0, 0, W, H);
+      frameData = img.data;
+      bg.fill(0);
+      let qHead = 0;
+      qTail = 0;
       for (let x = 0; x < W; x++) { seed(x); seed((H-1)*W+x); }
       for (let y = 1; y < H-1; y++) { seed(y*W); seed(y*W+W-1); }
-
-      let h = 0;
-      while (h < q.length) {
-        const i = q[h++], x = i%W, y = i/W|0;
-        if (x > 0)     seed(i-1);
-        if (x < W-1)   seed(i+1);
-        if (y > 0)     seed(i-W);
-        if (y < H-1)   seed(i+W);
+      while (qHead < qTail) {
+        const i = bq[qHead++];
+        const x = i % W, y = (i / W) | 0;
+        if (x > 0)   seed(i-1);
+        if (x < W-1) seed(i+1);
+        if (y > 0)   seed(i-W);
+        if (y < H-1) seed(i+W);
       }
-
-      for (let i = 0; i < N; i++) {
-        if (!bg[i]) continue;
-        d[i << 2 | 3] = 0;
-      }
-
-      ctx.putImageData(imgData, 0, 0);
+      for (let i = 0; i < N; i++) { if (bg[i]) frameData[i*4+3] = 0; }
+      ctx.putImageData(img, 0, 0);
     }
     requestAnimationFrame(drawFrame);
   }
 
+  if (video.readyState >= 1) initCrop();
+  else video.addEventListener('loadedmetadata', initCrop);
   video.addEventListener('loadeddata', drawFrame);
   if (video.readyState >= 2) drawFrame();
 }
