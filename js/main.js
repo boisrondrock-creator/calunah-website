@@ -2550,36 +2550,48 @@ function initLogoCanvas() {
     }
   }
 
-  let lastT = -1;
-  function drawFrame() {
-    if (video.readyState >= 2 && video.currentTime !== lastT) {
-      lastT = video.currentTime;
-      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, W, H);
-      const img = ctx.getImageData(0, 0, W, H);
-      frameData = img.data;
-      bg.fill(0);
-      let qHead = 0;
-      qTail = 0;
-      for (let x = 0; x < W; x++) { seed(x); seed((H-1)*W+x); }
-      for (let y = 1; y < H-1; y++) { seed(y*W); seed(y*W+W-1); }
-      while (qHead < qTail) {
-        const i = bq[qHead++];
-        const x = i % W, y = (i / W) | 0;
-        if (x > 0)   seed(i-1);
-        if (x < W-1) seed(i+1);
-        if (y > 0)   seed(i-W);
-        if (y < H-1) seed(i+W);
-      }
-      for (let i = 0; i < N; i++) { if (bg[i]) frameData[i*4+3] = 0; }
-      ctx.putImageData(img, 0, 0);
+  function processFrame() {
+    if (video.readyState < 2) return;
+    ctx.drawImage(video, sx, sy, sw, sh, 0, 0, W, H);
+    const img = ctx.getImageData(0, 0, W, H);
+    frameData = img.data;
+    bg.fill(0);
+    let qHead = 0;
+    qTail = 0;
+    for (let x = 0; x < W; x++) { seed(x); seed((H-1)*W+x); }
+    for (let y = 1; y < H-1; y++) { seed(y*W); seed(y*W+W-1); }
+    while (qHead < qTail) {
+      const i = bq[qHead++];
+      const x = i % W, y = (i / W) | 0;
+      if (x > 0)   seed(i-1);
+      if (x < W-1) seed(i+1);
+      if (y > 0)   seed(i-W);
+      if (y < H-1) seed(i+W);
     }
-    requestAnimationFrame(drawFrame);
+    for (let i = 0; i < N; i++) { if (bg[i]) frameData[i*4+3] = 0; }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  function startLoop() {
+    if (typeof video.requestVideoFrameCallback === 'function') {
+      // Fires only when the video has a new frame — no wasted CPU between frames
+      function onFrame() { processFrame(); video.requestVideoFrameCallback(onFrame); }
+      video.requestVideoFrameCallback(onFrame);
+    } else {
+      // Fallback: rAF throttled to ~24fps
+      var lastTs = 0;
+      function rafLoop(ts) {
+        if (ts - lastTs >= 42) { lastTs = ts; processFrame(); }
+        requestAnimationFrame(rafLoop);
+      }
+      requestAnimationFrame(rafLoop);
+    }
   }
 
   if (video.readyState >= 1) initCrop();
   else video.addEventListener('loadedmetadata', initCrop);
-  video.addEventListener('loadeddata', drawFrame);
-  if (video.readyState >= 2) drawFrame();
+  if (video.readyState >= 2) startLoop();
+  else video.addEventListener('loadeddata', startLoop);
 }
 
 
