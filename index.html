@@ -80,7 +80,6 @@
     <div class="intro-sub">Club des Alumni de l'Université Adventiste d'Haïti</div>
     <div class="intro-founded">Founded 1993 &nbsp;·&nbsp; 501(c)(3) Nonprofit</div>
   </div>
-  <div class="intro-flash" id="intro-flash"></div>
   <button class="intro-sound" id="intro-sound" title="Toggle Sound"><i class="fas fa-volume-mute"></i></button>
   <button class="intro-skip" id="intro-skip">Skip &nbsp;<i class="fas fa-forward-step"></i></button>
 </div>
@@ -90,10 +89,7 @@
   <div class="nav-inner">
     <a href="#hero" class="nav-brand">
       <div class="nav-logo-wrap">
-        <canvas class="nav-logo-canvas"></canvas>
-        <video class="nav-logo-vid" autoplay loop muted playsinline preload="auto" disablepictureinpicture>
-          <source src="images/logo-spinning.mp4" type="video/mp4">
-        </video>
+        <img class="nav-logo-img" src="images/logo.png" alt="CALUNAH">
       </div>
       <div>
         <span class="nav-name">CALUNAH</span>
@@ -142,6 +138,13 @@
   </div>
 </nav>
 
+<!-- ══ MEMORIAL ANNOUNCEMENT ══════════════════════════ -->
+<div class="memorial-bar">
+  <span class="mem-candle">🕯</span>
+  <span class="mem-text">In Loving Memory of <strong>Dr. Japhe Roberne Saint Louis</strong>, Co-Founder &amp; Chairman of CALUNAH &nbsp;|&nbsp; May 25, 1948 · July 25, 2026</span>
+  <a href="memorial.html" class="mem-link" id="view-tribute-btn">View Tribute</a>
+</div>
+
 <!-- ══ HERO ════════════════════════════════════════════ -->
 <section id="hero" class="hero">
   <div class="hero-slides" id="hero-slides">
@@ -178,17 +181,18 @@
   </a>
 </section>
 
+
 <!-- ══ EVENT SPOTLIGHT ════════════════════════════════════ -->
-<div class="event-spotlight" id="event-spotlight">
+<div class="event-spotlight" id="event-spotlight" style="display:none">
   <div class="spotlight-inner container">
     <div class="spotlight-left">
       <span class="spotlight-badge"><i class="fas fa-calendar-star"></i> UPCOMING EVENT</span>
       <div class="spotlight-details">
-        <strong>Blooming Minds: Giving Back for Education</strong>
+        <strong class="spotlight-title"></strong>
         <span class="spotlight-meta">
-          <i class="fas fa-calendar-alt"></i> June 21, 2026 &nbsp;·&nbsp;
-          <i class="fas fa-clock"></i> 5:30 PM to 9:30 PM &nbsp;·&nbsp;
-          <i class="fas fa-map-marker-alt"></i> Holy Trinity Reception Center, Orlando FL
+          <i class="fas fa-calendar-alt"></i> <span class="spotlight-date"></span>
+          <span class="spotlight-time-sep">&nbsp;&middot;&nbsp;<i class="fas fa-clock"></i> <span class="spotlight-time"></span></span>
+          &nbsp;&middot;&nbsp;<i class="fas fa-map-marker-alt"></i> <span class="spotlight-location"></span>
         </span>
       </div>
     </div>
@@ -1031,6 +1035,12 @@
         <div class="form-group"><label>Why do you want to join CALUNAH?</label>
           <textarea name="motivation" rows="4" placeholder="Tell us about yourself and your connection to UNAH…"></textarea>
         </div>
+        <div class="sms-consent-wrap">
+          <label class="sms-consent-label">
+            <input type="checkbox" name="smsConsent" value="yes" id="sms-consent">
+            <span class="sms-consent-text">I agree to receive text messages (SMS) from CALUNAH about membership updates, event reminders, chapter announcements, and organizational news. Message frequency may vary. Message and data rates may apply. Reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for assistance. <a href="/privacy" target="_blank">Privacy Policy</a> &middot; <a href="/terms" target="_blank">Terms of Service</a>. SMS consent is not required to apply for membership.</span>
+          </label>
+        </div>
         <button type="submit" class="btn btn-gold btn-full"><i class="fas fa-paper-plane"></i> Submit Application</button>
         <div class="form-success" id="mem-success"><i class="fas fa-check-circle"></i> <span data-i18n="mem.form.success">Application received! We'll be in touch soon.</span></div>
       </form>
@@ -1514,7 +1524,8 @@
           <ul>
             <li><a href="transparency.html"><i class="fas fa-file-alt" style="font-size:.7rem;margin-right:.3rem"></i><span data-i18n="footer.transparency.funders">For Funders &amp; Grantors</span></a></li>
             <li><a href="annual-report.html"><i class="fas fa-chart-bar" style="font-size:.7rem;margin-right:.3rem"></i><span data-i18n="footer.transparency.annual">Annual Report</span></a></li>
-            <li><a href="privacy.html"><i class="fas fa-lock" style="font-size:.7rem;margin-right:.3rem"></i><span data-i18n="footer.transparency.privacy">Privacy Policy</span></a></li>
+            <li><a href="/privacy"><i class="fas fa-lock" style="font-size:.7rem;margin-right:.3rem"></i><span data-i18n="footer.transparency.privacy">Privacy Policy</span></a></li>
+            <li><a href="/terms"><i class="fas fa-file-lines" style="font-size:.7rem;margin-right:.3rem"></i>Terms of Service</a></li>
           </ul>
         </div>
 
@@ -1539,7 +1550,8 @@
       <p class="footer-note">
         <a href="transparency.html" data-i18n="footer.links.funders">For Funders</a> &nbsp;·&nbsp;
         <a href="annual-report.html" data-i18n="footer.links.annual">Annual Report</a> &nbsp;·&nbsp;
-        <a href="privacy.html" data-i18n="footer.links.privacy">Privacy Policy</a> &nbsp;·&nbsp;
+        <a href="/privacy" data-i18n="footer.links.privacy">Privacy Policy</a> &nbsp;·&nbsp;
+        <a href="/terms">Terms of Service</a> &nbsp;·&nbsp;
         Designed with <i class="fas fa-heart" style="color:var(--gold)"></i> for our UNAH family
       </p>
     </div>
@@ -1552,7 +1564,7 @@
 <!-- PDF.js — renders the magazine pages for the flipbook reader -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="js/flipbook.js?v=20260602f"></script>
-<script src="js/main.js?v=20260728a"></script>
+<script src="js/main.js?v=20260728c"></script>
 <!-- Donorbox widget — powers the "Donate Online" card -->
 <script src="https://donorbox.org/widget.js" paypalExpress="false"></script>
 
@@ -1576,6 +1588,20 @@
       window.gtag=gtag; gtag('js',new Date()); gtag('config',GA_ID,{anonymize_ip:true});
     }
   })();
+</script>
+
+<script>
+(function(){
+  var bar = document.querySelector('.memorial-bar');
+  var nav = document.getElementById('navbar');
+  if(!bar || !nav) return;
+  function reposition(){
+    var h = bar.getBoundingClientRect().height;
+    nav.style.top = h + 'px';
+  }
+  reposition();
+  window.addEventListener('resize', reposition);
+})();
 </script>
 
 <!-- ══ TICKET RESERVATION MODAL ═══════════════════════════ -->
@@ -1660,5 +1686,45 @@
     </form>
   </div>
 </div>
+
+<!-- MEMORIAL VIDEO OVERLAY -->
+<div id="tribute-overlay" class="tribute-overlay">
+  <video id="tribute-video" class="tribute-video" playsinline preload="none">
+    <source src="images/MEMORIAL%20VIDEO%20FOR%20THE%20TRIBUTE.mp4" type="video/mp4">
+  </video>
+  <div class="tribute-vignette"></div>
+  <div class="tribute-flash" id="tribute-flash"></div>
+  <button class="tribute-skip" id="tribute-skip">Skip &nbsp;<i class="fas fa-forward-step"></i></button>
+</div>
+
+<script>
+(function(){
+  var btn     = document.getElementById('view-tribute-btn');
+  var overlay = document.getElementById('tribute-overlay');
+  var video   = document.getElementById('tribute-video');
+  var flash   = document.getElementById('tribute-flash');
+  var skip    = document.getElementById('tribute-skip');
+  var skipTm;
+
+  function navigate(){
+    clearTimeout(skipTm);
+    video.pause();
+    flash.classList.add('on');
+    setTimeout(function(){ window.location.href = 'memorial.html'; }, 1000);
+  }
+
+  btn.addEventListener('click', function(e){
+    e.preventDefault();
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    video.currentTime = 0;
+    video.play().catch(function(){});
+    skipTm = setTimeout(function(){ skip.classList.add('visible'); }, 2500);
+  });
+
+  video.addEventListener('ended', navigate);
+  skip.addEventListener('click', navigate);
+})();
+</script>
 </body>
 </html>

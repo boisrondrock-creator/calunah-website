@@ -458,6 +458,15 @@ function initSplash() {
   const splash  = qs('#splash');
   if (!splash) return;
 
+  /* Skip the intro when returning from a sub-page (privacy, terms, annual report, etc.) */
+  if (new URLSearchParams(location.search).get('ref') === 'back') {
+    splash.style.display = 'none';
+    document.body.style.overflow = '';
+    const nlBack = document.querySelector('.nav-logo-wrap');
+    if (nlBack) nlBack.classList.add('nav-logo-spin');
+    return;
+  }
+
   document.body.style.overflow = 'hidden';
 
   const video   = qs('#intro-video');
@@ -475,18 +484,13 @@ function initSplash() {
     if (video) video.pause();
     if (barTop) { barTop.classList.remove('in'); barTop.classList.add('out'); }
     if (barBot) { barBot.classList.remove('in'); barBot.classList.add('out'); }
+    splash.classList.add('hidden');
+    document.body.style.overflow = '';
     setTimeout(() => {
-      if (flash) flash.classList.add('on');
-      setTimeout(() => {
-        splash.classList.add('hidden');
-        document.body.style.overflow = '';
-        setTimeout(() => {
-          if (splash.parentNode) splash.remove();
-          const nl = document.querySelector('.nav-logo');
-          if (nl) nl.classList.add('nav-logo-spin');
-        }, 1700);
-      }, 280);
-    }, 420);
+      if (splash.parentNode) splash.remove();
+      const nl = document.querySelector('.nav-logo-wrap');
+      if (nl) nl.classList.add('nav-logo-spin');
+    }, 2200);
   }
 
   // T+200ms — bars glide in from edges
@@ -513,8 +517,8 @@ function initSplash() {
   }, 200);
 
   if (video) {
-    video.addEventListener('ended', () => setTimeout(exitSplash, 1200));
-    video.addEventListener('error', () => setTimeout(exitSplash, 400));
+    video.addEventListener('ended', () => setTimeout(exitSplash, 600));
+    video.addEventListener('error',  () => setTimeout(exitSplash, 400));
   }
 
   if (sndBtn) {
@@ -528,7 +532,7 @@ function initSplash() {
 
   if (skipBtn) skipBtn.addEventListener('click', exitSplash);
 
-  setTimeout(exitSplash, 18000); // hard fallback
+  setTimeout(exitSplash, 60000); // hard fallback
 }
 
 
@@ -1027,6 +1031,43 @@ function buildPartners() {
 /* ============================================================
    10. EVENTS BUILDER
    ============================================================ */
+
+/* Populates and shows the #event-spotlight banner with the first upcoming
+   event. Hides the banner automatically if no upcoming event exists. */
+function buildSpotlight() {
+  const banner = qs('#event-spotlight');
+  if (!banner) return;
+
+  const allEvents = CALUNAH_CONFIG.events || [];
+  const now = Date.now();
+
+  /* Find the first event whose end-date is still in the future */
+  const next = allEvents.find(ev => {
+    const end = parseEventEndDate(ev.date);
+    return end && end.getTime() >= now;
+  });
+
+  if (!next) {
+    banner.style.display = 'none';
+    return;
+  }
+
+  const titleEl    = qs('.spotlight-title',    banner);
+  const dateEl     = qs('.spotlight-date',     banner);
+  const timeEl     = qs('.spotlight-time',     banner);
+  const locationEl = qs('.spotlight-location', banner);
+
+  if (titleEl)    titleEl.textContent    = next.title;
+  if (dateEl)     dateEl.textContent     = next.date;
+  if (timeEl)     timeEl.textContent     = next.time || '';
+  if (locationEl) locationEl.textContent = next.location || '';
+
+  /* Hide time separator if no time provided */
+  const timeSep = qs('.spotlight-time-sep', banner);
+  if (timeSep) timeSep.style.display = next.time ? '' : 'none';
+
+  banner.style.display = '';
+}
 
 /* Returns the last moment an event is still relevant, as a JS Date.
    Handles a single date ("June 21, 2026") or a range
@@ -4220,6 +4261,52 @@ async function loadCMSContent() {
   }));
 }
 
+/* Fetches live YTD fundraising total from CALUNAH Connect CRM.
+   Primary path: RPC get_public_fundraising_total() (sums all non-rejected
+   donations for the current year via SECURITY DEFINER — bypasses RLS).
+   Fallback: sums campaigns.current_amount for active global campaigns.
+   Silently no-ops on network error or timeout. */
+async function loadCRMFundraiser() {
+  const CRM_URL  = 'https://fcxfdsqfjwkgcoprvmzx.supabase.co/rest/v1';
+  const CRM_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjeGZkc3FmandrZ2NvcHJ2bXp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg5NjE3OTgsImV4cCI6MjA4NDUzNzc5OH0.qOjFdpHiGqdI1pJeZKlpaAya012iV4MOiBCWgCzYO_E';
+  const hdrs = { apikey: CRM_ANON, Authorization: 'Bearer ' + CRM_ANON, 'Content-Type': 'application/json' };
+  try {
+    const ctrl = new AbortController();
+    const tid  = setTimeout(() => ctrl.abort(), 5000);
+    let totalRaised = null;
+
+    /* Primary: secure RPC that sums actual donation records */
+    try {
+      const r = await fetch(CRM_URL + '/rpc/get_public_fundraising_total', {
+        method: 'POST', headers: hdrs, body: '{}', signal: ctrl.signal
+      });
+      if (r.ok) {
+        const data = await r.json();
+        if (data && typeof data.total_raised === 'number') totalRaised = data.total_raised;
+      }
+    } catch (e) { /* RPC not yet deployed — fall through to campaign fallback */ }
+
+    /* Fallback: sum campaigns.current_amount (only populated by webhooks) */
+    if (totalRaised === null) {
+      const r2 = await fetch(
+        CRM_URL + '/campaigns?select=current_amount&status=eq.active&is_global=eq.true',
+        { headers: hdrs, signal: ctrl.signal }
+      );
+      clearTimeout(tid);
+      if (r2.ok) {
+        const rows = await r2.json();
+        if (Array.isArray(rows)) totalRaised = rows.reduce((s, c) => s + (Number(c.current_amount) || 0), 0);
+      }
+    } else {
+      clearTimeout(tid);
+    }
+
+    if (totalRaised === null) return;
+    if (!CALUNAH_CONFIG.fundraiser) CALUNAH_CONFIG.fundraiser = {};
+    CALUNAH_CONFIG.fundraiser.raised = totalRaised;
+  } catch (e) { /* network error or timeout — keep default */ }
+}
+
 /* Fundraising tracker — fills the progress bar from CALUNAH_CONFIG.fundraiser
    { raised, goal } (editable in admin). Falls back to goal 150000 / raised 0. */
 function buildFundraiser() {
@@ -4332,6 +4419,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   /* Load CMS JSON data first, then build */
   await loadCMSContent();
+  await loadCRMFundraiser();
 
   /* Core experience */
   initSplash();
@@ -4373,6 +4461,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   initRecurringMembership();
   initNLSignupForm();
   initTicketReturn();
+
+  /* Event spotlight — auto-populate from first upcoming event */
+  buildSpotlight();
 
   /* Event spotlight dismiss */
   const spotlightClose = qs('#spotlight-close');
