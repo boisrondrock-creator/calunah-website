@@ -298,6 +298,20 @@ const CALUNAH_CONFIG = {
   /* ---------- Events ---------- */
   events: [
     {
+      id:          'saturdaygiving2026',
+      title:       'Saturday Giving, Blooming Minds: Growing in Knowledge, Rooted in Faith',
+      date:        'November 21, 2026',
+      time:        '5:00 PM to 7:30 PM',
+      location:    'Virtual, YouTube & Facebook Live',
+      flyer:       'images/events/saturdaygiving2026.jpg',
+      tags:        ['Fundraiser', 'Giving', 'Scholarships', 'Virtual'],
+      description: 'CALUNAH Executive presents Saturday Giving with the theme: Blooming Minds, Growing in Knowledge, Rooted in Faith. Your generosity funds scholarships and a Boys\' Dorm Worship Room at UNAH.',
+      fullInfo:    'CALUNAH Executive presents Saturday Giving with the theme: Blooming Minds, Growing in Knowledge, Rooted in Faith.\n\nSaturday, November 21st, 2026 | 5:00 PM to 7:30 PM\n\nOur Mission:\n• Scholarships: Investing in Students. Building Futures.\n• Boys\' Dorm Worship Room: Creating a Space for Faith, Prayer & Worship.\n\nWatch live on:\n📺 YouTube: @calunahexecutive4985\n📘 Facebook: @calunahexecutive\n\nSupport us at www.calunah.org/donate — Your Donation Matters!',
+      ticketUrl:   '',
+      ctaLabel:    'Donate',
+      upcoming:    true
+    },
+    {
       id:          'hightea2026',
       title:       'Blooming Minds: Giving Back for Education',
       date:        'June 21, 2026',
