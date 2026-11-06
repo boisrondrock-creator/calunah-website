@@ -4243,7 +4243,7 @@ async function loadCMSContent() {
       /* Try GitHub raw first — admin saves appear without redeploy */
       let r;
       try {
-        r = await fetch(GITHUB_RAW + path, { cache: 'no-cache' });
+        r = await fetch(GITHUB_RAW + path + '?t=' + Date.now(), { cache: 'no-cache' });
         if (!r.ok) throw new Error('gh');
       } catch {
         r = await fetch(path + '?t=' + Date.now());
